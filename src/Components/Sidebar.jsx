@@ -2,7 +2,7 @@ import { Box, Typography } from "@mui/material";
 import { Fragment, useState } from "react";
 import { BsCartCheckFill } from "react-icons/bs";
 
-import { MdDashboard, MdOutlineCancel, MdOutlineTextsms } from "react-icons/md";
+import { MdDashboard, MdFastfood, MdOutlineCancel, MdOutlineTextsms } from "react-icons/md";
 import { Link, NavLink } from "react-router-dom";
 import logo from "../image/logo.png";
 import { useStateContext } from "../Contexts/ContextProvider";
@@ -87,7 +87,7 @@ const Sidebar = () => {
               })}
               className={({ isActive }) => (isActive ? activeLink : normalLink)}
             >
-              <MdOutlineTextsms />
+              <MdFastfood />
               <span className="capitalize ">food item</span>
             </NavLink>
             <NavLink
@@ -154,7 +154,7 @@ const Sidebar = () => {
                 isActive ? smActiveLink : smNormalLink
               }
             >
-              <MdOutlineTextsms className="text-3xl" />
+              <MdFastfood className="text-3xl" />
             </NavLink>
             <NavLink
               to="/order"

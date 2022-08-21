@@ -1,8 +1,6 @@
 import { Grid, TextField } from "@mui/material";
 import React from "react";
 import { useForm } from "react-hook-form";
-import { ImGoogle3 } from "react-icons/im";
-import { SiFacebook } from "react-icons/si";
 import { Link } from "react-router-dom";
 import { useStateContext } from "../Contexts/ContextProvider";
 import logoImg from "../image/undraw_modern_design_re_dlp8 1.svg";

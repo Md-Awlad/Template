@@ -1,63 +1,145 @@
-import React from "react";
-import { GrEdit } from "react-icons/gr";
+import {
+  Box,
+  Button,
+  IconButton,
+  Menu,
+  MenuItem,
+  TextField,
+} from "@mui/material";
+import { DataGrid, GridToolbar } from "@mui/x-data-grid";
+import React, { useState } from "react";
+import { BiEdit } from "react-icons/bi";
+import { BsThreeDots } from "react-icons/bs";
 import { RiDeleteBin6Line } from "react-icons/ri";
-import sandwich from "../../../image/sandwich.png";
+import ClearIcon from "@mui/icons-material/Clear";
+import SearchIcon from "@mui/icons-material/Search";
+import { useStateContext } from "../../../Contexts/ContextProvider";
 
 const Sandwich = () => {
+  const { currentColor, currentMode } = useStateContext();
+  const [anchorEl, setAnchorEl] = useState(false);
+  const [rows, setRows] = useState([]);
+  const open = Boolean(anchorEl);
+
+  const handleClick = (e) => {
+    setAnchorEl(e.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const columns = [
+    { field: "id", headerName: "Id", width: 86 },
+    { field: "image", headerName: "Image", width: 160 },
+    { field: "name", headerName: "Food Name", width: 200 },
+    { field: "price", headerName: "Price", width: 130 },
+    { field: "details", headerName: "Details", width: 200 },
+    { field: "extra", headerName: "Extra", width: 130 },
+    {
+      field: "action",
+      headerName: "Action",
+      width: 100,
+      renderCell: (data) => {
+        const onClick = (e) => {
+          e.stopPropagation();
+          setAnchorEl(e.currentTarget);
+        };
+
+        return (
+          <Button
+            id="basic-button"
+            aria-controls={open ? "basic-menu" : undefined}
+            aria-haspopup="true"
+            aria-expanded={open ? "true" : undefined}
+            onClick={onClick}
+          >
+            <BsThreeDots className="text-gray-900 dark:text-neutral -ml-3" />
+          </Button>
+        );
+      },
+    },
+  ];
+
   return (
-    <div>
-      <div className="overflow-x-scroll">
-        <div className="bg-gray-100 flex items-center justify-center font-sans overflow-hidden">
-          <div className="w-full">
-            <div className="bg-white shadow-md rounded">
-              <table className="min-w-max w-full table-auto">
-                <thead>
-                  <tr className="bg-[#FFC446] text-gray-600 uppercase text-sm">
-                    <th className="py-3 px-6 text-left">Image</th>
-                    <th className="py-3 px-6 text-left">Food Name</th>
-                    <th className="py-3 px-6 text-center">Price</th>
-                    <th className="py-3 px-6 text-center">Details</th>
-                    <th className="py-3 px-6 text-center">Other</th>
-                    <th className="py-3 px-6 text-center">Actions</th>
-                  </tr>
-                </thead>
-                <tbody className="text-gray-700 text-sm">
-                  {[1, 2, 3, 4, 5].map((item, index) => (
-                    <tr
-                      key={index}
-                      className="border-b border-gray-200 hover:bg-gray-100"
-                    >
-                      <td className="py-3 px-6 text-left whitespace-nowrap">
-                        <img className="w-12 h-12" src={sandwich} alt="" />
-                      </td>
-                      <td className="py-3 px-6 text-center">
-                        <h2>Pizza</h2>
-                      </td>
-                      <td className="py-3 px-6 text-center">
-                        <h2>600</h2>
-                      </td>
-                      <td className="py-3 px-6 text-center">
-                        <h2>
-                          Lorem ipsum dolor sit amet consectetur adipisicing.
-                        </h2>
-                      </td>
-                      <td className="py-3 px-6 text-center">
-                        <h2>Extra Sauce</h2>
-                      </td>
-                      <td className="py-3 px-6 text-center">
-                        <div className="flex gap-3 item-center justify-center">
-                          <GrEdit className="cursor-pointer" />
-                          <RiDeleteBin6Line className="cursor-pointer" />
-                        </div>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
+    <div style={{ height: 510, width: "100%" }}>
+      <DataGrid
+        sx={{
+          "& .MuiDataGrid-columnHeader": { backgroundColor: `${currentColor}` },
+          color: "#fff",
+          "& .MuiIconButton-root": {
+            color: "unset !important",
+          },
+          "& .MuiTablePagination-toolbar": {
+            color: currentMode === "Dark" ? "#fff" : "#000",
+          },
+          "& .MuiDataGrid-row:hover": {
+            bgcolor: currentMode === "Dark" ? `${currentColor}10` : "",
+          },
+          "& .MuiDataGrid-selectedRowCount": {
+            visibility: "hidden",
+          },
+          "& .MuiDataGrid-cell:focus-within": {
+            outline: "none",
+          },
+          "& .MuiInput-root": { color: "#fff" },
+        }}
+        rows={rows}
+        columns={columns}
+        rowsPerPageOptions={[5]}
+        disableSelectionOnClick
+        disableColumnFilter
+        disableColumnSelector
+        disableDensitySelector
+        components={{ Toolbar: GridToolbar }}
+        componentsProps={{
+          toolbar: {
+            showQuickFilter: true,
+            quickFilterProps: { debounceMs: 500 },
+            printOptions: {
+              disableToolbarButton: true,
+            },
+            csvOptions: {
+              disableToolbarButton: true,
+            },
+          },
+        }}
+        // checkboxSelection
+        // disableSelectionOnClick
+      />
+      <Menu
+        id="basic-menu"
+        anchorEl={anchorEl}
+        open={open}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "right",
+        }}
+        transformOrigin={{
+          vertical: "top",
+          horizontal: "right",
+        }}
+        // onClose={handleClose}
+        onClick={handleClose}
+        MenuListProps={{
+          "aria-labelledby": "basic-button",
+        }}
+      >
+        <MenuItem
+        // onClick={() => handleEditModalOpen(rows?.id)}
+
+        // sx={{
+        //   display: "flex",
+        //   justifyContent: "space-between",
+        // }}
+        >
+          <BiEdit className="text-dark-color dark:text-neutral text-sm cursor-pointer" />
+          <p className="text-sm font-medium  pl-2">Edit</p>
+        </MenuItem>
+        <MenuItem>
+          <RiDeleteBin6Line className="text-dark-color dark:text-neutral text-sm cursor-pointer" />
+          <p className="text-sm font-medium pl-2">Delete</p>
+        </MenuItem>
+      </Menu>
     </div>
   );
 };

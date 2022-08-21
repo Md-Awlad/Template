@@ -4,6 +4,7 @@ import TextField from "@mui/material/TextField";
 import { useForm } from "react-hook-form";
 import { useStateContext } from "../../Contexts/ContextProvider";
 import { DatePicker } from "@mui/x-date-pickers";
+import { Grid } from "@mui/material";
 
 const style = {
   position: "absolute",
@@ -21,8 +22,7 @@ const style = {
 };
 
 const AddCategory = ({ handleModalClose }) => {
-  const { currentColor } = useStateContext();
-  const [date, setDate] = useState(new Date());
+  const { currentColor, currentMode } = useStateContext();
   const {
     register,
     handleSubmit,
@@ -34,8 +34,40 @@ const AddCategory = ({ handleModalClose }) => {
   };
 
   return (
-    <Box sx={{ ...style, width: 500 }}>
-      <h2>Add Category</h2>
+    <Box sx={{ ...style }}>
+      <h2 className="text-xl font-semibold pb-3">Add Category</h2>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div className="flex justify-between">
+          <Grid
+            sx={{
+              "& .MuiInputBase-root": {
+                color: `${currentMode === "Light" ? "#000" : "#fff"}`,
+                borderColor: `${currentMode === "Light" ? "#000" : "#fff"}`,
+              },
+            }}
+            item
+            xs={12}
+            md={6}
+          >
+            <TextField
+              id="category"
+              label="Name of Category"
+              type="text"
+              error={Boolean(errors.category)}
+              helperText={errors.category && "This category field is required *"}
+              {...register("category", { required: true })}
+              fullWidth
+            />
+          </Grid>
+          <button
+            type="submit"
+            style={{ backgroundColor: currentColor }}
+            className="h-14 px-8 py-2 rounded-md text-neutral text-lg uppercase"
+          >
+            add
+          </button>
+        </div>
+      </form>
     </Box>
   );
 };
