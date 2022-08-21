@@ -4,7 +4,7 @@ import TextField from "@mui/material/TextField";
 import { useForm } from "react-hook-form";
 import { useStateContext } from "../../Contexts/ContextProvider";
 import { FiUpload } from "react-icons/fi";
-import { Autocomplete, Grid, InputAdornment, Stack } from "@mui/material";
+import { Autocomplete, Grid, InputAdornment } from "@mui/material";
 
 const style = {
   position: "absolute",
