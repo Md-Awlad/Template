@@ -29,16 +29,16 @@ const Pizza = () => {
   };
 
   const columns = [
-    { field: "id", headerName: "Id", width: 86 },
-    { field: "image", headerName: "Image", width: 160 },
+    { field: "id", headerName: "Id", width: 100 },
+    { field: "image", headerName: "Image", width: 200 },
     { field: "name", headerName: "Food Name", width: 200 },
     { field: "price", headerName: "Price", width: 130 },
-    { field: "details", headerName: "Details", width: 200 },
+    { field: "details", headerName: "Details", width: 208 },
     { field: "extra", headerName: "Extra", width: 130 },
     {
       field: "action",
       headerName: "Action",
-      width: 100,
+      width: 150,
       renderCell: (data) => {
         const onClick = (e) => {
           e.stopPropagation();
@@ -81,7 +81,9 @@ const Pizza = () => {
           "& .MuiDataGrid-cell:focus-within": {
             outline: "none",
           },
-          "& .MuiInput-root": { color: "#fff" },
+          "& .MuiInput-root": {
+            color: currentMode === "Dark" ? "#fff" : "#000",
+          },
         }}
         rows={rows}
         columns={columns}

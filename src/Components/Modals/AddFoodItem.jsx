@@ -46,7 +46,7 @@ const AddFoodItem = ({ handleModalClose }) => {
 
   return (
     <Box sx={{ ...style, width: 600, height: 500, overflowY: "scroll" }}>
-      <h2 className="text-xl font-semibold pb-3 text-center">Add Food Item</h2>
+      <h2 className="text-xl font-bold pb-3 text-center">Add Food Item</h2>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="space-y-5">
           {/* --FoodName-- */}

@@ -12,7 +12,7 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import ClearIcon from "@mui/icons-material/Clear";
 import SearchIcon from "@mui/icons-material/Search";
 import { useStateContext } from "../../Contexts/ContextProvider";
-import { DataGrid } from "@mui/x-data-grid";
+import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 
 const OrderList = () => {
   const { currentColor, currentMode } = useStateContext();
@@ -32,21 +32,19 @@ const OrderList = () => {
   };
 
   const columns = [
-    { field: "id", headerName: "ID", width: 100 },
+    { field: "id", headerName: "ID", width: 130 },
     { field: "name", headerName: "Customer Name", width: 230 },
-    { field: "mobile", headerName: "Mobile", width: 150 },
-    { field: "order", headerName: "Order Item", width: 200 },
-    { field: "amount", headerName: "Amount", width: 150 },
+    { field: "mobile", headerName: "Mobile", width: 200 },
+    { field: "order", headerName: "Order Item", width: 250 },
+    { field: "amount", headerName: "Amount", width: 200 },
     {
       field: "action",
       headerName: "Action",
-      width: 200,
+      width: 150,
       renderCell: (data) => {
-        // console.log(data);
         const onClick = (e) => {
           e.stopPropagation();
           setAnchorEl(e.currentTarget);
-          // setEditBranchId(data);
         };
 
         return (
@@ -64,160 +62,88 @@ const OrderList = () => {
     },
   ];
 
-  function escapeRegExp(value) {
-    return value.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
-  }
-  const requestSearch = (searchValue) => {
-    const searchRegex = new RegExp(escapeRegExp(searchValue), "i");
-    const filteredRows = platform.filter((row) => {
-      return Object.keys(row).some((field) => {
-        return searchRegex.test(row[field].toString());
-      });
-    });
-    setRows(filteredRows);
-  };
-
   return (
-    <div>
-      <Box>
-        <TextField
-          inputProps={{
-            style: { color: currentMode === "Dark" ? "#fff" : "#000" },
-          }}
-          variant="standard"
-          value={searchText}
-          onChange={(e) => {
-            setSearchText(e.target.value);
-            requestSearch(e.target.value);
-          }}
-          placeholder="Search..."
-          InputProps={{
-            startAdornment: (
-              <SearchIcon
-                sx={{
-                  color: currentMode === "Dark" ? "#fff" : "#000",
-                }}
-                fontSize="small"
-                color="action"
-              />
-            ),
-            endAdornment: (
-              <IconButton
-                title="Clear"
-                aria-label="Clear"
-                size="small"
-                style={{
-                  visibility: searchText ? "visible" : "hidden",
-                  borderRadius: "57%",
-                  paddingRight: "1px",
-                  margin: "0",
-                  fontSize: "1.25rem",
-                }}
-                onClick={(e) => {
-                  setSearchText("");
-                  setRows(platform);
-                }}
-              >
-                <ClearIcon
-                  sx={{
-                    color: currentMode === "Dark" ? "#fff" : "#000",
-                  }}
-                  fontSize="small"
-                  color="action"
-                />
-              </IconButton>
-            ),
-          }}
-          sx={{
-            borderColor: "",
-            width: { xs: 1, sm: "auto" },
-            m: (theme) => theme.spacing(1, 0.5, 1.5),
-            "& .MuiSvgIcon-root": {
-              mr: 0.5,
-            },
-            "& .MuiInput-underline:before": {
-              borderBottom: 1,
-              borderColor: "divider",
-            },
-          }}
-        />
-      </Box>
-      <div className="dark:text-neutral" style={{ height: 510, width: "100%" }}>
-        {/* {branchIsLoading ? (
-                <QueryLoader />
-              ) : branchError ? (
-                <Alert
-                  severity="error"
-                  sx={{
-                    width: 1,
-                  }}
-                >
-                  <AlertTitle>Branch Error!</AlertTitle>
-                  There was an error fetching your branches.
-                </Alert>
-              ) : ( */}
-        <DataGrid
-          sx={{
+    <div style={{ height: 510, width: "100%" }}>
+      <DataGrid
+        sx={{
+          "& .MuiDataGrid-columnHeader": { backgroundColor: `${currentColor}` },
+          color: "#fff",
+          "& .MuiIconButton-root": {
+            color: "unset !important",
+          },
+          "& .MuiTablePagination-toolbar": {
             color: currentMode === "Dark" ? "#fff" : "#000",
-            "& .MuiIconButton-root": {
-              color: "unset !important",
+          },
+          "& .MuiDataGrid-row:hover": {
+            bgcolor: currentMode === "Dark" ? `${currentColor}10` : "",
+          },
+          "& .MuiDataGrid-selectedRowCount": {
+            visibility: "hidden",
+          },
+          "& .MuiDataGrid-cell:focus-within": {
+            outline: "none",
+          },
+          "& .MuiInput-root": {
+            color: currentMode === "Dark" ? "#fff" : "#000",
+          },
+        }}
+        rows={rows}
+        columns={columns}
+        rowsPerPageOptions={[5]}
+        disableSelectionOnClick
+        disableColumnFilter
+        disableColumnSelector
+        disableDensitySelector
+        components={{ Toolbar: GridToolbar }}
+        componentsProps={{
+          toolbar: {
+            showQuickFilter: true,
+            quickFilterProps: { debounceMs: 500 },
+            printOptions: {
+              disableToolbarButton: true,
             },
-            "& .MuiTablePagination-toolbar": {
-              color: currentMode === "Dark" ? "#fff" : "#000",
+            csvOptions: {
+              disableToolbarButton: true,
             },
-            "& .MuiDataGrid-row:hover": {
-              bgcolor: currentMode === "Dark" ? `${currentColor}10` : "",
-            },
-            "& .MuiDataGrid-selectedRowCount": {
-              visibility: "hidden",
-            },
-            "& .MuiDataGrid-cell:focus-within": {
-              outline: "none",
-            },
-          }}
-          rows={rows}
-          columns={columns}
-          pageSize={8}
-          rowsPerPageOptions={[5]}
-          // checkboxSelection
-          // disableSelectionOnClick
-        />
-        {/* )} */}
-        <Menu
-          id="basic-menu"
-          anchorEl={anchorEl}
-          open={open}
-          anchorOrigin={{
-            vertical: "bottom",
-            horizontal: "right",
-          }}
-          transformOrigin={{
-            vertical: "top",
-            horizontal: "right",
-          }}
-          // onClose={handleClose}
-          onClick={handleClose}
-          MenuListProps={{
-            "aria-labelledby": "basic-button",
-          }}
-        >
-          <MenuItem
-          // onClick={() => handleEditModalOpen(rows?.id)}
+          },
+        }}
+        // checkboxSelection
+        // disableSelectionOnClick
+      />
+      <Menu
+        id="basic-menu"
+        anchorEl={anchorEl}
+        open={open}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "right",
+        }}
+        transformOrigin={{
+          vertical: "top",
+          horizontal: "right",
+        }}
+        // onClose={handleClose}
+        onClick={handleClose}
+        MenuListProps={{
+          "aria-labelledby": "basic-button",
+        }}
+      >
+        <MenuItem
+        // onClick={() => handleEditModalOpen(rows?.id)}
 
-          // sx={{
-          //   display: "flex",
-          //   justifyContent: "space-between",
-          // }}
-          >
-            <BiEdit className="text-dark-color dark:text-neutral text-sm cursor-pointer" />
-            <p className="text-sm font-medium  pl-2">Edit</p>
-          </MenuItem>
-          <MenuItem>
-            <RiDeleteBin6Line className="text-dark-color dark:text-neutral text-sm cursor-pointer" />
-            <p className="text-sm font-medium pl-2">Delete</p>
-          </MenuItem>
-        </Menu>
-      </div>
+        // sx={{
+        //   display: "flex",
+        //   justifyContent: "space-between",
+        // }}
+        >
+          <BiEdit className="text-dark-color dark:text-neutral text-sm cursor-pointer" />
+          <p className="text-sm font-medium  pl-2">Edit</p>
+        </MenuItem>
+        <MenuItem>
+          <RiDeleteBin6Line className="text-dark-color dark:text-neutral text-sm cursor-pointer" />
+          <p className="text-sm font-medium pl-2">Delete</p>
+        </MenuItem>
+      </Menu>
     </div>
   );
 };

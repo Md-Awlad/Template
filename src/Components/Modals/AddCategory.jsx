@@ -35,7 +35,7 @@ const AddCategory = ({ handleModalClose }) => {
 
   return (
     <Box sx={{ ...style }}>
-      <h2 className="text-xl font-semibold pb-3">Add Category</h2>
+      <h2 className="text-xl font-bold pb-3">Add Category</h2>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="flex justify-between">
           <Grid
@@ -54,7 +54,9 @@ const AddCategory = ({ handleModalClose }) => {
               label="Name of Category"
               type="text"
               error={Boolean(errors.category)}
-              helperText={errors.category && "This category field is required *"}
+              helperText={
+                errors.category && "This category field is required *"
+              }
               {...register("category", { required: true })}
               fullWidth
             />

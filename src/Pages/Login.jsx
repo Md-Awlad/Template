@@ -6,7 +6,7 @@ import { useStateContext } from "../Contexts/ContextProvider";
 import logoImg from "../image/undraw_modern_design_re_dlp8 1.svg";
 
 const Login = () => {
-  const { currentColor, currentMode } = useStateContext();
+  const { currentColor, currentMode, currentUser } = useStateContext();
   const {
     register,
     handleSubmit,

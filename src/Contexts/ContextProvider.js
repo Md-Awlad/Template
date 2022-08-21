@@ -17,7 +17,7 @@ export const ContextProvider = ({ children }) => {
   );
   const [themeSettings, setThemeSettings] = useState(false);
   const [activeMenu, setActiveMenu] = useState(true);
-  // const [currentUser, setCurrentUser] = useState(null);
+  const [currentUser, setCurrentUser] = useState(null);
 
   const setMode = (value) => {
     setCurrentMode(value);
@@ -44,6 +44,7 @@ export const ContextProvider = ({ children }) => {
   return (
     <StateContext.Provider
       value={{
+        currentUser,
         currentColor,
         currentMode,
         setCurrentMode,
