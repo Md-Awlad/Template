@@ -24,7 +24,8 @@ const Login = () => {
         {/* --logo-- */}
         <div className="space-y-5 rounded-md px-4 py-5">
           <h2 className="text-xl font-medium dark:text-neutral">
-            Welcome to Nexis
+            Welcome to{" "}
+            <span className="text-[#FFC446] text-3xl font-bold">Neuvemi</span>
           </h2>
           <img src={logoImg} alt="" />
         </div>
@@ -67,52 +68,28 @@ const Login = () => {
                 fullWidth
               />
             </Grid>
-            <div className="text-center space-y-5">
+            <div className="text-center space-y-3">
               <h2 className="text-xl text-gray-500 dark:text-neutral font-semibold">
                 Login with
               </h2>
-              <div className="flex justify-center">
-                <div className="space-y-5">
-                  <div className="grid md:grid-cols-2 grid-cols-1 gap-5">
-                    {/* --google-- */}
-                    <Link
-                      to=""
-                      style={{ backgroundColor: currentColor }}
-                      type="submit"
-                      className="rounded-md shadow px-3 py-2 text-lg font-medium text-white outline-none"
-                    >
-                      <ImGoogle3 className="inline text-2xl font-bold mr-4" />
-                      Google
-                    </Link>
-                    {/* --facebook-- */}
-                    <Link
-                      to=""
-                      style={{ backgroundColor: currentColor }}
-                      type="submit"
-                      className="rounded-md shadow px-3 py-2 text-lg font-medium text-white outline-none"
-                    >
-                      <SiFacebook className="inline text-2xl font-bold mr-4" />
-                      Facebook
-                    </Link>
-                  </div>
-                  <button
-                    type="submit"
-                    style={{ backgroundColor: currentColor }}
-                    className="w-full px-3 py-2 rounded-md text-neutral text-lg uppercase"
+              <div>
+                <button
+                  type="submit"
+                  style={{ backgroundColor: currentColor }}
+                  className="w-full px-3 py-2 rounded-md text-neutral text-lg uppercase"
+                >
+                  login
+                </button>
+                <span className="text-sm font-bold text-gray-500 dark:text-neutral">
+                  You have no account?{" "}
+                  <Link
+                    to="/register"
+                    style={{ color: currentColor }}
+                    className="text-base"
                   >
-                    login
-                  </button>
-                  <span className="text-sm font-bold text-gray-500 dark:text-neutral py-3">
-                    You have no account?{" "}
-                    <Link
-                      to="/register"
-                      style={{ color: currentColor }}
-                      className="text-base"
-                    >
-                      Register
-                    </Link>
-                  </span>
-                </div>
+                    Register
+                  </Link>
+                </span>
               </div>
             </div>
           </form>

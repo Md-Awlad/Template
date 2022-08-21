@@ -18,7 +18,6 @@ const OrderList = () => {
   const { currentColor, currentMode } = useStateContext();
   const [showArrow, setShowArrow] = useState(true);
   const [anchorEl, setAnchorEl] = useState(false);
-  const [date, setDate] = useState(new Date());
   const [platform, setPlatform] = useState([]);
   const [searchText, setSearchText] = useState("");
   const [rows, setRows] = useState([]);
