@@ -1,10 +1,12 @@
 import { Box } from "@mui/system";
-import React, { useState } from "react";
+import React from "react";
 import TextField from "@mui/material/TextField";
 import { useForm } from "react-hook-form";
 import { useStateContext } from "../../Contexts/ContextProvider";
-import { DatePicker } from "@mui/x-date-pickers";
-import { Grid } from "@mui/material";
+import { Grid, InputAdornment } from "@mui/material";
+import { toast } from "react-toastify";
+import myAxios from "../../utils/myAxios";
+import { FiUpload } from "react-icons/fi";
 
 const style = {
   position: "absolute",
@@ -21,7 +23,7 @@ const style = {
   pb: 3,
 };
 
-const AddCategory = ({ handleModalClose }) => {
+const AddCategory = ({ handleModalClose, categoryRefetch }) => {
   const { currentColor, currentMode } = useStateContext();
   const {
     register,
@@ -29,46 +31,91 @@ const AddCategory = ({ handleModalClose }) => {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     console.log(data);
+    const payloadForm = new FormData();
+    payloadForm.append("name", data?.category);
+    payloadForm.append("image", data?.image);
+    console.log(data);
+
+    const response = await toast.promise(
+      myAxios.post("/category/", payloadForm),
+      {
+        pending: "Adding Categories...",
+        success: "Categories Added",
+        error: "Error Adding Categories!",
+      }
+    );
+    if (response.status === 201) {
+      handleModalClose();
+      categoryRefetch();
+    }
   };
 
   return (
     <Box sx={{ ...style }}>
       <h2 className="text-xl font-bold pb-3">Add Category</h2>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="flex justify-between">
-          <Grid
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+        <Grid
+          sx={{
+            "& .MuiInputBase-root": {
+              color: `${currentMode === "Light" ? "#000" : "#fff"}`,
+              borderColor: `${currentMode === "Light" ? "#000" : "#fff"}`,
+            },
+          }}
+          item
+          xs={12}
+          md={6}
+        >
+          <TextField
+            id="category"
+            label="Name of Category"
+            type="text"
+            error={Boolean(errors.category)}
+            helperText={errors.category && "This category field is required *"}
+            {...register("category", { required: true })}
+            fullWidth
+          />
+        </Grid>
+
+        {/* --img-- */}
+        <Grid item xs={12} md={6}>
+          <TextField
+            id="image"
+            type="file"
+            label="Image"
+            required
+            InputLabelProps={{
+              shrink: true,
+            }}
+            error={Boolean(errors.image)}
+            helperText={errors.image && "Image is required *"}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <FiUpload size={25} />
+                </InputAdornment>
+              ),
+            }}
+            inputProps={{
+              accept: "image/*",
+            }}
+            {...register("image", { required: true })}
             sx={{
-              "& .MuiInputBase-root": {
-                color: `${currentMode === "Light" ? "#000" : "#fff"}`,
-                borderColor: `${currentMode === "Light" ? "#000" : "#fff"}`,
+              width: 1,
+              "& ::file-selector-button": {
+                display: "none",
               },
             }}
-            item
-            xs={12}
-            md={6}
-          >
-            <TextField
-              id="category"
-              label="Name of Category"
-              type="text"
-              error={Boolean(errors.category)}
-              helperText={
-                errors.category && "This category field is required *"
-              }
-              {...register("category", { required: true })}
-              fullWidth
-            />
-          </Grid>
-          <button
-            type="submit"
-            style={{ backgroundColor: currentColor }}
-            className="h-14 px-8 py-2 rounded-md text-neutral text-lg uppercase"
-          >
-            add
-          </button>
-        </div>
+          />
+        </Grid>
+        <button
+          type="submit"
+          style={{ backgroundColor: currentColor }}
+          className="w-full px-8 py-2 rounded-md text-neutral text-lg uppercase"
+        >
+          add
+        </button>
       </form>
     </Box>
   );

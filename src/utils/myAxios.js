@@ -47,9 +47,9 @@ const myAxios = axios.create({ baseURL, withCredentials: true });
 //   }
 // );
 
-// export const defaultQueryFn = async ({ queryKey }) => {
-//   const { data } = await myAxios(`/${queryKey[0]}`);
-//   return data;
-// };
+export const defaultQueryFn = async ({ queryKey }) => {
+  const { data } = await myAxios(`/${queryKey[0]}`);
+  return data;
+};
 
 export default myAxios;

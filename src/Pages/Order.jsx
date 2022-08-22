@@ -1,6 +1,4 @@
-import { Container, Modal } from "@mui/material";
-import { useState } from "react";
-import AddCategory from "../Components/Modals/AddCategory.jsx";
+import { Container } from "@mui/material";
 import OrderList from "../Components/Order/OrderList";
 import PageTitle from "../Components/PageTitle/PageTitle";
 
@@ -12,7 +10,6 @@ const Order = () => {
       <PageTitle
         headingText="order list"
         pageName="order"
-        
       />
       <OrderList />
     </Container>

@@ -7,16 +7,30 @@ import { ContextProvider } from "./Contexts/ContextProvider";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { defaultQueryFn } from "./utils/myAxios";
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: false,
+      refetchOnWindowFocus: false,
+      queryFn: defaultQueryFn,
+    },
+  },
+});
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <LocalizationProvider dateAdapter={AdapterDateFns}>
-      <BrowserRouter>
-        <ContextProvider>
-          <App />
-        </ContextProvider>
-      </BrowserRouter>
+      <QueryClientProvider client={queryClient}>
+        <BrowserRouter>
+          <ContextProvider>
+            <App />
+          </ContextProvider>
+        </BrowserRouter>
+      </QueryClientProvider>
     </LocalizationProvider>
   </React.StrictMode>
 );

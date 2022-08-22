@@ -4,6 +4,8 @@ import FoodCategory from "../Components/FoodItem/FoodCategory";
 import AddCategory from "../Components/Modals/AddCategory";
 import AddFoodItem from "../Components/Modals/AddFoodItem";
 import PageTitle from "../Components/PageTitle/PageTitle";
+import { useQuery } from "@tanstack/react-query";
+import myAxios from "../utils/myAxios";
 
 const FoodItem = () => {
   const [openModal, setOpenModal] = useState(false);
@@ -21,10 +23,23 @@ const FoodItem = () => {
   const handleModalCloseTwo = (e) => {
     setOpenModalTwo(false);
   };
+
+  const { data: categories = [], refetch: categoryRefetch } = useQuery(
+    ["category"],
+    async () => {
+      const res = await myAxios("/category/");
+      console.log(res);
+      return res.data;
+    }
+  );
+
   return (
     <Container>
       <Modal open={openModal} onClose={handleModalClose}>
-        <AddCategory handleModalClose={handleModalClose} />
+        <AddCategory
+          categoryRefetch={categoryRefetch}
+          handleModalClose={handleModalClose}
+        />
       </Modal>
       <Modal open={openModalTwo} onClose={handleModalCloseTwo}>
         <AddFoodItem handleModalCloseTwo={handleModalCloseTwo} />
@@ -37,7 +52,7 @@ const FoodItem = () => {
         modalOpen={handleModalOpen}
         modalOpenTwo={handleModalOpenTwo}
       />
-      <FoodCategory />
+      <FoodCategory categories={categories} />
     </Container>
   );
 };

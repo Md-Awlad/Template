@@ -9,15 +9,16 @@ import {
 import Pizza from "./FoodItem/Pizza";
 import { useStateContext } from "../../Contexts/ContextProvider";
 
-const FoodCategory = () => {
-  const { currentColor, currentMode } = useStateContext();
+const FoodCategory = ({categories}) => {
+  const { currentMode } = useStateContext();
+  console.log(categories);
   return (
     <div>
-      {[1, 2, 3].map((item, index) => (
+      {categories.map((item, index) => (
         <Accordion
           key={index}
           sx={{
-            backgroundColor: currentMode === "Dark" ? "#2b2a2a" : "#fff",
+            backgroundColor: currentMode === "Dark" ? "#33373E" : "#fff",
             color: currentMode === "Dark" ? "#fff" : "#2b2a2a",
           }}
         >
@@ -27,7 +28,7 @@ const FoodCategory = () => {
             id="panel1a-header"
           >
             <Typography sx={{ fontWeight: 500, fontSize: 18 }}>
-              Pizza
+              {item.name}
             </Typography>
           </AccordionSummary>
           <AccordionDetails>

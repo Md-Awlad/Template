@@ -5,7 +5,15 @@ import NavLayout from "./Components/Layouts/NavLayout";
 
 import ThemeLayout from "./Components/Layouts/ThemeLayout";
 import { useStateContext } from "./Contexts/ContextProvider";
-import { DashBoard, Profile, Login, Order,FoodItem,Settings, Register } from "./Pages";
+import {
+  DashBoard,
+  Profile,
+  Login,
+  Order,
+  FoodItem,
+  Settings,
+  Register,
+} from "./Pages";
 import NotFound from "./Components/NotFound/NotFound";
 
 const App = () => {

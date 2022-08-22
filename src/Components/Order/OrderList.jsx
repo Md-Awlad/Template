@@ -1,25 +1,14 @@
-import { Button, IconButton, Menu, MenuItem, TextField } from "@mui/material";
-import { Box } from "@mui/system";
-import { DatePicker } from "@mui/x-date-pickers";
+import { Button, Menu, MenuItem, } from "@mui/material";
 import React, { useState } from "react";
 import { BiEdit } from "react-icons/bi";
 import { BsThreeDots } from "react-icons/bs";
-import {
-  HiOutlineArrowNarrowDown,
-  HiOutlineArrowNarrowUp,
-} from "react-icons/hi";
 import { RiDeleteBin6Line } from "react-icons/ri";
-import ClearIcon from "@mui/icons-material/Clear";
-import SearchIcon from "@mui/icons-material/Search";
 import { useStateContext } from "../../Contexts/ContextProvider";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 
 const OrderList = () => {
   const { currentColor, currentMode } = useStateContext();
-  const [showArrow, setShowArrow] = useState(true);
   const [anchorEl, setAnchorEl] = useState(false);
-  const [platform, setPlatform] = useState([]);
-  const [searchText, setSearchText] = useState("");
   const [rows, setRows] = useState([]);
 
   const open = Boolean(anchorEl);
