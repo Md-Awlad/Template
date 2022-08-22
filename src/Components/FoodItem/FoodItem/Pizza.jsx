@@ -1,14 +1,13 @@
-import {
-  Button,
-  Menu,
-  MenuItem,
-} from "@mui/material";
+import { Button, Menu, MenuItem } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import React, { useState } from "react";
 import { BiEdit } from "react-icons/bi";
 import { BsThreeDots } from "react-icons/bs";
 import { RiDeleteBin6Line } from "react-icons/ri";
+import { useQuery } from "@tanstack/react-query";
 import { useStateContext } from "../../../Contexts/ContextProvider";
+import myAxios from "../../../utils/myAxios";
+import { MdModeEdit } from "react-icons/md";
 
 const Pizza = () => {
   const { currentColor, currentMode } = useStateContext();
@@ -26,41 +25,62 @@ const Pizza = () => {
   const columns = [
     { field: "id", headerName: "Id", width: 100 },
     { field: "image", headerName: "Image", width: 200 },
-    { field: "name", headerName: "Food Name", width: 200 },
-    { field: "price", headerName: "Price", width: 130 },
-    { field: "details", headerName: "Details", width: 208 },
-    { field: "extra", headerName: "Extra", width: 130 },
+    { field: "food_name", headerName: "Food Name", width: 200 },
+    { field: "food_price", headerName: "Price", width: 130 },
+    { field: "food_detail", headerName: "Details", width: 208 },
+    { field: "review", headerName: "Review", width: 130 },
+    {
+      field: "is_recommended",
+      headerName: "Recommended",
+      width: 130,
+      renderCell: (params) => {
+        return (
+          <div
+            className={`${
+              params?.value === true
+                ? "bg-green-200 text-green-900"
+                : "bg-yellow-200 text-yellow-700"
+            } px-5 rounded-md font-medium   `}
+          >
+            <p>{params?.value === true ? "true" : "false"}</p>
+          </div>
+        );
+      },
+    },
     {
       field: "action",
       headerName: "Action",
       width: 150,
       renderCell: (data) => {
-        const onClick = (e) => {
-          e.stopPropagation();
-          setAnchorEl(e.currentTarget);
-        };
-
+        // const onClick = (e) => {
+        //   e.stopPropagation();
+        //   setAnchorEl(e.currentTarget);
+        // };
         return (
-          <Button
-            id="basic-button"
-            aria-controls={open ? "basic-menu" : undefined}
-            aria-haspopup="true"
-            aria-expanded={open ? "true" : undefined}
-            onClick={onClick}
-          >
-            <BsThreeDots className="text-gray-900 dark:text-neutral -ml-3" />
-          </Button>
+          <div className="flex gap-5 items-center">
+            <MdModeEdit className="text-dark-color dark:text-neutral text-xl cursor-pointer" />
+            <RiDeleteBin6Line className="text-dark-color dark:text-neutral text-xl cursor-pointer" />
+          </div>
         );
       },
     },
   ];
 
+  const { data: foods = [], refetch: foodRefetch } = useQuery(
+    ["food"],
+    async () => {
+      const res = await myAxios("/food/");
+      console.log(res);
+      return res.data;
+    }
+  );
+
   return (
     <div style={{ height: 510, width: "100%" }}>
       <DataGrid
         sx={{
-          "& .MuiDataGrid-columnHeader": { backgroundColor: `${currentColor}` },
-          color: "#fff",
+          "& .MuiDataGrid-columnHeader": { backgroundColor: "#FFC446" },
+          color: currentMode === "Dark" ? "#fff" : "#000",
           "& .MuiIconButton-root": {
             color: "unset !important",
           },
@@ -80,7 +100,7 @@ const Pizza = () => {
             color: currentMode === "Dark" ? "#fff" : "#000",
           },
         }}
-        rows={rows}
+        rows={foods}
         columns={columns}
         rowsPerPageOptions={[5]}
         disableSelectionOnClick
@@ -103,40 +123,6 @@ const Pizza = () => {
         // checkboxSelection
         // disableSelectionOnClick
       />
-      <Menu
-        id="basic-menu"
-        anchorEl={anchorEl}
-        open={open}
-        anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "right",
-        }}
-        transformOrigin={{
-          vertical: "top",
-          horizontal: "right",
-        }}
-        // onClose={handleClose}
-        onClick={handleClose}
-        MenuListProps={{
-          "aria-labelledby": "basic-button",
-        }}
-      >
-        <MenuItem
-        // onClick={() => handleEditModalOpen(rows?.id)}
-
-        // sx={{
-        //   display: "flex",
-        //   justifyContent: "space-between",
-        // }}
-        >
-          <BiEdit className="text-dark-color dark:text-neutral text-sm cursor-pointer" />
-          <p className="text-sm font-medium  pl-2">Edit</p>
-        </MenuItem>
-        <MenuItem>
-          <RiDeleteBin6Line className="text-dark-color dark:text-neutral text-sm cursor-pointer" />
-          <p className="text-sm font-medium pl-2">Delete</p>
-        </MenuItem>
-      </Menu>
     </div>
   );
 };

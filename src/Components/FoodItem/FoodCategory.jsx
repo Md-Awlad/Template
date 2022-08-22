@@ -9,7 +9,7 @@ import {
 import Pizza from "./FoodItem/Pizza";
 import { useStateContext } from "../../Contexts/ContextProvider";
 
-const FoodCategory = ({categories}) => {
+const FoodCategory = ({ categories, foodRefetch }) => {
   const { currentMode } = useStateContext();
   console.log(categories);
   return (
@@ -33,7 +33,7 @@ const FoodCategory = ({categories}) => {
           </AccordionSummary>
           <AccordionDetails>
             <Typography>
-              <Pizza />
+              <Pizza  />
             </Typography>
           </AccordionDetails>
         </Accordion>
