@@ -35,11 +35,15 @@ const AddCategory = ({ handleModalClose, categoryRefetch }) => {
     console.log(data);
     const payloadForm = new FormData();
     payloadForm.append("name", data?.category);
-    payloadForm.append("image", data?.image);
+    payloadForm.append("image", data?.image[0]);
     console.log(data);
 
     const response = await toast.promise(
-      myAxios.post("/category/", payloadForm),
+      myAxios.post("/category/", payloadForm, {
+          headers: {
+          "content-type": "multipart/form-data",
+        },
+      }),
       {
         pending: "Adding Categories...",
         success: "Categories Added",

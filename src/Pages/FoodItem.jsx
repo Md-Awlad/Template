@@ -28,7 +28,6 @@ const FoodItem = () => {
     ["category"],
     async () => {
       const res = await myAxios("/category/");
-      console.log(res);
       return res.data;
     }
   );
@@ -42,7 +41,10 @@ const FoodItem = () => {
         />
       </Modal>
       <Modal open={openModalTwo} onClose={handleModalCloseTwo}>
-        <AddFoodItem handleModalCloseTwo={handleModalCloseTwo} />
+        <AddFoodItem
+          handleModalCloseTwo={handleModalCloseTwo}
+          categories={categories}
+        />
       </Modal>
       <PageTitle
         headingText="Food Item"

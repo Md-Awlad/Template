@@ -1,8 +1,5 @@
-import { Button, Menu, MenuItem } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
-import React, { useState } from "react";
-import { BiEdit } from "react-icons/bi";
-import { BsThreeDots } from "react-icons/bs";
+import React from "react";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { useQuery } from "@tanstack/react-query";
 import { useStateContext } from "../../../Contexts/ContextProvider";
@@ -11,20 +8,21 @@ import { MdModeEdit } from "react-icons/md";
 
 const Pizza = () => {
   const { currentColor, currentMode } = useStateContext();
-  const [anchorEl, setAnchorEl] = useState(false);
-  const [rows, setRows] = useState([]);
-  const open = Boolean(anchorEl);
-
-  const handleClick = (e) => {
-    setAnchorEl(e.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
 
   const columns = [
     { field: "id", headerName: "Id", width: 100 },
-    { field: "image", headerName: "Image", width: 200 },
+    {
+      field: "image",
+      headerName: "Image",
+      width: 200,
+      renderCell: (params) => {
+        return (
+          <div>
+            <img src={params.row.image} alt={Image} />
+          </div>
+        );
+      },
+    },
     { field: "food_name", headerName: "Food Name", width: 200 },
     { field: "food_price", headerName: "Price", width: 130 },
     { field: "food_detail", headerName: "Details", width: 208 },
@@ -70,7 +68,6 @@ const Pizza = () => {
     ["food"],
     async () => {
       const res = await myAxios("/food/");
-      console.log(res);
       return res.data;
     }
   );
