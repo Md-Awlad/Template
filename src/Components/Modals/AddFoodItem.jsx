@@ -130,43 +130,58 @@ const style = {
 //   { title: "Monty Python and the Holy Grail", year: 1975 },
 // ];
 
+// const [price2, setPrice2] = useState([top100Films[13]]);
+// console.log(price);
+// console.log(categories);
+// let arr = [];
+// arr.push(price);
+// console.log(arr);
+// const handleKeyDown = (event) => {
+//   switch (event.key) {
+//     case ",":
+//     case " ": {
+//       event.preventDefault();
+//       event.stopPropagation();
+//       if (event.target.value.length > 0) {
+//         setPrice([...price, event.target.value]);
+//       }
+//       break;
+//     }
+//     default:
+//   }
+// };
+
 const AddFoodItem = ({ handleModalCloseTwo, categories }) => {
-  const topFilms = [
-    { size: "6''" },
-    { size: "9''" },
-    { size: "12''" },
-    { size: "large" },
-    { size: "small" },
-    { size: "1:3" },
-    { size: "1:4" },
+  const topSize = [
+    { size: "6''", price: "100" },
+    { size: "9''", price: "200" },
+    { size: "12''", price: "300" },
+    { size: "large", price: "400" },
+    { size: "small", price: "500" },
+    { size: "1:3", price: "600" },
+    { size: "1:4", price: "700" },
+    { size: "regular", price: "800" },
+  ];
+  const topPrice = [
+    { price: "500" },
+    { price: "600" },
+    { price: "700" },
+    { price: "1000" },
+    { price: "1200" },
   ];
 
   const { currentColor, currentMode } = useStateContext();
-  const [selectValue, setSelectValue] = useState([]);
-  const [category, setCategory] = useState(null);
+  const [selectValue, setSelectValue] = useState();
   const [price, setPrice] = useState();
-  
-
-  // const [price2, setPrice2] = useState([top100Films[13]]);
-  // console.log(price);
-  // console.log(categories);
-  // let arr = [];
-  // arr.push(price);
-  // console.log(arr);
-  // const handleKeyDown = (event) => {
-  //   switch (event.key) {
-  //     case ",":
-  //     case " ": {
-  //       event.preventDefault();
-  //       event.stopPropagation();
-  //       if (event.target.value.length > 0) {
-  //         setPrice([...price, event.target.value]);
-  //       }
-  //       break;
-  //     }
-  //     default:
-  //   }
-  // };
+  const [foodName, setFoodName] = useState();
+  const [file, setFile] = useState();
+  const [detail, setDetail] = useState();
+  const [review, setReview] = useState();
+  const [recommend, setRecommend] = useState();
+  const [ingredient, setIngredient] = useState();
+  const [taste, setTaste] = useState();
+  const [category, setCategory] = useState();
+  const [package2, setPackage2] = useState();
 
   const {
     register,
@@ -180,21 +195,36 @@ const AddFoodItem = ({ handleModalCloseTwo, categories }) => {
     // console.log(price);
 
     const payloadForm = new FormData();
-    payloadForm.append("food_name", data?.food_name);
+    payloadForm.append("food_name", data?.foodName);
+    // payloadForm.append("price_title", selectValue);
     payloadForm.append("image", data?.image[0]);
-    payloadForm.append("food_price", [data?.food_price]);
-    payloadForm.append("food_detail", data?.food_detail);
+    payloadForm.append("price", price);
+    payloadForm.append("food_detail", data?.detail);
     payloadForm.append("review", data?.review);
-    payloadForm.append("is_recommended", data?.is_recommended);
-    payloadForm.append("base_ingredient", data?.base_ingredient);
+    payloadForm.append("is_recommended", data?.recommend);
+    payloadForm.append("base_ingredient", data?.ingredient);
     payloadForm.append("taste", data?.taste);
-    payloadForm.append("packaging", data?.packaging);
-    payloadForm.append("category", category);
-
+    payloadForm.append("packaging", data?.package);
+    payloadForm.append("category", Number(category));
 
     for (let value of payloadForm) {
       console.log(value);
     }
+
+    // const payload = {
+    //   food_name: data.foodName,
+    //   price_title: selectValue,
+    //   food_price: price,
+    //   food_detail: data.detail,
+    //   review: data.review,
+    //   packaging: data.package2,
+    //   is_recommended: data.recommend,
+    //   base_ingredient: data.ingredient,
+    //   taste: data.taste,
+    //   category: Number(data.category),
+    // };
+
+    // console.log(payload);
 
     const response = await toast.promise(
       myAxios.post("/food/", payloadForm, {
@@ -211,10 +241,7 @@ const AddFoodItem = ({ handleModalCloseTwo, categories }) => {
     if (response.status === 500) {
       handleModalCloseTwo();
     }
-
-    console.log(payloadForm);
   };
-  // const ct = categ?.map((c) => c?.map((cc) => cc.id));
 
   return (
     <Box sx={{ ...style, width: 600, height: 500, overflowY: "scroll" }}>
@@ -234,12 +261,16 @@ const AddFoodItem = ({ handleModalCloseTwo, categories }) => {
             md={6}
           >
             <TextField
-              id="food_name"
+              id="foodName"
               label="Food Name"
               type="text"
-              error={Boolean(errors.food_name)}
-              helperText={errors.food_name && "This food name is required *"}
-              {...register("food_name", { required: true })}
+              // value={foodName}
+              // onChange={(newValue) => {
+              //   setFoodName(newValue);
+              // }}
+              error={Boolean(errors.foodName)}
+              helperText={errors.foodName && "This food name is required *"}
+              {...register("foodName", { required: true })}
               fullWidth
             />
           </Grid>
@@ -247,13 +278,19 @@ const AddFoodItem = ({ handleModalCloseTwo, categories }) => {
           <Grid item xs={12}>
             <Autocomplete
               multiple
-              options={topFilms.map((option) => option.size)}
-              defaultValue={[topFilms[2].size]}
+              options={topSize.map((option) => option.size)}
+              // defaultValue={[topSize[2].size]}
               filterSelectedOptions
               value={selectValue}
               onChange={(event, value) => setSelectValue(value)}
               renderInput={(params) => (
-                <TextField {...params} label="Price Title" />
+                <TextField
+                  {...params}
+                  id="size"
+                  label="Price Title"
+                  // value={size}
+                  // onChange={(value) => console.log(value)}
+                />
               )}
             />
           </Grid>
@@ -269,17 +306,34 @@ const AddFoodItem = ({ handleModalCloseTwo, categories }) => {
             xs={12}
             md={6}
           >
-            <TextField
-              id="food_price"
+            <Autocomplete
+              multiple
+              options={topPrice.map((option) => option.price)}
+              // defaultValue={[topSize[2].size]}
+              filterSelectedOptions
+              value={price}
+              onChange={(event, value) => setPrice(value)}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  id="size"
+                  label="Price"
+                  // value={size}
+                  // onChange={(value) => console.log(value)}
+                />
+              )}
+            />
+            {/* <TextField
+              id="price"
               label="Price"
               type="text"
               value={price}
               onChange={(value) => setPrice(value)}
-              error={Boolean(errors.food_price)}
-              helperText={errors.food_price && "This food price is required *"}
-              {...register("food_price", { required: true })}
+              error={Boolean(errors.price)}
+              helperText={errors.price && "This food price is required *"}
+              {...register("price", { required: true })}
               fullWidth
-            />
+            /> */}
             {/* <Autocomplete
               multiple
               freeSolo
@@ -349,14 +403,14 @@ const AddFoodItem = ({ handleModalCloseTwo, categories }) => {
             md={6}
           >
             <TextField
-              id="base_ingredient"
+              id="ingredient"
               label="Base Ingredient"
               type="text"
-              error={Boolean(errors.base_ingredient)}
-              helperText={
-                errors.base_ingredient && "This ingredient is required *"
-              }
-              {...register("base_ingredient", { required: true })}
+              // value={ingredient}
+              // onChange={(value) => setIngredient(value)}
+              error={Boolean(errors.ingredient)}
+              helperText={errors.ingredient && "This ingredient is required *"}
+              {...register("ingredient", { required: true })}
               fullWidth
             />
           </Grid>
@@ -373,14 +427,14 @@ const AddFoodItem = ({ handleModalCloseTwo, categories }) => {
             md={6}
           >
             <TextField
-              id="food_detail"
+              id="detail"
               label="Details"
               type="text"
-              error={Boolean(errors.food_detail)}
-              helperText={
-                errors.food_detail && "This food details is required *"
-              }
-              {...register("food_detail", { required: true })}
+              // value={detail}
+              // onChange={(value) => setDetail(value)}
+              error={Boolean(errors.detail)}
+              helperText={errors.detail && "This food details is required *"}
+              {...register("detail", { required: true })}
               fullWidth
             />
           </Grid>
@@ -400,6 +454,8 @@ const AddFoodItem = ({ handleModalCloseTwo, categories }) => {
               id="taste"
               label="Taste"
               type="text"
+              // value={taste}
+              // onChange={(value) => setTaste(value)}
               error={Boolean(errors.taste)}
               helperText={errors.taste && "This taste is required *"}
               {...register("taste", { required: true })}
@@ -422,6 +478,8 @@ const AddFoodItem = ({ handleModalCloseTwo, categories }) => {
               id="review"
               label="Review"
               type="text"
+              value={review}
+              onChange={(value) => setReview(value)}
               error={Boolean(errors.review)}
               helperText={errors.review && "This review is required *"}
               {...register("review", { required: true })}
@@ -441,12 +499,14 @@ const AddFoodItem = ({ handleModalCloseTwo, categories }) => {
             md={6}
           >
             <TextField
-              id="packaging"
+              id="package"
               label="Packaging"
               type="number"
-              error={Boolean(errors.packaging)}
-              helperText={errors.packaging && "This package is required *"}
-              {...register("packaging", { required: true })}
+              // value={package2}
+              // onChange={(value) => setPackage2(value)}
+              error={Boolean(errors.package)}
+              helperText={errors.package && "This package is required *"}
+              {...register("package", { required: true })}
               fullWidth
             />
           </Grid>
@@ -463,14 +523,14 @@ const AddFoodItem = ({ handleModalCloseTwo, categories }) => {
             md={6}
           >
             <TextField
-              id="is_recommended"
+              id="recommend"
               label="Recommended"
               type="text"
-              error={Boolean(errors.is_recommended)}
-              helperText={
-                errors.is_recommended && "This recommend is required *"
-              }
-              {...register("is_recommended", { required: true })}
+              // value={recommend}
+              // onChange={(value) => setRecommend(value)}
+              error={Boolean(errors.recommend)}
+              helperText={errors.recommend && "This recommend is required *"}
+              {...register("recommend", { required: true })}
               fullWidth
             />
           </Grid>
@@ -488,12 +548,18 @@ const AddFoodItem = ({ handleModalCloseTwo, categories }) => {
           >
             <Autocomplete
               options={categories?.map((category) => category?.id)}
-              // defaultValue={[topFilms[2].size]}
+              // defaultValue={[topSize[2].size]}
               filterSelectedOptions
               value={category}
-              onChange={(e, value) => setCategory(value)}
+              onChange={(event, value) => setCategory(value)}
               renderInput={(params) => (
-                <TextField {...params} label="Select Size" />
+                <TextField
+                  {...params}
+                  id="size"
+                  label="Category"
+                  // value={size}
+                  // onChange={(value) => console.log(value)}
+                />
               )}
             />
           </Grid>

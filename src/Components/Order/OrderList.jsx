@@ -1,10 +1,12 @@
-import { Button, Menu, MenuItem, } from "@mui/material";
+import { Button, Menu, MenuItem } from "@mui/material";
 import React, { useState } from "react";
 import { BiEdit } from "react-icons/bi";
 import { BsThreeDots } from "react-icons/bs";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { useStateContext } from "../../Contexts/ContextProvider";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
+import { useQuery } from "@tanstack/react-query";
+import myAxios from "../../utils/myAxios";
 
 const OrderList = () => {
   const { currentColor, currentMode } = useStateContext();
@@ -22,10 +24,10 @@ const OrderList = () => {
 
   const columns = [
     { field: "id", headerName: "ID", width: 130 },
-    { field: "name", headerName: "Customer Name", width: 230 },
-    { field: "mobile", headerName: "Mobile", width: 200 },
+    { field: "order_type", headerName: "Customer Name", width: 230 },
+    { field: "phone", headerName: "Mobile", width: 200 },
     { field: "order", headerName: "Order Item", width: 250 },
-    { field: "amount", headerName: "Amount", width: 200 },
+    { field: "price", headerName: "Amount", width: 200 },
     {
       field: "action",
       headerName: "Action",
@@ -50,6 +52,14 @@ const OrderList = () => {
       },
     },
   ];
+
+  const { data: orders = [], refetch: orderRefetch } = useQuery(
+    ["food"],
+    async () => {
+      const res = await myAxios("/food/");
+      return res.data;
+    }
+  );
 
   return (
     <div style={{ height: 510, width: "100%" }}>
@@ -76,7 +86,7 @@ const OrderList = () => {
             color: currentMode === "Dark" ? "#fff" : "#000",
           },
         }}
-        rows={rows}
+        rows={orders}
         columns={columns}
         rowsPerPageOptions={[5]}
         disableSelectionOnClick
