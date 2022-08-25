@@ -11,7 +11,6 @@ import myAxios from "../../utils/myAxios";
 const OrderList = () => {
   const { currentColor, currentMode } = useStateContext();
   const [anchorEl, setAnchorEl] = useState(false);
-  const [rows, setRows] = useState([]);
 
   const open = Boolean(anchorEl);
 

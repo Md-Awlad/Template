@@ -6,7 +6,7 @@ import { useStateContext } from "../../../Contexts/ContextProvider";
 import myAxios from "../../../utils/myAxios";
 import { MdModeEdit } from "react-icons/md";
 
-const Pizza = () => {
+const Pizza = ({foods}) => {
   const { currentColor, currentMode } = useStateContext();
 
   const columns = [
@@ -64,13 +64,7 @@ const Pizza = () => {
     },
   ];
 
-  const { data: foods = [], refetch: foodRefetch } = useQuery(
-    ["food"],
-    async () => {
-      const res = await myAxios("/food/");
-      return res.data;
-    }
-  );
+  
 
   return (
     <div style={{ height: 510, width: "100%" }}>

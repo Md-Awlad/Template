@@ -32,6 +32,14 @@ const FoodItem = () => {
     }
   );
 
+  const { data: foods = [], refetch: foodRefetch } = useQuery(
+    ["food"],
+    async () => {
+      const res = await myAxios("/food/");
+      return res.data;
+    }
+  );
+
   return (
     <Container>
       <Modal open={openModal} onClose={handleModalClose}>
@@ -42,6 +50,7 @@ const FoodItem = () => {
       </Modal>
       <Modal open={openModalTwo} onClose={handleModalCloseTwo}>
         <AddFoodItem
+          foodRefetch={foodRefetch}
           handleModalCloseTwo={handleModalCloseTwo}
           categories={categories}
         />
@@ -54,7 +63,7 @@ const FoodItem = () => {
         modalOpen={handleModalOpen}
         modalOpenTwo={handleModalOpenTwo}
       />
-      <FoodCategory categories={categories} />
+      <FoodCategory foods={foods} categories={categories} />
     </Container>
   );
 };

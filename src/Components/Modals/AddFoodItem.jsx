@@ -23,7 +23,7 @@ const style = {
   pb: 3,
 };
 
-const AddFoodItem = ({ handleModalCloseTwo, categories }) => {
+const AddFoodItem = ({ handleModalCloseTwo, categories, foodRefetch }) => {
   const allSize = [
     { size: "6''" },
     { size: "7''" },
@@ -107,9 +107,9 @@ const AddFoodItem = ({ handleModalCloseTwo, categories }) => {
         error: "Error Adding Foods!",
       }
     );
-    if (response.status === 500) {
+    if (response.status === 201) {
       handleModalCloseTwo();
-      
+      foodRefetch();
     }
   };
 
