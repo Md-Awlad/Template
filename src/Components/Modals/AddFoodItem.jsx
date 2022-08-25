@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { useStateContext } from "../../Contexts/ContextProvider";
 import { FiUpload } from "react-icons/fi";
 import { toast } from "react-toastify";
-import { Autocomplete, Grid, InputAdornment } from "@mui/material";
+import { Autocomplete, Button, Grid, InputAdornment } from "@mui/material";
 import myAxios from "../../utils/myAxios";
 
 const style = {
@@ -171,17 +171,30 @@ const AddFoodItem = ({ handleModalCloseTwo, categories }) => {
   ];
 
   const { currentColor, currentMode } = useStateContext();
-  const [selectValue, setSelectValue] = useState();
-  const [price, setPrice] = useState();
-  const [foodName, setFoodName] = useState();
-  const [file, setFile] = useState();
-  const [detail, setDetail] = useState();
+  const [variants, setVariants] = useState(0);
+  const [category, setCategory] = useState(null);
   const [review, setReview] = useState();
-  const [recommend, setRecommend] = useState();
-  const [ingredient, setIngredient] = useState();
-  const [taste, setTaste] = useState();
-  const [category, setCategory] = useState();
-  const [package2, setPackage2] = useState();
+
+  // const [price2, setPrice2] = useState([top100Films[13]]);
+  // console.log(price);
+  // console.log(categories);
+  // let arr = [];
+  // arr.push(price);
+  // console.log(arr);
+  // const handleKeyDown = (event) => {
+  //   switch (event.key) {
+  //     case ",":
+  //     case " ": {
+  //       event.preventDefault();
+  //       event.stopPropagation();
+  //       if (event.target.value.length > 0) {
+  //         setPrice([...price, event.target.value]);
+  //       }
+  //       break;
+  //     }
+  //     default:
+  //   }
+  // };
 
   const {
     register,
@@ -190,16 +203,19 @@ const AddFoodItem = ({ handleModalCloseTwo, categories }) => {
   } = useForm();
 
   const onSubmit = async (data) => {
-    // const price = [data?.food_price];
-    // price.push(price);
-    // console.log(price);
+    const price = {};
+
+    data.item?.forEach((item) => {
+      price[item.title] = item.price;
+    });
+
+    console.log(price);
 
     const payloadForm = new FormData();
     payloadForm.append("food_name", data?.foodName);
     // payloadForm.append("price_title", selectValue);
     payloadForm.append("image", data?.image[0]);
     payloadForm.append("price", price);
-    payloadForm.append("food_detail", data?.detail);
     payloadForm.append("review", data?.review);
     payloadForm.append("is_recommended", data?.recommend);
     payloadForm.append("base_ingredient", data?.ingredient);
@@ -276,7 +292,7 @@ const AddFoodItem = ({ handleModalCloseTwo, categories }) => {
           </Grid>
           {/* --size-- */}
           <Grid item xs={12}>
-            <Autocomplete
+            {/* <Autocomplete
               multiple
               options={topSize.map((option) => option.size)}
               // defaultValue={[topSize[2].size]}
@@ -292,10 +308,29 @@ const AddFoodItem = ({ handleModalCloseTwo, categories }) => {
                   // onChange={(value) => console.log(value)}
                 />
               )}
-            />
+            /> */}
+            <Button
+              variant="contained"
+              onClick={() => setVariants((variants) => (variants += 1))}
+            >
+              +
+            </Button>
+            {new Array(variants).fill(null).map((item, index) => {
+              return (
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                  }}
+                >
+                  <TextField {...register(`item.${index + 1}.title`)} />
+                  <TextField {...register(`item.${index + 1}.price`)} />
+                </Box>
+              );
+            })}
           </Grid>
           {/* --price-- */}
-          <Grid
+          {/* <Grid
             sx={{
               "& .MuiInputBase-root": {
                 color: `${currentMode === "Light" ? "#000" : "#fff"}`,
@@ -333,8 +368,13 @@ const AddFoodItem = ({ handleModalCloseTwo, categories }) => {
               helperText={errors.price && "This food price is required *"}
               {...register("price", { required: true })}
               fullWidth
+<<<<<<< HEAD
             /> */}
-            {/* <Autocomplete
+          {/* <Autocomplete
+=======
+            />
+            <Autocomplete
+>>>>>>> origin/main
               multiple
               freeSolo
               id="tags-outlined"
@@ -356,8 +396,8 @@ const AddFoodItem = ({ handleModalCloseTwo, categories }) => {
                   />
                 );
               }}
-            /> */}
-          </Grid>
+            />
+          </Grid> */}
 
           {/* --img-- */}
           <Grid item xs={12} md={6}>
