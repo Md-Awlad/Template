@@ -66,7 +66,7 @@ const OrderList = () => {
       <DataGrid
         sx={{
           "& .MuiDataGrid-columnHeader": { backgroundColor: `${currentColor}` },
-          color: "#fff",
+          color: currentMode === "Dark" ? "#fff" : "#000",
           "& .MuiIconButton-root": {
             color: "unset !important",
           },
