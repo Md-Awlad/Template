@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { useStateContext } from "../../Contexts/ContextProvider";
 import { FiUpload } from "react-icons/fi";
 import { toast } from "react-toastify";
-import { Autocomplete, Grid, InputAdornment } from "@mui/material";
+import { Autocomplete, Button, Grid, InputAdornment } from "@mui/material";
 import myAxios from "../../utils/myAxios";
 
 const style = {
@@ -143,9 +143,9 @@ const AddFoodItem = ({ handleModalCloseTwo, categories }) => {
 
   const { currentColor, currentMode } = useStateContext();
   const [selectValue, setSelectValue] = useState([]);
+  const [variants, setVariants] = useState(0);
   const [category, setCategory] = useState(null);
   const [price, setPrice] = useState();
-  
 
   // const [price2, setPrice2] = useState([top100Films[13]]);
   // console.log(price);
@@ -175,22 +175,25 @@ const AddFoodItem = ({ handleModalCloseTwo, categories }) => {
   } = useForm();
 
   const onSubmit = async (data) => {
-    // const price = [data?.food_price];
-    // price.push(price);
-    // console.log(price);
+
+    const price = {};
+
+    data.item?.forEach(item=>{
+      price[item.title] = item.price;
+    })
+
+    console.log(price);
 
     const payloadForm = new FormData();
     payloadForm.append("food_name", data?.food_name);
     payloadForm.append("image", data?.image[0]);
-    payloadForm.append("food_price", [data?.food_price]);
-    payloadForm.append("food_detail", data?.food_detail);
+    payloadForm.append("price", price);
     payloadForm.append("review", data?.review);
     payloadForm.append("is_recommended", data?.is_recommended);
     payloadForm.append("base_ingredient", data?.base_ingredient);
     payloadForm.append("taste", data?.taste);
     payloadForm.append("packaging", data?.packaging);
     payloadForm.append("category", category);
-
 
     for (let value of payloadForm) {
       console.log(value);
@@ -212,7 +215,7 @@ const AddFoodItem = ({ handleModalCloseTwo, categories }) => {
       handleModalCloseTwo();
     }
 
-    console.log(payloadForm);
+    // console.log(payloadForm);
   };
   // const ct = categ?.map((c) => c?.map((cc) => cc.id));
 
@@ -245,7 +248,7 @@ const AddFoodItem = ({ handleModalCloseTwo, categories }) => {
           </Grid>
           {/* --size-- */}
           <Grid item xs={12}>
-            <Autocomplete
+            {/* <Autocomplete
               multiple
               options={topFilms.map((option) => option.size)}
               defaultValue={[topFilms[2].size]}
@@ -255,10 +258,29 @@ const AddFoodItem = ({ handleModalCloseTwo, categories }) => {
               renderInput={(params) => (
                 <TextField {...params} label="Price Title" />
               )}
-            />
+            /> */}
+                  <Button
+                    variant="contained"
+                    onClick={() => setVariants((variants) => (variants += 1))}
+                  >
+                    +
+                  </Button>
+            {new Array(variants).fill(null).map((item, index) => {
+              return (
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                  }}
+                >
+                  <TextField {...register(`item.${index+1}.title`)} />
+                  <TextField {...register(`item.${index+1}.price`)} />
+                </Box>
+              );
+            })}
           </Grid>
           {/* --price-- */}
-          <Grid
+          {/* <Grid
             sx={{
               "& .MuiInputBase-root": {
                 color: `${currentMode === "Light" ? "#000" : "#fff"}`,
@@ -280,7 +302,7 @@ const AddFoodItem = ({ handleModalCloseTwo, categories }) => {
               {...register("food_price", { required: true })}
               fullWidth
             />
-            {/* <Autocomplete
+            <Autocomplete
               multiple
               freeSolo
               id="tags-outlined"
@@ -302,8 +324,8 @@ const AddFoodItem = ({ handleModalCloseTwo, categories }) => {
                   />
                 );
               }}
-            /> */}
-          </Grid>
+            />
+          </Grid> */}
 
           {/* --img-- */}
           <Grid item xs={12} md={6}>
