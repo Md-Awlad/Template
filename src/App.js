@@ -32,7 +32,7 @@ const App = () => {
         },
         {
           path: "fooditem",
-          element: <FoodItem />,
+          element: <FoodItem  />,
         },
         {
           path: "order",

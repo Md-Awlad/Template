@@ -9,7 +9,7 @@ import {
 import Pizza from "./FoodItem/Pizza";
 import { useStateContext } from "../../Contexts/ContextProvider";
 
-const FoodCategory = ({ categories, foodRefetch }) => {
+const FoodCategory = ({ categories }) => {
   const { currentMode } = useStateContext();
   console.log(categories);
   return (

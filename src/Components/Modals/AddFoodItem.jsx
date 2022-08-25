@@ -24,11 +24,28 @@ const style = {
 };
 
 const AddFoodItem = ({ handleModalCloseTwo, categories }) => {
+  const allSize = [
+    { size: "6''" },
+    { size: "7''" },
+    { size: "9''" },
+    { size: "1:3" },
+    { size: "1:4" },
+    { size: "Regular" },
+  ];
+  const allPrice = [
+    { price: "600" },
+    { price: "700" },
+    { price: "900" },
+    { price: "1100" },
+  ];
+
   const { currentColor, currentMode } = useStateContext();
   const [variants, setVariants] = useState(1);
   const [category, setCategory] = useState("");
   const [categoryId, setCategoryId] = useState(null);
   const [review, setReview] = useState();
+  // const [size, setSize] = useState();
+  // const [price, setPrice] = useState();
 
   console.log(category);
 
@@ -49,25 +66,37 @@ const AddFoodItem = ({ handleModalCloseTwo, categories }) => {
       price[item.title] = item.price;
     });
 
-    console.log(price);
+    // console.log(price);
 
-    const payloadForm = new FormData();
-    payloadForm.append("food_name", data?.foodName);
-    payloadForm.append("image", data?.image[0]);
-    payloadForm.append("price", price);
-    payloadForm.append("review", data?.review);
-    payloadForm.append("is_recommended", data?.recommend);
-    payloadForm.append("base_ingredient", data?.ingredient);
-    payloadForm.append("taste", data?.taste);
-    payloadForm.append("packaging", data?.package);
-    payloadForm.append("category", Number(categoryId));
+    // const payloadForm = new FormData();
+    // payloadForm.append("food_name", data?.foodName);
+    // payloadForm.append("image", data?.image[0]);
+    // payloadForm.append("price", price);
+    // payloadForm.append("review", data?.review);
+    // payloadForm.append("is_recommended", data?.recommend);
+    // payloadForm.append("base_ingredient", data?.ingredient);
+    // payloadForm.append("taste", data?.taste);
+    // payloadForm.append("packaging", data?.package);
+    // payloadForm.append("category", Number(categoryId));
 
-    for (let value of payloadForm) {
-      console.log(value);
-    }
+    // for (let value of payloadForm) {
+    //   console.log(value);
+    // }
+    const payloadForm = {
+      food_name: data?.foodName,
+      food_detail: data?.detail,
+      price: JSON.stringify(price),
+      image: data?.image[0],
+      base_ingredient: data?.ingredient,
+      taste: data?.taste,
+      packaging: data?.package,
+      category: Number(categoryId),
+    };
+
+    console.log(payloadForm);
 
     const response = await toast.promise(
-      myAxios.post("/food/", payloadForm, {
+      myAxios.post(`/food/`, payloadForm, {
         headers: {
           "content-type": "multipart/form-data",
         },
@@ -80,6 +109,7 @@ const AddFoodItem = ({ handleModalCloseTwo, categories }) => {
     );
     if (response.status === 500) {
       handleModalCloseTwo();
+      
     }
   };
 
@@ -114,7 +144,7 @@ const AddFoodItem = ({ handleModalCloseTwo, categories }) => {
               fullWidth
             />
           </Grid>
-          {/* --size&price-- */}
+          {/* --size&price--*/}
           <Grid item xs={12}>
             <Button
               sx={{ width: "100%", backgroundColor: `${currentColor}` }}
@@ -269,7 +299,7 @@ const AddFoodItem = ({ handleModalCloseTwo, categories }) => {
             <TextField
               id="review"
               label="Review"
-              type="text"
+              type="number"
               value={review}
               onChange={(value) => setReview(value)}
               error={Boolean(errors.review)}
@@ -302,7 +332,7 @@ const AddFoodItem = ({ handleModalCloseTwo, categories }) => {
               fullWidth
             />
           </Grid>
-          {/* --recommend-- */}
+          {/* --recommend--
           <Grid
             sx={{
               "& .MuiInputBase-root": {
@@ -325,7 +355,7 @@ const AddFoodItem = ({ handleModalCloseTwo, categories }) => {
               {...register("recommend", { required: true })}
               fullWidth
             />
-          </Grid>
+          </Grid> */}
           {/* --category-- */}
           <Grid
             sx={{
