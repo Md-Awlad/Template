@@ -1,12 +1,16 @@
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
-import React from "react";
+import React, { useState } from "react";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { useQuery } from "@tanstack/react-query";
 import { useStateContext } from "../../../Contexts/ContextProvider";
 import { MdModeEdit } from "react-icons/md";
+import DeleteFood from "../../Modals/DeleteFood";
+import EditFood from "../../Modals/EditFood";
 
-const Food = ({ category }) => {
+const Food = ({ category, categories }) => {
   const { currentColor, currentMode } = useStateContext();
+  const [editId, setEditId] = useState(null);
+  const [deleteId, setDeleteId] = useState(null);
 
   const { data: { foodItems_category = [] } = {} } = useQuery([
     `category/${category}/`,
@@ -59,9 +63,12 @@ const Food = ({ category }) => {
         // };
         return (
           <div className="flex gap-5 items-center">
-            <MdModeEdit className="text-dark-color dark:text-neutral text-xl cursor-pointer" />
+            <MdModeEdit
+              onClick={() => setEditId(row?.id)}
+              className="text-dark-color dark:text-neutral text-xl cursor-pointer"
+            />
             <RiDeleteBin6Line
-              onClick={() => console.log(row.id)}
+              onClick={() => setDeleteId(row?.id)}
               className="text-dark-color dark:text-neutral text-xl cursor-pointer"
             />
           </div>
@@ -71,54 +78,66 @@ const Food = ({ category }) => {
   ];
 
   return (
-    <div style={{ height: 510, width: "100%" }}>
-      <DataGrid
-        sx={{
-          "& .MuiDataGrid-columnHeader": { backgroundColor: "#FFC446" },
-          color: currentMode === "Dark" ? "#fff" : "#000",
-          "& .MuiIconButton-root": {
-            color: "unset !important",
-          },
-          "& .MuiTablePagination-toolbar": {
+    <>
+      <div style={{ height: 510, width: "100%" }}>
+        <DataGrid
+          sx={{
+            "& .MuiDataGrid-columnHeader": { backgroundColor: "#FFC446" },
             color: currentMode === "Dark" ? "#fff" : "#000",
-          },
-          "& .MuiDataGrid-row:hover": {
-            bgcolor: currentMode === "Dark" ? `${currentColor}10` : "",
-          },
-          "& .MuiDataGrid-selectedRowCount": {
-            visibility: "hidden",
-          },
-          "& .MuiDataGrid-cell:focus-within": {
-            outline: "none",
-          },
-          "& .MuiInput-root": {
-            color: currentMode === "Dark" ? "#fff" : "#000",
-          },
-        }}
-        rows={foodItems_category}
-        columns={columns}
-        rowsPerPageOptions={[5]}
-        disableSelectionOnClick
-        disableColumnFilter
-        disableColumnSelector
-        disableDensitySelector
-        components={{ Toolbar: GridToolbar }}
-        componentsProps={{
-          toolbar: {
-            showQuickFilter: true,
-            quickFilterProps: { debounceMs: 500 },
-            printOptions: {
-              disableToolbarButton: true,
+            "& .MuiIconButton-root": {
+              color: "unset !important",
             },
-            csvOptions: {
-              disableToolbarButton: true,
+            "& .MuiTablePagination-toolbar": {
+              color: currentMode === "Dark" ? "#fff" : "#000",
             },
-          },
-        }}
-        // checkboxSelection
-        // disableSelectionOnClick
-      />
-    </div>
+            "& .MuiDataGrid-row:hover": {
+              bgcolor: currentMode === "Dark" ? `${currentColor}10` : "",
+            },
+            "& .MuiDataGrid-selectedRowCount": {
+              visibility: "hidden",
+            },
+            "& .MuiDataGrid-cell:focus-within": {
+              outline: "none",
+            },
+            "& .MuiInput-root": {
+              color: currentMode === "Dark" ? "#fff" : "#000",
+            },
+          }}
+          rows={foodItems_category}
+          columns={columns}
+          rowsPerPageOptions={[5]}
+          disableSelectionOnClick
+          disableColumnFilter
+          disableColumnSelector
+          disableDensitySelector
+          components={{ Toolbar: GridToolbar }}
+          componentsProps={{
+            toolbar: {
+              showQuickFilter: true,
+              quickFilterProps: { debounceMs: 500 },
+              printOptions: {
+                disableToolbarButton: true,
+              },
+              csvOptions: {
+                disableToolbarButton: true,
+              },
+            },
+          }}
+          // checkboxSelection
+          // disableSelectionOnClick
+        />
+      </div>
+      {Boolean(editId) && (
+        <EditFood
+          editId={editId}
+          handleModalClose={() => setEditId(null)}
+          categories={categories}
+        />
+      )}
+      {Boolean(deleteId) && (
+        <DeleteFood deleteId={deleteId} handleClose={() => setDeleteId(null)} />
+      )}
+    </>
   );
 };
 

@@ -32,13 +32,7 @@ const style = {
   pb: 3,
 };
 
-const EditFood = ({
-  editOpenModal,
-  setEditOpenModal,
-  handleModalClose,
-  categories,
-  foodRefetch,
-}) => {
+const EditFood = ({ editId, handleModalClose, categories }) => {
   const { currentColor, currentMode } = useStateContext();
   const [variants, setVariants] = useState(1);
   const [category, setCategory] = useState(0);
@@ -73,7 +67,7 @@ const EditFood = ({
     console.log(payloadForm);
 
     const response = await toast.promise(
-      myAxios.post(`/food/`, payloadForm, {
+      myAxios.post(`/food/${editId}/`, payloadForm, {
         headers: {
           "content-type": "multipart/form-data",
         },
@@ -86,14 +80,14 @@ const EditFood = ({
     );
     if (response.status === 201) {
       handleModalClose();
-      foodRefetch();
+      // foodRefetch();
     }
   };
 
   useEffect(() => {}, []);
 
   return (
-    <Modal open={Boolean(editOpenModal)} onClose={handleModalClose}>
+    <Modal open={Boolean(editId)} onClose={handleModalClose}>
       <Box sx={{ ...style, width: 600, height: 500, overflowY: "scroll" }}>
         <h2 className="text-3xl font-bold pb-3 text-center">Add Food Item</h2>
         <form onSubmit={handleSubmit(onSubmit)}>
