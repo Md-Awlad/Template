@@ -39,7 +39,7 @@ const FoodItem = () => {
       return res.data;
     }
   );
-
+  console.log(foods);
   return (
     <Container>
       <Modal open={openModal} onClose={handleModalClose}>

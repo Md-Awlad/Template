@@ -59,6 +59,7 @@ const OrderList = () => {
       return res.data;
     }
   );
+  console.log()
 
   return (
     <div style={{ height: 510, width: "100%" }}>

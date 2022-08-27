@@ -27,12 +27,12 @@ const App = () => {
       element: <NavLayout />,
       children: [
         {
-          path: "/dashboard",
+          path: "dashboard",
           element: <DashBoard />,
         },
         {
           path: "fooditem",
-          element: <FoodItem  />,
+          element: <FoodItem />,
         },
         {
           path: "order",

@@ -6,12 +6,12 @@ import {
   AccordionSummary,
   Typography,
 } from "@mui/material";
-import Pizza from "./FoodItem/Pizza";
+import Food from "./FoodItem/Food";
 import { useStateContext } from "../../Contexts/ContextProvider";
 
 const FoodCategory = ({ categories, foods }) => {
   const { currentMode } = useStateContext();
-  console.log(categories);
+  console.log(categories, foods);
   return (
     <div>
       {categories.map((item, index) => (
@@ -33,7 +33,7 @@ const FoodCategory = ({ categories, foods }) => {
           </AccordionSummary>
           <AccordionDetails>
             <Typography>
-              <Pizza foods={foods} />
+              <Food category={item?.id} />
             </Typography>
           </AccordionDetails>
         </Accordion>

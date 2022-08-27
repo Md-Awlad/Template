@@ -5,7 +5,15 @@ import { useForm } from "react-hook-form";
 import { useStateContext } from "../../Contexts/ContextProvider";
 import { FiUpload } from "react-icons/fi";
 import { toast } from "react-toastify";
-import { Autocomplete, Button, Grid, InputAdornment } from "@mui/material";
+import {
+  Button,
+  FormControl,
+  Grid,
+  InputAdornment,
+  InputLabel,
+  MenuItem,
+  Select,
+} from "@mui/material";
 import myAxios from "../../utils/myAxios";
 
 const style = {
@@ -24,34 +32,12 @@ const style = {
 };
 
 const AddFoodItem = ({ handleModalCloseTwo, categories, foodRefetch }) => {
-  const allSize = [
-    { size: "6''" },
-    { size: "7''" },
-    { size: "9''" },
-    { size: "1:3" },
-    { size: "1:4" },
-    { size: "Regular" },
-  ];
-  const allPrice = [
-    { price: "600" },
-    { price: "700" },
-    { price: "900" },
-    { price: "1100" },
-  ];
-
   const { currentColor, currentMode } = useStateContext();
   const [variants, setVariants] = useState(1);
-  const [category, setCategory] = useState("");
-  const [categoryId, setCategoryId] = useState(null);
+  const [category, setCategory] = useState(0);
   const [review, setReview] = useState();
-  // const [size, setSize] = useState();
-  // const [price, setPrice] = useState();
 
   console.log(category);
-
-  const id = categories?.map((category) => category.id);
-
-  console.log(id);
 
   const {
     register,
@@ -66,22 +52,6 @@ const AddFoodItem = ({ handleModalCloseTwo, categories, foodRefetch }) => {
       price[item.title] = item.price;
     });
 
-    // console.log(price);
-
-    // const payloadForm = new FormData();
-    // payloadForm.append("food_name", data?.foodName);
-    // payloadForm.append("image", data?.image[0]);
-    // payloadForm.append("price", price);
-    // payloadForm.append("review", data?.review);
-    // payloadForm.append("is_recommended", data?.recommend);
-    // payloadForm.append("base_ingredient", data?.ingredient);
-    // payloadForm.append("taste", data?.taste);
-    // payloadForm.append("packaging", data?.package);
-    // payloadForm.append("category", Number(categoryId));
-
-    // for (let value of payloadForm) {
-    //   console.log(value);
-    // }
     const payloadForm = {
       food_name: data?.foodName,
       food_detail: data?.detail,
@@ -90,7 +60,7 @@ const AddFoodItem = ({ handleModalCloseTwo, categories, foodRefetch }) => {
       base_ingredient: data?.ingredient,
       taste: data?.taste,
       packaging: data?.package,
-      category: Number(categoryId),
+      category: category,
     };
 
     console.log(payloadForm);
@@ -332,30 +302,6 @@ const AddFoodItem = ({ handleModalCloseTwo, categories, foodRefetch }) => {
               fullWidth
             />
           </Grid>
-          {/* --recommend--
-          <Grid
-            sx={{
-              "& .MuiInputBase-root": {
-                color: `${currentMode === "Light" ? "#000" : "#fff"}`,
-                borderColor: `${currentMode === "Light" ? "#000" : "#fff"}`,
-              },
-            }}
-            item
-            xs={12}
-            md={6}
-          >
-            <TextField
-              id="recommend"
-              label="Recommended"
-              type="text"
-              // value={recommend}
-              // onChange={(value) => setRecommend(value)}
-              error={Boolean(errors.recommend)}
-              helperText={errors.recommend && "This recommend is required *"}
-              {...register("recommend", { required: true })}
-              fullWidth
-            />
-          </Grid> */}
           {/* --category-- */}
           <Grid
             sx={{
@@ -368,21 +314,21 @@ const AddFoodItem = ({ handleModalCloseTwo, categories, foodRefetch }) => {
             xs={12}
             md={6}
           >
-            <Autocomplete
-              options={categories?.map((category) => category)}
-              getOptionLabel={(option) => option.name || category}
-              filterSelectedOptions
-              value={category}
-              onChange={(event, value) => {
-                if (value) {
-                  setCategory(value.name);
-                  setCategoryId(value.id);
-                }
-              }}
-              renderInput={(params) => (
-                <TextField {...params} id="size" label="Category" />
-              )}
-            />
+            <FormControl fullWidth>
+              <InputLabel id="demo-simple-select-label">Categories</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                label="Categories"
+                onChange={(e) => setCategory(e.target.value)}
+                error={Boolean(errors.category)}
+                helperText={errors.category && "This categories is required *"}
+              >
+                {categories.map((category) => (
+                  <MenuItem value={category.id}>{category.name}</MenuItem>
+                ))}
+              </Select>
+            </FormControl>
           </Grid>
           <div className="flex justify-end">
             <button

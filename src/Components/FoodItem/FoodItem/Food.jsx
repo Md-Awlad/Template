@@ -3,11 +3,14 @@ import React from "react";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { useQuery } from "@tanstack/react-query";
 import { useStateContext } from "../../../Contexts/ContextProvider";
-import myAxios from "../../../utils/myAxios";
 import { MdModeEdit } from "react-icons/md";
 
-const Pizza = ({foods}) => {
+const Food = ({ category }) => {
   const { currentColor, currentMode } = useStateContext();
+
+  const { data: { foodItems_category = [] } = {} } = useQuery([
+    `category/${category}/`,
+  ]);
 
   const columns = [
     { field: "id", headerName: "Id", width: 100 },
@@ -49,22 +52,23 @@ const Pizza = ({foods}) => {
       field: "action",
       headerName: "Action",
       width: 150,
-      renderCell: (data) => {
+      renderCell: ({ row }) => {
         // const onClick = (e) => {
         //   e.stopPropagation();
-        //   setAnchorEl(e.currentTarget);
+        //   setOpenModal(e.currentTarget);
         // };
         return (
           <div className="flex gap-5 items-center">
             <MdModeEdit className="text-dark-color dark:text-neutral text-xl cursor-pointer" />
-            <RiDeleteBin6Line className="text-dark-color dark:text-neutral text-xl cursor-pointer" />
+            <RiDeleteBin6Line
+              onClick={() => console.log(row.id)}
+              className="text-dark-color dark:text-neutral text-xl cursor-pointer"
+            />
           </div>
         );
       },
     },
   ];
-
-  
 
   return (
     <div style={{ height: 510, width: "100%" }}>
@@ -91,7 +95,7 @@ const Pizza = ({foods}) => {
             color: currentMode === "Dark" ? "#fff" : "#000",
           },
         }}
-        rows={foods}
+        rows={foodItems_category}
         columns={columns}
         rowsPerPageOptions={[5]}
         disableSelectionOnClick
@@ -118,4 +122,4 @@ const Pizza = ({foods}) => {
   );
 };
 
-export default Pizza;
+export default Food;
