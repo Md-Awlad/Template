@@ -50,7 +50,7 @@ const EditFood = ({ editId, handleModalClose, foodRefetch }) => {
     const payloadForm = {
       food_name: data?.foodName,
       food_detail: data?.detail,
-      price: price,
+      price: JSON.stringify(price),
       image: data?.image[0],
       base_ingredient: data?.ingredient,
       taste: data?.taste,

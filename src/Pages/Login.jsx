@@ -1,6 +1,6 @@
 import { Grid, TextField } from "@mui/material";
 import { useQueryClient } from "@tanstack/react-query";
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -10,7 +10,7 @@ import myAxios from "../utils/myAxios";
 
 const Login = () => {
   const { currentColor, currentMode } = useStateContext();
-  // const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   const queryClient = useQueryClient();
   const {
     register,
@@ -21,8 +21,7 @@ const Login = () => {
   } = useForm();
 
   const onSubmit = async (data) => {
-    // setLoading(true);
-    console.log(data);
+    setLoading(true);
     try {
       const res = await toast.promise(myAxios.post("/token/", data), {
         pending: "Signing in...",

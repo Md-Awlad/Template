@@ -32,7 +32,25 @@ const Food = ({ category, foodRefetch }) => {
       },
     },
     { field: "food_name", headerName: "Food Name", width: 200 },
-    { field: "price", headerName: "Price", width: 130 },
+    {
+      field: "price",
+      headerName: "Price",
+      width: 250,
+      renderCell: ({ value }) => {
+        console.log(value);
+        return (
+          <div className="overflow-y-auto h-12 w-full">
+            {Object.keys(value).map((key) => {
+              return (
+                <h6>
+                  {key}:{value[key]}
+                </h6>
+              );
+            })}
+          </div>
+        );
+      },
+    },
     { field: "food_detail", headerName: "Details", width: 208 },
     { field: "review", headerName: "Review", width: 130 },
     {

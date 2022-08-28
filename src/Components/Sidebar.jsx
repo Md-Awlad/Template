@@ -6,12 +6,10 @@ import {
   MdDashboard,
   MdFastfood,
   MdOutlineCancel,
-  MdOutlineTextsms,
 } from "react-icons/md";
 import { Link, NavLink } from "react-router-dom";
 import logo from "../image/logo.png";
 import { useStateContext } from "../Contexts/ContextProvider";
-import { CgProfile } from "react-icons/cg";
 
 const Sidebar = () => {
   const { activeMenu, setActiveMenu, screenSize, currentColor } =

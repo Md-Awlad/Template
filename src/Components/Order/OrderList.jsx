@@ -7,6 +7,7 @@ import { useStateContext } from "../../Contexts/ContextProvider";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { useQuery } from "@tanstack/react-query";
 import myAxios from "../../utils/myAxios";
+import { MdModeEdit } from "react-icons/md";
 
 const OrderList = () => {
   const { currentColor, currentMode } = useStateContext();
@@ -31,22 +32,12 @@ const OrderList = () => {
       field: "action",
       headerName: "Action",
       width: 150,
-      renderCell: (data) => {
-        const onClick = (e) => {
-          e.stopPropagation();
-          setAnchorEl(e.currentTarget);
-        };
-
+      renderCell: ({ row }) => {
         return (
-          <Button
-            id="basic-button"
-            aria-controls={open ? "basic-menu" : undefined}
-            aria-haspopup="true"
-            aria-expanded={open ? "true" : undefined}
-            onClick={onClick}
-          >
-            <BsThreeDots className="text-gray-900 dark:text-neutral -ml-3" />
-          </Button>
+          <div className="flex gap-5 items-center">
+            <MdModeEdit className="text-dark-color dark:text-neutral text-xl cursor-pointer" />
+            <RiDeleteBin6Line className="text-dark-color dark:text-neutral text-xl cursor-pointer" />
+          </div>
         );
       },
     },
@@ -59,7 +50,6 @@ const OrderList = () => {
       return res.data;
     }
   );
-  console.log()
 
   return (
     <div style={{ height: 510, width: "100%" }}>
@@ -109,40 +99,6 @@ const OrderList = () => {
         // checkboxSelection
         // disableSelectionOnClick
       />
-      <Menu
-        id="basic-menu"
-        anchorEl={anchorEl}
-        open={open}
-        anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "right",
-        }}
-        transformOrigin={{
-          vertical: "top",
-          horizontal: "right",
-        }}
-        // onClose={handleClose}
-        onClick={handleClose}
-        MenuListProps={{
-          "aria-labelledby": "basic-button",
-        }}
-      >
-        <MenuItem
-        // onClick={() => handleEditModalOpen(rows?.id)}
-
-        // sx={{
-        //   display: "flex",
-        //   justifyContent: "space-between",
-        // }}
-        >
-          <BiEdit className="text-dark-color dark:text-neutral text-sm cursor-pointer" />
-          <p className="text-sm font-medium  pl-2">Edit</p>
-        </MenuItem>
-        <MenuItem>
-          <RiDeleteBin6Line className="text-dark-color dark:text-neutral text-sm cursor-pointer" />
-          <p className="text-sm font-medium pl-2">Delete</p>
-        </MenuItem>
-      </Menu>
     </div>
   );
 };
