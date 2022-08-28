@@ -7,7 +7,7 @@ import { MdModeEdit } from "react-icons/md";
 import DeleteFood from "../../Modals/DeleteFood";
 import EditFood from "../../Modals/EditFood";
 
-const Food = ({ category, categories }) => {
+const Food = ({ category, foodRefetch }) => {
   const { currentColor, currentMode } = useStateContext();
   const [editId, setEditId] = useState(null);
   const [deleteId, setDeleteId] = useState(null);
@@ -15,6 +15,7 @@ const Food = ({ category, categories }) => {
   const { data: { foodItems_category = [] } = {} } = useQuery([
     `category/${category}/`,
   ]);
+  console.log(foodItems_category);
 
   const columns = [
     { field: "id", headerName: "Id", width: 100 },
@@ -31,7 +32,7 @@ const Food = ({ category, categories }) => {
       },
     },
     { field: "food_name", headerName: "Food Name", width: 200 },
-    { field: "food_price", headerName: "Price", width: 130 },
+    { field: "price", headerName: "Price", width: 130 },
     { field: "food_detail", headerName: "Details", width: 208 },
     { field: "review", headerName: "Review", width: 130 },
     {
@@ -131,7 +132,8 @@ const Food = ({ category, categories }) => {
         <EditFood
           editId={editId}
           handleModalClose={() => setEditId(null)}
-          categories={categories}
+          categories={foodItems_category}
+          foodRefetch={foodRefetch}
         />
       )}
       {Boolean(deleteId) && (

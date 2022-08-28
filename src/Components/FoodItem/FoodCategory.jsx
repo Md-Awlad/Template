@@ -9,9 +9,8 @@ import {
 import Food from "./FoodItem/Food";
 import { useStateContext } from "../../Contexts/ContextProvider";
 
-const FoodCategory = ({ categories, foods }) => {
+const FoodCategory = ({ categories }) => {
   const { currentMode } = useStateContext();
-  console.log(categories, foods);
   return (
     <div>
       {categories.map((item, index) => (

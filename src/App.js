@@ -17,14 +17,14 @@ import {
 import NotFound from "./Components/NotFound/NotFound";
 
 const App = () => {
-  const { currentMode } = useStateContext();
+  const { currentMode, currentUser } = useStateContext();
   // console.log(currentUser);
   // console.log(isLoading);
 
   const routes = [
     {
       path: "/",
-      element: <NavLayout />,
+      element: currentUser?.id ? <NavLayout /> : <Login />,
       children: [
         {
           path: "dashboard",
@@ -39,20 +39,12 @@ const App = () => {
           element: <Order />,
         },
         {
-          path: "profile",
-          element: <Profile />,
-        },
-        {
           path: "login",
           element: <Login />,
         },
         {
           path: "register",
           element: <Register />,
-        },
-        {
-          path: "settings",
-          element: <Settings />,
         },
         {
           path: "*",

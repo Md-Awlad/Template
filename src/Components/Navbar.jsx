@@ -12,7 +12,7 @@ import DarkModeToggle from "react-dark-mode-toggle";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { useStateContext } from "../Contexts/ContextProvider";
-import avatar from "../Data/avatar.jpg";
+import avatar from "../image/logo.png";
 import MainLogo from "../image/MainLogo.png";
 import Sidebar from "./Sidebar";
 import UserProfile from "./UserProfile";
@@ -151,14 +151,6 @@ const Navbar = () => {
               checked={!isDarkMode}
               size={50}
             />
-            {/* <NavButton
-              title="Notification"
-              dotColor="rgb(254, 201, 15)"
-              // customFunc={() => setNotification(!notification)}
-              color={currentColor}
-              icon={<RiNotification3Line />}
-            /> */}
-
             <div
               className="flex items-center gap-2 cursor-pointer p-1 hover:bg-light-gray rounded-lg"
               onClick={(event) => setUserProfile(event.currentTarget)}

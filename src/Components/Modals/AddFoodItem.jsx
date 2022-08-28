@@ -35,7 +35,7 @@ const AddFoodItem = ({ handleModalCloseTwo, categories, foodRefetch }) => {
   const { currentColor, currentMode } = useStateContext();
   const [variants, setVariants] = useState(1);
   const [category, setCategory] = useState(0);
-  const [review, setReview] = useState();
+  // const [review, setReview] = useState();
 
   console.log(category);
 
@@ -58,6 +58,7 @@ const AddFoodItem = ({ handleModalCloseTwo, categories, foodRefetch }) => {
       price: JSON.stringify(price),
       image: data?.image[0],
       base_ingredient: data?.ingredient,
+      review: data?.review,
       taste: data?.taste,
       packaging: data?.package,
       category: category,
@@ -270,8 +271,6 @@ const AddFoodItem = ({ handleModalCloseTwo, categories, foodRefetch }) => {
               id="review"
               label="Review"
               type="number"
-              value={review}
-              onChange={(value) => setReview(value)}
               error={Boolean(errors.review)}
               helperText={errors.review && "This review is required *"}
               {...register("review", { required: true })}

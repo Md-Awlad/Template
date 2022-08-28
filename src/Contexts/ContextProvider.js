@@ -1,4 +1,6 @@
+import { useQuery } from "@tanstack/react-query";
 import { createContext, useContext, useEffect, useState } from "react";
+import myAxios from "../utils/myAxios";
 
 const StateContext = createContext();
 
@@ -17,8 +19,15 @@ export const ContextProvider = ({ children }) => {
   );
   const [themeSettings, setThemeSettings] = useState(false);
   const [activeMenu, setActiveMenu] = useState(true);
-  const [currentUser, setCurrentUser] = useState(null);
   const [currentPass, setCurrentPass] = useState(null);
+
+  const { data: currentUser = {}, refetch: currentUserRefetch } = useQuery(
+    ["currentUser"],
+    async () => {
+      const res = await myAxios("/user_info");
+      return res?.data;
+    }
+  );
 
   const setMode = (value) => {
     setCurrentMode(value);
@@ -47,7 +56,7 @@ export const ContextProvider = ({ children }) => {
       value={{
         currentUser,
         currentPass,
-        setCurrentUser,
+        // setCurrentUser,
         currentColor,
         currentMode,
         setCurrentMode,

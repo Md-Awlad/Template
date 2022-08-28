@@ -2,7 +2,12 @@ import { Box, Typography } from "@mui/material";
 import { Fragment, useState } from "react";
 import { BsCartCheckFill } from "react-icons/bs";
 
-import { MdDashboard, MdFastfood, MdOutlineCancel, MdOutlineTextsms } from "react-icons/md";
+import {
+  MdDashboard,
+  MdFastfood,
+  MdOutlineCancel,
+  MdOutlineTextsms,
+} from "react-icons/md";
 import { Link, NavLink } from "react-router-dom";
 import logo from "../image/logo.png";
 import { useStateContext } from "../Contexts/ContextProvider";
@@ -101,17 +106,6 @@ const Sidebar = () => {
               <BsCartCheckFill />
               <span className="capitalize ">order</span>
             </NavLink>
-            <NavLink
-              to="/profile"
-              onClick={handleCloseSidebar}
-              style={({ isActive }) => ({
-                backgroundColor: isActive ? currentColor : "",
-              })}
-              className={({ isActive }) => (isActive ? activeLink : normalLink)}
-            >
-              <CgProfile />
-              <span className="capitalize ">profile</span>
-            </NavLink>
           </div>
         </Fragment>
       ) : (
@@ -167,18 +161,6 @@ const Sidebar = () => {
               }
             >
               <BsCartCheckFill className="text-3xl" />
-            </NavLink>
-            <NavLink
-              to="/profile"
-              onClick={handleCloseSidebar}
-              style={({ isActive }) => ({
-                backgroundColor: isActive ? currentColor : "",
-              })}
-              className={({ isActive }) =>
-                isActive ? smActiveLink : smNormalLink
-              }
-            >
-              <CgProfile className="text-3xl" />
             </NavLink>
           </div>
         </Fragment>

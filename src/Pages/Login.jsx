@@ -1,16 +1,17 @@
 import { Grid, TextField } from "@mui/material";
 import { useQueryClient } from "@tanstack/react-query";
 import React from "react";
-import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useStateContext } from "../Contexts/ContextProvider";
+import { setAccessToken, setRefreshToken } from "../utils/localStorages";
 import myAxios from "../utils/myAxios";
 
 const Login = () => {
-  const { currentColor, currentMode, currentUser, currentPass } =
-    useStateContext();
+  const { currentColor, currentMode } = useStateContext();
+  // const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const {
     register,
     handleSubmit,
@@ -19,16 +20,30 @@ const Login = () => {
     formState: { errors },
   } = useForm();
 
-
   const onSubmit = async (data) => {
-    try {
-      const res = await toast.promise(myAxios.post("/user/", data), {
-        
-      })
-    } catch (error) {
-      
-    }
+    // setLoading(true);
     console.log(data);
+    try {
+      const res = await toast.promise(myAxios.post("/token/", data), {
+        pending: "Signing in...",
+        success: "Welcome back!",
+        error: "Sign in failed",
+      });
+      if (res?.status === 200) {
+        setAccessToken(res?.data?.access);
+        setRefreshToken(res?.data?.refresh);
+        queryClient.invalidateQueries(["currentUser"]);
+      }
+    } catch (error) {
+      // setLoading(false);
+      if (error?.response?.data?.detail) {
+        setError("username", {
+          type: "custom",
+          message: error?.response?.data?.detail,
+        });
+        setValue("password", "");
+      }
+    }
   };
 
   return (
@@ -37,7 +52,7 @@ const Login = () => {
         login
       </h2>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
-        {/* --email-- */}
+        {/* --user-- */}
         <Grid
           sx={{
             "& .MuiInputBase-root": {
@@ -49,24 +64,24 @@ const Login = () => {
           xs={12}
         >
           <TextField
-            id="user"
+            id="username"
             label="User Name"
             type="text"
-            error={Boolean(errors.user)}
-            helperText={errors.user && "This user is required *"}
-            {...register("user", { required: true })}
+            error={Boolean(errors.username)}
+            helperText={errors.username && "This user is required *"}
+            {...register("username", { required: true })}
             fullWidth
           />
         </Grid>
         {/* --pass-- */}
         <Grid item xs={12}>
           <TextField
-            id="pass"
+            id="password"
             label="Password"
             type="password"
-            error={Boolean(errors.pass)}
-            helperText={errors.pass && "This password is required *"}
-            {...register("pass", { required: true })}
+            error={Boolean(errors.password)}
+            helperText={errors.password && "This password is required *"}
+            {...register("password", { required: true })}
             fullWidth
           />
         </Grid>

@@ -1,4 +1,5 @@
 import { Button, IconButton, MenuItem } from "@mui/material";
+import { useQueryClient } from "@tanstack/react-query";
 import { Fragment } from "react";
 import { BiUserCircle } from "react-icons/bi";
 import { BsCheck } from "react-icons/bs";
@@ -10,40 +11,21 @@ import { themeColors } from "../Data/dummy";
 import { removeTokens } from "../utils/localStorages";
 
 const UserProfile = ({ closeUserProfile, changePassword }) => {
-  const { currentColor, setColor, isLoading } = useStateContext();
-  const removeLoginItem = () => {
+  const {
+    currentColor,
+    setColor,
+    currentUser: { id } = {},
+  } = useStateContext();
+  console.log(id);
+  const queryClient = useQueryClient();
+  const logOut = () => {
     removeTokens();
     closeUserProfile();
+    queryClient.resetQueries();
   };
 
   return (
     <Fragment>
-      <div className="flex justify-between items-center w-full px-5">
-        <p className="font-semibold text-md dark:text-gray-200">User Profile</p>
-        <IconButton onClick={closeUserProfile}>
-          <MdOutlineCancel className="dark:text-neutral" />
-        </IconButton>
-      </div>
-      <MenuItem onClick={closeUserProfile}>
-        <NavLink to="/settings">
-          <div className="flex gap-5 px-2 pt-1 pb-1 hover:bg-light-gray cursor-pointer  dark:hover:bg-[#42464D]">
-            <button
-              type="button"
-              style={{ color: currentColor, backgroundColor: "currentcolor" }}
-              className=" text-lg rounded-lg p-3 hover:bg-light-gray"
-            >
-              <BiUserCircle className="text-white" />
-            </button>
-            <div>
-              <p className="font-medium dark:text-gray-200 ">Settings</p>
-              <p className="text-gray-500 text-sm dark:text-gray-400">
-                Account Information
-              </p>
-            </div>
-          </div>
-        </NavLink>
-      </MenuItem>
-      <hr />
       <div className="flex gap-5 border-b-1 border-color py-[.6rem]  px-6 ">
         <div>
           <div className="flex gap-5">
@@ -88,7 +70,7 @@ const UserProfile = ({ closeUserProfile, changePassword }) => {
         <Button
           fullWidth
           variant="contained"
-          onClick={removeLoginItem}
+          onClick={logOut}
           className="rounded-md w-full p-1 text-white"
         >
           Logout

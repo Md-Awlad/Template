@@ -15,6 +15,7 @@ import {
   Modal,
   Select,
 } from "@mui/material";
+import { useQuery } from "@tanstack/react-query";
 import myAxios from "../../utils/myAxios";
 
 const style = {
@@ -32,19 +33,10 @@ const style = {
   pb: 3,
 };
 
-const EditFood = ({ editId, handleModalClose, categories }) => {
+const EditFood = ({ editId, handleModalClose, foodRefetch }) => {
   const { currentColor, currentMode } = useStateContext();
   const [variants, setVariants] = useState(1);
-  const [category, setCategory] = useState(0);
-  const [review, setReview] = useState();
-
-  console.log(category);
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+  const { register, handleSubmit, setValue } = useForm();
 
   const onSubmit = async (data) => {
     const price = {};
@@ -53,21 +45,22 @@ const EditFood = ({ editId, handleModalClose, categories }) => {
       price[item.title] = item.price;
     });
 
+    console.log(price);
+
     const payloadForm = {
       food_name: data?.foodName,
       food_detail: data?.detail,
-      price: JSON.stringify(price),
+      price: price,
       image: data?.image[0],
       base_ingredient: data?.ingredient,
       taste: data?.taste,
       packaging: data?.package,
-      category: category,
     };
 
     console.log(payloadForm);
 
     const response = await toast.promise(
-      myAxios.post(`/food/${editId}/`, payloadForm, {
+      myAxios.patch(`/food/${editId}/`, payloadForm, {
         headers: {
           "content-type": "multipart/form-data",
         },
@@ -80,11 +73,19 @@ const EditFood = ({ editId, handleModalClose, categories }) => {
     );
     if (response.status === 201) {
       handleModalClose();
-      // foodRefetch();
+      foodRefetch();
     }
   };
 
-  useEffect(() => {}, []);
+  const { data } = useQuery([`food/${editId}`], {
+    onSuccess: (data) => {
+      setValue("foodName", data?.food_name);
+      setValue("ingredient", data?.base_ingredient);
+      setValue("detail", data?.food_detail);
+      setValue("taste", data?.taste);
+      setValue("package", data?.packaging);
+    },
+  });
 
   return (
     <Modal open={Boolean(editId)} onClose={handleModalClose}>
@@ -109,9 +110,7 @@ const EditFood = ({ editId, handleModalClose, categories }) => {
                 label="Food Name"
                 type="text"
                 InputLabelProps={{ shrink: true }}
-                error={Boolean(errors.foodName)}
-                helperText={errors.foodName && "This food name is required *"}
-                {...register("foodName", { required: true })}
+                {...register("foodName")}
                 fullWidth
               />
             </Grid>
@@ -137,14 +136,12 @@ const EditFood = ({ editId, handleModalClose, categories }) => {
                     <TextField
                       label="Food Size"
                       type="text"
-                      required
                       {...register(`item.${index + 1}.title`)}
                       fullWidth
                     />
                     <TextField
                       label="Food Price"
                       type="number"
-                      required
                       {...register(`item.${index + 1}.price`)}
                       fullWidth
                     />
@@ -162,8 +159,6 @@ const EditFood = ({ editId, handleModalClose, categories }) => {
                 InputLabelProps={{
                   shrink: true,
                 }}
-                error={Boolean(errors.image)}
-                helperText={errors.image && "Food image is required *"}
                 InputProps={{
                   endAdornment: (
                     <InputAdornment position="end">
@@ -174,7 +169,7 @@ const EditFood = ({ editId, handleModalClose, categories }) => {
                 inputProps={{
                   accept: "image/*",
                 }}
-                {...register("image", { required: true })}
+                {...register("image")}
                 sx={{
                   width: 1,
                   "& ::file-selector-button": {
@@ -199,13 +194,8 @@ const EditFood = ({ editId, handleModalClose, categories }) => {
                 id="ingredient"
                 label="Base Ingredient"
                 type="text"
-                // value={ingredient}
-                // onChange={(value) => setIngredient(value)}
-                error={Boolean(errors.ingredient)}
-                helperText={
-                  errors.ingredient && "This ingredient is required *"
-                }
-                {...register("ingredient", { required: true })}
+                InputLabelProps={{ shrink: true }}
+                {...register("ingredient")}
                 fullWidth
               />
             </Grid>
@@ -225,9 +215,8 @@ const EditFood = ({ editId, handleModalClose, categories }) => {
                 id="detail"
                 label="Details"
                 type="text"
-                error={Boolean(errors.detail)}
-                helperText={errors.detail && "This food details is required *"}
-                {...register("detail", { required: true })}
+                InputLabelProps={{ shrink: true }}
+                {...register("detail")}
                 fullWidth
               />
             </Grid>
@@ -247,16 +236,13 @@ const EditFood = ({ editId, handleModalClose, categories }) => {
                 id="taste"
                 label="Taste"
                 type="text"
-                // value={taste}
-                // onChange={(value) => setTaste(value)}
-                error={Boolean(errors.taste)}
-                helperText={errors.taste && "This taste is required *"}
-                {...register("taste", { required: true })}
+                InputLabelProps={{ shrink: true }}
+                {...register("taste")}
                 fullWidth
               />
             </Grid>
             {/* --review-- */}
-            <Grid
+            {/* <Grid
               sx={{
                 "& .MuiInputBase-root": {
                   color: `${currentMode === "Light" ? "#000" : "#fff"}`,
@@ -269,16 +255,13 @@ const EditFood = ({ editId, handleModalClose, categories }) => {
             >
               <TextField
                 id="review"
-                label="Review"
+                label="review"
                 type="number"
-                value={review}
-                onChange={(value) => setReview(value)}
-                error={Boolean(errors.review)}
-                helperText={errors.review && "This review is required *"}
-                {...register("review", { required: true })}
+                InputLabelProps={{ shrink: true }}
+                {...register("review")}
                 fullWidth
               />
-            </Grid>
+            </Grid> */}
             {/* --package-- */}
             <Grid
               sx={{
@@ -295,43 +278,10 @@ const EditFood = ({ editId, handleModalClose, categories }) => {
                 id="package"
                 label="Packaging"
                 type="number"
-                error={Boolean(errors.package)}
-                helperText={errors.package && "This package is required *"}
-                {...register("package", { required: true })}
+                InputLabelProps={{ shrink: true }}
+                {...register("package")}
                 fullWidth
               />
-            </Grid>
-            {/* --category-- */}
-            <Grid
-              sx={{
-                "& .MuiInputBase-root": {
-                  color: `${currentMode === "Light" ? "#000" : "#fff"}`,
-                  borderColor: `${currentMode === "Light" ? "#000" : "#fff"}`,
-                },
-              }}
-              item
-              xs={12}
-              md={6}
-            >
-              <FormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">
-                  Categories
-                </InputLabel>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  label="Categories"
-                  onChange={(e) => setCategory(e.target.value)}
-                  error={Boolean(errors.category)}
-                  helperText={
-                    errors.category && "This categories is required *"
-                  }
-                >
-                  {categories.map((category) => (
-                    <MenuItem value={category.id}>{category.name}</MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
             </Grid>
             <div className="flex justify-end">
               <button
