@@ -2,7 +2,7 @@ import { useRoutes } from "react-router-dom";
 
 import "./App.css";
 import NavLayout from "./Components/Layouts/NavLayout";
-
+import "react-toastify/dist/ReactToastify.css";
 import ThemeLayout from "./Components/Layouts/ThemeLayout";
 import { useStateContext } from "./Contexts/ContextProvider";
 import {
@@ -15,9 +15,11 @@ import {
   Register,
 } from "./Pages";
 import NotFound from "./Components/NotFound/NotFound";
+import { ToastContainer } from "react-toastify";
+import MainLoader from "./Components/Loaders/MainLoader";
 
 const App = () => {
-  const { currentMode, currentUser } = useStateContext();
+  const { currentMode, currentUser, isLoading } = useStateContext();
   // console.log(currentUser);
   // console.log(isLoading);
 
@@ -38,10 +40,10 @@ const App = () => {
           path: "order",
           element: <Order />,
         },
-        {
-          path: "login",
-          element: <Login />,
-        },
+        // {
+        //   path: "login",
+        //   element: <Login />,
+        // },
         {
           path: "register",
           element: <Register />,
@@ -60,9 +62,23 @@ const App = () => {
     <ThemeLayout>
       <div className={currentMode === "Dark" ? "dark" : ""}>
         <div className="overflow-hidden">
-          {/* {isLoading ? <MainLoader /> : allRoutes} */}
-          {allRoutes}
+          {isLoading ? <MainLoader /> : allRoutes}
+          {/* {allRoutes} */}
         </div>
+        <ToastContainer
+          position="top-right"
+          // limit={3}
+          autoClose={3000}
+          hideProgressBar
+          newestOnTop
+          closeOnClick
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          style={{
+            marginTop: "50px",
+          }}
+        />
       </div>
     </ThemeLayout>
   );

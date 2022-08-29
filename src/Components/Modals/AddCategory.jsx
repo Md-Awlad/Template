@@ -40,7 +40,7 @@ const AddCategory = ({ handleModalClose, categoryRefetch }) => {
 
     const response = await toast.promise(
       myAxios.post("/category/", payloadForm, {
-          headers: {
+        headers: {
           "content-type": "multipart/form-data",
         },
       }),
@@ -96,7 +96,7 @@ const AddCategory = ({ handleModalClose, categoryRefetch }) => {
             helperText={errors.image && "Image is required *"}
             InputProps={{
               endAdornment: (
-                <InputAdornment position="end">
+                <InputAdornment position="end" sx={{ cursor: "pointer" }}>
                   <FiUpload size={25} />
                 </InputAdornment>
               ),

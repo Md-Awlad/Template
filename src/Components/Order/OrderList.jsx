@@ -1,7 +1,4 @@
-import { Button, Menu, MenuItem } from "@mui/material";
 import React, { useState } from "react";
-import { BiEdit } from "react-icons/bi";
-import { BsThreeDots } from "react-icons/bs";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { useStateContext } from "../../Contexts/ContextProvider";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
@@ -44,9 +41,9 @@ const OrderList = () => {
   ];
 
   const { data: orders = [], refetch: orderRefetch } = useQuery(
-    ["food"],
+    ["order"],
     async () => {
-      const res = await myAxios("/food/");
+      const res = await myAxios("/order/");
       return res.data;
     }
   );

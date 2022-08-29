@@ -37,7 +37,6 @@ const Food = ({ category, foodRefetch }) => {
       headerName: "Price",
       width: 250,
       renderCell: ({ value }) => {
-        console.log(value);
         return (
           <div className="overflow-y-auto h-12 w-full">
             {Object.keys(value).map((key) => {

@@ -21,13 +21,14 @@ export const ContextProvider = ({ children }) => {
   const [activeMenu, setActiveMenu] = useState(true);
   const [currentPass, setCurrentPass] = useState(null);
 
-  const { data: currentUser = {}, refetch: currentUserRefetch } = useQuery(
-    ["currentUser"],
-    async () => {
-      const res = await myAxios("/user_info");
-      return res?.data;
-    }
-  );
+  const {
+    isLoading,
+    data: currentUser = {},
+    refetch: currentUserRefetch,
+  } = useQuery(["currentUser"], async () => {
+    const res = await myAxios("/user_info");
+    return res?.data;
+  });
 
   const setMode = (value) => {
     setCurrentMode(value);
@@ -57,6 +58,7 @@ export const ContextProvider = ({ children }) => {
         currentUser,
         currentPass,
         // setCurrentUser,
+        isLoading,
         currentColor,
         currentMode,
         setCurrentMode,

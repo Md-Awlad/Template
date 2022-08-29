@@ -1,11 +1,13 @@
 import { Button } from "@mui/material";
 import { useQueryClient } from "@tanstack/react-query";
 import { Fragment } from "react";
+import { AiOutlineUserAdd } from "react-icons/ai";
 import { BsCheck } from "react-icons/bs";
 import { FiSettings } from "react-icons/fi";
 import { useStateContext } from "../Contexts/ContextProvider";
 import { themeColors } from "../Data/dummy";
 import { removeTokens } from "../utils/localStorages";
+import { NavLink } from "react-router-dom";
 
 const UserProfile = ({ closeUserProfile, changePassword }) => {
   const {
@@ -63,6 +65,19 @@ const UserProfile = ({ closeUserProfile, changePassword }) => {
           </div>
         </div>
       </div>
+      <NavLink
+        to="/register"
+        className="flex gap-3 flex-col border-color py-2  px-6 "
+      >
+        <Button
+          fullWidth
+          variant="contained"
+          className="rounded-md w-full p-1 text-white"
+        >
+          <AiOutlineUserAdd className="text-xl" />
+          Create New User
+        </Button>
+      </NavLink>
       <div className="flex gap-3 flex-col border-color py-2  px-6 ">
         <Button
           fullWidth
