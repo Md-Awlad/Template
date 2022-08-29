@@ -4,26 +4,48 @@ import { useStateContext } from "../../Contexts/ContextProvider";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { useQuery } from "@tanstack/react-query";
 import myAxios from "../../utils/myAxios";
-import { MdModeEdit } from "react-icons/md";
 
 const OrderList = () => {
   const { currentColor, currentMode } = useStateContext();
-  const [anchorEl, setAnchorEl] = useState(false);
-
-  const open = Boolean(anchorEl);
-
-  const handleClick = (e) => {
-    setAnchorEl(e.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+  const [item, setItem] = useState([]);
 
   const columns = [
     { field: "id", headerName: "ID", width: 130 },
-    { field: "order_type", headerName: "Customer Name", width: 230 },
+    { field: "name", headerName: "Customer Name", width: 230 },
+    { field: "order_type", headerName: "Order Type", width: 230 },
     { field: "phone", headerName: "Mobile", width: 200 },
-    { field: "order", headerName: "Order Item", width: 250 },
+    {
+      field: "order_items",
+      headerName: "Order Items",
+      width: 250,
+      renderCell: (value) => {
+        console.log(value?.row?.note);
+        const vl = value?.row?.note?.order_items.map((item) => item);
+        console.log(vl.map((a) => a.id));
+        return value?.row?.note?.order_items.map((item) => {
+          return (
+            <div>
+              <h2>{item.id}, </h2>
+            </div>
+          );
+        });
+      },
+    },
+    {
+      field: "quantity",
+      headerName: "Quantity",
+      width: 250,
+      renderCell: (value) => {
+        // console.log(value?.row?.note?.order_items.map((item) => item.price));
+        return value?.row?.note?.order_items.map((item) => {
+          return (
+            <div>
+              <h2>{item.quantity}</h2>
+            </div>
+          );
+        });
+      },
+    },
     { field: "price", headerName: "Amount", width: 200 },
     {
       field: "action",
@@ -31,10 +53,7 @@ const OrderList = () => {
       width: 150,
       renderCell: ({ row }) => {
         return (
-          <div className="flex gap-5 items-center">
-            <MdModeEdit className="text-dark-color dark:text-neutral text-xl cursor-pointer" />
-            <RiDeleteBin6Line className="text-dark-color dark:text-neutral text-xl cursor-pointer" />
-          </div>
+          <RiDeleteBin6Line className="text-dark-color dark:text-neutral text-xl cursor-pointer" />
         );
       },
     },

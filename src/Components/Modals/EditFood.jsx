@@ -15,7 +15,7 @@ import {
   Modal,
   Select,
 } from "@mui/material";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import myAxios from "../../utils/myAxios";
 
 const style = {
@@ -37,6 +37,7 @@ const EditFood = ({ editId, handleModalClose, foodRefetch }) => {
   const { currentColor, currentMode } = useStateContext();
   const [variants, setVariants] = useState(1);
   const { register, handleSubmit, setValue } = useForm();
+  const queryClient = useQueryClient();
 
   const onSubmit = async (data) => {
     const price = {};
@@ -71,10 +72,8 @@ const EditFood = ({ editId, handleModalClose, foodRefetch }) => {
         error: "Error Adding Foods!",
       }
     );
-    if (response.status === 201) {
-      handleModalClose();
-      foodRefetch();
-    }
+    queryClient.invalidateQueries("foods");
+    handleModalClose();
   };
 
   const { data } = useQuery([`food/${editId}`], {

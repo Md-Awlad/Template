@@ -24,9 +24,10 @@ const Food = ({ category, foodRefetch }) => {
       headerName: "Image",
       width: 200,
       renderCell: (params) => {
+        console.log(params);
         return (
           <div>
-            <img src={params.row.image} alt={Image} />
+            <img src={params?.row?.image} alt="" />
           </div>
         );
       },

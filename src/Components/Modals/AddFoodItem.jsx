@@ -15,6 +15,7 @@ import {
   Select,
 } from "@mui/material";
 import myAxios from "../../utils/myAxios";
+import { useQueryClient } from "@tanstack/react-query";
 
 const style = {
   position: "absolute",
@@ -35,7 +36,7 @@ const AddFoodItem = ({ handleModalCloseTwo, categories, foodRefetch }) => {
   const { currentColor, currentMode } = useStateContext();
   const [variants, setVariants] = useState(1);
   const [category, setCategory] = useState(0);
-  // const [review, setReview] = useState();
+  const queryClient = useQueryClient();
 
   console.log(category);
 
@@ -80,10 +81,9 @@ const AddFoodItem = ({ handleModalCloseTwo, categories, foodRefetch }) => {
         error: "Error Adding Foods!",
       }
     );
-    if (response.status === 201) {
-      handleModalCloseTwo();
-      foodRefetch();
-    }
+    queryClient.invalidateQueries("foods");
+    handleModalCloseTwo();
+    foodRefetch();
   };
 
   return (

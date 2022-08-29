@@ -15,7 +15,6 @@ const UserProfile = ({ closeUserProfile, changePassword }) => {
     setColor,
     currentUser: { id } = {},
   } = useStateContext();
-  console.log(id);
   const queryClient = useQueryClient();
   const logOut = () => {
     removeTokens();
