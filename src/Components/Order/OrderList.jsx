@@ -4,10 +4,11 @@ import { useStateContext } from "../../Contexts/ContextProvider";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { useQuery } from "@tanstack/react-query";
 import myAxios from "../../utils/myAxios";
+import DeleteOrder from "../Modals/DeleteOrder";
 
 const OrderList = () => {
   const { currentColor, currentMode } = useStateContext();
-  const [item, setItem] = useState([]);
+  const [deleteId, setDeleteId] = useState(null);
 
   const columns = [
     { field: "id", headerName: "ID", width: 130 },
@@ -19,9 +20,6 @@ const OrderList = () => {
       headerName: "Order Items",
       width: 250,
       renderCell: (value) => {
-        console.log(value?.row?.note);
-        const vl = value?.row?.note?.order_items.map((item) => item);
-        console.log(vl.map((a) => a.id));
         return value?.row?.note?.order_items.map((item) => {
           return (
             <div>
@@ -36,7 +34,6 @@ const OrderList = () => {
       headerName: "Quantity",
       width: 250,
       renderCell: (value) => {
-        // console.log(value?.row?.note?.order_items.map((item) => item.price));
         return value?.row?.note?.order_items.map((item) => {
           return (
             <div>
@@ -53,7 +50,10 @@ const OrderList = () => {
       width: 150,
       renderCell: ({ row }) => {
         return (
-          <RiDeleteBin6Line className="text-dark-color dark:text-neutral text-xl cursor-pointer" />
+          <RiDeleteBin6Line
+            onClick={() => setDeleteId(row?.id)}
+            className="text-dark-color dark:text-neutral text-xl cursor-pointer"
+          />
         );
       },
     },
@@ -115,6 +115,12 @@ const OrderList = () => {
         // checkboxSelection
         // disableSelectionOnClick
       />
+      {Boolean(deleteId) && (
+        <DeleteOrder
+          deleteId={deleteId}
+          handleClose={() => setDeleteId(null)}
+        />
+      )}
     </div>
   );
 };
