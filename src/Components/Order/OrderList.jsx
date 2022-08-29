@@ -20,13 +20,13 @@ const OrderList = () => {
       headerName: "Order Items",
       width: 250,
       renderCell: (value) => {
-        return value?.row?.note?.order_items.map((item) => {
-          return (
-            <div>
-              <h2>{item.id}, </h2>
-            </div>
-          );
-        });
+        return (
+          <div className="w-full h-12 overflow-y-auto">
+            {value?.row?.order_items.map((item) => {
+              return <h2>{item.food_name}</h2>;
+            })}
+          </div>
+        );
       },
     },
     {
@@ -34,13 +34,13 @@ const OrderList = () => {
       headerName: "Quantity",
       width: 250,
       renderCell: (value) => {
-        return value?.row?.note?.order_items.map((item) => {
-          return (
-            <div>
-              <h2>{item.quantity}</h2>
-            </div>
-          );
-        });
+        return (
+          <div className="w-full h-12 overflow-y-auto">
+            {value?.row?.note?.order_items.map((item) => {
+              return <h2>{item.quantity}</h2>;
+            })}
+          </div>
+        );
       },
     },
     { field: "price", headerName: "Amount", width: 200 },

@@ -15,7 +15,6 @@ const Food = ({ category, foodRefetch }) => {
   const { data: { foodItems_category = [] } = {} } = useQuery([
     `category/${category}/`,
   ]);
-  console.log(foodItems_category);
 
   const columns = [
     { field: "id", headerName: "Id", width: 100 },
@@ -24,7 +23,6 @@ const Food = ({ category, foodRefetch }) => {
       headerName: "Image",
       width: 200,
       renderCell: (params) => {
-        console.log(params);
         return (
           <div>
             <img src={params?.row?.image} alt="" />

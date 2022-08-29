@@ -9,7 +9,7 @@ import { themeColors } from "../Data/dummy";
 import { removeTokens } from "../utils/localStorages";
 import { NavLink } from "react-router-dom";
 
-const UserProfile = ({ closeUserProfile, changePassword }) => {
+const UserProfile = ({ closeUserProfile }) => {
   const {
     currentColor,
     setColor,
