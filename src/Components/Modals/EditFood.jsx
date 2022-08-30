@@ -25,6 +25,7 @@ const style = {
 };
 
 const EditFood = ({ editId, handleModalClose, foodRefetch }) => {
+  console.log(editId);
   const { currentColor, currentMode } = useStateContext();
   const [variants, setVariants] = useState(1);
   const { register, handleSubmit, setValue } = useForm();
@@ -67,20 +68,23 @@ const EditFood = ({ editId, handleModalClose, foodRefetch }) => {
     handleModalClose();
   };
 
-  const { data } = useQuery([`food/${editId}`], {
-    onSuccess: (data) => {
-      setValue("foodName", data?.food_name);
-      setValue("ingredient", data?.base_ingredient);
-      setValue("detail", data?.food_detail);
-      setValue("taste", data?.taste);
-      setValue("package", data?.packaging);
+  const { data } = useQuery([`food`], () => myAxios(`/food/${editId}`), {
+    onSuccess: ({ data: foodData = [] }) => {
+      console.log(foodData);
+      foodData.map((data) => {
+        setValue("foodName", data?.food_name);
+        setValue("ingredient", data?.base_ingredient);
+        setValue("detail", data?.food_detail);
+        setValue("taste", data?.taste);
+        setValue("package", data?.packaging);
+      });
     },
   });
-
+  console.log(data);
   return (
     <Modal open={Boolean(editId)} onClose={handleModalClose}>
       <Box sx={{ ...style, width: 600, height: 500, overflowY: "scroll" }}>
-        <h2 className="text-3xl font-bold pb-3 text-center">Add Food Item</h2>
+        <h2 className="text-3xl font-bold pb-3 text-center">Edit Food Item</h2>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="space-y-5">
             {/* --FoodName-- */}

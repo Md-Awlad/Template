@@ -27,7 +27,7 @@ const Login = () => {
     setLoading(true);
     try {
       const res = await toast.promise(myAxios.post("/token/", data), {
-        pending: "Signing in...",
+        pending: "Sign in...",
         success: "Welcome back!",
         error: "Sign in failed",
       });

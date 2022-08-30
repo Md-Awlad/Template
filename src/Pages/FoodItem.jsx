@@ -39,7 +39,6 @@ const FoodItem = () => {
       return res.data;
     }
   );
-  console.log(foods);
   return (
     <Container>
       <Modal open={openModal} onClose={handleModalClose}>
@@ -63,7 +62,7 @@ const FoodItem = () => {
         modalOpen={handleModalOpen}
         modalOpenTwo={handleModalOpenTwo}
       />
-      <FoodCategory foods={foods} categories={categories} />
+      <FoodCategory categories={categories} />
     </Container>
   );
 };

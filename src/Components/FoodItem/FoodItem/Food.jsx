@@ -1,7 +1,6 @@
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import React, { useState } from "react";
 import { RiDeleteBin6Line } from "react-icons/ri";
-import { useQuery } from "@tanstack/react-query";
 import { useStateContext } from "../../../Contexts/ContextProvider";
 import { MdModeEdit } from "react-icons/md";
 import DeleteFood from "../../Modals/DeleteFood";
@@ -12,10 +11,7 @@ const Food = ({ category, foodRefetch }) => {
   const [editId, setEditId] = useState(null);
   const [deleteId, setDeleteId] = useState(null);
 
-  const { data: { foodItems_category = [] } = {} } = useQuery([
-    `category/${category}/`,
-  ]);
-
+  const food = category?.foodItems_category?.map((a) => a);
   const columns = [
     { field: "id", headerName: "Id", width: 100 },
     {
@@ -25,7 +21,7 @@ const Food = ({ category, foodRefetch }) => {
       renderCell: (params) => {
         return (
           <div>
-            <img src={params?.row?.image} alt="" />
+            <img className="w-14 h-14" src={params?.row?.image} alt="" />
           </div>
         );
       },
@@ -74,26 +70,21 @@ const Food = ({ category, foodRefetch }) => {
       headerName: "Action",
       width: 150,
       renderCell: ({ row }) => {
-        // const onClick = (e) => {
-        //   e.stopPropagation();
-        //   setOpenModal(e.currentTarget);
-        // };
         return (
           <div className="flex gap-5 items-center">
             <MdModeEdit
               onClick={() => setEditId(row?.id)}
-              className="text-dark-color dark:text-neutral text-xl cursor-pointer"
+              className="text-gray-600 dark:text-neutral text-xl cursor-pointer"
             />
             <RiDeleteBin6Line
               onClick={() => setDeleteId(row?.id)}
-              className="text-dark-color dark:text-neutral text-xl cursor-pointer"
+              className="text-red-300 dark:text-neutral text-xl cursor-pointer"
             />
           </div>
         );
       },
     },
   ];
-
   return (
     <>
       <div style={{ height: 510, width: "100%" }}>
@@ -120,7 +111,7 @@ const Food = ({ category, foodRefetch }) => {
               color: currentMode === "Dark" ? "#fff" : "#000",
             },
           }}
-          rows={foodItems_category}
+          rows={food}
           columns={columns}
           rowsPerPageOptions={[5]}
           disableSelectionOnClick
@@ -148,7 +139,7 @@ const Food = ({ category, foodRefetch }) => {
         <EditFood
           editId={editId}
           handleModalClose={() => setEditId(null)}
-          categories={foodItems_category}
+          categories={food}
           foodRefetch={foodRefetch}
         />
       )}

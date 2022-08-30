@@ -10,25 +10,26 @@ import React from "react";
 import { toast } from "react-toastify";
 import myAxios from "../../utils/myAxios";
 
-const DeleteCategory = ({ deleteId, handleClose }) => {
+const DeleteCategory = ({ deleteId, handleModalClose }) => {
+
   const queryClient = useQueryClient();
 
   const handleDelete = async () => {
     try {
       await toast.promise(myAxios.delete(`/category/${deleteId}/`), {
-        pending: "Deleting food...",
-        success: "Food Deleted Successfully",
+        pending: "Deleting Category...",
+        success: "Category Deleted Successfully",
         error: "Error Deleting Food",
       });
       queryClient.invalidateQueries("categories");
-      handleClose();
+      handleModalClose();
     } catch (error) {
       console.log(error.response);
     }
   };
 
   return (
-    <Dialog open={Boolean(deleteId)} onClose={handleClose}>
+    <Dialog open={Boolean(deleteId)} onClose={handleModalClose}>
       <DialogContent>
         <DialogContentText
           id="alert-dialog-description"
@@ -41,7 +42,7 @@ const DeleteCategory = ({ deleteId, handleClose }) => {
         <Button onClick={handleDelete} variant="outlined">
           Delete
         </Button>
-        <Button onClick={handleClose} variant="outlined" color="error">
+        <Button onClick={handleModalClose} variant="outlined" color="error">
           Cancel
         </Button>
       </DialogActions>

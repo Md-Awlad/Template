@@ -27,6 +27,7 @@ const App = () => {
     {
       path: "/",
       element: currentUser?.id ? <NavLayout /> : <Login />,
+      // element: <NavLayout />,
       children: [
         {
           path: "dashboard",
