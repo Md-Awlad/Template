@@ -6,7 +6,7 @@ import { useStateContext } from "../../Contexts/ContextProvider";
 import { FiUpload } from "react-icons/fi";
 import { toast } from "react-toastify";
 import { Grid, InputAdornment, Modal } from "@mui/material";
-import { useQueryClient } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import myAxios from "../../utils/myAxios";
 
 const style = {
@@ -52,6 +52,10 @@ const EditCategory = ({ editId, handleClose }) => {
     queryClient.invalidateQueries("category");
     handleClose();
   };
+
+    const { data } = useQuery(`/category/${editId}`, {
+      
+  })
 
   return (
     <Modal open={Boolean(editId)} onClose={handleClose}>

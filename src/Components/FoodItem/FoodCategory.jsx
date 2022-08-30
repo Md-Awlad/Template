@@ -16,10 +16,8 @@ import EditCategory from "../Modals/EditCategory";
 
 const FoodCategory = ({ categories }) => {
   const { currentMode } = useStateContext();
-  const [editId, setEditId] = useState(false);
+  const [editId, setEditId] = useState(null);
   const [deleteId, setDeleteId] = useState(null);
-  console.log(deleteId);
-  // console.log(categories.map((a) => a.id));
   return (
     <div>
       {categories?.map((item, index) => (
@@ -57,7 +55,7 @@ const FoodCategory = ({ categories }) => {
               }}
             >
               <button
-                onClick={() => setEditId(true)}
+                onClick={() => setEditId(item)}
                 className="flex items-center gap-1 bg-teal-700 text-white w-20 py-1 justify-center rounded-md text-sm shadow-lg"
               >
                 <MdModeEdit />

@@ -29,16 +29,17 @@ const Food = ({ category, foodRefetch }) => {
     { field: "food_name", headerName: "Food Name", width: 200 },
     {
       field: "price",
-      headerName: "Price",
+      headerName: "Size & Price",
       width: 250,
       renderCell: ({ value }) => {
         return (
           <div className="overflow-y-auto h-12 w-full">
             {Object.keys(value).map((key) => {
               return (
-                <h6>
-                  {key}:{value[key]}
-                </h6>
+                <div className="flex gap-12 items-center">
+                  <h2>size:{key}</h2>
+                  <h2>Price:{value[key]}</h2>
+                </div>
               );
             })}
           </div>
