@@ -1,5 +1,5 @@
 import { Box, Typography } from "@mui/material";
-import { Fragment, useState } from "react";
+import { Fragment } from "react";
 import { BsCartCheckFill } from "react-icons/bs";
 
 import { MdDashboard, MdFastfood, MdOutlineCancel } from "react-icons/md";
@@ -11,16 +11,16 @@ import { useStateContext } from "../Contexts/ContextProvider";
 const Sidebar = () => {
   const { activeMenu, setActiveMenu, screenSize, currentColor } =
     useStateContext();
-  const [openSubMenu, setOpenSubmenu] = useState(false);
+  // const [openSubMenu, setOpenSubmenu] = useState(false);
   const handleCloseSidebar = () => {
     if (activeMenu && screenSize <= 900) {
       setActiveMenu(false);
     }
   };
-  const handleOpenSubMenu = (e) => {
-    setOpenSubmenu(e);
-    console.log(e);
-  };
+  // const handleOpenSubMenu = (e) => {
+  //   setOpenSubmenu(e);
+  //   console.log(e);
+  // };
   const activeLink =
     "flex  items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg  text-neutral  text-md m-2";
   const smActiveLink =

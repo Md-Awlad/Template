@@ -20,7 +20,6 @@ const Discount = () => {
     ["discount"],
     async () => {
       const res = await myAxios("/create_discount/");
-      console.log(res.data);
       return res.data;
     }
   );

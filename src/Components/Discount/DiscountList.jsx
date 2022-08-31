@@ -1,9 +1,6 @@
 import React, { useState } from "react";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
-import { useQuery } from "@tanstack/react-query";
-import DeleteOrder from "../Modals/DeleteOrder";
-import myAxios from "../../utils/myAxios";
 import { useStateContext } from "../../Contexts/ContextProvider";
 import DeleteDiscount from "../Modals/DeleteDiscount";
 
@@ -24,7 +21,7 @@ const DiscountList = ({ discounts }) => {
       renderCell: ({ row }) => {
         return (
           <RiDeleteBin6Line
-            // onClick={() => setDeleteId(row?.id)}
+            onClick={() => setDeleteId(row.id)}
             className="text-red-400 dark:text-neutral text-xl cursor-pointer"
           />
         );

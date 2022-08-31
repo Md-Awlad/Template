@@ -28,7 +28,7 @@ const style = {
 const AddDiscount = ({ handleModalClose, discountRefetch }) => {
   const { currentColor, currentMode } = useStateContext();
   const [status, setStatus] = useState(false);
-  const [date, setDate] = useState(moment());
+  const [date, setDate] = useState();
   const {
     register,
     handleSubmit,
@@ -127,7 +127,7 @@ const AddDiscount = ({ handleModalClose, discountRefetch }) => {
               label="Expired Date"
               value={date}
               onChange={(newValue) => {
-                setDate(moment(newValue));
+                setDate(newValue);
               }}
               renderInput={(params) => (
                 <TextField size="small" fullWidth {...params} />
