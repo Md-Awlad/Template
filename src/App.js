@@ -7,12 +7,11 @@ import ThemeLayout from "./Components/Layouts/ThemeLayout";
 import { useStateContext } from "./Contexts/ContextProvider";
 import {
   DashBoard,
-  Profile,
   Login,
   Order,
   FoodItem,
-  Settings,
   Register,
+  Discount,
 } from "./Pages";
 import NotFound from "./Components/NotFound/NotFound";
 import { ToastContainer } from "react-toastify";
@@ -41,10 +40,10 @@ const App = () => {
           path: "order",
           element: <Order />,
         },
-        // {
-        //   path: "login",
-        //   element: <Login />,
-        // },
+        {
+          path: "discount",
+          element: <Discount />,
+        },
         {
           path: "register",
           element: <Register />,

@@ -29,15 +29,11 @@ const EditCategory = ({ editId, handleClose }) => {
   const { register, handleSubmit, setValue } = useForm();
   const queryClient = useQueryClient();
 
-  console.log(editId);
-
   const onSubmit = async (data) => {
     const payloadForm = {
       name: data?.category,
       image: data?.image[0],
     };
-
-    console.log(payloadForm);
 
     const response = await toast.promise(
       myAxios.patch(`/category/${editId}/`, payloadForm, {

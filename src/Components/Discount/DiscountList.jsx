@@ -1,49 +1,49 @@
 import React, { useState } from "react";
 import { RiDeleteBin6Line } from "react-icons/ri";
-import { useStateContext } from "../../Contexts/ContextProvider";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { useQuery } from "@tanstack/react-query";
-import myAxios from "../../utils/myAxios";
 import DeleteOrder from "../Modals/DeleteOrder";
+import myAxios from "../../utils/myAxios";
+import { useStateContext } from "../../Contexts/ContextProvider";
 
-const OrderList = () => {
+const DiscountList = () => {
   const { currentColor, currentMode } = useStateContext();
   const [deleteId, setDeleteId] = useState(null);
 
   const columns = [
     { field: "id", headerName: "ID", width: 130 },
-    { field: "name", headerName: "Customer Name", width: 230 },
-    { field: "order_type", headerName: "Order Type", width: 230 },
-    { field: "phone", headerName: "Mobile", width: 200 },
-    {
-      field: "order_items",
-      headerName: "Order Items",
-      width: 250,
-      renderCell: (value) => {
-        return (
-          <div className="w-full h-12 overflow-y-auto">
-            {value?.row?.order_items.map((item) => {
-              return <h2>{item.food_name}</h2>;
-            })}
-          </div>
-        );
-      },
-    },
-    {
-      field: "quantity",
-      headerName: "Quantity",
-      width: 250,
-      renderCell: (value) => {
-        return (
-          <div className="w-full h-12 overflow-y-auto">
-            {value?.row?.note?.order_items.map((item) => {
-              return <h2>{item.quantity}</h2>;
-            })}
-          </div>
-        );
-      },
-    },
-    { field: "price", headerName: "Amount", width: 200 },
+    { field: "notice", headerName: "Notice", width: 230 },
+    { field: "amount", headerName: "Amount", width: 230 },
+    { field: "condition", headerName: "Condition", width: 200 },
+    // {
+    //   field: "order_items",
+    //   headerName: "Order Items",
+    //   width: 250,
+    //   renderCell: (value) => {
+    //     return (
+    //       <div className="w-full h-12 overflow-y-auto">
+    //         {value?.row?.order_items.map((item) => {
+    //           return <h2>{item.food_name}</h2>;
+    //         })}
+    //       </div>
+    //     );
+    //   },
+    // },
+    // {
+    //   field: "quantity",
+    //   headerName: "Quantity",
+    //   width: 250,
+    //   renderCell: (value) => {
+    //     return (
+    //       <div className="w-full h-12 overflow-y-auto">
+    //         {value?.row?.note?.order_items.map((item) => {
+    //           return <h2>{item.quantity}</h2>;
+    //         })}
+    //       </div>
+    //     );
+    //   },
+    // },
+    { field: "date", headerName: "Date", width: 200 },
     {
       field: "action",
       headerName: "Action",
@@ -51,7 +51,7 @@ const OrderList = () => {
       renderCell: ({ row }) => {
         return (
           <RiDeleteBin6Line
-            onClick={() => setDeleteId(row?.id)}
+            // onClick={() => setDeleteId(row?.id)}
             className="text-red-400 dark:text-neutral text-xl cursor-pointer"
           />
         );
@@ -59,10 +59,11 @@ const OrderList = () => {
     },
   ];
 
-  const { data: orders = [], refetch: orderRefetch } = useQuery(
-    ["order"],
+  const { data: discounts = [], refetch: discountRefetch } = useQuery(
+    ["discount"],
     async () => {
-      const res = await myAxios("/order/");
+      const res = await myAxios("/create_discount/");
+      console.log(res.data);
       return res.data;
     }
   );
@@ -92,7 +93,7 @@ const OrderList = () => {
             color: currentMode === "Dark" ? "#fff" : "#000",
           },
         }}
-        rows={orders}
+        rows={discounts}
         columns={columns}
         rowsPerPageOptions={[5]}
         disableSelectionOnClick
@@ -125,4 +126,4 @@ const OrderList = () => {
   );
 };
 
-export default OrderList;
+export default DiscountList;

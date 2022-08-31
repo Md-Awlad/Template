@@ -2,11 +2,8 @@ import { Box, Typography } from "@mui/material";
 import { Fragment, useState } from "react";
 import { BsCartCheckFill } from "react-icons/bs";
 
-import {
-  MdDashboard,
-  MdFastfood,
-  MdOutlineCancel,
-} from "react-icons/md";
+import { MdDashboard, MdFastfood, MdOutlineCancel } from "react-icons/md";
+import { GrAnnounce } from "react-icons/gr";
 import { Link, NavLink } from "react-router-dom";
 import logo from "../image/logo.png";
 import { useStateContext } from "../Contexts/ContextProvider";
@@ -48,7 +45,6 @@ const Sidebar = () => {
                 px: 1,
                 mt: 2,
               }}
-              // className="items-center gap-3 ml-3 mt-4 flex text-xl font-extrabold tracking-tight dark:text-neutral text-slate-900"
             >
               <Box
                 component="img"
@@ -103,6 +99,17 @@ const Sidebar = () => {
             >
               <BsCartCheckFill />
               <span className="capitalize ">order</span>
+            </NavLink>
+            <NavLink
+              to="/discount"
+              onClick={handleCloseSidebar}
+              style={({ isActive }) => ({
+                backgroundColor: isActive ? currentColor : "",
+              })}
+              className={({ isActive }) => (isActive ? activeLink : normalLink)}
+            >
+              <GrAnnounce />
+              <span className="capitalize ">discount</span>
             </NavLink>
           </div>
         </Fragment>
@@ -159,6 +166,18 @@ const Sidebar = () => {
               }
             >
               <BsCartCheckFill className="text-3xl" />
+            </NavLink>
+            <NavLink
+              to="/discount"
+              onClick={handleCloseSidebar}
+              style={({ isActive }) => ({
+                backgroundColor: isActive ? currentColor : "",
+              })}
+              className={({ isActive }) =>
+                isActive ? smActiveLink : smNormalLink
+              }
+            >
+              <GrAnnounce className="text-3xl" />
             </NavLink>
           </div>
         </Fragment>

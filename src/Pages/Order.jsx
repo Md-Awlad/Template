@@ -8,7 +8,7 @@ const Order = () => {
     <Container>
       
       <PageTitle
-        headingText="order list"
+        headingText="order"
         pageName="order"
       />
       <OrderList />
