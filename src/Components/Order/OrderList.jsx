@@ -94,6 +94,7 @@ const OrderList = () => {
         }}
         rows={orders}
         columns={columns}
+        orderRefetch={orderRefetch}
         rowsPerPageOptions={[5]}
         disableSelectionOnClick
         disableColumnFilter

@@ -3,7 +3,7 @@ import { Fragment, useState } from "react";
 import { BsCartCheckFill } from "react-icons/bs";
 
 import { MdDashboard, MdFastfood, MdOutlineCancel } from "react-icons/md";
-import { GrAnnounce } from "react-icons/gr";
+import { TbShoppingCartDiscount } from "react-icons/tb";
 import { Link, NavLink } from "react-router-dom";
 import logo from "../image/logo.png";
 import { useStateContext } from "../Contexts/ContextProvider";
@@ -108,7 +108,7 @@ const Sidebar = () => {
               })}
               className={({ isActive }) => (isActive ? activeLink : normalLink)}
             >
-              <GrAnnounce />
+              <TbShoppingCartDiscount />
               <span className="capitalize ">discount</span>
             </NavLink>
           </div>
@@ -177,7 +177,7 @@ const Sidebar = () => {
                 isActive ? smActiveLink : smNormalLink
               }
             >
-              <GrAnnounce className="text-3xl" />
+              <TbShoppingCartDiscount className="text-3xl" />
             </NavLink>
           </div>
         </Fragment>

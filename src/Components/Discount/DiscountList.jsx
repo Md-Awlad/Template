@@ -5,8 +5,9 @@ import { useQuery } from "@tanstack/react-query";
 import DeleteOrder from "../Modals/DeleteOrder";
 import myAxios from "../../utils/myAxios";
 import { useStateContext } from "../../Contexts/ContextProvider";
+import DeleteDiscount from "../Modals/DeleteDiscount";
 
-const DiscountList = () => {
+const DiscountList = ({ discounts }) => {
   const { currentColor, currentMode } = useStateContext();
   const [deleteId, setDeleteId] = useState(null);
 
@@ -15,35 +16,7 @@ const DiscountList = () => {
     { field: "notice", headerName: "Notice", width: 230 },
     { field: "amount", headerName: "Amount", width: 230 },
     { field: "condition", headerName: "Condition", width: 200 },
-    // {
-    //   field: "order_items",
-    //   headerName: "Order Items",
-    //   width: 250,
-    //   renderCell: (value) => {
-    //     return (
-    //       <div className="w-full h-12 overflow-y-auto">
-    //         {value?.row?.order_items.map((item) => {
-    //           return <h2>{item.food_name}</h2>;
-    //         })}
-    //       </div>
-    //     );
-    //   },
-    // },
-    // {
-    //   field: "quantity",
-    //   headerName: "Quantity",
-    //   width: 250,
-    //   renderCell: (value) => {
-    //     return (
-    //       <div className="w-full h-12 overflow-y-auto">
-    //         {value?.row?.note?.order_items.map((item) => {
-    //           return <h2>{item.quantity}</h2>;
-    //         })}
-    //       </div>
-    //     );
-    //   },
-    // },
-    { field: "date", headerName: "Date", width: 200 },
+    { field: "expired_at ", headerName: "Expired Date", width: 200 },
     {
       field: "action",
       headerName: "Action",
@@ -58,15 +31,6 @@ const DiscountList = () => {
       },
     },
   ];
-
-  const { data: discounts = [], refetch: discountRefetch } = useQuery(
-    ["discount"],
-    async () => {
-      const res = await myAxios("/create_discount/");
-      console.log(res.data);
-      return res.data;
-    }
-  );
 
   return (
     <div style={{ height: 510, width: "100%" }}>
@@ -117,7 +81,7 @@ const DiscountList = () => {
         // disableSelectionOnClick
       />
       {Boolean(deleteId) && (
-        <DeleteOrder
+        <DeleteDiscount
           deleteId={deleteId}
           handleClose={() => setDeleteId(null)}
         />
