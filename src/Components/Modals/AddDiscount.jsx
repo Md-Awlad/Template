@@ -58,7 +58,7 @@ const AddDiscount = ({ handleModalClose, discountRefetch }) => {
         },
       }),
       {
-        pending: "Adding Discount...",
+        pending: "Adding Discount....",
         success: "Discount Added",
         error: "Error Adding Discount!",
       }
@@ -132,7 +132,7 @@ const AddDiscount = ({ handleModalClose, discountRefetch }) => {
               renderInput={(params) => (
                 <TextField size="small" fullWidth {...params} />
               )}
-            />
+            /> 
           </Grid>
           {/* <--Status--> */}
           <FormControl fullWidth>
