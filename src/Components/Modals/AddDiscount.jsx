@@ -9,6 +9,7 @@ import myAxios from "../../utils/myAxios";
 import moment from "moment";
 import { DatePicker } from "@mui/x-date-pickers";
 import { useState } from "react";
+import { format } from "date-fns";
 
 const style = {
   position: "absolute",
@@ -28,7 +29,7 @@ const style = {
 const AddDiscount = ({ handleModalClose, discountRefetch }) => {
   const { currentColor, currentMode } = useStateContext();
   const [status, setStatus] = useState(false);
-  const [date, setDate] = useState();
+  const [date, setDate] = useState(moment());
   const {
     register,
     handleSubmit,
@@ -45,7 +46,7 @@ const AddDiscount = ({ handleModalClose, discountRefetch }) => {
     payloadForm.append("amount", data?.amount);
     payloadForm.append("condition", data?.condition);
     payloadForm.append("is_fixed", status);
-    payloadForm.append("expired_at", date);
+    payloadForm.append("expired_at", date.format("YYYY-MM-DD"));
 
     for (const value of payloadForm.values()) {
       console.log(value);
@@ -127,12 +128,12 @@ const AddDiscount = ({ handleModalClose, discountRefetch }) => {
               label="Expired Date"
               value={date}
               onChange={(newValue) => {
-                setDate(newValue);
+                setDate(moment(newValue));
               }}
               renderInput={(params) => (
                 <TextField size="small" fullWidth {...params} />
               )}
-            /> 
+            />
           </Grid>
           {/* <--Status--> */}
           <FormControl fullWidth>

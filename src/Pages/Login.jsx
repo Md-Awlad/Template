@@ -2,8 +2,6 @@ import { Grid, InputAdornment, TextField } from "@mui/material";
 import { useQueryClient } from "@tanstack/react-query";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
-import LoginIcon from "@mui/icons-material/Login";
 import { toast } from "react-toastify";
 import { FaUserAlt } from "react-icons/fa";
 import { useStateContext } from "../Contexts/ContextProvider";
