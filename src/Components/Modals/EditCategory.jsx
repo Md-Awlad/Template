@@ -29,9 +29,11 @@ const EditCategory = ({ editId, handleClose }) => {
   const { register, handleSubmit, setValue } = useForm();
   const queryClient = useQueryClient();
 
+  console.log(editId);
+
   const onSubmit = async (data) => {
     const payloadForm = {
-      category: data?.category,
+      name: data?.category,
       image: data?.image[0],
     };
 
@@ -44,18 +46,26 @@ const EditCategory = ({ editId, handleClose }) => {
         },
       }),
       {
-        pending: "Adding Foods...",
-        success: "Food Added",
-        error: "Error Adding Foods!",
+        pending: "Adding Category...",
+        success: "Category Added",
+        error: "Error Adding category!",
       }
     );
     queryClient.invalidateQueries("category");
     handleClose();
   };
 
-    const { data } = useQuery(`/category/${editId}`, {
-      
-  })
+  const { data } = useQuery(
+    [`categories`],
+    () => myAxios(`/category/${editId}`),
+    {
+      onSuccess: ({ data: categoryData = [] }) => {
+        categoryData.map((data) => {
+          setValue("category", data?.name);
+        });
+      },
+    }
+  );
 
   return (
     <Modal open={Boolean(editId)} onClose={handleClose}>
@@ -75,6 +85,7 @@ const EditCategory = ({ editId, handleClose }) => {
               md={6}
             >
               <TextField
+                InputLabelProps={{ shrink: true }}
                 id="category"
                 label="Name of Category"
                 type="text"

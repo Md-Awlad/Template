@@ -55,7 +55,7 @@ const FoodCategory = ({ categories }) => {
               }}
             >
               <button
-                onClick={() => setEditId(item)}
+                onClick={() => setEditId(item.id)}
                 className="flex items-center gap-1 bg-teal-700 text-white w-20 py-1 justify-center rounded-md text-sm shadow-lg"
               >
                 <MdModeEdit />

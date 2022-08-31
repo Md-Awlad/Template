@@ -36,7 +36,7 @@ const Food = ({ category, foodRefetch }) => {
           <div className="overflow-y-auto h-12 w-full">
             {Object.keys(value).map((key) => {
               return (
-                <div className="flex gap-12 items-center">
+                <div className="grid grid-cols-2">
                   <h2>size:{key}</h2>
                   <h2>Price:{value[key]}</h2>
                 </div>
