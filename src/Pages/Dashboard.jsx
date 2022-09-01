@@ -1,10 +1,5 @@
 import { Container } from "@mui/material";
-import DoughnutChart from "../Components/Charts/DoughnutChart";
-import AvailablePackage from "../Components/Dashboard/Card/AvailablePackage";
-import AvailableSMS from "../Components/Dashboard/Card/AvailableSMS";
-import Campaign from "../Components/Dashboard/Card/Campaign";
-import Last from "../Components/Dashboard/Card/Last";
-import Chart from "../Components/Dashboard/Chart";
+import LineChart from "../Components/Charts/Chart";
 
 const DashBoard = () => {
   return (
@@ -17,6 +12,7 @@ const DashBoard = () => {
           <p className="text-sm my-2 font-medium capitalize">Dashboard</p>
         </div>
       </div>
+      <LineChart />
     </Container>
   );
 };

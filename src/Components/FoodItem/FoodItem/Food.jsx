@@ -46,6 +46,7 @@ const Food = ({ category, foodRefetch }) => {
         );
       },
     },
+    { field: "discount_price", headerName: "Discount Price", width: 208 },
     { field: "food_detail", headerName: "Details", width: 208 },
     { field: "review", headerName: "Review", width: 130 },
     {

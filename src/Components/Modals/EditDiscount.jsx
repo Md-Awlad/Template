@@ -18,6 +18,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import myAxios from "../../utils/myAxios";
 import moment from "moment";
 import { DatePicker } from "@mui/x-date-pickers";
+import { useEffect } from "react";
 
 const style = {
   position: "absolute",
@@ -36,15 +37,11 @@ const style = {
 
 const EditDiscount = ({ editId, handleClose }) => {
   const { currentColor, currentMode } = useStateContext();
-  const [status, setStatus] = useState(false);
   const [date, setDate] = useState(moment());
+  const [status, setStatus] = useState("");
 
   const queryClient = useQueryClient();
   const { register, handleSubmit, setValue } = useForm();
-
-  const handleChange = (e) => {
-    setStatus(e.target.value);
-  };
 
   const onSubmit = async (data) => {
     const payloadForm = new FormData();
@@ -52,36 +49,39 @@ const EditDiscount = ({ editId, handleClose }) => {
     payloadForm.append("amount", data?.amount);
     payloadForm.append("condition", data?.condition);
     payloadForm.append("is_fixed", status);
-    payloadForm.append("expired_at", date.format("YYYY-MM-DD"));
+    payloadForm.append("expired_at", date);
 
     for (const value of payloadForm.values()) {
       console.log(value);
     }
 
     const response = await toast.promise(
-      myAxios.patch("/create_discount/", payloadForm, {
+      myAxios.patch(`/create_discount/${editId}/`, payloadForm, {
         headers: {
           "content-type": "multipart/form-data",
         },
       }),
       {
-        pending: "Adding Discount....",
+        pending: "Editing Discount....",
         success: "Discount Added",
-        error: "Error Adding Discount!",
+        error: "Error Editing Discount!",
       }
     );
     queryClient.invalidateQueries("discounts");
     handleClose();
   };
 
-  const { data } = useQuery(
-    [`discounts`],
+  const { data: value } = useQuery(
+    [`discounts`, editId],
     () => myAxios(`/create_discount/${editId}`),
     {
-      onSuccess: ({ data: categoryData = [] }) => {
-        categoryData.map((data) => {
-          setValue("category", data?.name);
-        });
+      onSuccess: ({ data: discount = [] }) => {
+        console.log(discount);
+        setValue("notice", discount?.notice);
+        setValue("amount", discount?.amount);
+        setValue("condition", discount?.condition);
+        setStatus(discount?.is_fixed);
+        setDate(discount?.expired_at);
       },
     }
   );
@@ -106,6 +106,7 @@ const EditDiscount = ({ editId, handleClose }) => {
             >
               <TextField
                 id="notice"
+                InputLabelProps={{ shrink: true }}
                 label="Notice"
                 type="text"
                 {...register("notice")}
@@ -126,6 +127,7 @@ const EditDiscount = ({ editId, handleClose }) => {
             >
               <TextField
                 id="amount"
+                InputLabelProps={{ shrink: true }}
                 label="Amount"
                 type="number"
                 {...register("amount")}
@@ -154,11 +156,12 @@ const EditDiscount = ({ editId, handleClose }) => {
               <Select
                 labelId="selectLabelId"
                 id="selectId"
+                InputLabelProps={{ shrink: true }}
                 size="small"
                 value={status}
-                {...register("status")}
+                // {...register("status")}
                 label="Status"
-                onChange={handleChange}
+                onChange={(e) => setStatus(e.target.value)}
               >
                 <MenuItem value={true}>Active</MenuItem>
                 <MenuItem value={false}>Inactive</MenuItem>
@@ -179,6 +182,7 @@ const EditDiscount = ({ editId, handleClose }) => {
           >
             <TextField
               id="condition"
+              InputLabelProps={{ shrink: true }}
               label="Conditional Amount"
               type="number"
               {...register("condition")}

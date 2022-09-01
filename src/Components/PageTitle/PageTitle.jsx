@@ -31,11 +31,11 @@ const PageTitle = ({
             style={{ backgroundColor: currentColor }}
             className="px-3 py-2 text-sm rounded-md text-neutral flex items-center gap-1 font-medium hover:opacity-80 capitalize"
           >
-            {editIcon ? (
+            {/* {editIcon ? (
               <BiEditAlt className="inline text-xs font-bold " />
             ) : (
               <ImPlus className="inline text-xs font-bold " />
-            )}
+            )} */}
             {buttonText}
           </button>
         )}
@@ -45,11 +45,6 @@ const PageTitle = ({
             style={{ backgroundColor: currentColor }}
             className="px-3 py-2 text-sm rounded-md text-neutral flex items-center gap-1 font-medium hover:opacity-80 capitalize"
           >
-            {editIcon ? (
-              <BiEditAlt className="inline text-xs font-bold " />
-            ) : (
-              <ImPlus className="inline text-xs font-bold " />
-            )}
             {buttonTextTwo}
           </button>
         )}

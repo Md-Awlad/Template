@@ -71,7 +71,7 @@ const AddDiscount = ({ handleModalClose, discountRefetch }) => {
   };
 
   return (
-    <Box sx={{ ...style }}>
+    <Box sx={{ ...style, width: 600 }}>
       <h2 className="text-xl font-bold pb-3">Add Discount</h2>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
         <div className="grid grid-cols-2 gap-4">
