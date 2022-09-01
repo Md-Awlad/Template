@@ -1,5 +1,7 @@
 import { Container } from "@mui/material";
-import LineChart from "../Components/Charts/Chart";
+import FoodChart from "../Components/Charts/FoodChart";
+import ItemChart from "../Components/Charts/ItemChart";
+import OrderChart from "../Components/Charts/OrderChart";
 
 const DashBoard = () => {
   return (
@@ -12,7 +14,19 @@ const DashBoard = () => {
           <p className="text-sm my-2 font-medium capitalize">Dashboard</p>
         </div>
       </div>
-      <LineChart />
+      <div className="space-y-10">
+        <div className="grid md:grid-cols-2 md:gap-16 gap-4">
+          <div className="bg-neutral dark:bg-secondary-dark-bg dark:text-neutral text-center px-4 py-3 border rounded-md text-2xl font-semibold shadow-sm dark:border-gray-700">
+            <h2>Total Item</h2>
+            {/* <ItemChart /> */}
+          </div>
+          <div className="bg-neutral dark:bg-secondary-dark-bg dark:text-neutral text-center px-4 py-3 border rounded-md text-2xl font-semibold shadow-sm dark:border-gray-700">
+            <h2>Total Order</h2>
+            {/* <OrderChart /> */}
+          </div>
+        </div>
+        <FoodChart />
+      </div>
     </Container>
   );
 };
