@@ -46,7 +46,34 @@ const Food = ({ category, foodRefetch }) => {
         );
       },
     },
-    { field: "discount_price", headerName: "Discount Price", width: 208 },
+    {
+      field: "discount_price",
+      headerName: "Discount Price",
+      width: 208,
+      renderCell: ({ value }) => {
+        console.log(value);
+        if (value) {
+          return (
+            <div className="overflow-y-auto h-12 w-full">
+              {Object.keys(value).map((key) => {
+                return (
+                  <div className="grid grid-cols-2">
+                    <h2>size:{key}</h2>
+                    <h2>Price:{value[key]}</h2>
+                  </div>
+                );
+              })}
+            </div>
+          );
+        } else {
+          return (
+            <div className="grid grid-cols-2">
+              <h2>0</h2>
+            </div>
+          );
+        }
+      },
+    },
     { field: "food_detail", headerName: "Details", width: 208 },
     { field: "review", headerName: "Review", width: 130 },
     {
@@ -87,6 +114,7 @@ const Food = ({ category, foodRefetch }) => {
       },
     },
   ];
+  console.log(food);
   return (
     <>
       <div style={{ height: 510, width: "100%" }}>

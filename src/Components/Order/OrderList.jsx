@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { FaEye } from "react-icons/fa";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { useStateContext } from "../../Contexts/ContextProvider";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
@@ -9,6 +10,7 @@ import DeleteOrder from "../Modals/DeleteOrder";
 const OrderList = () => {
   const { currentColor, currentMode } = useStateContext();
   const [deleteId, setDeleteId] = useState(null);
+  const [complete, setComplete] = useState(false);
 
   const columns = [
     { field: "id", headerName: "ID", width: 130 },
@@ -47,13 +49,28 @@ const OrderList = () => {
     {
       field: "action",
       headerName: "Action",
-      width: 150,
+      width: 250,
       renderCell: ({ row }) => {
         return (
-          <RiDeleteBin6Line
-            onClick={() => setDeleteId(row?.id)}
-            className="text-red-400 dark:text-neutral text-xl cursor-pointer"
-          />
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => setDeleteId(row.id)}
+              className="flex items-center gap-1 bg-red-400 text-white w-20 py-1 justify-center rounded-md text-sm shadow-lg"
+            >
+              <RiDeleteBin6Line />
+              <h3>Delete</h3>
+            </button>
+            {complete ? (
+              <button className="bg-green-800 text-white border px-3 py-1 text-sm font-medium rounded-md">
+                Complete
+              </button>
+            ) : (
+              <button className="bg-yellow-700 text-white border px-3 py-1 text-sm font-medium rounded-md">
+                Pending...
+              </button>
+            )}
+            <FaEye />
+          </div>
         );
       },
     },

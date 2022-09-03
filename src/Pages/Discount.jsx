@@ -32,6 +32,15 @@ const Discount = () => {
     }
   );
 
+  const { data: categories = [] } = useQuery(["category"], async () => {
+    const res = await myAxios("/category/");
+    return res.data;
+  });
+  const { data: foods = [] } = useQuery(["food"], async () => {
+    const res = await myAxios("/food/");
+    return res.data;
+  });
+
   return (
     <Container>
       <Modal open={openModal} onClose={handleModalClose}>
@@ -41,7 +50,12 @@ const Discount = () => {
         />
       </Modal>
       <Modal open={discountModal} onClose={handleDiscountModalClose}>
-        <ApplyDiscount handleDiscountModalClose={handleDiscountModalClose} />
+        <ApplyDiscount
+          discounts={discounts}
+          categories={categories}
+          foods={foods}
+          handleDiscountModalClose={handleDiscountModalClose}
+        />
       </Modal>
       <PageTitle
         headingText="discount"

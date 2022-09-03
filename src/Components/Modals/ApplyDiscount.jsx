@@ -3,10 +3,11 @@ import React from "react";
 import TextField from "@mui/material/TextField";
 import { useForm } from "react-hook-form";
 import { useStateContext } from "../../Contexts/ContextProvider";
-import { Grid, InputAdornment } from "@mui/material";
+import { Autocomplete, Grid } from "@mui/material";
 import { toast } from "react-toastify";
 import myAxios from "../../utils/myAxios";
-import { FiUpload } from "react-icons/fi";
+import { useState } from "react";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 const style = {
   position: "absolute",
@@ -23,37 +24,51 @@ const style = {
   pb: 3,
 };
 
-const ApplyDiscount = ({ handleDiscountModalClose }) => {
+const ApplyDiscount = ({ discounts, categories, foods }) => {
   const { currentColor, currentMode } = useStateContext();
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+  const [discount, setDiscount] = useState();
+  const [category, setCategory] = useState();
+  const [food, setFood] = useState();
+  const queryClient = useQueryClient();
+
+  const { handleSubmit } = useForm();
+
+  console.log(discounts.map((a) => a.notice));
 
   const onSubmit = async (data) => {
-    const payloadForm = new FormData();
-    payloadForm.append("discount", data?.discount);
-    payloadForm.append("category", data?.category);
-    payloadForm.append("food", data?.food);
-    console.log(data);
+    const payload = {
+      discount: discount?.map((a) => a.id),
+      category: category?.map((a) => a.id),
+      food: food?.map((a) => a.id),
+    };
 
-    const response = await toast.promise(
-      myAxios.post("/apply_discount/", payloadForm, {
-        headers: {
-          "content-type": "multipart/form-data",
-        },
-      }),
-      {
-        pending: "Adding Categories...",
-        success: "Categories Added",
-        error: "Error Adding Categories!",
-      }
-    );
-    if (response.status === 201) {
-      handleDiscountModalClose();
-    }
+    // const response = await toast.promise(
+    //   myAxios.post("/apply_discount/", payload),
+    //   {
+    // pending: "Adding Discounts...",
+    // success: "Discounts Added",
+    // error: "Error Adding Discounts!",
+    //   }
+    // );
+    // if (response.status === 201) {
+    // }
+    applyDiscount(payload);
   };
+  const { data: organization = {}, refetch } = useQuery(["apply_discount/"]);
+  const { mutate: applyDiscount } = useMutation(
+    (payload) =>
+      toast.promise(myAxios.post("/apply_discount/", payload), {
+        pending: "Adding Discounts...",
+        success: "Discounts Added",
+        error: "Error Adding Discounts!",
+      }),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries("discount");
+        refetch();
+      },
+    }
+  );
 
   return (
     <Box sx={{ ...style }}>
@@ -71,14 +86,17 @@ const ApplyDiscount = ({ handleDiscountModalClose }) => {
           xs={12}
           md={6}
         >
-          <TextField
-            id="discount"
-            label="Discount Price"
-            type="text"
-            error={Boolean(errors.discount)}
-            helperText={errors.discount && "This discount field is required *"}
-            {...register("discount", { required: true })}
-            fullWidth
+          <Autocomplete
+            multiple
+            disablePortal
+            id="combo-box-demo"
+            options={discounts?.map((discount) => discount)}
+            getOptionLabel={(option) => option?.notice}
+            filterSelectedOptions
+            onChange={(_, newValue) => setDiscount(newValue)}
+            renderInput={(params) => (
+              <TextField {...params} label="Discount" fullWidth />
+            )}
           />
         </Grid>
         {/* --category-- */}
@@ -93,14 +111,33 @@ const ApplyDiscount = ({ handleDiscountModalClose }) => {
           xs={12}
           md={6}
         >
-          <TextField
-            id="category"
-            label="Name of Category"
-            type="text"
-            error={Boolean(errors.category)}
-            helperText={errors.category && "This category field is required *"}
-            {...register("category", { required: true })}
-            fullWidth
+          {/* <FormControl fullWidth>
+            <InputLabel id="demo-simple-select-label">Categories</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              label="Categories"
+              onChange={(e) => setCategory(e.target.value)}
+              error={Boolean(errors.category)}
+              helperText={errors.category && "This categories is required *"}
+              {...register("category", { required: true })}
+            >
+              {categories.map((category) => (
+                <MenuItem value={category.id}>{category.name}</MenuItem>
+              ))}
+            </Select>
+          </FormControl> */}
+          <Autocomplete
+            multiple
+            disablePortal
+            id="combo-box-demo"
+            options={categories?.map((category) => category)}
+            getOptionLabel={(option) => option?.name}
+            filterSelectedOptions
+            onChange={(_, newValue) => setCategory(newValue)}
+            renderInput={(params) => (
+              <TextField {...params} label="Categories" fullWidth />
+            )}
           />
         </Grid>
         {/* --food-- */}
@@ -115,17 +152,38 @@ const ApplyDiscount = ({ handleDiscountModalClose }) => {
           xs={12}
           md={6}
         >
-          <TextField
-            id="food"
-            label="Name of Food"
-            type="text"
-            error={Boolean(errors.food)}
-            helperText={errors.food && "This food field is required *"}
-            {...register("food", { required: true })}
-            fullWidth
+          {/* <FormControl fullWidth>
+            <InputLabel id="demo-simple-select-label">Food</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              label="Food"
+              onChange={(e) => setFood(e.target.value)}
+              error={Boolean(errors.food)}
+              helperText={errors.food && "This categories is required *"}
+              {...register("food", { required: true })}
+            >
+              {foods.map((food) => (
+                <MenuItem value={food.id}>{food.food_name}</MenuItem>
+              ))}
+            </Select>
+          </FormControl> */}
+          <Autocomplete
+            multiple
+            disablePortal
+            id="combo-box-demo"
+            options={foods?.map((food) => food)}
+            getOptionLabel={(option) => option?.food_name}
+            filterSelectedOptions
+            onChange={(_, newValue) => setFood(newValue)}
+            renderInput={(params) => (
+              <TextField {...params} label="Food" fullWidth />
+            )}
           />
         </Grid>
+
         <button
+          // onClick={() => organization()}
           type="submit"
           style={{ backgroundColor: currentColor }}
           className="w-full px-8 py-2 rounded-md text-neutral text-lg uppercase"
