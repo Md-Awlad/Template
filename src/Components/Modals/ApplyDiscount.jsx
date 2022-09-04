@@ -7,7 +7,7 @@ import { Autocomplete, Grid } from "@mui/material";
 import { toast } from "react-toastify";
 import myAxios from "../../utils/myAxios";
 import { useState } from "react";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQueryClient } from "@tanstack/react-query";
 
 const style = {
   position: "absolute",
@@ -24,7 +24,12 @@ const style = {
   pb: 3,
 };
 
-const ApplyDiscount = ({ discounts, categories, foods }) => {
+const ApplyDiscount = ({
+  discounts,
+  categories,
+  foods,
+  handleDiscountModalClose,
+}) => {
   const { currentColor, currentMode } = useStateContext();
   const [discount, setDiscount] = useState();
   const [category, setCategory] = useState();
@@ -42,33 +47,17 @@ const ApplyDiscount = ({ discounts, categories, foods }) => {
       food: food?.map((a) => a.id),
     };
 
-    // const response = await toast.promise(
-    //   myAxios.post("/apply_discount/", payload),
-    //   {
-    // pending: "Adding Discounts...",
-    // success: "Discounts Added",
-    // error: "Error Adding Discounts!",
-    //   }
-    // );
-    // if (response.status === 201) {
-    // }
-    applyDiscount(payload);
-  };
-  const { data: organization = {}, refetch } = useQuery(["apply_discount/"]);
-  const { mutate: applyDiscount } = useMutation(
-    (payload) =>
-      toast.promise(myAxios.post("/apply_discount/", payload), {
+    const response = await toast.promise(
+      myAxios.post("/apply_discount/", payload),
+      {
         pending: "Adding Discounts...",
         success: "Discounts Added",
         error: "Error Adding Discounts!",
-      }),
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries("discount");
-        refetch();
-      },
-    }
-  );
+      }
+    );
+    queryClient.invalidateQueries("apply_discount");
+    handleDiscountModalClose();
+  };
 
   return (
     <Box sx={{ ...style }}>
@@ -183,7 +172,6 @@ const ApplyDiscount = ({ discounts, categories, foods }) => {
         </Grid>
 
         <button
-          // onClick={() => organization()}
           type="submit"
           style={{ backgroundColor: currentColor }}
           className="w-full px-8 py-2 rounded-md text-neutral text-lg uppercase"

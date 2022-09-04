@@ -51,7 +51,6 @@ const Food = ({ category, foodRefetch }) => {
       headerName: "Discount Price",
       width: 208,
       renderCell: ({ value }) => {
-        console.log(value);
         if (value) {
           return (
             <div className="overflow-y-auto h-12 w-full">
@@ -107,7 +106,7 @@ const Food = ({ category, foodRefetch }) => {
             />
             <RiDeleteBin6Line
               onClick={() => setDeleteId(row?.id)}
-              className="text-red-300 dark:text-neutral text-xl cursor-pointer"
+              className="text-red-400 dark:text-neutral text-xl cursor-pointer"
             />
           </div>
         );

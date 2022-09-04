@@ -1,19 +1,23 @@
 import React, { useState } from "react";
-import { FaEye } from "react-icons/fa";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { useStateContext } from "../../Contexts/ContextProvider";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { useForm } from "react-hook-form";
 import myAxios from "../../utils/myAxios";
 import DeleteOrder from "../Modals/DeleteOrder";
+import { toast } from "react-toastify";
+import TaskAltIcon from "@mui/icons-material/TaskAlt";
 
 const OrderList = () => {
   const { currentColor, currentMode } = useStateContext();
+  const { handleSubmit } = useForm();
   const [deleteId, setDeleteId] = useState(null);
-  const [complete, setComplete] = useState(false);
+  const [complete, setComplete] = useState();
 
   const columns = [
     { field: "id", headerName: "ID", width: 130 },
+    { field: "table", headerName: "Table Number", width: 130 },
     { field: "name", headerName: "Customer Name", width: 230 },
     { field: "order_type", headerName: "Order Type", width: 230 },
     { field: "phone", headerName: "Mobile", width: 200 },
@@ -53,23 +57,18 @@ const OrderList = () => {
       renderCell: ({ row }) => {
         return (
           <div className="flex items-center gap-3">
-            <button
-              onClick={() => setDeleteId(row.id)}
-              className="flex items-center gap-1 bg-red-400 text-white w-20 py-1 justify-center rounded-md text-sm shadow-lg"
-            >
-              <RiDeleteBin6Line />
-              <h3>Delete</h3>
-            </button>
-            {complete ? (
-              <button className="bg-green-800 text-white border px-3 py-1 text-sm font-medium rounded-md">
-                Complete
+            <RiDeleteBin6Line
+              onClick={() => setDeleteId(row?.id)}
+              className="text-red-400 dark:text-neutral text-xl cursor-pointer"
+            />
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <button
+                onClick={() => setComplete(row.id)}
+                className=" p-1 text-md font-medium text-green-800"
+              >
+                <TaskAltIcon />
               </button>
-            ) : (
-              <button className="bg-yellow-700 text-white border px-3 py-1 text-sm font-medium rounded-md">
-                Pending...
-              </button>
-            )}
-            <FaEye />
+            </form>
           </div>
         );
       },
@@ -83,6 +82,26 @@ const OrderList = () => {
       return res.data;
     }
   );
+  const orderConfirmMutation = useMutation(
+    (payloadForm) =>
+      toast.promise(myAxios.patch(`/order/${complete}/`, payloadForm), {
+        pending: "Process your order...",
+        success: "Confirmed your order",
+        error: "Error order confirmed!",
+      }),
+    {
+      onSuccess: () => {
+        orderRefetch();
+      },
+    }
+  );
+
+  const onSubmit = async (data) => {
+    const payloadForm = {
+      is_done: Boolean(complete),
+    };
+    orderConfirmMutation.mutate(payloadForm);
+  };
 
   return (
     <div style={{ height: 510, width: "100%" }}>
@@ -130,8 +149,6 @@ const OrderList = () => {
             },
           },
         }}
-        // checkboxSelection
-        // disableSelectionOnClick
       />
       {Boolean(deleteId) && (
         <DeleteOrder

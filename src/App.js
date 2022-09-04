@@ -12,6 +12,7 @@ import {
   FoodItem,
   Register,
   Discount,
+  CompleteOrder,
 } from "./Pages";
 import NotFound from "./Components/NotFound/NotFound";
 import { ToastContainer } from "react-toastify";
@@ -39,6 +40,10 @@ const App = () => {
         {
           path: "order",
           element: <Order />,
+        },
+        {
+          path: "completeOrder",
+          element: <CompleteOrder />,
         },
         {
           path: "discount",

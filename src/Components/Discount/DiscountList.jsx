@@ -54,7 +54,7 @@ const DiscountList = ({ discounts }) => {
             />
             <RiDeleteBin6Line
               onClick={() => setDeleteId(row?.id)}
-              className="text-red-300 dark:text-neutral text-xl cursor-pointer"
+              className="text-red-400 dark:text-neutral text-xl cursor-pointer"
             />
           </div>
         );
