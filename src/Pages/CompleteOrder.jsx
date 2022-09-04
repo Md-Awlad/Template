@@ -16,7 +16,7 @@ const CompleteOrder = () => {
   console.log(completes);
   return (
     <Container>
-      <PageTitle headingText="Complete Order List" pageName="Complete" />
+      <PageTitle headingText="Complete Order" pageName="Completed" />
       <CompleteOrderList completes={completes} />
     </Container>
   );

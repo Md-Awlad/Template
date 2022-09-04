@@ -1,9 +1,9 @@
 import { Box, Typography } from "@mui/material";
 import { Fragment } from "react";
 import { BsCartCheckFill } from "react-icons/bs";
-
 import { MdDashboard, MdFastfood, MdOutlineCancel } from "react-icons/md";
 import { TbShoppingCartDiscount } from "react-icons/tb";
+import { FiCheckCircle } from "react-icons/fi";
 import { Link, NavLink } from "react-router-dom";
 import logo from "../image/logo.png";
 import { useStateContext } from "../Contexts/ContextProvider";
@@ -101,6 +101,17 @@ const Sidebar = () => {
               <span className="capitalize ">order</span>
             </NavLink>
             <NavLink
+              to="/completeOrder"
+              onClick={handleCloseSidebar}
+              style={({ isActive }) => ({
+                backgroundColor: isActive ? currentColor : "",
+              })}
+              className={({ isActive }) => (isActive ? activeLink : normalLink)}
+            >
+              <FiCheckCircle />
+              <span className="capitalize ">Completed Order</span>
+            </NavLink>
+            <NavLink
               to="/discount"
               onClick={handleCloseSidebar}
               style={({ isActive }) => ({
@@ -166,6 +177,18 @@ const Sidebar = () => {
               }
             >
               <BsCartCheckFill className="text-3xl" />
+            </NavLink>
+            <NavLink
+              to="/completeOrder"
+              onClick={handleCloseSidebar}
+              style={({ isActive }) => ({
+                backgroundColor: isActive ? currentColor : "",
+              })}
+              className={({ isActive }) =>
+                isActive ? smActiveLink : smNormalLink
+              }
+            >
+              <FiCheckCircle className="text-3xl" />
             </NavLink>
             <NavLink
               to="/discount"
