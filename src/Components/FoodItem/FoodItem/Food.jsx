@@ -113,7 +113,6 @@ const Food = ({ category, foodRefetch }) => {
       },
     },
   ];
-  console.log(food);
   return (
     <>
       <div style={{ height: 510, width: "100%" }}>

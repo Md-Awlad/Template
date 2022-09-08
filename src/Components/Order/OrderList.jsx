@@ -82,6 +82,9 @@ const OrderList = () => {
       return res.data;
     }
   );
+
+  console.log(orders);
+
   const orderConfirmMutation = useMutation(
     (payloadForm) =>
       toast.promise(myAxios.patch(`/order/${complete}/`, payloadForm), {

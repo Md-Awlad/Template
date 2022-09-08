@@ -31,6 +31,7 @@ const FoodItem = () => {
       return res.data;
     }
   );
+  console.log(categories);
 
   const { data: foods = [], refetch: foodRefetch } = useQuery(
     ["food"],

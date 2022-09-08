@@ -6,13 +6,10 @@ import PageTitle from "../Components/PageTitle/PageTitle";
 import myAxios from "../utils/myAxios";
 
 const CompleteOrder = () => {
-  const { data: completes = [], refetch: orderRefetch } = useQuery(
-    ["complete"],
-    async () => {
-      const res = await myAxios("/complete-orders/");
-      return res.data;
-    }
-  );
+  const { data: completes = [] } = useQuery(["complete"], async () => {
+    const res = await myAxios("/complete-orders/");
+    return res.data;
+  });
   console.log(completes);
   return (
     <Container>
