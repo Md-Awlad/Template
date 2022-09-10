@@ -1,0 +1,19 @@
+import { Container } from "@mui/material";
+import OrderList from "../../Components/Admin/Order/OrderList";
+import PageTitle from "../../Components/PageTitle/PageTitle";
+
+const Order = () => {
+  
+  return (
+    <Container>
+      
+      <PageTitle
+        headingText="order"
+        pageName="order"
+      />
+      <OrderList />
+    </Container>
+  );
+};
+
+export default Order;

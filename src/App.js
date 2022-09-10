@@ -13,6 +13,7 @@ import {
   Register,
   Discount,
   CompleteOrder,
+  LandingPage,
 } from "./Pages";
 import NotFound from "./Components/NotFound/NotFound";
 import { ToastContainer } from "react-toastify";
@@ -20,14 +21,19 @@ import MainLoader from "./Components/Loaders/MainLoader";
 
 const App = () => {
   const { currentMode, currentUser, isLoading } = useStateContext();
-  // console.log(currentUser);
-  // console.log(isLoading);
 
   const routes = [
     {
-      path: "/",
+      path: "",
+      element: <LandingPage />,
+    },
+    {
+      path: "*",
+      element: <NotFound />,
+    },
+    {
+      path: "/admin",
       element: currentUser?.id ? <NavLayout /> : <Login />,
-      // element: <NavLayout />,
       children: [
         {
           path: "dashboard",

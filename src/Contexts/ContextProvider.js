@@ -20,6 +20,8 @@ export const ContextProvider = ({ children }) => {
   const [themeSettings, setThemeSettings] = useState(false);
   const [activeMenu, setActiveMenu] = useState(true);
   const [currentPass, setCurrentPass] = useState(null);
+  const [cart, setCart] = useState([]);
+  const [checkbox, setCheckbox] = useState();
 
   const {
     isLoading,
@@ -72,6 +74,10 @@ export const ContextProvider = ({ children }) => {
         setColor,
         themeSettings,
         setThemeSettings,
+        cart,
+        setCart,
+        checkbox,
+        setCheckbox,
       }}
     >
       {children}
