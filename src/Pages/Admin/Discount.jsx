@@ -1,4 +1,4 @@
-import { Container, Modal } from "@mui/material";
+import { Box, Container, Modal, Tab, Tabs, Typography } from "@mui/material";
 import React, { useState } from "react";
 import PageTitle from "../../Components/PageTitle/PageTitle";
 import { useQuery } from "@tanstack/react-query";
@@ -6,10 +6,45 @@ import myAxios from "../../utils/myAxios";
 import AddDiscount from "../../Components/Modals/Admin/AddDiscount";
 import ApplyDiscount from "../../Components/Modals/Admin/ApplyDiscount";
 import DiscountList from "../../Components/Admin/Discount/DiscountList";
+import ApplyDiscountList from "../../Components/Admin/Discount/ApplyDiscountList";
+import { useStateContext } from "../../Contexts/ContextProvider";
+
+function TabPanel(props) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box>
+          <Typography>{children}</Typography>
+        </Box>
+      )}
+    </div>
+  );
+}
+
+function a11yProps(index) {
+  return {
+    id: `simple-tab-${index}`,
+    "aria-controls": `simple-tabpanel-${index}`,
+  };
+}
 
 const Discount = () => {
+  const { currentColor, currentMode } = useStateContext();
   const [openModal, setOpenModal] = useState(false);
   const [discountModal, setDiscountModal] = useState(false);
+  const [value, setValue] = useState(0);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
 
   const handleModalOpen = (e) => {
     setOpenModal(true);
@@ -32,10 +67,19 @@ const Discount = () => {
     }
   );
 
+  const { data: applyDiscount = [], refetch: applyRefetch } = useQuery(
+    ["applyDiscounts"],
+    async () => {
+      const res = await myAxios("/apply_discount/");
+      return res.data;
+    }
+  );
+
   const { data: categories = [] } = useQuery(["category"], async () => {
     const res = await myAxios("/category/");
     return res.data;
   });
+
   const { data: foods = [] } = useQuery(["food"], async () => {
     const res = await myAxios("/food/");
     return res.data;
@@ -65,7 +109,56 @@ const Discount = () => {
         modalOpen={handleModalOpen}
         modalOpenTwo={handleDiscountModalOpen}
       />
-      <DiscountList discounts={discounts} handleModalClose={handleModalClose} />
+
+      <Box>
+        <Tabs
+          value={value}
+          onChange={handleChange}
+          aria-label="basic tabs example"
+          variant="scrollable"
+          scrollButtons="auto"
+          allowScrollButtonsMobile
+          sx={{
+            "& button": {
+              borderRadius: "5px 5px 0 0 ",
+              color: `${currentMode === "Light" ? "#000" : "#fff"}`,
+            },
+            "& button.Mui-selected": {
+              backgroundColor: `${currentColor}`,
+              color: "white",
+              "&:hover": {
+                backgroundColor: `${currentColor}`,
+                color: "white",
+              },
+            },
+            "& button:hover": {
+              backgroundColor: `${
+                currentMode === "Light" ? "#fff" : "#33373E"
+              }`,
+              color: `${currentMode === "Light" ? "#000" : "#fff"}`,
+            },
+          }}
+        >
+          <Tab label="Discount Information" {...a11yProps(0)} />
+          <Tab label="Apply Discount" {...a11yProps(1)} />
+        </Tabs>
+        {/* --dineIn-- */}
+        <TabPanel value={value} index={0}>
+          <DiscountList
+            discounts={discounts}
+            handleModalClose={handleModalClose}
+          />
+        </TabPanel>
+        {/* --takeaway-- */}
+        <TabPanel value={value} index={1}>
+          <ApplyDiscountList
+            applyDiscount={applyDiscount}
+            applyRefetch={applyRefetch}
+            categories={categories}
+            foods={foods}
+          />
+        </TabPanel>
+      </Box>
     </Container>
   );
 };

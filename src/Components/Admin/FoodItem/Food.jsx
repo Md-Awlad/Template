@@ -13,27 +13,47 @@ const Food = ({ category, foodRefetch }) => {
 
   const food = category?.foodItems_category?.map((a) => a);
   const columns = [
-    { field: "id", headerName: "Id", width: 100 },
+    {
+      field: "id",
+      headerName: "Id",
+      width: 100,
+      headerAlign: "center",
+      align: "center",
+    },
     {
       field: "image",
       headerName: "Image",
       width: 200,
+      headerAlign: "center",
+      align: "center",
       renderCell: (params) => {
         return (
           <div>
-            <img className="w-14 h-14" src={params?.row?.image} alt="" />
+            <img
+              className="w-14 h-14 object-contain"
+              src={params?.row?.image}
+              alt=""
+            />
           </div>
         );
       },
     },
-    { field: "food_name", headerName: "Food Name", width: 200 },
+    {
+      field: "food_name",
+      headerName: "Food Name",
+      width: 200,
+      headerAlign: "center",
+      align: "center",
+    },
     {
       field: "price",
       headerName: "Size & Price",
       width: 250,
+      headerAlign: "center",
+      align: "center",
       renderCell: ({ value }) => {
         return (
-          <div className="overflow-y-auto h-12 w-full">
+          <div className="overflow-y-auto h-12 w-full mt-7">
             {Object.keys(value).map((key) => {
               return (
                 <div className="grid grid-cols-2">
@@ -50,11 +70,13 @@ const Food = ({ category, foodRefetch }) => {
       field: "discount_price",
       headerName: "Discount Price",
       width: 208,
+      headerAlign: "center",
+      align: "center",
       renderCell: ({ value }) => {
         if (value) {
           return (
-            <div className="overflow-y-auto h-12 w-full">
-              {Object.keys(value).map((key) => {
+            <div className="overflow-y-auto h-12 w-full mt-7">
+              {Object.keys(value)?.map((key) => {
                 return (
                   <div className="grid grid-cols-2">
                     <h2>size:{key}</h2>
@@ -73,12 +95,19 @@ const Food = ({ category, foodRefetch }) => {
         }
       },
     },
-    { field: "food_detail", headerName: "Details", width: 208 },
-    { field: "review", headerName: "Review", width: 130 },
+    {
+      field: "food_detail",
+      headerName: "Details",
+      width: 208,
+      headerAlign: "center",
+    },
+    { field: "review", headerName: "Review", width: 130, align: "center" },
     {
       field: "is_recommended",
       headerName: "Recommended",
       width: 130,
+      headerAlign: "center",
+      align: "center",
       renderCell: (params) => {
         return (
           <div
@@ -97,6 +126,8 @@ const Food = ({ category, foodRefetch }) => {
       field: "action",
       headerName: "Action",
       width: 150,
+      headerAlign: "center",
+      align: "center",
       renderCell: ({ row }) => {
         return (
           <div className="flex gap-5 items-center">
@@ -118,7 +149,6 @@ const Food = ({ category, foodRefetch }) => {
       <div style={{ height: 510, width: "100%" }}>
         <DataGrid
           sx={{
-            "& .MuiDataGrid-columnHeader": { backgroundColor: "#FFC446" },
             color: currentMode === "Dark" ? "#fff" : "#000",
             "& .MuiIconButton-root": {
               color: "unset !important",
@@ -159,8 +189,6 @@ const Food = ({ category, foodRefetch }) => {
               },
             },
           }}
-          // checkboxSelection
-          // disableSelectionOnClick
         />
       </div>
       {Boolean(editId) && (

@@ -3,8 +3,10 @@ import { Box } from "@mui/system";
 import Grid from "@mui/material/Grid";
 import MenuTabs from "../MenuTabs/MenuTabs";
 import Cart from "../../Cart/Cart";
+import { useStateContext } from "../../../../Contexts/ContextProvider";
 
 const Menu = () => {
+  const { activeMenu } = useStateContext();
   return (
     <Box
       sx={{
@@ -20,9 +22,11 @@ const Menu = () => {
         <Grid item xs={12} md={8}>
           <MenuTabs />
         </Grid>
-        <Grid item xs={12} md={4}>
-          <Cart />
-        </Grid>
+        {activeMenu ? (
+          <Grid item xs={12} md={4}>
+            <Cart />
+          </Grid>
+        ):[]}
       </Grid>
     </Box>
   );

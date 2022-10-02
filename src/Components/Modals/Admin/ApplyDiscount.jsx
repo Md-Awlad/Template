@@ -8,6 +8,8 @@ import { toast } from "react-toastify";
 import myAxios from "../../../utils/myAxios";
 import { useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
+import moment from "moment";
+import { DatePicker } from "@mui/x-date-pickers";
 
 const style = {
   position: "absolute",
@@ -34,6 +36,7 @@ const ApplyDiscount = ({
   const [discount, setDiscount] = useState();
   const [category, setCategory] = useState();
   const [food, setFood] = useState();
+  const [date, setDate] = useState(moment());
   const queryClient = useQueryClient();
 
   const { handleSubmit } = useForm();
@@ -45,6 +48,7 @@ const ApplyDiscount = ({
       discount: discount?.map((a) => a.id),
       category: category?.map((a) => a.id),
       food: food?.map((a) => a.id),
+      date: date?.expired_at,
     };
 
     const response = await toast.promise(
@@ -100,22 +104,6 @@ const ApplyDiscount = ({
           xs={12}
           md={6}
         >
-          {/* <FormControl fullWidth>
-            <InputLabel id="demo-simple-select-label">Categories</InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              label="Categories"
-              onChange={(e) => setCategory(e.target.value)}
-              error={Boolean(errors.category)}
-              helperText={errors.category && "This categories is required *"}
-              {...register("category", { required: true })}
-            >
-              {categories.map((category) => (
-                <MenuItem value={category.id}>{category.name}</MenuItem>
-              ))}
-            </Select>
-          </FormControl> */}
           <Autocomplete
             multiple
             disablePortal
@@ -141,22 +129,6 @@ const ApplyDiscount = ({
           xs={12}
           md={6}
         >
-          {/* <FormControl fullWidth>
-            <InputLabel id="demo-simple-select-label">Food</InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              label="Food"
-              onChange={(e) => setFood(e.target.value)}
-              error={Boolean(errors.food)}
-              helperText={errors.food && "This categories is required *"}
-              {...register("food", { required: true })}
-            >
-              {foods.map((food) => (
-                <MenuItem value={food.id}>{food.food_name}</MenuItem>
-              ))}
-            </Select>
-          </FormControl> */}
           <Autocomplete
             multiple
             disablePortal
@@ -170,7 +142,19 @@ const ApplyDiscount = ({
             )}
           />
         </Grid>
-
+        <Grid item xs={12} md={6}>
+          <DatePicker
+            id="date"
+            label="Expired Date"
+            value={date}
+            onChange={(newValue) => {
+              setDate(moment(newValue));
+            }}
+            renderInput={(params) => (
+              <TextField size="small" fullWidth {...params} />
+            )}
+          />
+        </Grid>
         <button
           type="submit"
           style={{ backgroundColor: currentColor }}

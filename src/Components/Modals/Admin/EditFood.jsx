@@ -117,9 +117,10 @@ const EditFood = ({ editId, handleModalClose }) => {
               >
                 Add Size and Price
               </Button>
-              {new Array(variants).fill(null).map((item, index) => {
+              {new Array(variants).fill(null)?.map((item, index) => {
                 return (
                   <Box
+                    key={index}
                     sx={{
                       display: "flex",
                       alignItems: "center",

@@ -38,8 +38,6 @@ const AddFoodItem = ({ handleModalCloseTwo, categories, foodRefetch }) => {
   const [category, setCategory] = useState(0);
   const queryClient = useQueryClient();
 
-  console.log(category);
-
   const {
     register,
     handleSubmit,
@@ -53,8 +51,6 @@ const AddFoodItem = ({ handleModalCloseTwo, categories, foodRefetch }) => {
       price[item.title] = item.price;
     });
 
-    console.log(price);
-
     const payloadForm = {
       food_name: data?.foodName,
       food_detail: data?.detail,
@@ -67,10 +63,8 @@ const AddFoodItem = ({ handleModalCloseTwo, categories, foodRefetch }) => {
       category: category,
     };
 
-    console.log(payloadForm);
-
     const response = await toast.promise(
-      myAxios.post(`/food/`, payloadForm, {
+      myAxios.post("/food/", payloadForm, {
         headers: {
           "content-type": "multipart/form-data",
         },
@@ -126,9 +120,10 @@ const AddFoodItem = ({ handleModalCloseTwo, categories, foodRefetch }) => {
             >
               Add Size and Price
             </Button>
-            {new Array(variants).fill(null).map((item, index) => {
+            {new Array(variants).fill(null)?.map((item, index) => {
               return (
                 <Box
+                  key={index}
                   sx={{
                     display: "flex",
                     alignItems: "center",
@@ -325,8 +320,10 @@ const AddFoodItem = ({ handleModalCloseTwo, categories, foodRefetch }) => {
                 error={Boolean(errors.category)}
                 helperText={errors.category && "This categories is required *"}
               >
-                {categories.map((category) => (
-                  <MenuItem value={category.id}>{category.name}</MenuItem>
+                {categories?.map((category, index) => (
+                  <MenuItem key={index} value={category.id}>
+                    {category.name}
+                  </MenuItem>
                 ))}
               </Select>
             </FormControl>

@@ -6,10 +6,15 @@ import {
   setAccessToken,
 } from "./localStorages";
 
-const baseURL = "https://api.neuvemirestro.com";
-// const baseURL = "http://127.0.0.1:8000";
+// const baseURL = "https://api.neuvemirestro.com";
+// const baseURL =
+//   process.env.NODE_ENV === "production"
+//     ? "https://api.neuvemirestro.com"
+//     : "http://10.27.27.32:8000";
+const baseURL = "http://10.27.27.32:8001";
 
-const myAxios = axios.create({ baseURL, withCredentials: true });
+const myAxios = axios.create({ baseURL });
+export const staticAxios = axios.create({ baseURL });
 
 // Add a request interceptor
 myAxios.interceptors.request.use(
@@ -48,7 +53,7 @@ myAxios.interceptors.response.use(
 );
 
 export const defaultQueryFn = async ({ queryKey }) => {
-  const { data } = await myAxios(`/${queryKey[0]}`);
+  const { data } = await myAxios(`${queryKey[0]}`);
   return data;
 };
 

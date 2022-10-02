@@ -4,9 +4,11 @@ import { BsCartCheckFill } from "react-icons/bs";
 import { MdDashboard, MdFastfood, MdOutlineCancel } from "react-icons/md";
 import { TbShoppingCartDiscount } from "react-icons/tb";
 import { FiCheckCircle } from "react-icons/fi";
+import { AiOutlineCloseCircle, AiOutlineFileProtect } from "react-icons/ai";
 import { Link, NavLink } from "react-router-dom";
 import logo from "../image/logo.png";
 import { useStateContext } from "../Contexts/ContextProvider";
+import { HiDocumentReport } from "react-icons/hi";
 
 const Sidebar = () => {
   const { activeMenu, setActiveMenu, screenSize, currentColor } =
@@ -112,6 +114,17 @@ const Sidebar = () => {
               <span className="capitalize ">Completed Order</span>
             </NavLink>
             <NavLink
+              to="rejectorder"
+              onClick={handleCloseSidebar}
+              style={({ isActive }) => ({
+                backgroundColor: isActive ? currentColor : "",
+              })}
+              className={({ isActive }) => (isActive ? activeLink : normalLink)}
+            >
+              <AiOutlineCloseCircle />
+              <span className="capitalize ">Rejected Order</span>
+            </NavLink>
+            <NavLink
               to="discount"
               onClick={handleCloseSidebar}
               style={({ isActive }) => ({
@@ -121,6 +134,28 @@ const Sidebar = () => {
             >
               <TbShoppingCartDiscount />
               <span className="capitalize ">discount</span>
+            </NavLink>
+            <NavLink
+              to="report"
+              onClick={handleCloseSidebar}
+              style={({ isActive }) => ({
+                backgroundColor: isActive ? currentColor : "",
+              })}
+              className={({ isActive }) => (isActive ? activeLink : normalLink)}
+            >
+              <HiDocumentReport />
+              <span className="capitalize ">Report</span>
+            </NavLink>
+            <NavLink
+              to="surveylist"
+              onClick={handleCloseSidebar}
+              style={({ isActive }) => ({
+                backgroundColor: isActive ? currentColor : "",
+              })}
+              className={({ isActive }) => (isActive ? activeLink : normalLink)}
+            >
+              <AiOutlineFileProtect />
+              <span className="capitalize ">survey</span>
             </NavLink>
           </div>
         </Fragment>
@@ -191,6 +226,18 @@ const Sidebar = () => {
               <FiCheckCircle className="text-3xl" />
             </NavLink>
             <NavLink
+              to="rejectorder"
+              onClick={handleCloseSidebar}
+              style={({ isActive }) => ({
+                backgroundColor: isActive ? currentColor : "",
+              })}
+              className={({ isActive }) =>
+                isActive ? smActiveLink : smNormalLink
+              }
+            >
+              <AiOutlineCloseCircle className="text-3xl" />
+            </NavLink>
+            <NavLink
               to="discount"
               onClick={handleCloseSidebar}
               style={({ isActive }) => ({
@@ -201,6 +248,30 @@ const Sidebar = () => {
               }
             >
               <TbShoppingCartDiscount className="text-3xl" />
+            </NavLink>
+            <NavLink
+              to="report"
+              onClick={handleCloseSidebar}
+              style={({ isActive }) => ({
+                backgroundColor: isActive ? currentColor : "",
+              })}
+              className={({ isActive }) =>
+                isActive ? smActiveLink : smNormalLink
+              }
+            >
+              <HiDocumentReport className="text-3xl" />
+            </NavLink>
+            <NavLink
+              to="surveylist"
+              onClick={handleCloseSidebar}
+              style={({ isActive }) => ({
+                backgroundColor: isActive ? currentColor : "",
+              })}
+              className={({ isActive }) =>
+                isActive ? smActiveLink : smNormalLink
+              }
+            >
+              <AiOutlineFileProtect className="text-3xl" />
             </NavLink>
           </div>
         </Fragment>

@@ -1,390 +1,361 @@
 import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
   Alert,
   Badge,
   Box,
   Button,
-  Checkbox,
-  FormControlLabel,
-  Paper,
+  Tab,
+  Tabs,
   TextField,
   Typography,
 } from "@mui/material";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import React, { useState } from "react";
-import { AiOutlineMinus } from "react-icons/ai";
-import { GrAdd } from "react-icons/gr";
-import { MdClose } from "react-icons/md";
 import { MdOutlineAddShoppingCart } from "react-icons/md";
-import { useMutation } from "@tanstack/react-query";
-import { useForm } from "react-hook-form";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { Controller, useForm } from "react-hook-form";
 import { useStateContext } from "../../../Contexts/ContextProvider";
 import interceptor from "../../../utils/interceptors";
+import CartItems from "./CartItems";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import { matchIsValidTel, MuiTelInput } from "mui-tel-input";
+import { staticAxios } from "../../../utils/myAxios";
+import { AiOutlineArrowLeft } from "react-icons/ai";
+
+function TabPanel(props) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && <Box sx={{ mt: 2 }}>{children}</Box>}
+    </div>
+  );
+}
+
+function a11yProps(index) {
+  return {
+    id: `simple-tab-${index}`,
+    "aria-controls": `simple-tabpanel-${index}`,
+  };
+}
 
 const Cart = () => {
+  const { setOrderId } = useStateContext();
+  let [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+  const [value, setValue] = useState(0);
+  const [orderType, setOrderType] = useState("dine_in");
   const { cart, setCart } = useStateContext();
-  const [fieldShow, setFieldShow] = useState(false);
-  const [packaging, setPackaging] = useState(10);
-  const [extraOne, setExtraOne] = useState(null);
-  const [extraTwo, setExtraTwo] = useState(null);
-  const [extraThree, setExtraThree] = useState(null);
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+  const { register, handleSubmit, reset, control } = useForm();
 
-  const handleExtraPrice = (item, data) => {
-    if (cart.find((i) => i.id === item.id && i.size === item.size)) {
-      setCart(
-        cart.map((e) => {
-          if (e.id === item.id && e.size === item.size && data === "one") {
-            return { ...e, extraOne: e.extraOne ? false : true };
-          }
-          if (e.id === item.id && e.size === item.size && data === "two") {
-            return { ...e, extraTwo: e.extraTwo ? false : true };
-          }
-          if (e.id === item.id && e.size === item.size && data === "three") {
-            return { ...e, extraThree: e.extraThree ? false : true };
-          } else {
-            return e;
-          }
-        })
-      );
-    }
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+  const handleType = (e) => {
+   
+    setOrderType(
+      e.target.innerText.toLowerCase() === "dine in"
+        ? "dine_in"
+        : e.target.innerText.toLowerCase()
+    );
   };
 
-  const handleIncrement = (item) => {
-    if (cart.find((i) => i.id === item.id && i.size === item.size)) {
-      setCart(
-        cart.map((e) => {
-          if (e.id === item.id && e.size === item.size) {
-            return { ...e, count: e.count + 1 };
-          } else {
-            return e;
-          }
-        })
-      );
-    } else {
-      setCart([...cart, { ...item, count: 1 }]);
-    }
-  };
-
-  const handleDecrement = (item) => {
-    if (cart.find((i) => i.id === item.id && i.size === item.size)) {
-      setCart(
-        cart.map((e) => {
-          if (e.id === item.id && e.size === item.size && e.count > 1) {
-            return { ...e, count: e.count - 1 };
-          } else {
-            return e;
-          }
-        })
-      );
-    }
-  };
+  // const {
+  //   data: { data: ingredients = [] },
+  // } = useQuery([`/customize_food_category/${item.category}`], () =>
+  //   staticAxios(`/customize_food_category/${item.category}`)
+  // );
+  // const { data: total = [] } = staticAxios("/viewcart/");
+  // console.log(total);
 
   const orderConfirmMutation = useMutation(
-    (payload) => interceptor.post("/order/", payload),
+    (payload) =>
+      interceptor.post(
+        `/order/?table=${
+          searchParams.get("table") ? searchParams.get("table") : []
+        }`,
+        payload
+      ),
     {
-      onSuccess: () => {
+      onSuccess: ({ data }) => {
         setCart([]);
+        reset();
+        navigate("/ordersummary");
+        setOrderId(data?.id);
       },
     }
   );
-
   const onSubmit = async (data) => {
-    console.log(data);
     const payload = {
-      order_type: "takeaway",
-      order_items: cart.map((item) => {
+      order_type: orderType,
+      order_items: cart?.map((item) => {
         return {
           id: item.id,
           quantity: item.count,
           price: item.size,
+          extra: item?.extra ? Object.keys(item?.extra) : [],
         };
       }),
       name: data?.name,
-      phone: data?.phone,
+      email: data?.email,
+      phone: data?.phoneNumber,
+      address: data?.address,
     };
     orderConfirmMutation.mutate(payload);
-    console.log(payload);
   };
 
-  // --remove item--
-  const removeItem = (id) => {
-    const deleted = cart.filter((item) => item.id !== id && item.size !== id);
-    setCart(deleted);
-  };
+  const { data: cartCalculation } = useQuery(
+    ["viewcart", cart],
+    async () => {
+      const { data } = await staticAxios.post("/viewcart/", {
+        order_type: orderType,
+        order_items: cart?.map((item) => {
+          return {
+            id: item.id,
+            quantity: item.count,
+            price: item.size,
+            extra: item?.extra ? Object.keys(item?.extra) : [],
+          };
+        }),
+      });
+      return data;
+    },
+    {
+      enabled: Boolean(cart.length),
+    }
+  );
 
   return (
-    <div className="border rounded-md py-2">
-      <div className="h-96 overflow-y-scroll">
+    <Box
+      sx={{
+        paddingX: 2,
+        paddingY: 2,
+        border: "1px solid #ccc",
+        borderRadius: "5px",
+        mt: { md: 0, sm: 7, xs: 9 },
+      }}
+    >
+      {/* --cartInfo-- */}
+      <Box
+        sx={{
+          "& .MuiBox-root": { padding: 0 },
+          color: "#000",
+          borderColor: "#a8adaa",
+          borderRadius: 1,
+        }}
+      >
         <Box
           sx={{
-            "& .MuiBox-root": { padding: 0 },
-            color: "#000",
-            borderColor: "#a8adaa",
-            borderRadius: 1,
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
           }}
         >
-          <div className="flex justify-between items-center">
-            <h2 className="text-2xl font-semibold px-2 pb-3 capitalize">
-              your food
-            </h2>
-            <Badge
-              className="mr-3 cursor-pointer"
-              badgeContent={cart.length}
-              color="primary"
-            >
-              <MdOutlineAddShoppingCart
-                className="inline w-6 h-6 cursor-pointer"
-                color="action"
-              />
-            </Badge>
-          </div>
-          {cart.map((item) => (
-            <Paper
-              sx={{
-                marginX: 1,
-                marginY: 1,
-                padding: 2,
-                boxShadow: "0px 0px 5px 0px rgb(0 0 0 / 20%)",
-              }}
-            >
-              <div className="flex items-center gap-3 md:flex-nowrap flex-wrap relative">
-                <img
-                  className="w-16 h-16 object-contain"
-                  src={item.image}
-                  alt=""
-                />
-                <div>
-                  <h2 className="text-xl font-bold">{item.food_name}</h2>
-                  <div className="flex gap-3">
-                    <h3 className="text-sm font-bold">Size: {item?.size}</h3>
-                  </div>
-                </div>
-                {/* --remove-- */}
-                <MdClose
-                  onClick={() => removeItem(item.id && item.size)}
-                  className="absolute -right-2 -top-2 cursor-pointer text-red-600 text-lg border border-gray-700 rounded-full"
-                />
-              </div>
-              {/* --countBtn-- */}
-              <div className="flex justify-between items-center">
-                <div className="flex gap-3 items-center">
-                  <AiOutlineMinus
-                    onClick={() => handleDecrement(item)}
-                    className="inline w-5 h-5 border border-gray-600 rounded cursor-pointer"
-                  />
-                  <p>{item?.count}</p>
-                  <GrAdd
-                    onClick={() => handleIncrement(item)}
-                    className="inline w-5 h-5 border border-gray-600 rounded cursor-pointer"
-                  />
-                </div>
-                <div>
-                  <h3 className="text-2xl font-semibold">
-                    {item?.price
-                      ? Number(
-                          item?.price * item?.count +
-                            Number(item?.extraOne ? 20 : 0) +
-                            Number(item?.extraTwo ? 15 : 0) +
-                            Number(item?.extraThree ? 10 : 0)
-                        )
-                      : 0}
-                    <span className="text-lg font-semibold pl-1">Tk</span>
-                  </h3>
-                </div>
-              </div>
-              {/* --extra-- */}
-              <Accordion
-                sx={{
-                  "& .MuiAccordionSummary-root": {
-                    padding: "0 !important",
-                  },
-                  "& .MuiAccordionDetails-root": {
-                    padding: 0,
-                  },
-                  boxShadow: "none",
-                  "&:before": {
-                    display: "none",
-                  },
-                }}
-              >
-                <AccordionSummary
-                  expandIcon={<ExpandMoreIcon />}
-                  aria-controls="panel1a-content"
-                  id="panel1a-header"
-                >
-                  <Typography sx={{ fontWeight: "bold", fontSize: 14 }}>
-                    Extra Ingredients
-                  </Typography>
-                </AccordionSummary>
-                <AccordionDetails>
-                  <Typography>
-                    <div className="flex justify-between items-center flex-wrap gap-2">
-                      <div>
-                        <FormControlLabel
-                          sx={{ "& .MuiCheckbox-root": { padding: 1 } }}
-                          control={
-                            <Checkbox
-                              style={{
-                                color: "#FFC446",
-                              }}
-                            />
-                          }
-                          label="Cheese"
-                          name="size"
-                          value={extraOne}
-                          onClick={() => handleExtraPrice(item, "one")}
-                        />
-                      </div>
-                      <h2 className="text-md font-semibold pl-1">20 Tk</h2>
-                    </div>
-                    <div className="flex justify-between items-center flex-wrap gap-2">
-                      <div>
-                        <FormControlLabel
-                          sx={{ "& .MuiCheckbox-root": { padding: 1 } }}
-                          control={
-                            <Checkbox
-                              style={{
-                                color: "#FFC446",
-                              }}
-                            />
-                          }
-                          label="Salad"
-                          name="size"
-                          value={extraTwo}
-                          onClick={() => handleExtraPrice(item, "two")}
-                        />
-                      </div>
-                      <h2 className="text-md font-semibold pl-1">15 Tk</h2>
-                    </div>
-                    <div className="flex justify-between items-center flex-wrap gap-2">
-                      <div>
-                        <FormControlLabel
-                          sx={{ "& .MuiCheckbox-root": { padding: 1 } }}
-                          control={
-                            <Checkbox
-                              style={{
-                                color: "#FFC446",
-                              }}
-                            />
-                          }
-                          label="Sauce"
-                          name="size"
-                          value={extraThree}
-                          onClick={() => handleExtraPrice(item, "three")}
-                        />
-                      </div>
-                      <h2 className="text-md font-semibold pl-1">10 Tk</h2>
-                    </div>
-                  </Typography>
-                </AccordionDetails>
-              </Accordion>
-            </Paper>
+          <Typography variant="h6" sx={{ textTransform: "uppercase" }}>
+            your food
+          </Typography>
+          <Badge
+            className="cursor-pointer"
+            badgeContent={cart.length}
+            color="primary"
+          >
+            <MdOutlineAddShoppingCart
+              className="inline w-6 h-6 cursor-pointer"
+              color="action"
+            />
+          </Badge>
+        </Box>
+        <Box sx={{ height: "60vh", overflow: "scroll" }}>
+          {cart?.map((item, index) => (
+            <CartItems key={index} item={item} cart={cart} setCart={setCart} />
           ))}
         </Box>
-      </div>
+      </Box>
+      {/* --submitInfo-- */}
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="my-8 mx-2">
-          <div className="space-y-4">
-            <div className="flex gap-12">
-              <Button
-                variant="outlined"
-                sx={{
-                  ":hover": {
-                    backgroundColor: "#FFC446",
-                    borderColor: "#FFC446",
-                  },
-                  width: 130,
-                  height: 30,
-                  color: "#000",
-                  borderColor: "#000",
-                }}
-              >
-                <h3>Dine-in</h3>
-              </Button>
-              <Button
-                onClick={() => setFieldShow(!fieldShow)}
-                variant="outlined"
-                sx={{
-                  ":hover": {
-                    backgroundColor: "#FFC446",
-                    borderColor: "#FFC446",
-                  },
-                  width: 130,
-                  height: 30,
-                  color: "#000",
-                  borderColor: "#000",
-                }}
-              >
-                <h3>Takeway</h3>
-              </Button>
-            </div>
-            {fieldShow ? (
+        <Box sx={{ marginY: 2 }}>
+          <Box className="space-y-4">
+            <Box className="space-y-3">
+              {/* --subTotal-- */}
               <Box
                 sx={{
                   display: "flex",
+                  justifyContent: "space-between",
                   alignItems: "center",
-                  columnGap: 2,
                 }}
               >
-                <TextField
-                  size="small"
-                  label="Your Name"
-                  type="text"
-                  error={Boolean(errors.name)}
-                  helperText={errors.name && "This name is required*"}
-                  {...register("name", { required: true })}
-                  fullWidth
-                  required
-                />
-                <TextField
-                  size="small"
-                  label="Your Phone Number"
-                  type="number"
-                  error={Boolean(errors.phone)}
-                  helperText={errors.phone && "This number is required*"}
-                  {...register("phone", { required: true })}
-                  fullWidth
-                  required
-                />
+                <Typography variant="h6" sx={{ fontSize: "14px" }}>
+                  Sub Total
+                </Typography>
+                <Typography variant="h6" sx={{ fontSize: "14px" }}>
+                  {cartCalculation?.sub_total
+                    ? cartCalculation?.sub_total
+                    : "00"}{" "}
+                  <span>Tk</span>
+                </Typography>
               </Box>
-            ) : null}
-
-            <div className="space-y-3">
-              <div className="flex justify-between items-center">
-                <h2 className="text-sm font-bold text-gray-700">Packaging</h2>
-                <h3 className="text-2xl font-semibold">
-                  {packaging}
-                  <span className="text-lg font-semibold pl-1">Tk</span>
-                </h3>
-              </div>
-              <div className="flex justify-between items-center">
-                <h2 className="text-lg font-bold text-gray-700">
+              {/* --package-- */}
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <Typography variant="h6" sx={{ fontSize: "14px" }}>
+                  Packaging
+                </Typography>
+                <Typography variant="h6" sx={{ fontSize: "14px" }}>
+                  {cartCalculation?.packaging
+                    ? cartCalculation?.packaging
+                    : "00"}{" "}
+                  <span>Tk</span>
+                </Typography>
+              </Box>
+              {/* --discount-- */}
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <Typography variant="h6" sx={{ fontSize: "14px" }}>
+                  Discount
+                </Typography>
+                <Typography variant="h6" sx={{ fontSize: "14px" }}>
+                  {cartCalculation?.discount_amount
+                    ? -cartCalculation?.discount_amount
+                    : "00"}{" "}
+                  <span>Tk</span>
+                </Typography>
+              </Box>
+              <hr className="border-[#FFC446]" />
+              {/* --total-- */}
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <Typography variant="h6" sx={{ fontSize: "16px" }}>
                   Total Amount
-                </h2>
-                <h3 className="text-2xl font-semibold">
-                  {Boolean(cart.length)
-                    ? cart
-                        .map(
-                          (item) =>
-                            item?.count * item?.price +
-                            (item?.extraOne ? 20 : 0) +
-                            (item?.extraTwo ? 15 : 0) +
-                            (item?.extraThree ? 10 : 0)
-                        )
-                        .reduce((a, b) => a + b, 0) + packaging
-                    : 0}
-
-                  <span className="text-lg font-semibold pl-1">Tk</span>
-                </h3>
-              </div>
-            </div>
+                </Typography>
+                <Typography variant="h6" sx={{ fontSize: "16px" }}>
+                  {cartCalculation?.total_amount
+                    ? cartCalculation?.total_amount
+                    : "00"}{" "}
+                  <span>Tk</span>
+                </Typography>
+              </Box>
+              <hr className="border-[#FFC446]" />
+              <Box>
+                <Tabs
+                  value={value}
+                  onChange={handleChange}
+                  aria-label="basic tabs example"
+                  variant="scrollable"
+                  scrollButtons="auto"
+                  allowScrollButtonsMobile
+                  sx={{
+                    "& .MuiTabs-indicator": {
+                      backgroundColor: "#FFC446",
+                    },
+                    "& button": {
+                      color: "#000",
+                      borderRadius: "5px 5px 0 0 ",
+                      paddingX: 3,
+                    },
+                    "& button.Mui-selected": {
+                      backgroundColor: "#FFC446",
+                      color: "#000",
+                    },
+                  }}
+                >
+                  <Tab onClick={handleType} label="Dine In" {...a11yProps(0)} />
+                  <Tab
+                    onClick={handleType}
+                    label="Takeaway"
+                    {...a11yProps(1)}
+                  />
+                </Tabs>
+                {/* --dineIn-- */}
+                <TabPanel value={value} index={0}>
+                  <Box className="space-y-2">
+                    {" "}
+                    <TextField
+                      size="small"
+                      label="Your Email"
+                      type="email"
+                      {...register("email")}
+                      fullWidth
+                    />
+                    <Controller
+                      name="phoneNumber"
+                      control={control}
+                      defaultValue="+880"
+                      rules={{ validate: matchIsValidTel }}
+                      render={({ field, fieldState }) => (
+                        <MuiTelInput
+                          {...field}
+                          fullWidth
+                          preferredCountries={["BD"]}
+                          helperText={
+                            Boolean(fieldState.error)
+                              ? "Phone Number is Invalid"
+                              : ""
+                          }
+                          error={Boolean(fieldState.error)}
+                        />
+                      )}
+                    />
+                  </Box>
+                </TabPanel>
+                {/* --takeaway-- */}
+                <TabPanel value={value} index={1}>
+                  <Box className="space-y-2">
+                    <TextField
+                      size="small"
+                      label="Your Name"
+                      type="text"
+                      {...register("name")}
+                      fullWidth
+                    />
+                    <TextField
+                      size="small"
+                      label="Your Email"
+                      type="email"
+                      {...register("email")}
+                      fullWidth
+                    />
+                    <Controller
+                      name="phoneNumber"
+                      control={control}
+                      defaultValue="+880"
+                      rules={{ validate: matchIsValidTel }}
+                      render={({ field, fieldState }) => (
+                        <MuiTelInput
+                          {...field}
+                          fullWidth
+                          preferredCountries={["BD"]}
+                          helperText={
+                            Boolean(fieldState.error)
+                              ? "Phone Number is Invalid"
+                              : ""
+                          }
+                          error={Boolean(fieldState.error)}
+                        />
+                      )}
+                    />
+                  </Box>
+                </TabPanel>
+              </Box>
+            </Box>
             <Button
               type="submit"
               variant="outlined"
@@ -393,25 +364,40 @@ const Cart = () => {
                   borderColor: "#FFC446",
                 },
                 width: "100%",
-                height: 35,
+                height: { md: 35, xs: 50 },
                 backgroundColor: "#FFC446",
                 borderColor: "#FFC446",
                 color: "#000",
                 borderRadius: "20px",
+                fontSize: { xs: 17, md: 14 },
               }}
             >
-              confirm your order
+              Confirm Your Order
             </Button>
             {orderConfirmMutation.isSuccess ? (
               <Alert severity="success">Your Order Successfully Done!</Alert>
             ) : null}
-            {orderConfirmMutation.isError ? (
-              <Alert severity="error">Your Order error..!</Alert>
+            {Boolean(orderConfirmMutation.error) ? (
+              <Alert severity="error">
+                {orderConfirmMutation.error?.response?.data?.detail ??
+                  "There was an error"}
+              </Alert>
             ) : null}
-          </div>
-        </div>
+          </Box>
+        </Box>
       </form>
-    </div>
+      <Link to="/">
+        <Button
+          sx={{
+            display: { md: "none" },
+            fontSize: "12px",
+          }}
+        >
+          <AiOutlineArrowLeft />
+          Go back
+        </Button>
+      </Link>
+    </Box>
   );
 };
 

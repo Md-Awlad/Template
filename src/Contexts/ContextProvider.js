@@ -10,7 +10,6 @@ const initialState = {
 };
 
 export const ContextProvider = ({ children }) => {
-  const [screenSize, setScreenSize] = useState(undefined);
   const [currentColor, setCurrentColor] = useState(
     localStorage.getItem("colorMode") || "#5442A8"
   );
@@ -22,15 +21,19 @@ export const ContextProvider = ({ children }) => {
   const [currentPass, setCurrentPass] = useState(null);
   const [cart, setCart] = useState([]);
   const [checkbox, setCheckbox] = useState();
+  const [ingredientId, setIngredientId] = useState();
+  const [screenSize, setScreenSize] = useState(undefined);
+  const [expandedMenu, setExpandedMenu] = useState(true);
+  const [orderId, setOrderId] = useState();
+  const [confirmed, setConfirmed] = useState();
 
-  const {
-    isLoading,
-    data: currentUser = {},
-    refetch: currentUserRefetch,
-  } = useQuery(["currentUser"], async () => {
-    const res = await myAxios("/user_info");
-    return res?.data;
-  });
+  const { isLoading, data: currentUser = {} } = useQuery(
+    ["currentUser"],
+    async () => {
+      const res = await myAxios("/user_info");
+      return res?.data;
+    }
+  );
 
   const setMode = (value) => {
     setCurrentMode(value);
@@ -41,6 +44,18 @@ export const ContextProvider = ({ children }) => {
     setCurrentColor(color);
     localStorage.setItem("colorMode", color);
   };
+
+  useEffect(() => {
+    const handleResize = () => setScreenSize(window.innerWidth);
+    window.addEventListener("resize", handleResize);
+    handleResize();
+    if (screenSize <= 900) {
+      setExpandedMenu(false);
+    } else {
+      setExpandedMenu(true);
+    }
+    return () => window.removeEventListener("resize", handleResize);
+  }, [screenSize]);
 
   useEffect(() => {
     const handleResize = () => setScreenSize(window.innerWidth);
@@ -59,9 +74,13 @@ export const ContextProvider = ({ children }) => {
       value={{
         currentUser,
         currentPass,
-        // setCurrentUser,
         isLoading,
+        confirmed,
+        setConfirmed,
+        expandedMenu,
         currentColor,
+        orderId,
+        setOrderId,
         currentMode,
         setCurrentMode,
         activeMenu,
@@ -78,6 +97,8 @@ export const ContextProvider = ({ children }) => {
         setCart,
         checkbox,
         setCheckbox,
+        ingredientId,
+        setIngredientId,
       }}
     >
       {children}

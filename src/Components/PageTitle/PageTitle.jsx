@@ -1,6 +1,4 @@
 import React from "react";
-import { BiEditAlt } from "react-icons/bi";
-import { ImPlus } from "react-icons/im";
 import { useStateContext } from "../../Contexts/ContextProvider";
 const PageTitle = ({
   headingText = "",
@@ -9,7 +7,6 @@ const PageTitle = ({
   modalOpenTwo = "",
   buttonText = "",
   buttonTextTwo = "",
-  editIcon = false,
 }) => {
   const { currentColor } = useStateContext();
   return (

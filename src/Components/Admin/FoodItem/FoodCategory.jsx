@@ -35,7 +35,11 @@ const FoodCategory = ({ categories }) => {
           >
             <div className="flex items-center gap-4">
               <Typography sx={{ fontWeight: 500, fontSize: 18 }}>
-                <img className="w-14 h-14" src={item.image} alt="" />
+                <img
+                  className="w-14 h-14 object-contain"
+                  src={item.image}
+                  alt=""
+                />
               </Typography>
               <Typography sx={{ fontWeight: 500, fontSize: 18 }}>
                 {item.name}

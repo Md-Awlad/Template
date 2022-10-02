@@ -65,7 +65,7 @@ const UserProfile = ({ closeUserProfile }) => {
         </div>
       </div>
       <NavLink
-        to="/register"
+        to="/admin/changepassord"
         className="flex gap-3 flex-col border-color py-2  px-6 "
       >
         <Button
@@ -74,7 +74,7 @@ const UserProfile = ({ closeUserProfile }) => {
           className="rounded-md w-full p-1 text-white"
         >
           <AiOutlineUserAdd className="text-xl" />
-          Create New User
+          Change your Password
         </Button>
       </NavLink>
       <div className="flex gap-3 flex-col border-color py-2  px-6 ">

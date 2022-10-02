@@ -1,4 +1,4 @@
-import gif from "../../image/loader/loader.gif";
+import { ThreeCircles } from "react-loader-spinner";
 
 const MainLoader = () => {
   const loaderStyle = {
@@ -10,13 +10,18 @@ const MainLoader = () => {
   };
   return (
     <div style={loaderStyle}>
-      <img className="w-20" src={gif} alt="Loading..." />
-      {/* <CircularProgress
-        sx={{
-          color: "#000",
-        }}
-        size={100}
-      /> */}
+      <ThreeCircles
+        height="50"
+        width="50"
+        color="#FFC446"
+        wrapperStyle={{}}
+        wrapperClass=""
+        visible={true}
+        ariaLabel="three-circles-rotating"
+        outerCircleColor=""
+        innerCircleColor=""
+        middleCircleColor=""
+      />
     </div>
   );
 };

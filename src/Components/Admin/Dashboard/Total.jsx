@@ -2,17 +2,30 @@ import React from "react";
 import { MdFastfood } from "react-icons/md";
 import { BiCategoryAlt } from "react-icons/bi";
 import { useStateContext } from "../../../Contexts/ContextProvider";
-import { BsCartCheckFill } from "react-icons/bs";
+import { BsCartCheckFill, BsCurrencyDollar } from "react-icons/bs";
 import { FiCheckCircle } from "react-icons/fi";
-import { FaSellcast } from "react-icons/fa";
+import { Box, Typography } from "@mui/material";
 
-const Total = ({ todays }) => {
+const Total = ({ orders }) => {
   const { currentColor } = useStateContext();
   return (
-    <div className="grid lg:grid-cols-5 md:grid-cols-3 grid-cols-1 gap-5">
+    <Box
+      sx={{
+        display: "grid",
+        gridTemplateColumns: { lg: " repeat(5, 1fr)", sm: "repeat(3,1fr)" },
+        gap: 2,
+      }}
+      // className="grid lg:grid-cols-5 md:grid-cols-3 grid-cols-1 gap-5"
+    >
       {/* --food-- */}
-      <div className="bg-neutral dark:bg-secondary-dark-bg dark:text-neutral px-2 py-8 border rounded-md text-2xl font-semibold shadow-sm dark:border-gray-700">
-        <div className="flex gap-3 items-center">
+      <div className="bg-neutral dark:bg-secondary-dark-bg dark:text-neutral md:px-3 px-6 py-8 border rounded-md text-2xl font-semibold shadow-sm dark:border-gray-700">
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
           <MdFastfood
             style={{
               color: currentColor,
@@ -20,17 +33,32 @@ const Total = ({ todays }) => {
             }}
             className="inline w-12 h-12 p-2 rounded-full"
           />
-          <div className="">
-            <h2 className="text-sm text-gray-600">Total Food</h2>
-            <h2 className="text-xl font-bold text-center">
-              {todays.total_food}
-            </h2>
-          </div>
-        </div>
+          <Box>
+            <Typography
+              variant="h6"
+              sx={{ fontSize: "16px" }}
+              // className="text-sm text-gray-600"
+            >
+              Total Food
+            </Typography>
+            <Typography
+              variant="h5"
+              sx={{ fontWeight: 500, textAlign: "center" }}
+            >
+              {orders.total_food}
+            </Typography>
+          </Box>
+        </Box>
       </div>
       {/* --category-- */}
-      <div className="bg-neutral dark:bg-secondary-dark-bg dark:text-neutral px-2 py-8 border rounded-md text-2xl font-semibold shadow-sm dark:border-gray-700">
-        <div className="flex gap-3 items-center">
+      <div className="bg-neutral dark:bg-secondary-dark-bg dark:text-neutral md:px-3 px-6 py-8 border rounded-md text-2xl font-semibold shadow-sm dark:border-gray-700">
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
           <BiCategoryAlt
             style={{
               color: currentColor,
@@ -38,17 +66,32 @@ const Total = ({ todays }) => {
             }}
             className="inline w-12 h-12 p-2 rounded-full"
           />
-          <div className="">
-            <h2 className="text-sm text-gray-600 ">Total Category</h2>
-            <h2 className="text-xl font-bold text-center">
-              {todays.total_category}
-            </h2>
-          </div>
-        </div>
+          <Box>
+            <Typography
+              variant="h6"
+              sx={{ fontSize: "16px" }}
+              // className="text-sm text-gray-600"
+            >
+              Total Category
+            </Typography>
+            <Typography
+              variant="h5"
+              sx={{ fontWeight: 500, textAlign: "center" }}
+            >
+              {orders.total_category}
+            </Typography>
+          </Box>
+        </Box>
       </div>
       {/* --order-- */}
-      <div className="bg-neutral dark:bg-secondary-dark-bg dark:text-neutral px-2 py-8 border rounded-md text-2xl font-semibold shadow-sm dark:border-gray-700">
-        <div className="flex gap-3 items-center">
+      <div className="bg-neutral dark:bg-secondary-dark-bg dark:text-neutral md:px-3 px-6 py-8 border rounded-md text-2xl font-semibold shadow-sm dark:border-gray-700">
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
           <BsCartCheckFill
             style={{
               color: currentColor,
@@ -56,17 +99,32 @@ const Total = ({ todays }) => {
             }}
             className="inline w-12 h-12 p-2 rounded-full"
           />
-          <div className="">
-            <h2 className="text-sm text-gray-600">Total Order</h2>
-            <h2 className="text-xl font-bold text-center">
-              {todays.total_order}
-            </h2>
-          </div>
-        </div>
+          <Box>
+            <Typography
+              variant="h6"
+              sx={{ fontSize: "16px" }}
+              // className="text-sm text-gray-600"
+            >
+              Total Orders
+            </Typography>
+            <Typography
+              variant="h5"
+              sx={{ fontWeight: 500, textAlign: "center" }}
+            >
+              {orders.total_order}
+            </Typography>
+          </Box>
+        </Box>
       </div>
       {/* --complete-- */}
-      <div className="bg-neutral dark:bg-secondary-dark-bg dark:text-neutral px-2 py-8 border rounded-md text-2xl font-semibold shadow-sm dark:border-gray-700">
-        <div className="flex gap-3 items-center">
+      <div className="bg-neutral dark:bg-secondary-dark-bg dark:text-neutral md:px-3 px-6 py-8 border rounded-md text-2xl font-semibold shadow-sm dark:border-gray-700">
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
           <FiCheckCircle
             style={{
               color: currentColor,
@@ -74,33 +132,57 @@ const Total = ({ todays }) => {
             }}
             className="inline w-12 h-12 p-2 rounded-full"
           />
-          <div className="">
-            <h2 className="text-sm text-gray-600">Complete Order</h2>
-            <h2 className="text-xl font-bold text-center">
-              {todays.total_complete_order}
-            </h2>
-          </div>
-        </div>
+          <Box>
+            <Typography
+              variant="h6"
+              sx={{ fontSize: "16px" }}
+              // className="text-sm text-gray-600"
+            >
+              Complete Order
+            </Typography>
+            <Typography
+              variant="h5"
+              sx={{ fontWeight: 500, textAlign: "center" }}
+            >
+              {orders.total_complete_order}
+            </Typography>
+          </Box>
+        </Box>
       </div>
       {/* --sell-- */}
-      <div className="bg-neutral dark:bg-secondary-dark-bg dark:text-neutral px-2 py-8 border rounded-md text-2xl font-semibold shadow-sm dark:border-gray-700">
-        <div className="flex gap-3 items-center">
-          <FaSellcast
+      <div className="bg-neutral dark:bg-secondary-dark-bg dark:text-neutral md:px-3 px-6 py-8 border rounded-md text-2xl font-semibold shadow-sm dark:border-gray-700">
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <BsCurrencyDollar
             style={{
               color: currentColor,
               backgroundColor: `${currentColor}40`,
             }}
             className="inline w-12 h-12 p-2 rounded-full"
           />
-          <div className="">
-            <h2 className="text-sm text-gray-600">Total Sell</h2>
-            <h2 className="text-xl font-bold text-center">
-              {todays.total_sell}
-            </h2>
-          </div>
-        </div>
+          <Box>
+            <Typography
+              variant="h6"
+              sx={{ fontSize: "16px" }}
+              // className="text-sm text-gray-600"
+            >
+              Total Sell
+            </Typography>
+            <Typography
+              variant="h5"
+              sx={{ fontWeight: 500, textAlign: "center" }}
+            >
+              {orders.total_sell}
+            </Typography>
+          </Box>
+        </Box>
       </div>
-    </div>
+    </Box>
   );
 };
 

@@ -1,9 +1,9 @@
 import axios from "axios";
 
 const interceptor = axios.create({
-  baseURL: "https://api.neuvemirestro.com",
+  baseURL: "http://10.27.27.32:8001",
+  // baseURL: "https://api.neuvemirestro.com",
 });
-
 
 // Add a request interceptor
 interceptor.interceptors.request.use(

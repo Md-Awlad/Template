@@ -13,20 +13,40 @@ const DiscountList = ({ discounts }) => {
   const [deleteId, setDeleteId] = useState(null);
 
   const columns = [
-    { field: "id", headerName: "ID", width: 130 },
-    { field: "notice", headerName: "Notice", width: 230 },
-    { field: "amount", headerName: "Amount", width: 230 },
-    { field: "condition", headerName: "Conditional Amount", width: 200 },
     {
-      field: "expired_at",
-      headerName: "Expired Date",
+      field: "id",
+      headerName: "ID",
+      width: 100,
+      headerAlign: "center",
+      align: "center",
+    },
+    {
+      field: "name",
+      headerName: "Name",
       width: 200,
-      valueGetter: ({ value }) => moment(value).format("LLL"),
+      headerAlign: "center",
+      align: "center",
+    },
+    {
+      field: "notice",
+      headerName: "Notice",
+      width: 230,
+      headerAlign: "center",
+      align: "center",
+    },
+    {
+      field: "amount",
+      headerName: "Amount",
+      width: 150,
+      headerAlign: "center",
+      align: "center",
     },
     {
       field: "is_fixed",
-      headerName: "Status",
+      headerName: "Fixed",
       width: 130,
+      headerAlign: "center",
+      align: "center",
       renderCell: (params) => {
         return (
           <div
@@ -42,9 +62,26 @@ const DiscountList = ({ discounts }) => {
       },
     },
     {
+      field: "condition",
+      headerName: "Conditional Amount",
+      width: 200,
+      headerAlign: "center",
+      align: "center",
+    },
+    {
+      field: "expired_at",
+      headerName: "Expired Date",
+      width: 200,
+      headerAlign: "center",
+      align: "center",
+      valueGetter: ({ value }) => moment(value).format("LLL"),
+    },
+    {
       field: "action",
       headerName: "Action",
       width: 150,
+      headerAlign: "center",
+      align: "center",
       renderCell: ({ row }) => {
         return (
           <div className="flex gap-5 items-center">
@@ -66,7 +103,6 @@ const DiscountList = ({ discounts }) => {
     <div style={{ height: 510, width: "100%" }}>
       <DataGrid
         sx={{
-          "& .MuiDataGrid-columnHeader": { backgroundColor: "#FFC446" },
           color: currentMode === "Dark" ? "#fff" : "#000",
           "& .MuiIconButton-root": {
             color: "unset !important",

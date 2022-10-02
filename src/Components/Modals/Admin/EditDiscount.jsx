@@ -149,7 +149,7 @@ const EditDiscount = ({ editId, handleClose }) => {
             </Grid>
             {/* <--Status--> */}
             <FormControl fullWidth>
-              <InputLabel id="selectLabelId">Status</InputLabel>
+              <InputLabel id="selectLabelId">Fixed</InputLabel>
               <Select
                 labelId="selectLabelId"
                 id="selectId"
@@ -157,11 +157,11 @@ const EditDiscount = ({ editId, handleClose }) => {
                 size="small"
                 value={status}
                 // {...register("status")}
-                label="Status"
+                label="Fixed"
                 onChange={(e) => setStatus(e.target.value)}
               >
-                <MenuItem value={true}>Active</MenuItem>
-                <MenuItem value={false}>Inactive</MenuItem>
+                <MenuItem value={true}>True</MenuItem>
+                <MenuItem value={false}>False</MenuItem>
               </Select>
             </FormControl>
           </div>
@@ -191,7 +191,7 @@ const EditDiscount = ({ editId, handleClose }) => {
             style={{ backgroundColor: currentColor }}
             className="w-full px-8 py-2 rounded-md text-neutral text-lg uppercase"
           >
-            add
+            Update
           </button>
         </form>
       </Box>
