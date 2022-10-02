@@ -247,7 +247,7 @@ const OrderList = ({ orders, orderRefetch }) => {
           />
         )}
       </div> */}
-      {/* <Badge
+      <Badge
         sx={{
           cursor: "pointer",
           display: "flex",
@@ -258,18 +258,18 @@ const OrderList = ({ orders, orderRefetch }) => {
         badgeContent={orders.length}
         color="primary"
       >
-        Now Orders Item
+      
         <MdOutlineAddShoppingCart
           className="inline w-8 h-8 cursor-pointer"
           color="action"
         />
-      </Badge> */}
-      <Typography
+      </Badge>
+      {/* <Typography
         sx={{ display: "flex", justifyContent: "flex-end", my: 2 }}
         variant="h6"
       >
         Now Orders: {orders.length ? orders.length : "00"}
-      </Typography>
+      </Typography> */}
       <Box
         sx={{
           display: "grid",
