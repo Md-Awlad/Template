@@ -10,8 +10,10 @@ import { useStateContext } from "../../../Contexts/ContextProvider";
 import myAxios from "../../../utils/myAxios";
 import DeleteOrder from "../../Modals/Admin/DeleteOrder";
 import RejectOrder from "../../Modals/Admin/RejectOrder";
-import { Badge, Box, Paper, Typography } from "@mui/material";
-import { MdOutlineAddShoppingCart } from "react-icons/md";
+import { Badge, Box, Button, Paper, Typography } from "@mui/material";
+import { MdEmail, MdOutlineAddShoppingCart } from "react-icons/md";
+import { FaPhoneAlt } from "react-icons/fa";
+import { BsCheck2Circle } from "react-icons/bs";
 
 const OrderList = ({ orders, orderRefetch }) => {
   const { currentColor, currentMode } = useStateContext();
@@ -247,7 +249,7 @@ const OrderList = ({ orders, orderRefetch }) => {
           />
         )}
       </div> */}
-      <Badge
+      {/* <Badge
         sx={{
           cursor: "pointer",
           display: "flex",
@@ -263,13 +265,13 @@ const OrderList = ({ orders, orderRefetch }) => {
           className="inline w-8 h-8 cursor-pointer"
           color="action"
         />
-      </Badge>
-      {/* <Typography
+      </Badge> */}
+      <Typography
         sx={{ display: "flex", justifyContent: "flex-end", my: 2 }}
         variant="h6"
       >
         Now Orders: {orders.length ? orders.length : "00"}
-      </Typography> */}
+      </Typography>
       <Box
         sx={{
           display: "grid",
@@ -297,50 +299,51 @@ const OrderList = ({ orders, orderRefetch }) => {
             }}
           >
             <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-              <Box>
-                <Typography
-                  style={{ color: currentColor }}
-                  sx={{ fontSize: 14, fontWeight: 500 }}
-                  variant="h6"
-                >
-                  Order ID
-                </Typography>
-                <Typography
-                  sx={{ fontSize: 14, fontWeight: 500, textAlign: "center" }}
-                  variant="h6"
-                >
-                  {item.id}
-                </Typography>
-              </Box>
-              <Box>
-                <Typography
-                  style={{ color: currentColor }}
-                  sx={{ fontSize: 14, fontWeight: 500 }}
-                  variant="h6"
-                >
-                  Table Num
-                </Typography>
-                <Typography
-                  sx={{ fontSize: 14, fontWeight: 500, textAlign: "center" }}
-                  variant="h6"
-                >
-                  {item.table}
-                </Typography>
-              </Box>
+              <Typography
+                style={{ color: currentColor }}
+                sx={{ fontSize: 14, fontWeight: 500 }}
+                variant="h6"
+              >
+                Order ID: {item?.id}
+              </Typography>
+              <Typography
+                style={{ color: currentColor }}
+                sx={{ fontSize: 14, fontWeight: 500 }}
+                variant="h6"
+              >
+                Table No: {item?.table}
+              </Typography>
             </Box>
-            <Typography sx={{ fontSize: 12, fontWeight: 500 }} variant="h6">
-              Order Type: {item?.note?.order_type}
-            </Typography>
-            <Typography sx={{ fontSize: 12, fontWeight: 500 }} variant="h6">
-              Name: {item?.note?.name}
-            </Typography>
-
-            <Typography sx={{ fontSize: 12, fontWeight: 500 }} variant="h6">
-              Phone: {item?.note?.phone}
-            </Typography>
-            <Typography sx={{ fontSize: 12, fontWeight: 500 }} variant="h6">
-              Email: {item?.note?.email}
-            </Typography>
+            <Box>
+              <Typography sx={{ fontSize: 14, fontWeight: 500 }} variant="h6">
+                Name: {item?.note?.name}
+              </Typography>
+              <Typography
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 1,
+                  fontSize: 14,
+                  fontWeight: 500,
+                }}
+                variant="h6"
+              >
+                <FaPhoneAlt /> {item?.note?.phone}
+              </Typography>
+              <Typography
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 1,
+                  fontSize: 14,
+                  fontWeight: 500,
+                }}
+                variant="h6"
+              >
+                <MdEmail /> {item?.note?.email}
+              </Typography>
+            </Box>
+            <hr className="border-[#FFC446]" />
             <Box
               sx={{
                 display: "flex",
@@ -416,46 +419,46 @@ const OrderList = ({ orders, orderRefetch }) => {
               ))}
             </Box>
             <hr className="border-[#FFC446]" />
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
-              <Typography sx={{ fontSize: 18, fontWeight: 500 }} variant="h6">
-                Total Amount:
-              </Typography>
-              <Typography sx={{ fontSize: 18, fontWeight: 500 }} variant="h6">
-                $ {item?.price}
-              </Typography>
-            </Box>
-            {/* --actionbtn-- */}
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
-              <form onSubmit={handleSubmit(onSubmit)}>
-                <button
-                  onClick={() => setComplete(item.id)}
-                  className=" p-1 text-md font-medium text-green-900"
-                >
-                  <TaskAltIcon />
-                </button>
-              </form>
-              <button
-                onClick={() => setReject(item.id)}
-                className=" p-1 text-md font-medium text-red-900"
+            <Box className="space-y-7">
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
               >
-                <HighlightOffIcon />
-              </button>
-              <RiDeleteBin6Line
-                onClick={() => setDeleteId(item.id)}
-                className="text-red-900 dark:text-neutral text-xl cursor-pointer"
-              />
+                <Typography sx={{ fontSize: 18, fontWeight: 500 }} variant="h6">
+                  Total Amount:
+                </Typography>
+                <Typography sx={{ fontSize: 18, fontWeight: 500 }} variant="h6">
+                  $ {item?.price}
+                </Typography>
+              </Box>
+              {/* --actionbtn-- */}
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <form onSubmit={handleSubmit(onSubmit)}>
+                  <BsCheck2Circle
+                    onClick={() => setComplete(item.id)}
+                    className="text-green-900 dark:text-neutral text-2xl cursor-pointer"
+                  />
+                </form>
+
+                <HighlightOffIcon
+                  onClick={() => setReject(item.id)}
+                  className="text-red-900 dark:text-neutral text-2xl cursor-pointer"
+                />
+
+                <RiDeleteBin6Line
+                  onClick={() => setDeleteId(item.id)}
+                  className="text-blue-900 dark:text-neutral text-2xl cursor-pointer"
+                />
+              </Box>
             </Box>
           </Paper>
         ))}
