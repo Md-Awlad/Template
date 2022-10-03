@@ -1,7 +1,10 @@
+import { Box, Button, Paper, Typography } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import React from "react";
 import { useState } from "react";
+import { FaPhoneAlt } from "react-icons/fa";
 import { FiPrinter } from "react-icons/fi";
+import { MdEmail } from "react-icons/md";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { useStateContext } from "../../../Contexts/ContextProvider";
 import DeleteConfirmOrder from "../../Modals/Admin/DeleteConfirmOrder";
@@ -120,7 +123,7 @@ const CompleteOrderList = ({ completes }) => {
 
   return (
     <div>
-      <div style={{ height: 510, width: "100%" }}>
+      {/* <div style={{ height: 510, width: "100%" }}>
         <DataGrid
           sx={{
             color: currentMode === "Dark" ? "#fff" : "#000",
@@ -166,7 +169,189 @@ const CompleteOrderList = ({ completes }) => {
           // checkboxSelection
           // disableSelectionOnClick
         />
-      </div>
+      </div> */}
+      <Typography
+        className="dark:text-neutral"
+        sx={{ display: "flex", justifyContent: "flex-end", my: 2 }}
+        variant="h6"
+      >
+        Orders Complete : {completes.length ? completes.length : "00"}
+      </Typography>
+      <Box
+        sx={{
+          display: "grid",
+          justifyItems: { xs: "center" },
+          gridTemplateColumns: {
+            md: "repeat(4,1fr)",
+            sm: "repeat(2,1fr)",
+            xs: "repeat(1,1fr)",
+          },
+          gap: 2,
+        }}
+      >
+        {completes?.map((item) => (
+          <Paper
+            className="space-y-1 dark:bg-secondary-dark-bg dark:text-neutral"
+            key={item.id}
+            sx={{
+              width: 250,
+              height: 300,
+              overflowY: "scroll",
+              px: 2,
+              py: 1,
+              boxShadow: "0px 0px 5px 0px rgb(0 0 0 / 20%)",
+              border: "1px solid #ccc",
+            }}
+          >
+            <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+              <Typography
+                style={{ color: currentColor }}
+                sx={{ fontSize: 14, fontWeight: 500 }}
+                variant="h6"
+              >
+                Order ID: {item?.id}
+              </Typography>
+              <Typography
+                style={{ color: currentColor }}
+                sx={{ fontSize: 14, fontWeight: 500 }}
+                variant="h6"
+              >
+                Table No: {item?.table}
+              </Typography>
+            </Box>
+            <Box>
+              <Typography sx={{ fontSize: 14, fontWeight: 500 }} variant="h6">
+                Name: {item?.note?.name}
+              </Typography>
+              <Typography
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 1,
+                  fontSize: 14,
+                  fontWeight: 500,
+                }}
+                variant="h6"
+              >
+                <FaPhoneAlt /> {item?.note?.phone}
+              </Typography>
+              <Typography
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 1,
+                  fontSize: 14,
+                  fontWeight: 500,
+                }}
+                variant="h6"
+              >
+                <MdEmail /> {item?.note?.email}
+              </Typography>
+            </Box>
+            <hr className="border-[#FFC446]" />
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+              }}
+            >
+              <Box>
+                <Typography
+                  style={{ color: currentColor }}
+                  sx={{ fontSize: 14, fontWeight: 500 }}
+                  variant="h6"
+                >
+                  Order Items
+                </Typography>
+                {item?.order_items?.map((data, index) => (
+                  <Typography
+                    key={index}
+                    sx={{ fontSize: 14, fontWeight: 500 }}
+                    variant="h6"
+                  >
+                    {data?.food_name}
+                  </Typography>
+                ))}
+              </Box>
+              <Box>
+                <Typography
+                  style={{ color: currentColor }}
+                  sx={{
+                    fontSize: 14,
+                    fontWeight: 500,
+                  }}
+                  variant="h6"
+                >
+                  Quantity
+                </Typography>
+                {item?.note?.order_items?.map((data) => (
+                  <Box key={data.id}>
+                    <Typography
+                      sx={{
+                        fontSize: 14,
+                        fontWeight: 500,
+                        textAlign: "center",
+                      }}
+                      variant="h6"
+                    >
+                      {data?.quantity}
+                    </Typography>
+                  </Box>
+                ))}
+              </Box>
+            </Box>
+            {/* --extra-- */}
+            <Box>
+              <Typography
+                style={{ color: currentColor }}
+                sx={{ fontSize: 14, fontWeight: 500 }}
+                variant="h6"
+              >
+                Extra Ingredients
+              </Typography>
+              {item?.note?.order_items?.map((data) => (
+                <Box key={data.id}>
+                  {data?.extra?.map((extra, index) => (
+                    <Typography
+                      key={index}
+                      sx={{ fontSize: 14, fontWeight: 500 }}
+                      variant="h6"
+                    >
+                      {extra?.name}
+                    </Typography>
+                  ))}
+                </Box>
+              ))}
+            </Box>
+            <hr className="border-[#FFC446]" />
+            <Box className="space-y-7">
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <Typography sx={{ fontSize: 18, fontWeight: 500 }} variant="h6">
+                  Total Amount:
+                </Typography>
+                <Typography sx={{ fontSize: 18, fontWeight: 500 }} variant="h6">
+                  $ {item?.price}
+                </Typography>
+              </Box>
+              {/* --actionbtn-- */}
+
+              <Button
+                sx={{ width: 1 }}
+                variant="contained"
+                onClick={() => setDeleteId(item.id)}
+              >
+                Remove
+              </Button>
+            </Box>
+          </Paper>
+        ))}
+      </Box>
       {Boolean(deleteId) && (
         <DeleteConfirmOrder
           deleteId={deleteId}

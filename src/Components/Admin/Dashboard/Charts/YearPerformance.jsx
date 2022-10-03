@@ -6,6 +6,7 @@ import {
   MenuItem,
   Select,
   TextField,
+  Typography,
 } from "@mui/material";
 import { DatePicker } from "@mui/x-date-pickers";
 import { useQuery } from "@tanstack/react-query";
@@ -15,6 +16,7 @@ import { useState } from "react";
 import {
   Bar,
   BarChart,
+  CartesianGrid,
   ResponsiveContainer,
   Tooltip,
   XAxis,
@@ -38,7 +40,8 @@ const YearPerformance = () => {
 
   return (
     <>
-      <Grid
+      <Typography variant="h6"> Yearly Report</Typography>
+      {/* <Grid
         item
         xs={9}
         md={7}
@@ -51,17 +54,10 @@ const YearPerformance = () => {
           onChange={(newValue) => setCurrentYear(newValue)}
           renderInput={(params) => <TextField size="small" {...params} />}
         />
-      </Grid>
-      <ResponsiveContainer width="100%" height={300}>
-        <BarChart
-          data={years}
-          // margin={{
-          //   top: 5,
-          //   right: 30,
-          //   left: 20,
-          //   bottom: 5,
-          // }}
-        >
+      </Grid> */}
+      <ResponsiveContainer width="99%" height={300}>
+        <BarChart data={years}>
+          <CartesianGrid strokeDasharray="3" opacity={0.5} />
           <XAxis dataKey="month" tick={{ fontSize: "12px" }} />
           <YAxis
             // label={{

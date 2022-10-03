@@ -39,7 +39,7 @@ const DeleteConfirmOrder = ({ deleteId, handleClose }) => {
       </DialogContent>
       <DialogActions>
         <Button onClick={handleDelete} variant="outlined">
-          Delete
+          Remove
         </Button>
         <Button onClick={handleClose} variant="outlined" color="error">
           Cancel

@@ -13,7 +13,7 @@ import { MdKeyboardArrowDown } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { useStateContext } from "../Contexts/ContextProvider";
 import avatar from "../image/logo.png";
-import MainLogo from "../image/MainLogo.png";
+import MainLogo from "../image/logo.png";
 import Sidebar from "./Sidebar";
 import UserProfile from "./UserProfile";
 

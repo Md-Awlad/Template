@@ -56,7 +56,6 @@ const Cart = () => {
     setValue(newValue);
   };
   const handleType = (e) => {
-   
     setOrderType(
       e.target.innerText.toLowerCase() === "dine in"
         ? "dine_in"
@@ -118,7 +117,16 @@ const Cart = () => {
             id: item.id,
             quantity: item.count,
             price: item.size,
-            extra: item?.extra ? Object.keys(item?.extra) : [],
+
+            // extra: item?.extra ? Object.keys(item?.extra) : [],
+
+            extra: item.extra
+              ? Object.keys(item?.extra)
+              : []
+              ? item.extra
+                ? Object.keys(item?.extra)
+                : []
+              : 0,
           };
         }),
       });

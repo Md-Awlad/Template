@@ -5,6 +5,7 @@ import { useStateContext } from "../../../Contexts/ContextProvider";
 import DeleteCancelOrder from "../../Modals/Admin/DeleteCancelOrder";
 
 const RejectOrderList = ({ cancelOrder }) => {
+  console.log(cancelOrder);
   const { currentColor, currentMode } = useStateContext();
   const [deleteId, setDeleteId] = useState();
   const columns = [

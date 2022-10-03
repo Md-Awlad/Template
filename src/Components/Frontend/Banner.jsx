@@ -29,14 +29,16 @@ const Banner = () => {
         direction="left"
         gradientColor
         pauseOnHover
-        Speed="80px"
+        speed={60}
         style={{ backgroundColor: "#FFC446", height: "8vh" }}
       >
         {discounts
           .filter((e) => e.is_active)
           ?.map((a) =>
             a.discount?.map((data) => (
-              <Typography sx={{ mx: 2 }}>{data.notice}</Typography>
+              <Typography sx={{ mx: 2, fontSize: 22, fontWeight: 600 }}>
+                {data.notice}
+              </Typography>
             ))
           )}
       </Marquee>

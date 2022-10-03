@@ -12,7 +12,10 @@ const Total = ({ orders }) => {
     <Box
       sx={{
         display: "grid",
-        gridTemplateColumns: { lg: " repeat(5, 1fr)", sm: "repeat(3,1fr)" },
+        gridTemplateColumns: {
+          lg: " repeat(4, 1fr)",
+          sm: "repeat(2,1fr)",
+        },
         gap: 2,
       }}
       // className="grid lg:grid-cols-5 md:grid-cols-3 grid-cols-1 gap-5"
@@ -145,39 +148,6 @@ const Total = ({ orders }) => {
               sx={{ fontWeight: 500, textAlign: "center" }}
             >
               {orders.total_complete_order}
-            </Typography>
-          </Box>
-        </Box>
-      </div>
-      {/* --sell-- */}
-      <div className="bg-neutral dark:bg-secondary-dark-bg dark:text-neutral md:px-3 px-6 py-8 border rounded-md text-2xl font-semibold shadow-sm dark:border-gray-700">
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
-          <BsCurrencyDollar
-            style={{
-              color: currentColor,
-              backgroundColor: `${currentColor}40`,
-            }}
-            className="inline w-12 h-12 p-2 rounded-full"
-          />
-          <Box>
-            <Typography
-              variant="h6"
-              sx={{ fontSize: "16px" }}
-              // className="text-sm text-gray-600"
-            >
-              Total Sell
-            </Typography>
-            <Typography
-              variant="h5"
-              sx={{ fontWeight: 500, textAlign: "center" }}
-            >
-              {orders.total_sell}
             </Typography>
           </Box>
         </Box>

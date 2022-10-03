@@ -20,7 +20,7 @@ const OrderSummary = () => {
     const res = await staticAxios(`/order_summery/${orderId}/`);
     return res.data;
   });
-
+  console.log(orderSummary);
   return (
     <Box
       ref={componentRef}

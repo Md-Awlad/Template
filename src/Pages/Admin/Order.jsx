@@ -13,7 +13,6 @@ const Order = () => {
       return res.data;
     }
   );
-  console.log(orders?.map((a) => a.length));
 
   return (
     <Container>

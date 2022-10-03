@@ -33,18 +33,18 @@ const FoodCategory = ({ categories }) => {
             aria-controls="panel1a-content"
             id="panel1a-header"
           >
-            <div className="flex items-center gap-4">
-              <Typography sx={{ fontWeight: 500, fontSize: 18 }}>
+            {/* <div className="flex items-center gap-4"> */}
+              {/* <Typography sx={{ fontWeight: 500, fontSize: 18 }}>
                 <img
                   className="w-14 h-14 object-contain"
                   src={item.image}
                   alt=""
                 />
-              </Typography>
+              </Typography> */}
               <Typography sx={{ fontWeight: 500, fontSize: 18 }}>
                 {item.name}
               </Typography>
-            </div>
+            {/* </div> */}
           </AccordionSummary>
           <AccordionDetails>
             <Typography

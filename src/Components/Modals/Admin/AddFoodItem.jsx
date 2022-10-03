@@ -16,6 +16,8 @@ import {
 import { useQueryClient } from "@tanstack/react-query";
 import { useStateContext } from "../../../Contexts/ContextProvider";
 import myAxios from "../../../utils/myAxios";
+import { GrClose } from "react-icons/gr";
+import { AiOutlineClose } from "react-icons/ai";
 
 const style = {
   position: "absolute",
@@ -134,7 +136,6 @@ const AddFoodItem = ({ handleModalCloseTwo, categories, foodRefetch }) => {
                   <TextField
                     label="Food Size"
                     type="text"
-                    required
                     {...register(`item.${index + 1}.title`)}
                     fullWidth
                   />
@@ -144,6 +145,15 @@ const AddFoodItem = ({ handleModalCloseTwo, categories, foodRefetch }) => {
                     required
                     {...register(`item.${index + 1}.price`)}
                     fullWidth
+                  />
+                  {/* <Button
+                    variant="contained"
+                    sx={{ height: 52, color: "#fff" }}
+                  >
+                  </Button> */}
+                  <AiOutlineClose
+                    onClick={() => setVariants((variants) => (variants -= 1))}
+                    className="text-5xl cursor-pointer text-red-700"
                   />
                 </Box>
               );
@@ -201,76 +211,6 @@ const AddFoodItem = ({ handleModalCloseTwo, categories, foodRefetch }) => {
               error={Boolean(errors.ingredient)}
               helperText={errors.ingredient && "This ingredient is required *"}
               {...register("ingredient", { required: true })}
-              fullWidth
-            />
-          </Grid>
-          {/* --detail-- */}
-          <Grid
-            sx={{
-              "& .MuiInputBase-root": {
-                color: `${currentMode === "Light" ? "#000" : "#fff"}`,
-                borderColor: `${currentMode === "Light" ? "#000" : "#fff"}`,
-              },
-            }}
-            item
-            xs={12}
-            md={6}
-          >
-            <TextField
-              id="detail"
-              label="Details"
-              type="text"
-              // value={detail}
-              // onChange={(value) => setDetail(value)}
-              error={Boolean(errors.detail)}
-              helperText={errors.detail && "This food details is required *"}
-              {...register("detail", { required: true })}
-              fullWidth
-            />
-          </Grid>
-          {/* --test-- */}
-          <Grid
-            sx={{
-              "& .MuiInputBase-root": {
-                color: `${currentMode === "Light" ? "#000" : "#fff"}`,
-                borderColor: `${currentMode === "Light" ? "#000" : "#fff"}`,
-              },
-            }}
-            item
-            xs={12}
-            md={6}
-          >
-            <TextField
-              id="taste"
-              label="Taste"
-              type="text"
-              // value={taste}
-              // onChange={(value) => setTaste(value)}
-              error={Boolean(errors.taste)}
-              helperText={errors.taste && "This taste is required *"}
-              {...register("taste", { required: true })}
-              fullWidth
-            />
-          </Grid>
-          {/* --review-- */}
-          <Grid
-            sx={{
-              "& .MuiInputBase-root": {
-                color: `${currentMode === "Light" ? "#000" : "#fff"}`,
-                borderColor: `${currentMode === "Light" ? "#000" : "#fff"}`,
-              },
-            }}
-            item
-            xs={12}
-            md={6}
-          >
-            <TextField
-              id="review"
-              label="Review"
-              type="number"
-              error={Boolean(errors.review)}
-              helperText={errors.review && "This review is required *"}
-              {...register("review", { required: true })}
               fullWidth
             />
           </Grid>

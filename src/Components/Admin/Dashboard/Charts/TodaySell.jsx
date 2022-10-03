@@ -28,7 +28,8 @@ const TodaySell = ({ orders }) => {
         // height: { md: "61.5vh" },
       }}
     >
-      <Box sx={{ width: 150, height: 150, margin: "auto", mt: 5 }}>
+      <Typography variant="h6">Today Report</Typography>
+      <Box sx={{ width: 150, height: 150, margin: "auto", mt: 1 }}>
         <Doughnut data={data} />
       </Box>
       <Box sx={{ marginY: 1 }}>
@@ -39,7 +40,7 @@ const TodaySell = ({ orders }) => {
           ></Box>
           <Box>
             <Typography variant="h6" sx={{ fontSize: "14px" }}>
-              Today Order
+              Order
               <span className="text-lg font-semibold pl-3">
                 {orders.today_order}
               </span>
@@ -53,7 +54,7 @@ const TodaySell = ({ orders }) => {
           ></Box>
           <Box>
             <Typography variant="h6" sx={{ fontSize: "14px" }}>
-              Today Complete Order
+              Complete Order
               <span className="text-lg font-semibold pl-3">
                 {orders.today_order_complete}
               </span>
@@ -71,7 +72,7 @@ const TodaySell = ({ orders }) => {
           ></Box>
           <Box>
             <Typography variant="h6" sx={{ fontSize: "14px" }}>
-              Today Sell
+              Total Amount
               <span className="text-lg font-semibold pl-3">
                 {orders.today_sell}
               </span>

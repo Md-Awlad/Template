@@ -18,10 +18,15 @@ import { staticAxios } from "../../../utils/myAxios";
 
 const CartItems = ({ cart, setCart, item }) => {
   const addExtra = (extraId, price = 0) => {
+    console.log(extraId, price);
     setCart(
       cart.map((e) => {
+        console.log(e.id, e.size);
         if (e.id === item.id && e.size === item.size) {
+          console.log("ok");
+          console.log(e?.extra);
           const existing = e?.extra && Boolean(e.extra[extraId]);
+          console.log(existing);
           return {
             ...e,
             extra: {
@@ -35,6 +40,7 @@ const CartItems = ({ cart, setCart, item }) => {
       })
     );
   };
+  console.log(cart);
 
   const handleIncrement = (item) => {
     if (cart.find((i) => i.id === item.id && i.size === item.size)) {
@@ -75,7 +81,6 @@ const CartItems = ({ cart, setCart, item }) => {
   // const { data: ingredients = [] } = useQuery([
   //   `/customize_food_category/${item.category}`,
   // ]);
-
 
   // --remove item--
   const removeItem = (id) => {

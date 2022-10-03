@@ -83,7 +83,7 @@ const AddCategory = ({ handleModalClose, categoryRefetch }) => {
         </Grid>
 
         {/* --img-- */}
-        <Grid item xs={12} md={6}>
+        {/* <Grid item xs={12} md={6}>
           <TextField
             id="image"
             type="file"
@@ -112,7 +112,8 @@ const AddCategory = ({ handleModalClose, categoryRefetch }) => {
               },
             }}
           />
-        </Grid>
+        </Grid> */}
+
         <button
           type="submit"
           style={{ backgroundColor: currentColor }}

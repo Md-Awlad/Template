@@ -49,7 +49,7 @@ const OrderSummary = ({ orders }) => {
           variant="h6"
           sx={{ fontSize: "16px", fontWeight: 500, paddingY: 1 }}
         >
-          Today {orders.today_selling_performance}
+          {orders.today_selling_performance}
         </Typography>
         <LinearProgressWithLabel value={orders.percentage} />
       </Box>
@@ -69,6 +69,7 @@ const OrderSummary = ({ orders }) => {
           <MonthlySell />
         </Box>
       </Box>
+      <hr />
       <YearPerformance />
     </Box>
   );

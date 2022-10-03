@@ -32,7 +32,6 @@ const Food = ({ id }) => {
     return res.data;
   });
 
-
   const handleModalOpen = (item) => {
     setItem(item);
     setOpenModal(true);
@@ -49,6 +48,7 @@ const Food = ({ id }) => {
   };
 
   const handleAddToCart = (param, index) => {
+    setSize(null);
     const item = { ...param };
     setIngredientId(item.category);
 
@@ -68,6 +68,20 @@ const Food = ({ id }) => {
     } else {
       setCart([...cart, { ...item, count: 1 }]);
     }
+
+    // if (cart.find((i) => i.item)) {
+    //   setCart(
+    //     cart?.map((e) => {
+    //       if (e === item) {
+    //         return { ...e, count: e.count + 1 };
+    //       } else {
+    //         return e;
+    //       }
+    //     })
+    //   );
+    // } else {
+    //   setCart([...cart, { ...item, count: 1 }]);
+    // }
   };
 
   const { data: food = [] } = useQuery(["food"], async () => {
@@ -177,7 +191,7 @@ const Food = ({ id }) => {
                                 />
                                 <Typography
                                   sx={{
-                                    fontSize: "17px",
+                                    fontSize: "14px",
                                     display: "flex",
                                     gap: 1,
                                   }}

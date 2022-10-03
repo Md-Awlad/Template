@@ -267,6 +267,7 @@ const OrderList = ({ orders, orderRefetch }) => {
         />
       </Badge> */}
       <Typography
+        className="dark:text-neutral"
         sx={{ display: "flex", justifyContent: "flex-end", my: 2 }}
         variant="h6"
       >
@@ -286,7 +287,7 @@ const OrderList = ({ orders, orderRefetch }) => {
       >
         {orders?.map((item) => (
           <Paper
-            className="space-y-1"
+            className="space-y-1 dark:bg-secondary-dark-bg dark:text-neutral"
             key={item.id}
             sx={{
               width: 250,
@@ -443,10 +444,12 @@ const OrderList = ({ orders, orderRefetch }) => {
                 }}
               >
                 <form onSubmit={handleSubmit(onSubmit)}>
-                  <BsCheck2Circle
-                    onClick={() => setComplete(item.id)}
-                    className="text-green-900 dark:text-neutral text-2xl cursor-pointer"
-                  />
+                  <button>
+                    <BsCheck2Circle
+                      onClick={() => setComplete(item.id)}
+                      className="text-green-900 dark:text-neutral text-2xl cursor-pointer"
+                    />
+                  </button>
                 </form>
 
                 <HighlightOffIcon
