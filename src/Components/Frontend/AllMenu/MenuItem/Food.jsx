@@ -48,8 +48,7 @@ const Food = ({ id }) => {
   };
 
   const handleAddToCart = (param, index) => {
-    setSize(null);
-    const item = { ...param };
+    const item = { ...param, extra: {} };
     setIngredientId(item.category);
 
     item.price = size[index][1];

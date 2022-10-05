@@ -17,30 +17,69 @@ import { useQuery } from "@tanstack/react-query";
 import { staticAxios } from "../../../utils/myAxios";
 
 const CartItems = ({ cart, setCart, item }) => {
+  // const addExtra = (extraId, price = 0) => {
+  //   setCart(
+  //     cart.map((e) => {
+  //       if (e.id === item.id && e.size === item.size) {
+  //         const existing = e?.extra && Boolean(e.extra[extraId]);
+  //         return {
+  //           ...e,
+  //           extra: {
+  //             ...e.extra,
+  //             [extraId]: existing ? null : price,
+  //           },
+  //         };
+  //       } else {
+  //         return e;
+  //       }
+  //     })
+  //   );
+  // };
   const addExtra = (extraId, price = 0) => {
-    console.log(extraId, price);
+    // setCart(
+    //   cart.map((e) => {
+    //     if (e.id === item.id && e.size === item.size) {
+    //       const existing = e?.extra && Boolean(e.extra[extraId]);
+    //       return {
+    //         ...e,
+    //         extra: {
+    //           ...e.extra,
+    //           [extraId]: existing ? null : price,
+    //         },
+    //       };
+    //     } else {
+    //       return e;
+    //     }
+    //   })
+    // );
     setCart(
       cart.map((e) => {
-        console.log(e.id, e.size);
         if (e.id === item.id && e.size === item.size) {
-          console.log("ok");
-          console.log(e?.extra);
           const existing = e?.extra && Boolean(e.extra[extraId]);
-          console.log(existing);
-          return {
-            ...e,
-            extra: {
-              ...e.extra,
-              [extraId]: existing ? null : price,
-            },
-          };
+
+          if (Object.keys(e.extra).length) {
+            Object.keys(e.extra).map((ex) => {
+              if (parseInt(ex) === extraId) {
+                delete e.extra[extraId];
+              } else {
+                e["extra"] = {
+                  ...e?.extra,
+                  [extraId]: price,
+                };
+              }
+            });
+          } else {
+            e["extra"] = {
+              [extraId]: price,
+            };
+          }
+          return e;
         } else {
           return e;
         }
       })
     );
   };
-  console.log(cart);
 
   const handleIncrement = (item) => {
     if (cart.find((i) => i.id === item.id && i.size === item.size)) {
