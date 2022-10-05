@@ -19,7 +19,7 @@ import {
   SurveyList,
   ConfirmedOrder,
   MonthReport,
-  RejectedOrder,
+  CancelOrder,
 } from "./Pages";
 import NotFound from "./Components/NotFound/NotFound";
 import { ToastContainer } from "react-toastify";
@@ -60,7 +60,7 @@ const App = () => {
       element: currentUser?.id ? <NavLayout /> : <Login />,
       children: [
         {
-          path: "dashboard",
+          path: "/dashboard",
           element: <DashBoard />,
         },
         {
@@ -76,15 +76,15 @@ const App = () => {
           element: <CompleteOrder />,
         },
         {
-          path: "rejectorder",
-          element: <RejectedOrder />,
+          path: "cancelorder",
+          element: <CancelOrder />,
         },
         {
           path: "discount",
           element: <Discount />,
         },
         {
-          path: "changepassord",
+          path: "change-password",
           element: <ChangePassword />,
         },
         {

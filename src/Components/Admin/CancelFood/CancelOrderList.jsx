@@ -4,7 +4,7 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import { useStateContext } from "../../../Contexts/ContextProvider";
 import DeleteCancelOrder from "../../Modals/Admin/DeleteCancelOrder";
 
-const RejectOrderList = ({ cancelOrder }) => {
+const CancelOrderList = ({ cancelOrder }) => {
   console.log(cancelOrder);
   const { currentColor, currentMode } = useStateContext();
   const [deleteId, setDeleteId] = useState();
@@ -167,4 +167,4 @@ const RejectOrderList = ({ cancelOrder }) => {
   );
 };
 
-export default RejectOrderList;
+export default CancelOrderList;

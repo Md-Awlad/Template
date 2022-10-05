@@ -1,11 +1,11 @@
 import { Container } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
-import RejectOrderList from "../../Components/Admin/RejectedFood/RejectOrderList";
+import CancelOrderList from "../../Components/Admin/CancelFood/CancelOrderList";
 import PageTitle from "../../Components/PageTitle/PageTitle";
 import myAxios from "../../utils/myAxios";
 
-const RejectedOrder = () => {
+const CancelOrder = () => {
   const { data: cancelOrder = [] } = useQuery(["cancel"], async () => {
     const res = await myAxios("/cancel-orders/");
     return res.data;
@@ -13,10 +13,10 @@ const RejectedOrder = () => {
   console.log(cancelOrder);
   return (
     <Container>
-      <PageTitle headingText="Rejected Order" pageName="Rejected" />
-      <RejectOrderList cancelOrder={cancelOrder} />
+      <PageTitle headingText="Cancel Order" pageName="Cancel" />
+      <CancelOrderList cancelOrder={cancelOrder} />
     </Container>
   );
 };
 
-export default RejectedOrder;
+export default CancelOrder;

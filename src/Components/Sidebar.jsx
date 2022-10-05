@@ -70,7 +70,7 @@ const Sidebar = () => {
           </Box>
           <div className="mt-5">
             <NavLink
-              to="dashboard"
+              to="/dashboard"
               onClick={handleCloseSidebar}
               style={({ isActive }) => ({
                 backgroundColor: isActive ? currentColor : "",
@@ -114,7 +114,7 @@ const Sidebar = () => {
               <span className="capitalize ">Completed Order</span>
             </NavLink>
             <NavLink
-              to="rejectorder"
+              to="cancelorder"
               onClick={handleCloseSidebar}
               style={({ isActive }) => ({
                 backgroundColor: isActive ? currentColor : "",
@@ -122,7 +122,7 @@ const Sidebar = () => {
               className={({ isActive }) => (isActive ? activeLink : normalLink)}
             >
               <AiOutlineCloseCircle />
-              <span className="capitalize ">Rejected Order</span>
+              <span className="capitalize ">Cancel Order</span>
             </NavLink>
             <NavLink
               to="discount"
@@ -178,7 +178,7 @@ const Sidebar = () => {
           </Box>
           <div className="mt-10 ">
             <NavLink
-              to="dashboard"
+              to="/dashboard"
               onClick={handleCloseSidebar}
               style={({ isActive }) => ({
                 backgroundColor: isActive ? currentColor : "",
@@ -226,7 +226,7 @@ const Sidebar = () => {
               <FiCheckCircle className="text-3xl" />
             </NavLink>
             <NavLink
-              to="rejectorder"
+              to="cancelorder"
               onClick={handleCloseSidebar}
               style={({ isActive }) => ({
                 backgroundColor: isActive ? currentColor : "",

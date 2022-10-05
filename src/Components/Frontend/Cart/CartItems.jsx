@@ -36,22 +36,6 @@ const CartItems = ({ cart, setCart, item }) => {
   //   );
   // };
   const addExtra = (extraId, price = 0) => {
-    // setCart(
-    //   cart.map((e) => {
-    //     if (e.id === item.id && e.size === item.size) {
-    //       const existing = e?.extra && Boolean(e.extra[extraId]);
-    //       return {
-    //         ...e,
-    //         extra: {
-    //           ...e.extra,
-    //           [extraId]: existing ? null : price,
-    //         },
-    //       };
-    //     } else {
-    //       return e;
-    //     }
-    //   })
-    // );
     setCart(
       cart.map((e) => {
         if (e.id === item.id && e.size === item.size) {

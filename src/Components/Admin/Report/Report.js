@@ -6,7 +6,6 @@ import myAxios from "../../../utils/myAxios";
 import moment from "moment";
 import { DatePicker } from "@mui/x-date-pickers";
 import { TextField } from "@mui/material";
-import { Grid } from "react-loader-spinner";
 import { Box } from "@mui/system";
 
 const Report = () => {
@@ -49,9 +48,7 @@ const Report = () => {
     const res = await myAxios(
       `monthly_report/${date.format("MM")}/${date.format("YYYY")}/`
     );
-    console.log(res?.data);
     const allData = res.data?.map((data, index) => {
-      console.log(data);
       return {
         id: index,
         date: data?.date,
@@ -61,7 +58,6 @@ const Report = () => {
       };
     });
     setReport(allData);
-    console.log(allData);
     //   return;
     //   setReport(allData);
   });

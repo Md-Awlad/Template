@@ -65,7 +65,7 @@ const UserProfile = ({ closeUserProfile }) => {
         </div>
       </div>
       <NavLink
-        to="/admin/changepassord"
+        to="/dashboard/change-password"
         className="flex gap-3 flex-col border-color py-2  px-6 "
       >
         <Button

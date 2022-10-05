@@ -2,7 +2,7 @@ export { default as DashBoard } from "./Admin/Dashboard";
 export { default as FoodItem } from "./Admin/FoodItem";
 export { default as Order } from "./Admin/Order";
 export { default as CompleteOrder } from "./Admin/CompleteOrder";
-export { default as RejectedOrder } from "./Admin/RejectedOrder";
+export { default as CancelOrder } from "./Admin/CancelOrder";
 export { default as Discount } from "./Admin/Discount";
 export { default as SurveyList } from "./Admin/SurveyList";
 export { default as MonthReport } from "./Admin/MonthReport";
