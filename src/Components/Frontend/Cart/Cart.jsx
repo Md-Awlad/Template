@@ -48,7 +48,9 @@ const Cart = () => {
   let [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const [value, setValue] = useState(0);
-  const [orderType, setOrderType] = useState("dine_in");
+  const [orderType, setOrderType] = useState(
+    searchParams.get("table") ? "dine_in" : "takeaway"
+  );
   const { cart, setCart } = useStateContext();
   const { register, handleSubmit, reset, control } = useForm();
 
@@ -285,83 +287,141 @@ const Cart = () => {
                     },
                   }}
                 >
-                  <Tab onClick={handleType} label="Dine In" {...a11yProps(0)} />
-                  <Tab
-                    onClick={handleType}
-                    label="Takeaway"
-                    {...a11yProps(1)}
-                  />
+                  {searchParams.get("table") ? (
+                    <Tab
+                      onClick={handleType}
+                      label="Dine In"
+                      {...a11yProps(0)}
+                    />
+                  ) : null}
+
+                  {searchParams.get("table") ? (
+                    <Tab
+                      onClick={handleType}
+                      label="Takeaway"
+                      {...a11yProps(1)}
+                    />
+                  ) : (
+                    <Tab
+                      onClick={handleType}
+                      label="Takeaway"
+                      {...a11yProps(0)}
+                    />
+                  )}
                 </Tabs>
                 {/* --dineIn-- */}
-                <TabPanel value={value} index={0}>
-                  <Box className="space-y-2">
-                    {" "}
-                    <TextField
-                      size="small"
-                      label="Your Email"
-                      type="email"
-                      {...register("email")}
-                      fullWidth
-                    />
-                    <Controller
-                      name="phoneNumber"
-                      control={control}
-                      defaultValue="+880"
-                      rules={{ validate: matchIsValidTel }}
-                      render={({ field, fieldState }) => (
-                        <MuiTelInput
-                          {...field}
-                          fullWidth
-                          preferredCountries={["BD"]}
-                          helperText={
-                            Boolean(fieldState.error)
-                              ? "Phone Number is Invalid"
-                              : ""
-                          }
-                          error={Boolean(fieldState.error)}
-                        />
-                      )}
-                    />
-                  </Box>
-                </TabPanel>
+
+                {searchParams.get("table") ? (
+                  <TabPanel value={value} index={0}>
+                    <Box className="space-y-2">
+                      <TextField
+                        size="small"
+                        label="Your Email"
+                        type="email"
+                        {...register("email")}
+                        fullWidth
+                      />
+                      <Controller
+                        name="phoneNumber"
+                        control={control}
+                        defaultValue="+880"
+                        rules={{ validate: matchIsValidTel }}
+                        render={({ field, fieldState }) => (
+                          <MuiTelInput
+                            {...field}
+                            fullWidth
+                            preferredCountries={["BD"]}
+                            helperText={
+                              Boolean(fieldState.error)
+                                ? "Phone Number is Invalid"
+                                : ""
+                            }
+                            error={Boolean(fieldState.error)}
+                          />
+                        )}
+                      />
+                    </Box>
+                  </TabPanel>
+                ) : null}
+
                 {/* --takeaway-- */}
-                <TabPanel value={value} index={1}>
-                  <Box className="space-y-2">
-                    <TextField
-                      size="small"
-                      label="Your Name"
-                      type="text"
-                      {...register("name")}
-                      fullWidth
-                    />
-                    <TextField
-                      size="small"
-                      label="Your Email"
-                      type="email"
-                      {...register("email")}
-                      fullWidth
-                    />
-                    <Controller
-                      name="phoneNumber"
-                      control={control}
-                      defaultValue="+880"
-                      rules={{ validate: matchIsValidTel }}
-                      render={({ field, fieldState }) => (
-                        <MuiTelInput
-                          {...field}
-                          fullWidth
-                          preferredCountries={["BD"]}
-                          helperText={
-                            Boolean(fieldState.error)
-                              ? "Phone Number is Invalid"
-                              : ""
-                          }
-                          error={Boolean(fieldState.error)}
-                        />
-                      )}
-                    />
-                  </Box>
-                </TabPanel>
+                {searchParams.get("table") ? (
+                  <TabPanel value={value} index={1}>
+                    <Box className="space-y-2">
+                      <TextField
+                        size="small"
+                        label="Your Name"
+                        type="text"
+                        {...register("name")}
+                        fullWidth
+                      />
+                      <TextField
+                        size="small"
+                        label="Your Email"
+                        type="email"
+                        {...register("email")}
+                        fullWidth
+                      />
+                      <Controller
+                        name="phoneNumber"
+                        control={control}
+                        defaultValue="+880"
+                        rules={{ validate: matchIsValidTel }}
+                        render={({ field, fieldState }) => (
+                          <MuiTelInput
+                            {...field}
+                            fullWidth
+                            preferredCountries={["BD"]}
+                            helperText={
+                              Boolean(fieldState.error)
+                                ? "Phone Number is Invalid"
+                                : ""
+                            }
+                            error={Boolean(fieldState.error)}
+                          />
+                        )}
+                      />
+                    </Box>
+                  </TabPanel>
+                ) : (
+                  <TabPanel value={value} index={0}>
+                    <Box className="space-y-2">
+                      <TextField
+                        size="small"
+                        label="Your Name"
+                        type="text"
+                        {...register("name")}
+                        fullWidth
+                      />
+                      <TextField
+                        size="small"
+                        label="Your Email"
+                        type="email"
+                        {...register("email")}
+                        fullWidth
+                      />
+                      <Controller
+                        name="phoneNumber"
+                        control={control}
+                        defaultValue="+880"
+                        rules={{ validate: matchIsValidTel }}
+                        render={({ field, fieldState }) => (
+                          <MuiTelInput
+                            {...field}
+                            fullWidth
+                            preferredCountries={["BD"]}
+                            helperText={
+                              Boolean(fieldState.error)
+                                ? "Phone Number is Invalid"
+                                : ""
+                            }
+                            error={Boolean(fieldState.error)}
+                          />
+                        )}
+                      />
+                    </Box>
+                  </TabPanel>
+                )}
               </Box>
             </Box>
             <Button
