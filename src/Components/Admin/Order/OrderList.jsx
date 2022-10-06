@@ -162,7 +162,6 @@ const OrderList = ({ orders, orderRefetch }) => {
   //     return res.data;
   //   }
   // );
-  console.log(orders?.map((a) => a));
   // console.log(orders.map((a) => a));
   // console.log(
   //   orders?.map((a) => a?.note?.order_items?.map((data) => data.quantity))
@@ -287,8 +286,8 @@ const OrderList = ({ orders, orderRefetch }) => {
       >
         {orders?.map((item) => (
           <Paper
-            className="space-y-1 dark:bg-secondary-dark-bg dark:text-neutral"
             key={item.id}
+            className="space-y-1 dark:bg-secondary-dark-bg dark:text-neutral"
             sx={{
               width: 250,
               height: 300,

@@ -57,10 +57,10 @@ const ThemeSettings = () => {
         <div className="flex-col border-t-1 border-color p-4 ml-4">
           <p className="font-semibold text-lg">Theme Colors</p>
           <div className="flex gap-3">
-            {themeColors.map((item, index) => (
+            {themeColors.map((item) => (
               <div
-                className="relative mt-2 cursor-pointer flex gap-5 items-center"
                 key={item.name}
+                className="relative mt-2 cursor-pointer flex gap-5 items-center"
               >
                 <button
                   type="button"

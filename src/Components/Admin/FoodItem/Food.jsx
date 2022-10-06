@@ -54,9 +54,9 @@ const Food = ({ category, foodRefetch }) => {
       renderCell: ({ value }) => {
         return (
           <div className="overflow-y-auto h-12 w-full mt-7">
-            {Object.keys(value).map((key) => {
+            {Object.keys(value).map((key, index) => {
               return (
-                <div className="grid grid-cols-2">
+                <div key={index} className="grid grid-cols-2">
                   <h2>size:{key}</h2>
                   <h2>Price:{value[key]}</h2>
                 </div>
@@ -76,9 +76,9 @@ const Food = ({ category, foodRefetch }) => {
         if (value) {
           return (
             <div className="overflow-y-auto h-12 w-full mt-7">
-              {Object.keys(value)?.map((key) => {
+              {Object.keys(value)?.map((key,index) => {
                 return (
-                  <div className="grid grid-cols-2">
+                  <div key={index} className="grid grid-cols-2">
                     <h2>size:{key}</h2>
                     <h2>Price:{value[key]}</h2>
                   </div>

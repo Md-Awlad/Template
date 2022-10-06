@@ -191,8 +191,8 @@ const CompleteOrderList = ({ completes }) => {
       >
         {completes?.map((item) => (
           <Paper
-            className="space-y-1 dark:bg-secondary-dark-bg dark:text-neutral"
             key={item.id}
+            className="space-y-1 dark:bg-secondary-dark-bg dark:text-neutral"
             sx={{
               width: 250,
               height: 300,
@@ -343,7 +343,8 @@ const CompleteOrderList = ({ completes }) => {
 
               <Button
                 sx={{ width: 1 }}
-                variant="contained"
+                color="error"
+                variant="outlined"
                 onClick={() => setDeleteId(item.id)}
               >
                 Remove

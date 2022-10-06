@@ -29,8 +29,9 @@ const PopularFood = () => {
         gap: 2,
       }}
     >
-      {popularFood?.map((item) => (
+      {popularFood?.map((item,index) => (
         <Paper
+          key={index}
           sx={{
             width: 200,
             marginX: 1,

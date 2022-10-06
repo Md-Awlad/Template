@@ -26,6 +26,7 @@ import { ToastContainer } from "react-toastify";
 import MainLoader from "./Components/Loaders/MainLoader";
 import CartInfo from "./Pages/Frontend/CartInfo";
 import ChangePassword from "./Components/ChangePassword";
+import Test from "./Pages/Frontend/Test";
 
 const App = () => {
   const { currentMode, currentUser, isLoading, orderId } = useStateContext();
@@ -60,7 +61,7 @@ const App = () => {
       element: currentUser?.id ? <NavLayout /> : <Login />,
       children: [
         {
-          path: "/dashboard",
+          index: true,
           element: <DashBoard />,
         },
         {
@@ -111,6 +112,7 @@ const App = () => {
       <div className={currentMode === "Dark" ? "dark" : ""}>
         <div className="overflow-hidden">
           {isLoading ? <MainLoader /> : allRoutes}
+          {/* {allRoutes} */}
         </div>
         <ToastContainer
           position="top-right"

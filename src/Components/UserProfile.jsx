@@ -44,8 +44,8 @@ const UserProfile = ({ closeUserProfile }) => {
           <div className="flex gap-3 ">
             {themeColors.map((item, index) => (
               <div
-                className="relative mt-2 cursor-pointer flex gap-5 items-center"
                 key={item.name}
+                className="relative mt-2 cursor-pointer flex gap-5 items-center"
               >
                 <button
                   type="button"

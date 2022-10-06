@@ -6,7 +6,7 @@ import PageTitle from "../../Components/PageTitle/PageTitle";
 const MonthReport = () => {
   return (
     <Container>
-      <PageTitle headingText="Report" pageName="Report" />
+      <PageTitle headingText="Report" pageName="Monthly Report" />
       <Report />
     </Container>
   );

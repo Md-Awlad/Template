@@ -66,10 +66,19 @@ const CartItems = ({ cart, setCart, item }) => {
   };
 
   const handleIncrement = (item) => {
-    if (cart.find((i) => i.id === item.id && i.size === item.size)) {
+    if (
+      cart.find(
+        (i) =>
+          i.id === item.id && i.size === item.size && Object.keys(item?.extra)
+      )
+    ) {
       setCart(
         cart.map((e) => {
-          if (e.id === item.id && e.size === item.size) {
+          if (
+            e.id === item.id &&
+            e.size === item.size &&
+            Object.keys(item?.extra)
+          ) {
             return { ...e, count: e.count + 1 };
           } else {
             return e;
@@ -80,6 +89,7 @@ const CartItems = ({ cart, setCart, item }) => {
       setCart([...cart, { ...item, count: 1 }]);
     }
   };
+  console.log(handleIncrement);
 
   const handleDecrement = (item) => {
     if (cart.find((i) => i.id === item.id && i.size === item.size)) {
@@ -175,7 +185,8 @@ const CartItems = ({ cart, setCart, item }) => {
               ? Number(item?.price * item?.count) +
                 Number(
                   item?.extra
-                    ? Object.values(item?.extra)?.reduce((a, b) => a + b, 0)
+                    ? Object.values(item?.extra)?.reduce((a, b) => a + b, 0) *
+                        item?.count
                     : 0
                 )
               : 0}

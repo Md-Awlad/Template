@@ -36,7 +36,6 @@ const YearPerformance = () => {
     );
     return res.data;
   });
-  console.log(years);
 
   return (
     <>

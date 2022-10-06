@@ -69,8 +69,8 @@ const ItemDetails = ({ handleModalClose, item }) => {
               >
                 Size
               </Typography>
-              {Object.entries(item?.price).map((key) => (
-                <h2 className="text-sm py-1">{key[0]}</h2>
+              {Object.entries(item?.price).map((key,index) => (
+                <h2 key={index} className="text-sm py-1">{key[0]}</h2>
               ))}
             </div>
 
@@ -87,8 +87,8 @@ const ItemDetails = ({ handleModalClose, item }) => {
               >
                 Price
               </Typography>
-              {Object.entries(item?.price).map((key) => (
-                <h2 className="text-sm py-1">{key[1]} TK</h2>
+              {Object.entries(item?.price).map((key,index) => (
+                <h2 key={index} className="text-sm py-1">{key[1]} TK</h2>
               ))}
             </div>
           </div>

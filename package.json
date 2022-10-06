@@ -22,6 +22,7 @@
     "jspdf": "^2.5.1",
     "moment": "^2.29.4",
     "mui-tel-input": "^2.0.1",
+    "qrcode": "^1.5.1",
     "react": "^18.2.0",
     "react-chartjs-2": "^4.3.1",
     "react-dark-mode-toggle": "^0.2.0",

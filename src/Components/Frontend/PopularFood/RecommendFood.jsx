@@ -29,8 +29,9 @@ const RecommendFood = () => {
         gap: 2,
       }}
     >
-      {recommendFood?.map((item) => (
+      {recommendFood?.map((item,index) => (
         <Paper
+          key={index}
           sx={{
             width: 200,
             marginX: 1,

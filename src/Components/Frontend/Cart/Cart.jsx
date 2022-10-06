@@ -122,13 +122,7 @@ const Cart = () => {
 
             // extra: item?.extra ? Object.keys(item?.extra) : [],
 
-            extra: item.extra
-              ? Object.keys(item?.extra)
-              : []
-              ? item.extra
-                ? Object.keys(item?.extra)
-                : []
-              : 0,
+            extra: item.extra ? Object.keys(item?.extra) : [],
           };
         }),
       });

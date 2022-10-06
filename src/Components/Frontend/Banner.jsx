@@ -35,14 +35,16 @@ const Banner = () => {
         {discounts
           .filter((e) => e.is_active)
           ?.map((a) =>
-            a.discount?.map((data) => (
-              <Typography sx={{ mx: 2, fontSize: 22, fontWeight: 600 }}>
+            a.discount?.map((data, index) => (
+              <Typography
+                key={index}
+                sx={{ mx: 2, fontSize: 22, fontWeight: 600 }}
+              >
                 {data.notice}
               </Typography>
             ))
           )}
       </Marquee>
-
       {/* {discounts?.map((notice) => (
         <Box key={notice.id}>
           <Marquee
@@ -56,6 +58,7 @@ const Banner = () => {
           </Marquee>
         </Box>
       ))} */}
+      
     </Box>
   );
 };
