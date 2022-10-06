@@ -69,8 +69,10 @@ const ItemDetails = ({ handleModalClose, item }) => {
               >
                 Size
               </Typography>
-              {Object.entries(item?.price).map((key,index) => (
-                <h2 key={index} className="text-sm py-1">{key[0]}</h2>
+              {Object.entries(item?.price).map((key, index) => (
+                <h2 key={index} className="text-sm py-1">
+                  {key[0]}
+                </h2>
               ))}
             </div>
 
@@ -87,60 +89,39 @@ const ItemDetails = ({ handleModalClose, item }) => {
               >
                 Price
               </Typography>
-              {Object.entries(item?.price).map((key,index) => (
-                <h2 key={index} className="text-sm py-1">{key[1]} TK</h2>
+              {Object.entries(item?.price).map((key, index) => (
+                <h2 key={index} className="text-sm py-1">
+                  {key[1]} TK
+                </h2>
               ))}
             </div>
           </div>
         </div>
-        <div className="absolute -right-20 -top-20">
+        <Box className="absolute -right-20 -top-20">
           <img className="w-64 h-64 object-contain" src={item.image} alt="" />
-        </div>
+        </Box>
       </div>
       {/* --desc-- */}
-      <div className="space-y-2 mt-3">
-        <div>
-          {/* <h2 className="text-lg font-semibold">Taste</h2> */}
-          <Typography
-            variant="h6"
-            sx={{
-              fontWeight: 600,
-              fontSize: 16,
-            }}
-          >
-            Taste
-          </Typography>
-          <Typography
-            variant="h6"
-            sx={{
-              fontSize: 14,
-              fontWeight: 300,
-            }}
-          >
-            {item.taste}
-          </Typography>
-        </div>
-        <div>
-          <Typography
-            variant="h6"
-            sx={{
-              fontWeight: 600,
-              fontSize: 14,
-            }}
-          >
-            Details
-          </Typography>
-          <Typography
-            variant="h6"
-            sx={{
-              fontSize: 14,
-              fontWeight: 300,
-            }}
-          >
-            {item.food_detail}
-          </Typography>
-        </div>
-      </div>
+      <Box sx={{ my: 3 }}>
+        <Typography
+          variant="h6"
+          sx={{
+            fontWeight: 600,
+            fontSize: 14,
+          }}
+        >
+          Details
+        </Typography>
+        <Typography
+          variant="h6"
+          sx={{
+            fontSize: 14,
+            fontWeight: 300,
+          }}
+        >
+          {item.food_detail}
+        </Typography>
+      </Box>
     </Box>
   );
 };
