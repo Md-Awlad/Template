@@ -3,6 +3,13 @@ const setAccessToken = (accessToken) => {
   localStorage.setItem("accessToken", accessToken);
 };
 
+const setOrderInfo = (orderInfo) => {
+  localStorage.setItem("orderInfo", orderInfo);
+};
+const getOrderInfo = () => {
+  return localStorage.getItem("orderInfo");
+};
+
 // Get access token from localstorage
 const getAccessToken = () => {
   return localStorage.getItem("accessToken");
@@ -30,4 +37,6 @@ export {
   getAccessToken,
   getRefreshToken,
   removeTokens,
+  setOrderInfo,
+  getOrderInfo,
 };

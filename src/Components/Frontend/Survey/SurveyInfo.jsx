@@ -15,9 +15,13 @@ import {
 import { useQuery } from "@tanstack/react-query";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useStateContext } from "../../../Contexts/ContextProvider";
+import { getOrderInfo } from "../../../utils/localStorages";
 import myAxios, { staticAxios } from "../../../utils/myAxios";
 
 const SurveyInfo = () => {
+  const { orderId } = useStateContext();
+  console.log(orderId);
   const [taste, setTaste] = useState(null);
   const [environment, setEnvironment] = useState(null);
   const [cleanliness, setCleanliness] = useState(null);
@@ -31,6 +35,7 @@ const SurveyInfo = () => {
     register,
     handleSubmit,
     reset,
+    setValue,
     formState: { errors },
   } = useForm();
 
@@ -65,9 +70,21 @@ const SurveyInfo = () => {
     }
   };
 
-  const {data:orders=[]}=useQuery(["order"],async()=>{
-    const res=await staticAxios("/order/")
-  })
+  const orderInfo = getOrderInfo();
+  console.log(orderInfo);
+
+  const { data } = useQuery(
+    ["order"],
+    () => staticAxios(`/order/${orderInfo}/`),
+    {
+      onSuccess: ({ data: orders = [] }) => {
+        console.log(orders.phone);
+        setValue("orderId", orders?.id);
+        setValue("phoneNumber", orders?.phone);
+        setValue("email", orders?.email);
+      },
+    }
+  );
 
   return (
     <Box>
@@ -82,6 +99,7 @@ const SurveyInfo = () => {
           {/* --order ID-- */}
           <Grid item xs={12} md={6}>
             <TextField
+              InputLabelProps={{ shrink: true }}
               id="orderId"
               label="Order ID"
               type="number"
@@ -94,6 +112,7 @@ const SurveyInfo = () => {
           {/* --phone-- */}
           <Grid item xs={12} md={6}>
             <TextField
+              InputLabelProps={{ shrink: true }}
               id="phoneNumber"
               label="Type your phone number"
               type="number"
@@ -108,6 +127,7 @@ const SurveyInfo = () => {
           {/* --email-- */}
           <Grid item xs={12} md={6}>
             <TextField
+              InputLabelProps={{ shrink: true }}
               id="email"
               label="Email"
               type="email"

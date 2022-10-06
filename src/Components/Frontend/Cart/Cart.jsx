@@ -19,6 +19,7 @@ import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { matchIsValidTel, MuiTelInput } from "mui-tel-input";
 import { staticAxios } from "../../../utils/myAxios";
 import { AiOutlineArrowLeft } from "react-icons/ai";
+import { setOrderInfo } from "../../../utils/localStorages";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -87,6 +88,7 @@ const Cart = () => {
         reset();
         navigate("/ordersummary");
         setOrderId(data?.id);
+        setOrderInfo(data?.id);
       },
     }
   );
