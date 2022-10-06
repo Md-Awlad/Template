@@ -64,15 +64,26 @@ const Report = () => {
   console.log(reports);
 
   return (
-    <div style={{ height: 510, width: "100%" }}>
-      <Box sx={{ my: 2, display: "flex", justifyContent: "flex-end" }}>
-        <DatePicker
-          value={date}
-          views={["month", "year"]}
-          onChange={(newValue) => setDate(newValue)}
-          renderInput={(params) => <TextField size="small" {...params} />}
-        />
-      </Box>
+    <div style={{ height: 510, width: "100%" }} className="space-y-3">
+      <DatePicker
+        views={["year", "month"]}
+        value={date}
+        onChange={(newValue) => {
+          setDate(moment(newValue));
+        }}
+        renderInput={(params) => (
+          <TextField
+            sx={{
+              width: 200,
+              ".MuiInputBase-input": {
+                padding: 1.2,
+                color: `${currentMode === "Light" ? "#000" : "#fff"}`,
+              },
+            }}
+            {...params}
+          />
+        )}
+      />
       <DataGrid
         sx={{
           // "& .MuiDataGrid-columnHeader": { backgroundColor: "#FFC446" },

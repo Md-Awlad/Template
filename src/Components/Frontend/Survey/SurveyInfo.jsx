@@ -12,9 +12,10 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import { useQuery } from "@tanstack/react-query";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import myAxios from "../../../utils/myAxios";
+import myAxios, { staticAxios } from "../../../utils/myAxios";
 
 const SurveyInfo = () => {
   const [taste, setTaste] = useState(null);
@@ -63,6 +64,10 @@ const SurveyInfo = () => {
       setSource(null);
     }
   };
+
+  const {data:orders=[]}=useQuery(["order"],async()=>{
+    const res=await staticAxios("/order/")
+  })
 
   return (
     <Box>
