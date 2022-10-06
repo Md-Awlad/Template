@@ -38,12 +38,15 @@ const CartItems = ({ cart, setCart, item }) => {
   const addExtra = (extraId, price = 0) => {
     setCart(
       cart.map((e) => {
-        if (e.id === item.id && e.size === item.size) {
+        //e.id === item.id && e.size === item.size
+        if (e === item) {
           const existing = e?.extra && Boolean(e.extra[extraId]);
 
           if (Object.keys(e.extra).length) {
             Object.keys(e.extra).map((ex) => {
+              console.log(ex);
               if (parseInt(ex) === extraId) {
+                console.log(ex);
                 delete e.extra[extraId];
               } else {
                 e["extra"] = {
@@ -66,19 +69,10 @@ const CartItems = ({ cart, setCart, item }) => {
   };
 
   const handleIncrement = (item) => {
-    if (
-      cart.find(
-        (i) =>
-          i.id === item.id && i.size === item.size && Object.keys(item?.extra)
-      )
-    ) {
+    if (cart.find((i) => i === item && Object.keys(item?.extra))) {
       setCart(
         cart.map((e) => {
-          if (
-            e.id === item.id &&
-            e.size === item.size &&
-            Object.keys(item?.extra)
-          ) {
+          if (e === item && Object.keys(item?.extra)) {
             return { ...e, count: e.count + 1 };
           } else {
             return e;
@@ -89,13 +83,37 @@ const CartItems = ({ cart, setCart, item }) => {
       setCart([...cart, { ...item, count: 1 }]);
     }
   };
-  console.log(handleIncrement);
+
+  // const handleIncrement = (item) => {
+  //   if (
+  //     cart.find(
+  //       (i) =>
+  //         i.id === item.id && i.size === item.size && Object.keys(item?.extra)
+  //     )
+  //   ) {
+  //     setCart(
+  //       cart.map((e) => {
+  //         if (
+  //           e.id === item.id &&
+  //           e.size === item.size &&
+  //           Object.keys(item?.extra)
+  //         ) {
+  //           return { ...e, count: e.count + 1 };
+  //         } else {
+  //           return e;
+  //         }
+  //       })
+  //     );
+  //   } else {
+  //     setCart([...cart, { ...item, count: 1 }]);
+  //   }
+  // };
 
   const handleDecrement = (item) => {
-    if (cart.find((i) => i.id === item.id && i.size === item.size)) {
+    if (cart.find((i) => i === item)) {
       setCart(
         cart.map((e) => {
-          if (e.id === item.id && e.size === item.size && e.count > 1) {
+          if (e === item && e.count > 1) {
             return { ...e, count: e.count - 1 };
           } else {
             return e;
@@ -104,6 +122,20 @@ const CartItems = ({ cart, setCart, item }) => {
       );
     }
   };
+
+  // const handleDecrement = (item) => {
+  //   if (cart.find((i) => i.id === item.id && i.size === item.size)) {
+  //     setCart(
+  //       cart.map((e) => {
+  //         if (e.id === item.id && e.size === item.size && e.count > 1) {
+  //           return { ...e, count: e.count - 1 };
+  //         } else {
+  //           return e;
+  //         }
+  //       })
+  //     );
+  //   }
+  // };
 
   // --extraIngredients--
   const { data: { data: ingredients = [] } = {} } = useQuery(

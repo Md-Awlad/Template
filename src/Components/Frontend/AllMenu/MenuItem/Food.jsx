@@ -54,24 +54,10 @@ const Food = ({ id }) => {
     item.price = size[index][1];
     item.size = size[index][0];
 
-    if (cart.find((i) => i.id === item.id && i.size === item.size)) {
-      setCart(
-        cart?.map((e) => {
-          if (e.id === item.id && e.size === item.size) {
-            return { ...e, count: e.count + 1 };
-          } else {
-            return e;
-          }
-        })
-      );
-    } else {
-      setCart([...cart, { ...item, count: 1 }]);
-    }
-
-    // if (cart.find((i) => i.item)) {
+    // if (cart.find((i) => i.id === item.id && i.size === item.size)) {
     //   setCart(
     //     cart?.map((e) => {
-    //       if (e === item) {
+    //       if (e.id === item.id && e.size === item.size) {
     //         return { ...e, count: e.count + 1 };
     //       } else {
     //         return e;
@@ -81,6 +67,20 @@ const Food = ({ id }) => {
     // } else {
     //   setCart([...cart, { ...item, count: 1 }]);
     // }
+
+    if (cart.find((i) => i.item)) {
+      setCart(
+        cart?.map((e) => {
+          if (e === item) {
+            return { ...e, count: e.count + 1 };
+          } else {
+            return e;
+          }
+        })
+      );
+    } else {
+      setCart([...cart, { ...item, count: 1 }]);
+    }
   };
 
   const { data: food = [] } = useQuery(["food"], async () => {
