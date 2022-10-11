@@ -350,6 +350,7 @@ const OrderList = ({ orders, orderRefetch }) => {
                 justifyContent: "space-between",
               }}
             >
+              {/* --items-- */}
               <Box>
                 <Typography
                   style={{ color: currentColor }}
@@ -368,6 +369,30 @@ const OrderList = ({ orders, orderRefetch }) => {
                   </Typography>
                 ))}
               </Box>
+              {/* --extra-- */}
+              <Box>
+                <Typography
+                  style={{ color: currentColor }}
+                  sx={{ fontSize: 14, fontWeight: 500 }}
+                  variant="h6"
+                >
+                  Extra
+                </Typography>
+                {item?.note?.order_items?.map((data) => (
+                  <Box key={data.id}>
+                    {data?.extra?.map((extra, index) => (
+                      <Typography
+                        key={index}
+                        sx={{ fontSize: 14, fontWeight: 500 }}
+                        variant="h6"
+                      >
+                        {extra?.name}
+                      </Typography>
+                    ))}
+                  </Box>
+                ))}
+              </Box>
+              {/* --quantity-- */}
               <Box>
                 <Typography
                   style={{ color: currentColor }}
@@ -396,7 +421,7 @@ const OrderList = ({ orders, orderRefetch }) => {
               </Box>
             </Box>
             {/* --extra-- */}
-            <Box>
+            {/* <Box>
               <Typography
                 style={{ color: currentColor }}
                 sx={{ fontSize: 14, fontWeight: 500 }}
@@ -417,7 +442,7 @@ const OrderList = ({ orders, orderRefetch }) => {
                   ))}
                 </Box>
               ))}
-            </Box>
+            </Box> */}
             <hr className="border-[#FFC446]" />
             <Box className="space-y-7">
               <Box
