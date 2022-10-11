@@ -391,6 +391,7 @@ const OrderList = ({ orders, orderRefetch }) => {
                     ))}
                   </Box>
                 ))}
+                <hr />
               </Box>
               {/* --quantity-- */}
               <Box>
