@@ -70,12 +70,7 @@ const EditCategory = ({ editId, handleClose }) => {
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="space-y-5">
             <Grid
-              sx={{
-                "& .MuiInputBase-root": {
-                  color: `${currentMode === "Light" ? "#000" : "#fff"}`,
-                  borderColor: `${currentMode === "Light" ? "#000" : "#fff"}`,
-                },
-              }}
+            
               item
               xs={12}
               md={6}

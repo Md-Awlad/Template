@@ -35,9 +35,9 @@ const AddCategory = ({ handleModalClose, categoryRefetch }) => {
     console.log(data);
     const payloadForm = new FormData();
     payloadForm.append("name", data?.category);
-    payloadForm.append("image", data?.image[0]);
-    console.log(data);
-
+    if (data?.image[0]) {
+      payloadForm.append("image", data?.image[0]);
+    }
     const response = await toast.promise(
       myAxios.post("/category/", payloadForm, {
         headers: {
@@ -60,17 +60,7 @@ const AddCategory = ({ handleModalClose, categoryRefetch }) => {
     <Box sx={{ ...style }}>
       <h2 className="text-xl font-bold pb-3">Add Category</h2>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
-        <Grid
-          sx={{
-            "& .MuiInputBase-root": {
-              color: `${currentMode === "Light" ? "#000" : "#fff"}`,
-              borderColor: `${currentMode === "Light" ? "#000" : "#fff"}`,
-            },
-          }}
-          item
-          xs={12}
-          md={6}
-        >
+        <Grid item xs={12} md={6}>
           <TextField
             id="category"
             label="Name of Category"
@@ -83,17 +73,14 @@ const AddCategory = ({ handleModalClose, categoryRefetch }) => {
         </Grid>
 
         {/* --img-- */}
-        {/* <Grid item xs={12} md={6}>
+        <Grid item xs={12} md={6}>
           <TextField
             id="image"
             type="file"
             label="Image"
-            required
             InputLabelProps={{
               shrink: true,
             }}
-            error={Boolean(errors.image)}
-            helperText={errors.image && "Image is required *"}
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end" sx={{ cursor: "pointer" }}>
@@ -104,7 +91,7 @@ const AddCategory = ({ handleModalClose, categoryRefetch }) => {
             inputProps={{
               accept: "image/*",
             }}
-            {...register("image", { required: true })}
+            {...register("image")}
             sx={{
               width: 1,
               "& ::file-selector-button": {
@@ -112,7 +99,7 @@ const AddCategory = ({ handleModalClose, categoryRefetch }) => {
               },
             }}
           />
-        </Grid> */}
+        </Grid>
 
         <button
           type="submit"

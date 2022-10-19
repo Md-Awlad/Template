@@ -18,6 +18,7 @@ import { useStateContext } from "../../../Contexts/ContextProvider";
 import myAxios from "../../../utils/myAxios";
 import { GrClose } from "react-icons/gr";
 import { AiOutlineClose } from "react-icons/ai";
+import { type } from "@testing-library/user-event/dist/type";
 
 const style = {
   position: "absolute",
@@ -55,7 +56,6 @@ const AddFoodItem = ({ handleModalCloseTwo, categories, foodRefetch }) => {
 
     const payloadForm = {
       food_name: data?.foodName,
-      food_detail: data?.detail,
       price: `'${JSON.stringify(price)}'`,
       image: data?.image[0],
       base_ingredient: data?.ingredient,
@@ -88,17 +88,7 @@ const AddFoodItem = ({ handleModalCloseTwo, categories, foodRefetch }) => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="space-y-5">
           {/* --FoodName-- */}
-          <Grid
-            sx={{
-              "& .MuiInputBase-root": {
-                color: `${currentMode === "Light" ? "#000" : "#fff"}`,
-                borderColor: `${currentMode === "Light" ? "#000" : "#fff"}`,
-              },
-            }}
-            item
-            xs={12}
-            md={6}
-          >
+          <Grid item xs={12} md={6}>
             <TextField
               id="foodName"
               label="Food Name"
@@ -191,17 +181,7 @@ const AddFoodItem = ({ handleModalCloseTwo, categories, foodRefetch }) => {
             />
           </Grid>
           {/* --ingredient-- */}
-          <Grid
-            sx={{
-              "& .MuiInputBase-root": {
-                color: `${currentMode === "Light" ? "#000" : "#fff"}`,
-                borderColor: `${currentMode === "Light" ? "#000" : "#fff"}`,
-              },
-            }}
-            item
-            xs={12}
-            md={6}
-          >
+          <Grid item xs={12} md={6}>
             <TextField
               id="ingredient"
               label="Base Ingredient"
@@ -215,41 +195,19 @@ const AddFoodItem = ({ handleModalCloseTwo, categories, foodRefetch }) => {
             />
           </Grid>
           {/* --package-- */}
-          <Grid
-            sx={{
-              "& .MuiInputBase-root": {
-                color: `${currentMode === "Light" ? "#000" : "#fff"}`,
-                borderColor: `${currentMode === "Light" ? "#000" : "#fff"}`,
-              },
-            }}
-            item
-            xs={12}
-            md={6}
-          >
+          <Grid item xs={12} md={6}>
             <TextField
               id="package"
               label="Packaging"
               type="number"
               // value={package2}
               // onChange={(value) => setPackage2(value)}
-              error={Boolean(errors.package)}
-              helperText={errors.package && "This package is required *"}
-              {...register("package", { required: true })}
+              {...register("package")}
               fullWidth
             />
           </Grid>
           {/* --category-- */}
-          <Grid
-            sx={{
-              "& .MuiInputBase-root": {
-                color: `${currentMode === "Light" ? "#000" : "#fff"}`,
-                borderColor: `${currentMode === "Light" ? "#000" : "#fff"}`,
-              },
-            }}
-            item
-            xs={12}
-            md={6}
-          >
+          <Grid item xs={12} md={6}>
             <FormControl fullWidth>
               <InputLabel id="demo-simple-select-label">Categories</InputLabel>
               <Select

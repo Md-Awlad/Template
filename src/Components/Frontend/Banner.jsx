@@ -2,7 +2,7 @@ import { Box, Typography } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import Marquee from "react-fast-marquee";
-import banner from "../../image/Neuvemi_poster.jpg";
+import banner from "../../image/Cover-Banner-17.jpg";
 import { staticAxios } from "../../utils/myAxios";
 
 const Banner = () => {
@@ -12,7 +12,7 @@ const Banner = () => {
   });
 
   return (
-    <Box>
+    <Box className="pt-10">
       <img
         style={{
           width: "100%",
@@ -58,7 +58,6 @@ const Banner = () => {
           </Marquee>
         </Box>
       ))} */}
-      
     </Box>
   );
 };

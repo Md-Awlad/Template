@@ -69,12 +69,7 @@ const ApplyDiscount = ({
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
         {/* --discount-- */}
         <Grid
-          sx={{
-            "& .MuiInputBase-root": {
-              color: `${currentMode === "Light" ? "#000" : "#fff"}`,
-              borderColor: `${currentMode === "Light" ? "#000" : "#fff"}`,
-            },
-          }}
+       
           item
           xs={12}
           md={6}
@@ -94,12 +89,7 @@ const ApplyDiscount = ({
         </Grid>
         {/* --category-- */}
         <Grid
-          sx={{
-            "& .MuiInputBase-root": {
-              color: `${currentMode === "Light" ? "#000" : "#fff"}`,
-              borderColor: `${currentMode === "Light" ? "#000" : "#fff"}`,
-            },
-          }}
+       
           item
           xs={12}
           md={6}
@@ -119,12 +109,7 @@ const ApplyDiscount = ({
         </Grid>
         {/* --food-- */}
         <Grid
-          sx={{
-            "& .MuiInputBase-root": {
-              color: `${currentMode === "Light" ? "#000" : "#fff"}`,
-              borderColor: `${currentMode === "Light" ? "#000" : "#fff"}`,
-            },
-          }}
+       
           item
           xs={12}
           md={6}

@@ -5,9 +5,9 @@ import logo from "../../image/logo.png";
 
 const Header = () => {
   return (
-    <Box className="bg-[#102750] px-4 py-1 flex md:justify-between md:gap-0 gap-1 items-center fixed top-0 left-0 right-0 z-10">
+    <Box className="bg-[#102750] px-4 py-1 flex md:justify-between md:gap-0 gap-5 md:items-center fixed top-0 left-0 right-0 z-10">
       <Link to="/">
-        <img src={logo} alt="" />
+        <img className="md:w-16 w-28 md:h-0 " src={logo} alt="" />
       </Link>
       <Typography
         variant="h6"

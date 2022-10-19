@@ -91,12 +91,7 @@ const EditDiscount = ({ editId, handleClose }) => {
           <div className="grid grid-cols-2 gap-4">
             {/* --notice-- */}
             <Grid
-              sx={{
-                "& .MuiInputBase-root": {
-                  color: `${currentMode === "Light" ? "#000" : "#fff"}`,
-                  borderColor: `${currentMode === "Light" ? "#000" : "#fff"}`,
-                },
-              }}
+           
               item
               xs={12}
               md={6}
@@ -112,12 +107,7 @@ const EditDiscount = ({ editId, handleClose }) => {
             </Grid>
             {/* --amount-- */}
             <Grid
-              sx={{
-                "& .MuiInputBase-root": {
-                  color: `${currentMode === "Light" ? "#000" : "#fff"}`,
-                  borderColor: `${currentMode === "Light" ? "#000" : "#fff"}`,
-                },
-              }}
+            
               item
               xs={12}
               md={6}
@@ -167,12 +157,7 @@ const EditDiscount = ({ editId, handleClose }) => {
           </div>
           {/* --condition-- */}
           <Grid
-            sx={{
-              "& .MuiInputBase-root": {
-                color: `${currentMode === "Light" ? "#000" : "#fff"}`,
-                borderColor: `${currentMode === "Light" ? "#000" : "#fff"}`,
-              },
-            }}
+          
             item
             xs={12}
             md={6}

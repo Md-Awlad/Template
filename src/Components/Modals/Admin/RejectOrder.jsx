@@ -70,17 +70,7 @@ const RejectOrder = ({ reject, handleModalClose }) => {
         Cancel Food
       </Typography>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
-        <Grid
-          sx={{
-            "& .MuiInputBase-root": {
-              color: `${currentMode === "Light" ? "#000" : "#fff"}`,
-              borderColor: `${currentMode === "Light" ? "#000" : "#fff"}`,
-            },
-          }}
-          item
-          xs={12}
-          md={6}
-        >
+        <Grid item xs={12} md={6}>
           <TextField
             InputLabelProps={{ shrink: true }}
             id="orderId"
@@ -91,17 +81,7 @@ const RejectOrder = ({ reject, handleModalClose }) => {
           />
         </Grid>
         {/* --email-- */}
-        <Grid
-          sx={{
-            "& .MuiInputBase-root": {
-              color: `${currentMode === "Light" ? "#000" : "#fff"}`,
-              borderColor: `${currentMode === "Light" ? "#000" : "#fff"}`,
-            },
-          }}
-          item
-          xs={12}
-          md={6}
-        >
+        <Grid item xs={12} md={6}>
           <TextField
             InputLabelProps={{ shrink: true }}
             id="email"
@@ -112,17 +92,7 @@ const RejectOrder = ({ reject, handleModalClose }) => {
           />
         </Grid>
         {/* --subject-- */}
-        <Grid
-          sx={{
-            "& .MuiInputBase-root": {
-              color: `${currentMode === "Light" ? "#000" : "#fff"}`,
-              borderColor: `${currentMode === "Light" ? "#000" : "#fff"}`,
-            },
-          }}
-          item
-          xs={12}
-          md={6}
-        >
+        <Grid item xs={12} md={6}>
           <TextField
             id="subject"
             label="Subject"

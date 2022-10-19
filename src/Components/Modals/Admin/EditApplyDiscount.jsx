@@ -97,12 +97,7 @@ const EditApplyDiscount = ({ editId, handleClose, categories, foods }) => {
           {/* <div className="grid grid-cols-2 gap-4"> */}
           {/* --category-- */}
           <Grid
-            sx={{
-              "& .MuiInputBase-root": {
-                color: `${currentMode === "Light" ? "#000" : "#fff"}`,
-                borderColor: `${currentMode === "Light" ? "#000" : "#fff"}`,
-              },
-            }}
+          
             item
             xs={12}
             md={6}
@@ -122,12 +117,7 @@ const EditApplyDiscount = ({ editId, handleClose, categories, foods }) => {
           </Grid>
           {/* --food-- */}
           <Grid
-            sx={{
-              "& .MuiInputBase-root": {
-                color: `${currentMode === "Light" ? "#000" : "#fff"}`,
-                borderColor: `${currentMode === "Light" ? "#000" : "#fff"}`,
-              },
-            }}
+        
             item
             xs={12}
             md={6}

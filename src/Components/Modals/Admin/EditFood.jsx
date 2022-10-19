@@ -89,12 +89,7 @@ const EditFood = ({ editId, handleModalClose }) => {
           <div className="space-y-5">
             {/* --FoodName-- */}
             <Grid
-              sx={{
-                "& .MuiInputBase-root": {
-                  color: `${currentMode === "Light" ? "#000" : "#fff"}`,
-                  borderColor: `${currentMode === "Light" ? "#000" : "#fff"}`,
-                },
-              }}
+              
               item
               xs={12}
               md={6}
@@ -175,12 +170,7 @@ const EditFood = ({ editId, handleModalClose }) => {
             </Grid>
             {/* --ingredient-- */}
             <Grid
-              sx={{
-                "& .MuiInputBase-root": {
-                  color: `${currentMode === "Light" ? "#000" : "#fff"}`,
-                  borderColor: `${currentMode === "Light" ? "#000" : "#fff"}`,
-                },
-              }}
+            
               item
               xs={12}
               md={6}
@@ -196,12 +186,7 @@ const EditFood = ({ editId, handleModalClose }) => {
             </Grid>
             {/* --detail-- */}
             <Grid
-              sx={{
-                "& .MuiInputBase-root": {
-                  color: `${currentMode === "Light" ? "#000" : "#fff"}`,
-                  borderColor: `${currentMode === "Light" ? "#000" : "#fff"}`,
-                },
-              }}
+             
               item
               xs={12}
               md={6}
@@ -217,12 +202,7 @@ const EditFood = ({ editId, handleModalClose }) => {
             </Grid>
             {/* --test-- */}
             <Grid
-              sx={{
-                "& .MuiInputBase-root": {
-                  color: `${currentMode === "Light" ? "#000" : "#fff"}`,
-                  borderColor: `${currentMode === "Light" ? "#000" : "#fff"}`,
-                },
-              }}
+            
               item
               xs={12}
               md={6}
@@ -259,12 +239,7 @@ const EditFood = ({ editId, handleModalClose }) => {
             </Grid> */}
             {/* --package-- */}
             <Grid
-              sx={{
-                "& .MuiInputBase-root": {
-                  color: `${currentMode === "Light" ? "#000" : "#fff"}`,
-                  borderColor: `${currentMode === "Light" ? "#000" : "#fff"}`,
-                },
-              }}
+             
               item
               xs={12}
               md={6}

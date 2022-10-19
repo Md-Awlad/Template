@@ -76,12 +76,7 @@ const AddDiscount = ({ handleModalClose, discountRefetch }) => {
         <div className="grid grid-cols-2 gap-4">
           {/* --notice-- */}
           <Grid
-            sx={{
-              "& .MuiInputBase-root": {
-                color: `${currentMode === "Light" ? "#000" : "#fff"}`,
-                borderColor: `${currentMode === "Light" ? "#000" : "#fff"}`,
-              },
-            }}
+          
             item
             xs={12}
             md={6}
@@ -98,12 +93,7 @@ const AddDiscount = ({ handleModalClose, discountRefetch }) => {
           </Grid>
           {/* --amount-- */}
           <Grid
-            sx={{
-              "& .MuiInputBase-root": {
-                color: `${currentMode === "Light" ? "#000" : "#fff"}`,
-                borderColor: `${currentMode === "Light" ? "#000" : "#fff"}`,
-              },
-            }}
+          
             item
             xs={12}
             md={6}
@@ -155,12 +145,7 @@ const AddDiscount = ({ handleModalClose, discountRefetch }) => {
         </div>
         {/* --condition-- */}
         <Grid
-          sx={{
-            "& .MuiInputBase-root": {
-              color: `${currentMode === "Light" ? "#000" : "#fff"}`,
-              borderColor: `${currentMode === "Light" ? "#000" : "#fff"}`,
-            },
-          }}
+        
           item
           xs={12}
           md={6}

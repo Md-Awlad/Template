@@ -44,21 +44,21 @@ const MenuTabs = ({ setCart, cart }) => {
         value={value}
         onChange={handleChange}
         aria-label="basic tabs example"
-        TabIndicatorProps={{
-          hidden: true,
-        }}
+        variant="scrollable"
+        scrollButtons="auto"
+        allowScrollButtonsMobile
         sx={{
-          "& .MuiTabs-flexContainer": {
-            overflowX: "scroll",
+          "& .MuiTabs-indicator": {
+            backgroundColor: "#FFC446",
           },
           "& button": {
-            borderRadius: "5px 5px 0 0 ",
             color: "#000",
+            borderRadius: "5px 5px 0 0 ",
+            paddingX: 3,
           },
           "& button.Mui-selected": {
             backgroundColor: "#FFC446",
             color: "#000",
-            fontWeight: 500,
           },
         }}
       >

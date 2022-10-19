@@ -158,8 +158,8 @@ const Food = ({ id }) => {
                       }}
                       className="text-gray-500"
                     >
-                      {item.food_detail.substr(0, 65) +
-                        `${item.food_detail.length > 65 ? "..." : ""}`}
+                      {/* {item.food_detail.substr(0, 65) +
+                        `${item.food_detail.length > 65 ? "..." : ""}`} */}
                     </Typography>
                     {/* --checkbox-- */}
                     <FormControl>
