@@ -5,6 +5,7 @@ import { useStateContext } from "../../../Contexts/ContextProvider";
 import { MdModeEdit } from "react-icons/md";
 import EditFood from "../../Modals/Admin/EditFood";
 import DeleteFood from "../../Modals/Admin/DeleteFood";
+import { Tooltip } from "@mui/material";
 
 const Food = ({ category, foodRefetch }) => {
   const { currentColor, currentMode } = useStateContext();
@@ -53,16 +54,28 @@ const Food = ({ category, foodRefetch }) => {
       align: "center",
       renderCell: ({ value }) => {
         return (
-          <div className="overflow-y-auto h-12 w-full mt-7">
-            {Object.keys(value).map((key, index) => {
+          <Tooltip
+            title={Object.keys(value).map((key, index) => {
               return (
-                <div key={index} className="grid grid-cols-2">
-                  <h2>size:{key}</h2>
-                  <h2>Price:{value[key]}</h2>
+                <div key={index} className="flex gap-5">
+                  <h2>size: {key}</h2>
+                  <h2>Price: {value[key]}</h2>
                 </div>
               );
             })}
-          </div>
+            placement="top"
+          >
+            <div className="overflow-y-auto h-12 w-full mt-7">
+              {Object.keys(value).map((key, index) => {
+                return (
+                  <div key={index} className="flex gap-5">
+                    <h2>size: {key}</h2>
+                    <h2>Price: {value[key]}</h2>
+                  </div>
+                );
+              })}
+            </div>
+          </Tooltip>
         );
       },
     },
@@ -76,7 +89,7 @@ const Food = ({ category, foodRefetch }) => {
         if (value) {
           return (
             <div className="overflow-y-auto h-12 w-full mt-7">
-              {Object.keys(value)?.map((key,index) => {
+              {Object.keys(value)?.map((key, index) => {
                 return (
                   <div key={index} className="grid grid-cols-2">
                     <h2>size:{key}</h2>

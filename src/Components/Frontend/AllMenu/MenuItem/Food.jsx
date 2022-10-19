@@ -235,7 +235,9 @@ const Food = ({ id }) => {
                                   fontSize: "17px",
                                 }}
                                 variant="h6"
-                              >{`${key[0]} (${key[1]} TK)`}</Typography>
+                              >{`${key[0].replace("inch", '"')} (${
+                                key[1]
+                              } ৳)`}</Typography>
                             </Box>
                           ))
                         )}

@@ -49,11 +49,14 @@ const AddFoodItem = ({ handleModalCloseTwo, categories, foodRefetch }) => {
 
   const onSubmit = async (data) => {
     const price = {};
-
     data.item?.forEach((item) => {
-      price[item.title] = item.price;
+      if (item.title.endsWith('"')) {
+        const a = item?.title?.replace(/"/g, " inch");
+        price[a] = item.price;
+      } else {
+        price[item.title] = item.price;
+      }
     });
-
     const payloadForm = {
       food_name: data?.foodName,
       price: `'${JSON.stringify(price)}'`,
