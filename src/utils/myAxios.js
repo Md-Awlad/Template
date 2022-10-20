@@ -11,7 +11,7 @@ import {
 //   process.env.NODE_ENV === "production"
 //     ? "https://api.neuvemirestro.com"
 //     : "http://10.27.27.32:8000";
-const baseURL = "http://10.27.27.32:8001";
+const baseURL = "https://api.nexismenu.live";
 
 const myAxios = axios.create({ baseURL });
 export const staticAxios = axios.create({ baseURL });
