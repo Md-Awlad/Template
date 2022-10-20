@@ -1,3 +1,5 @@
+import { Tooltip, Typography } from "@mui/material";
+import { Box } from "@mui/system";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import React, { useState } from "react";
 import { RiDeleteBin6Line } from "react-icons/ri";
@@ -29,6 +31,13 @@ const CancelOrderList = ({ cancelOrder }) => {
       width: 180,
       headerAlign: "center",
       align: "center",
+      renderCell: ({ row }) => {
+        return (
+          <Tooltip title={row?.email} placement="top">
+            <Typography>{row?.email}</Typography>
+          </Tooltip>
+        );
+      },
     },
     {
       field: "table",
@@ -59,11 +68,18 @@ const CancelOrderList = ({ cancelOrder }) => {
       align: "center",
       renderCell: (value) => {
         return (
-          <div className="w-full h-12 overflow-y-auto my-5 text-center">
-            {value?.row?.order_items?.map((item, index) => {
-              return <h2 key={index}>{item.food_name}</h2>;
+          <Tooltip
+            title={value?.row?.order_items?.map((item, index) => {
+              return <Typography key={index}>{item.food_name}</Typography>;
             })}
-          </div>
+            placement="top"
+          >
+            <div className="w-full h-12 overflow-y-auto my-5 text-center">
+              {value?.row?.order_items?.map((item, index) => {
+                return <h2 key={index}>{item.food_name}</h2>;
+              })}
+            </div>
+          </Tooltip>
         );
       },
     },
@@ -98,12 +114,14 @@ const CancelOrderList = ({ cancelOrder }) => {
       align: "center",
       renderCell: ({ row }) => {
         return (
-          <div className="flex items-center gap-3">
-            <RiDeleteBin6Line
-              onClick={() => setDeleteId(row?.id)}
-              className="text-red-400 dark:text-neutral text-xl cursor-pointer"
-            />
-          </div>
+          <Box className="flex items-center gap-3">
+            <Tooltip title="Cancel Food" placement="top">
+              <RiDeleteBin6Line
+                onClick={() => setDeleteId(row?.id)}
+                className="text-red-400 dark:text-neutral text-xl cursor-pointer"
+              />
+            </Tooltip>
+          </Box>
         );
       },
     },

@@ -277,7 +277,7 @@ const OrderList = ({ orders, orderRefetch }) => {
           display: "grid",
           justifyItems: { xs: "center" },
           gridTemplateColumns: {
-            md: "repeat(4,1fr)",
+            md: "repeat(3,1fr)",
             sm: "repeat(2,1fr)",
             xs: "repeat(1,1fr)",
           },
@@ -289,8 +289,8 @@ const OrderList = ({ orders, orderRefetch }) => {
             key={item.id}
             className="space-y-1 dark:bg-secondary-dark-bg dark:text-neutral"
             sx={{
-              width: 250,
-              height: 300,
+              width: 300,
+              height: 350,
               overflowY: "scroll",
               px: 2,
               py: 1,
@@ -466,25 +466,26 @@ const OrderList = ({ orders, orderRefetch }) => {
                   display: "flex",
                   justifyContent: "space-between",
                   alignItems: "center",
+                  pt: 10,
                 }}
               >
                 <form onSubmit={handleSubmit(onSubmit)}>
                   <button>
                     <BsCheck2Circle
                       onClick={() => setComplete(item.id)}
-                      className="text-green-900 dark:text-neutral text-2xl cursor-pointer"
+                      className="text-green-900 dark:text-green-600 text-2xl cursor-pointer "
                     />
                   </button>
                 </form>
 
                 <HighlightOffIcon
                   onClick={() => setReject(item.id)}
-                  className="text-red-900 dark:text-neutral text-2xl cursor-pointer"
+                  className="text-red-900 dark:text-red-600 text-2xl cursor-pointer"
                 />
 
                 <RiDeleteBin6Line
                   onClick={() => setDeleteId(item.id)}
-                  className="text-blue-900 dark:text-neutral text-2xl cursor-pointer"
+                  className="text-blue-900 dark:text-blue-600 text-2xl cursor-pointer"
                 />
               </Box>
             </Box>

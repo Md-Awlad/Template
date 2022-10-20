@@ -17,6 +17,7 @@ import { useQuery } from "@tanstack/react-query";
 import { staticAxios } from "../../../utils/myAxios";
 
 const CartItems = ({ cart, setCart, item }) => {
+  console.log(item);
   // const addExtra = (extraId, price = 0) => {
   //   setCart(
   //     cart.map((e) => {
@@ -44,9 +45,7 @@ const CartItems = ({ cart, setCart, item }) => {
 
           if (Object.keys(e.extra).length) {
             Object.keys(e.extra).map((ex) => {
-              console.log(ex);
               if (parseInt(ex) === extraId) {
-                console.log(ex);
                 delete e.extra[extraId];
               } else {
                 e["extra"] = {
@@ -142,6 +141,7 @@ const CartItems = ({ cart, setCart, item }) => {
     [`/customize_food_category/${item.category}`],
     () => staticAxios(`/customize_food_category/${item.category}`)
   );
+  console.log(ingredients);
 
   // const { data: ingredients = [] } = useQuery([
   //   `/customize_food_category/${item.category}`,

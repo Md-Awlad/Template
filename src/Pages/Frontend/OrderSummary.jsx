@@ -186,7 +186,7 @@ const OrderSummary = () => {
                   :
                 </Typography>
                 <Typography variant="h6" sx={{ fontSize: "15px" }}>
-                  $ {orderSummary.total ? orderSummary.total : "00"}
+                  $ {orderSummary.sub_total ? orderSummary.sub_total : "00"}
                 </Typography>
               </Box>
               <Box className="grid grid-cols-3 gap-8">

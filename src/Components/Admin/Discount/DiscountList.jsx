@@ -6,6 +6,8 @@ import { MdModeEdit } from "react-icons/md";
 import moment from "moment";
 import DeleteDiscount from "../../Modals/Admin/DeleteDiscount";
 import EditDiscount from "../../Modals/Admin/EditDiscount";
+import { Tooltip, Typography } from "@mui/material";
+import { Box } from "@mui/system";
 
 const DiscountList = ({ discounts }) => {
   const { currentColor, currentMode } = useStateContext();
@@ -33,6 +35,20 @@ const DiscountList = ({ discounts }) => {
       width: 230,
       headerAlign: "center",
       align: "center",
+      renderCell: ({ row }) => {
+        return (
+          <Tooltip
+            title={row?.notice.length >= 15 ? row?.notice : ""}
+            placement="top"
+          >
+            <Box>
+              <Typography>
+                {row?.notice.length >= 15 ? row?.notice : ""}
+              </Typography>
+            </Box>
+          </Tooltip>
+        );
+      },
     },
     {
       field: "amount",
@@ -84,16 +100,20 @@ const DiscountList = ({ discounts }) => {
       align: "center",
       renderCell: ({ row }) => {
         return (
-          <div className="flex gap-5 items-center">
-            <MdModeEdit
-              onClick={() => setEditId(row?.id)}
-              className="text-gray-600 dark:text-neutral text-xl cursor-pointer"
-            />
-            <RiDeleteBin6Line
-              onClick={() => setDeleteId(row?.id)}
-              className="text-red-400 dark:text-neutral text-xl cursor-pointer"
-            />
-          </div>
+          <Box className="flex gap-5 items-center">
+            <Tooltip title="Edit Discount" placement="top">
+              <MdModeEdit
+                onClick={() => setEditId(row?.id)}
+                className="text-gray-600 dark:text-neutral text-xl cursor-pointer"
+              />
+            </Tooltip>
+            <Tooltip title="Delete Discount" placement="top">
+              <RiDeleteBin6Line
+                onClick={() => setDeleteId(row?.id)}
+                className="text-red-400 dark:text-neutral text-xl cursor-pointer"
+              />
+            </Tooltip>
+          </Box>
         );
       },
     },

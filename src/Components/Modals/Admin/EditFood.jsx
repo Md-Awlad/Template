@@ -42,11 +42,11 @@ const EditFood = ({ editId, handleModalClose }) => {
 
     const payloadForm = {
       food_name: data?.foodName,
-      food_detail: data?.detail,
+      // food_detail: data?.detail,
       price: JSON.stringify(price),
       image: data?.image[0],
       base_ingredient: data?.ingredient,
-      taste: data?.taste,
+      // taste: data?.taste,
       packaging: data?.package,
     };
 
@@ -74,8 +74,8 @@ const EditFood = ({ editId, handleModalClose }) => {
       foodData.map((data) => {
         setValue("foodName", data?.food_name);
         setValue("ingredient", data?.base_ingredient);
-        setValue("detail", data?.food_detail);
-        setValue("taste", data?.taste);
+        // setValue("detail", data?.food_detail);
+        // setValue("taste", data?.taste);
         setValue("package", data?.packaging);
       });
     },
@@ -88,12 +88,7 @@ const EditFood = ({ editId, handleModalClose }) => {
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="space-y-5">
             {/* --FoodName-- */}
-            <Grid
-              
-              item
-              xs={12}
-              md={6}
-            >
+            <Grid item xs={12} md={6}>
               <TextField
                 id="foodName"
                 label="Food Name"
@@ -169,12 +164,7 @@ const EditFood = ({ editId, handleModalClose }) => {
               />
             </Grid>
             {/* --ingredient-- */}
-            <Grid
-            
-              item
-              xs={12}
-              md={6}
-            >
+            <Grid item xs={12} md={6}>
               <TextField
                 id="ingredient"
                 label="Base Ingredient"
@@ -185,7 +175,7 @@ const EditFood = ({ editId, handleModalClose }) => {
               />
             </Grid>
             {/* --detail-- */}
-            <Grid
+            {/* <Grid
              
               item
               xs={12}
@@ -199,9 +189,9 @@ const EditFood = ({ editId, handleModalClose }) => {
                 {...register("detail")}
                 fullWidth
               />
-            </Grid>
+            </Grid> */}
             {/* --test-- */}
-            <Grid
+            {/* <Grid
             
               item
               xs={12}
@@ -215,7 +205,7 @@ const EditFood = ({ editId, handleModalClose }) => {
                 {...register("taste")}
                 fullWidth
               />
-            </Grid>
+            </Grid> */}
             {/* --review-- */}
             {/* <Grid
               sx={{
@@ -238,12 +228,7 @@ const EditFood = ({ editId, handleModalClose }) => {
               />
             </Grid> */}
             {/* --package-- */}
-            <Grid
-             
-              item
-              xs={12}
-              md={6}
-            >
+            <Grid item xs={12} md={6}>
               <TextField
                 id="package"
                 label="Packaging"

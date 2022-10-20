@@ -5,7 +5,7 @@ import { useStateContext } from "../../../Contexts/ContextProvider";
 import { MdModeEdit } from "react-icons/md";
 import EditFood from "../../Modals/Admin/EditFood";
 import DeleteFood from "../../Modals/Admin/DeleteFood";
-import { Tooltip } from "@mui/material";
+import { Box, Tooltip } from "@mui/material";
 
 const Food = ({ category, foodRefetch }) => {
   const { currentColor, currentMode } = useStateContext();
@@ -57,7 +57,7 @@ const Food = ({ category, foodRefetch }) => {
           <Tooltip
             title={Object.keys(value).map((key, index) => {
               return (
-                <div key={index} className="flex gap-5">
+                <div key={index} className="flex justify-between w-32">
                   <h2>size: {key}</h2>
                   <h2>Price: {value[key]}</h2>
                 </div>
@@ -88,16 +88,28 @@ const Food = ({ category, foodRefetch }) => {
       renderCell: ({ value }) => {
         if (value) {
           return (
-            <div className="overflow-y-auto h-12 w-full mt-7">
-              {Object.keys(value)?.map((key, index) => {
+            <Tooltip
+              title={Object.keys(value)?.map((key, index) => {
                 return (
-                  <div key={index} className="grid grid-cols-2">
-                    <h2>size:{key}</h2>
-                    <h2>Price:{value[key]}</h2>
+                  <div key={index} className="flex justify-between w-36">
+                    <h2>size: {key}</h2>
+                    <h2>Price: {value[key]}</h2>
                   </div>
                 );
               })}
-            </div>
+              placement="top"
+            >
+              <div className="overflow-y-auto h-12 w-full mt-7">
+                {Object.keys(value)?.map((key, index) => {
+                  return (
+                    <div key={index} className="grid grid-cols-2">
+                      <h2>size: {key}</h2>
+                      <h2>Price: {value[key]}</h2>
+                    </div>
+                  );
+                })}
+              </div>
+            </Tooltip>
           );
         } else {
           return (
@@ -107,12 +119,6 @@ const Food = ({ category, foodRefetch }) => {
           );
         }
       },
-    },
-    {
-      field: "food_detail",
-      headerName: "Details",
-      width: 208,
-      headerAlign: "center",
     },
     { field: "review", headerName: "Review", width: 130, align: "center" },
     {
@@ -143,16 +149,20 @@ const Food = ({ category, foodRefetch }) => {
       align: "center",
       renderCell: ({ row }) => {
         return (
-          <div className="flex gap-5 items-center">
-            <MdModeEdit
-              onClick={() => setEditId(row?.id)}
-              className="text-gray-600 dark:text-neutral text-xl cursor-pointer"
-            />
-            <RiDeleteBin6Line
-              onClick={() => setDeleteId(row?.id)}
-              className="text-red-400 dark:text-neutral text-xl cursor-pointer"
-            />
-          </div>
+          <Box className="flex gap-5 items-center">
+            <Tooltip title="Edit Food" placement="top">
+              <MdModeEdit
+                onClick={() => setEditId(row?.id)}
+                className="text-gray-600 dark:text-neutral text-xl cursor-pointer"
+              />
+            </Tooltip>
+            <Tooltip title="Delete Food" placement="top">
+              <RiDeleteBin6Line
+                onClick={() => setDeleteId(row?.id)}
+                className="text-red-400 dark:text-neutral text-xl cursor-pointer"
+              />
+            </Tooltip>
+          </Box>
         );
       },
     },

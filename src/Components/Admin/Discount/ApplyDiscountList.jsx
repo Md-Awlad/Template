@@ -3,10 +3,7 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { useStateContext } from "../../../Contexts/ContextProvider";
 import { MdModeEdit } from "react-icons/md";
-import moment from "moment";
-import DeleteDiscount from "../../Modals/Admin/DeleteDiscount";
-import EditDiscount from "../../Modals/Admin/EditDiscount";
-import { Box, Typography } from "@mui/material";
+import { Box, Tooltip, Typography } from "@mui/material";
 import EditApplyDiscount from "../../Modals/Admin/EditApplyDiscount";
 import DeleteApplyDiscount from "../../Modals/Admin/DeleteApplyDiscount";
 
@@ -52,11 +49,18 @@ const ApplyDiscountList = ({
       align: "center",
       renderCell: ({ row }) => {
         return (
-          <Box sx={{ height: 60, overflow: "scroll" }}>
-            {row?.food?.map((data) => (
+          <Tooltip
+            title={row?.food?.map((data) => (
               <Typography key={data.id}>{data.food_name}</Typography>
             ))}
-          </Box>
+            placement="top"
+          >
+            <Box sx={{ height: 60, overflow: "scroll", mt: 4 }}>
+              {row?.food?.map((data) => (
+                <Typography key={data.id}>{data.food_name}</Typography>
+              ))}
+            </Box>
+          </Tooltip>
         );
       },
     },
@@ -88,16 +92,20 @@ const ApplyDiscountList = ({
       align: "center",
       renderCell: ({ row }) => {
         return (
-          <div className="flex gap-5 items-center">
-            <MdModeEdit
-              onClick={() => setEditId(row?.id)}
-              className="text-gray-600 dark:text-neutral text-xl cursor-pointer"
-            />
-            <RiDeleteBin6Line
-              onClick={() => setDeleteId(row?.id)}
-              className="text-red-400 dark:text-neutral text-xl cursor-pointer"
-            />
-          </div>
+          <Box className="flex gap-5 items-center">
+            <Tooltip title="Edit Apply Discount" placement="top">
+              <MdModeEdit
+                onClick={() => setEditId(row?.id)}
+                className="text-gray-600 dark:text-neutral text-xl cursor-pointer"
+              />
+            </Tooltip>
+            <Tooltip title="Apply Discount Deleted" placement="top">
+              <RiDeleteBin6Line
+                onClick={() => setDeleteId(row?.id)}
+                className="text-red-400 dark:text-neutral text-xl cursor-pointer"
+              />
+            </Tooltip>
+          </Box>
         );
       },
     },
