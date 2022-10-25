@@ -311,6 +311,13 @@ const OrderList = ({ orders, orderRefetch }) => {
                 sx={{ fontSize: 14, fontWeight: 500 }}
                 variant="h6"
               >
+                Order Type: {item?.order_type}
+              </Typography>
+              <Typography
+                style={{ color: currentColor }}
+                sx={{ fontSize: 14, fontWeight: 500 }}
+                variant="h6"
+              >
                 Table No: {item?.table}
               </Typography>
             </Box>
@@ -457,7 +464,7 @@ const OrderList = ({ orders, orderRefetch }) => {
                   Total Amount:
                 </Typography>
                 <Typography sx={{ fontSize: 18, fontWeight: 500 }} variant="h6">
-                  $ {item?.price}
+                  {item?.price} ৳
                 </Typography>
               </Box>
               {/* --actionbtn-- */}

@@ -10,6 +10,14 @@ const getOrderInfo = () => {
   return localStorage.getItem("orderInfo");
 };
 
+const setColorInfo = (colorInfo) => {
+  return localStorage.setItem("colorInfo");
+};
+
+const getColorInfo = () => {
+  return localStorage.getItem("colorInfo");
+};
+
 // Get access token from localstorage
 const getAccessToken = () => {
   return localStorage.getItem("accessToken");
@@ -39,4 +47,6 @@ export {
   removeTokens,
   setOrderInfo,
   getOrderInfo,
+  setColorInfo,
+  getColorInfo,
 };

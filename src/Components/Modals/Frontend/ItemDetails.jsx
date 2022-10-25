@@ -97,8 +97,8 @@ const ItemDetails = ({ handleModalClose, item }) => {
             </div>
           </div>
         </div>
-        <Box className="absolute -right-20 -top-20">
-          <img className="w-64 h-64 object-contain" src={item.image} alt="" />
+        <Box className="absolute -right-10 -top-16">
+          <img className="w-40 h-40 object-contain" src={item.image} alt="" />
         </Box>
       </div>
       {/* --desc-- */}
