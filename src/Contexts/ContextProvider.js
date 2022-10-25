@@ -26,6 +26,7 @@ export const ContextProvider = ({ children }) => {
   const [expandedMenu, setExpandedMenu] = useState(true);
   const [orderId, setOrderId] = useState();
   const [confirmed, setConfirmed] = useState();
+  const [customColor, setCustomColor] = useState();
 
   const { isLoading, data: currentUser = {} } = useQuery(
     ["currentUser"],
@@ -34,6 +35,11 @@ export const ContextProvider = ({ children }) => {
       return res?.data;
     }
   );
+
+  const { data: create_menu = {} } = useQuery(["create_menu"], async () => {
+    const res = await myAxios("/create_menu");
+    return res?.data;
+  });
 
   const setMode = (value) => {
     setCurrentMode(value);
@@ -80,6 +86,9 @@ export const ContextProvider = ({ children }) => {
         expandedMenu,
         currentColor,
         orderId,
+        create_menu,
+        customColor,
+        setCustomColor,
         setOrderId,
         currentMode,
         setCurrentMode,

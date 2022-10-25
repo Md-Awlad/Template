@@ -3,7 +3,7 @@ import { Box } from "@mui/system";
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import { useState } from "react";
-import interceptor from "../../../../utils/interceptors";
+import { staticAxios } from "../../../../utils/myAxios";
 import Food from "../MenuItem/Food";
 
 function TabPanel(props) {
@@ -34,7 +34,7 @@ const MenuTabs = ({ setCart, cart }) => {
   };
 
   const { data: categories = [] } = useQuery(["category"], async () => {
-    const res = await interceptor("/category/");
+    const res = await staticAxios("/category/");
     return res.data;
   });
 

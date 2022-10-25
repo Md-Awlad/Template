@@ -24,6 +24,7 @@ module.exports = {
         success: "#36D399",
         warning: "#FBBD23",
         error: "#F87272",
+        customColor: "red",
         "main-bg": "#F2F5F9",
         "main-dark-bg": "#20232A",
         "secondary-dark-bg": "#33373E",

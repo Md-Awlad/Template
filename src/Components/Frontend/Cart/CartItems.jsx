@@ -17,7 +17,6 @@ import { useQuery } from "@tanstack/react-query";
 import { staticAxios } from "../../../utils/myAxios";
 
 const CartItems = ({ cart, setCart, item }) => {
-  console.log(item);
   // const addExtra = (extraId, price = 0) => {
   //   setCart(
   //     cart.map((e) => {
@@ -141,7 +140,6 @@ const CartItems = ({ cart, setCart, item }) => {
     [`/customize_food_category/${item.category}`],
     () => staticAxios(`/customize_food_category/${item.category}`)
   );
-  console.log(ingredients);
 
   // const { data: ingredients = [] } = useQuery([
   //   `/customize_food_category/${item.category}`,
@@ -149,17 +147,18 @@ const CartItems = ({ cart, setCart, item }) => {
 
   // --remove item--
   const removeItem = (id) => {
-    const deleted = cart.filter((item) => item.id !== id && item.size !== id);
+    const deleted = cart.filter((item) => item.id !== id);
     setCart(deleted);
   };
 
   return (
-    <Paper
+    <Box
       sx={{
-        marginX: 1,
+        // marginX: 1,
         marginY: 1,
         paddingY: 1,
         paddingX: 2,
+        borderRadius: "5px",
         boxShadow: "0px 0px 5px 0px rgb(0 0 0 / 20%)",
       }}
     >
@@ -173,7 +172,7 @@ const CartItems = ({ cart, setCart, item }) => {
         // className="flex items-center gap-3 md:flex-nowrap flex-wrap relative"
       >
         <img
-          className="lg:w-16 lg:h-16 w-24 h-24 object-contain"
+          className="lg:w-16 lg:h-16 w-20 h-20 object-cover rounded-full border-2 border-gray-400"
           src={item.image}
           alt=""
         />
@@ -181,12 +180,12 @@ const CartItems = ({ cart, setCart, item }) => {
           <Typography variant="h6" sx={{ fontWeight: 500 }}>
             {item.food_name}
           </Typography>
-          <Typography>Size: {item?.size}</Typography>
+          <Typography>{`Size: ${item?.size}`}</Typography>
         </Box>
 
         {/* --remove-- */}
         <MdClose
-          onClick={() => removeItem(item.id && item.size)}
+          onClick={() => removeItem(item.id)}
           className="absolute md:right-0 -right-2 top-0 cursor-pointer text-red-600 text-xl border border-gray-700 rounded-full"
         />
       </Box>
@@ -208,11 +207,11 @@ const CartItems = ({ cart, setCart, item }) => {
           <Typography className="text-xl">{item?.count}</Typography>
           <GrAdd
             onClick={() => handleIncrement(item)}
-            className="inline lg:w-5 lg:h-5 w-6 h-6 border border-gray-600 md:rounded rounded-sm cursor-pointer"
+            className="inline lg:w-5 lg:h-5 w-6 h-6 border border-gray-800 md:rounded rounded-sm cursor-pointer"
           />
         </Box>
         <div>
-          <h3 className="lg:text-xl text-2xl font-semibold">
+          <h3 className="lg:text-xl text-xl font-semibold">
             {item?.price
               ? Number(item?.price * item?.count) +
                 Number(
@@ -222,7 +221,7 @@ const CartItems = ({ cart, setCart, item }) => {
                     : 0
                 )
               : 0}
-            <span className="md:text-lg font-semibold pl-1">Tk</span>
+            <span className="md:text-lg font-semibold pl-1">৳</span>
           </h3>
         </div>
       </Box>
@@ -286,14 +285,14 @@ const CartItems = ({ cart, setCart, item }) => {
                   />
                 </Box>
                 <Typography variant="h6" sx={{ fontSize: "14px" }}>
-                  {extraPrice.price} TK
+                  {extraPrice.price} ৳
                 </Typography>
               </Box>
             ))}
           </Typography>
         </AccordionDetails>
       </Accordion>
-    </Paper>
+    </Box>
   );
 };
 

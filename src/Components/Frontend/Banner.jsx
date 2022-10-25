@@ -2,21 +2,23 @@ import { Box, Typography } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import Marquee from "react-fast-marquee";
+import { useStateContext } from "../../Contexts/ContextProvider";
 import banner from "../../image/Cover-Banner-17.jpg";
 import { staticAxios } from "../../utils/myAxios";
 
 const Banner = () => {
+  const { activeMenu } = useStateContext();
   const { data: discounts = [] } = useQuery(["discount"], async () => {
     const res = await staticAxios("/apply_discount/");
     return res.data;
   });
 
   return (
-    <Box className="pt-10">
+    <Box className={`${activeMenu ? "pt-10" : ""}`}>
       <img
         style={{
           width: "100%",
-          height: "30vh",
+          height: `${activeMenu ? "30vh" : "10vh"}`,
           backgroundPosition: "center",
           objectFit: "cover",
           backgroundSize: "auto",
@@ -29,7 +31,7 @@ const Banner = () => {
         direction="left"
         gradientColor
         pauseOnHover
-        speed={60}
+        speed={50}
         style={{ backgroundColor: "#FFC446", height: "8vh" }}
       >
         {discounts

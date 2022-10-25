@@ -8,9 +8,12 @@ import staticAxios from "../../utils/myAxios";
 import { useStateContext } from "../../Contexts/ContextProvider";
 import Header from "../../Components/Frontend/Header";
 import Footer from "../../Components/Frontend/Footer";
+import { Link } from "react-router-dom";
+import { AiOutlineArrowLeft } from "react-icons/ai";
+import PhoneHeader from "../../Components/Frontend/PhoneHeader";
 
 const OrderSummary = () => {
-  const { orderId } = useStateContext();
+  const { orderId, activeMenu } = useStateContext();
   const componentRef = useRef();
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
@@ -34,13 +37,15 @@ const OrderSummary = () => {
         },
       }}
     >
-      <Header />
+      {activeMenu ? <Header /> : <PhoneHeader />}
+      {/* {`${activeMenu ? "pt-10" : ""}`} */}
       <Box
-        sx={{
-          display: "flex",
-          justifyContent: "flex-end",
-          marginTop: { md: 7, xs: 10 },
-        }}
+        className={`${activeMenu ? "flex lg:mt-10" : ""}`}
+        // sx={{
+        //   display: "flex",
+        //   justifyContent: "flex-end",
+        //   marginTop: { md: 7, xs: 10 },
+        // }}
       >
         <Button
           size="small"
@@ -113,7 +118,7 @@ const OrderSummary = () => {
                 Phone: {orderSummary.phone}
               </Typography>
               <Typography variant="h6" sx={{ fontSize: "15px" }}>
-                Address: {orderSummary.address}
+                Order Type: {orderSummary.order_type}
               </Typography>
             </Box>
           </Box>
@@ -213,6 +218,7 @@ const OrderSummary = () => {
           </Box>
         </Box>
       </Box>
+
       {/* <Link to="/">
         <Button
           sx={{

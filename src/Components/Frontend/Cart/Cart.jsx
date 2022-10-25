@@ -45,7 +45,7 @@ function a11yProps(index) {
 }
 
 const Cart = () => {
-  const { setOrderId } = useStateContext();
+  const { setOrderId, activeMenu } = useStateContext();
   let [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const [value, setValue] = useState(0);
@@ -106,9 +106,9 @@ const Cart = () => {
       name: data?.name,
       email: data?.email,
       phone: data?.phoneNumber,
-      address: data?.address,
     };
     orderConfirmMutation.mutate(payload);
+    console.log(payload);
   };
 
   const { data: cartCalculation } = useQuery(
@@ -121,9 +121,7 @@ const Cart = () => {
             id: item.id,
             quantity: item.count,
             price: item.size,
-
             // extra: item?.extra ? Object.keys(item?.extra) : [],
-
             extra: item.extra ? Object.keys(item?.extra) : [],
           };
         }),
@@ -142,25 +140,13 @@ const Cart = () => {
         paddingY: 2,
         border: "1px solid #ccc",
         borderRadius: "5px",
-        mt: { md: 0, sm: 7, xs: 9 },
+        mt: { md: 0, sm: 7, xs: 0 },
       }}
     >
       {/* --cartInfo-- */}
-      <Box
-        sx={{
-          "& .MuiBox-root": { padding: 0 },
-          color: "#000",
-          borderColor: "#a8adaa",
-          borderRadius: 1,
-        }}
-      >
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
+
+      {activeMenu ? (
+        <Box className="flex justify-between">
           <Typography variant="h6" sx={{ textTransform: "uppercase" }}>
             your food
           </Typography>
@@ -170,17 +156,18 @@ const Cart = () => {
             color="primary"
           >
             <MdOutlineAddShoppingCart
-              className="inline w-6 h-6 cursor-pointer"
+              className="inline w-8 h-8 cursor-pointer"
               color="action"
             />
           </Badge>
         </Box>
-        <Box sx={{ height: "60vh", overflow: "scroll" }}>
-          {cart?.map((item, index) => (
-            <CartItems key={index} item={item} cart={cart} setCart={setCart} />
-          ))}
-        </Box>
+      ) : null}
+      <Box sx={{ height: "60vh", overflow: "scroll" }}>
+        {cart?.map((item, index) => (
+          <CartItems key={index} item={item} cart={cart} setCart={setCart} />
+        ))}
       </Box>
+
       {/* --submitInfo-- */}
       <form onSubmit={handleSubmit(onSubmit)}>
         <Box sx={{ marginY: 2 }}>
@@ -201,7 +188,7 @@ const Cart = () => {
                   {cartCalculation?.sub_total
                     ? cartCalculation?.sub_total
                     : "00"}{" "}
-                  <span>Tk</span>
+                  <span>৳</span>
                 </Typography>
               </Box>
               {/* --package-- */}
@@ -219,7 +206,7 @@ const Cart = () => {
                   {cartCalculation?.packaging
                     ? cartCalculation?.packaging
                     : "00"}{" "}
-                  <span>Tk</span>
+                  <span>৳</span>
                 </Typography>
               </Box>
               {/* --discount-- */}
@@ -237,7 +224,7 @@ const Cart = () => {
                   {cartCalculation?.discount_amount
                     ? -cartCalculation?.discount_amount
                     : "00"}{" "}
-                  <span>Tk</span>
+                  <span>৳</span>
                 </Typography>
               </Box>
               <hr className="border-[#FFC446]" />
@@ -256,7 +243,7 @@ const Cart = () => {
                   {cartCalculation?.total_amount
                     ? cartCalculation?.total_amount
                     : "00"}{" "}
-                  <span>Tk</span>
+                  <span>৳</span>
                 </Typography>
               </Box>
               <hr className="border-[#FFC446]" />
@@ -450,17 +437,12 @@ const Cart = () => {
           </Box>
         </Box>
       </form>
-      <Link to="/">
-        <Button
-          sx={{
-            display: { md: "none" },
-            fontSize: "12px",
-          }}
-        >
+      {/* <Link to="/">
+        <button className="flex items-center m-auto border border-gray-500 rounded-md px-2">
           <AiOutlineArrowLeft />
           Go back
-        </Button>
-      </Link>
+        </button>
+      </Link> */}
     </Box>
   );
 };
