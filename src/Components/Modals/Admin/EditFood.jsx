@@ -1,12 +1,12 @@
-import { Box } from "@mui/system";
-import React, { useState } from "react";
+import { Button, Grid, InputAdornment, Modal } from "@mui/material";
 import TextField from "@mui/material/TextField";
+import { Box } from "@mui/system";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useStateContext } from "../../../Contexts/ContextProvider";
 import { FiUpload } from "react-icons/fi";
 import { toast } from "react-toastify";
-import { Button, Grid, InputAdornment, Modal } from "@mui/material";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useStateContext } from "../../../Contexts/ContextProvider";
 import myAxios from "../../../utils/myAxios";
 
 const style = {
@@ -140,7 +140,6 @@ const EditFood = ({ editId, handleModalClose }) => {
                 id="image"
                 type="file"
                 label="Food Image"
-                required
                 InputLabelProps={{
                   shrink: true,
                 }}

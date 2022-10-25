@@ -1,3 +1,4 @@
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import {
   Accordion,
   AccordionDetails,
@@ -5,15 +6,13 @@ import {
   Box,
   Checkbox,
   FormControlLabel,
-  Paper,
   Typography,
 } from "@mui/material";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import { AiOutlineMinus } from "react-icons/ai";
 import { GrAdd } from "react-icons/gr";
 import { MdClose } from "react-icons/md";
-import { useQuery } from "@tanstack/react-query";
 import { staticAxios } from "../../../utils/myAxios";
 
 const CartItems = ({ cart, setCart, item }) => {
@@ -150,7 +149,6 @@ const CartItems = ({ cart, setCart, item }) => {
     const deleted = cart.filter((item) => item.id !== id);
     setCart(deleted);
   };
-
   return (
     <Box
       sx={{
@@ -180,7 +178,7 @@ const CartItems = ({ cart, setCart, item }) => {
           <Typography variant="h6" sx={{ fontWeight: 500 }}>
             {item.food_name}
           </Typography>
-          <Typography>{`Size: ${item?.size}`}</Typography>
+          {item?.size && <Typography>{`Size:${item?.size}`}</Typography>}
         </Box>
 
         {/* --remove-- */}

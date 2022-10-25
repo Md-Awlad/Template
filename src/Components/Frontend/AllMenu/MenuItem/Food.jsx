@@ -1,34 +1,23 @@
 import {
-  Button,
-  Card,
   FormControl,
   FormControlLabel,
   Modal,
   Radio,
   RadioGroup,
-  Rating,
-  Snackbar,
   Typography,
 } from "@mui/material";
 import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
 import { useQuery } from "@tanstack/react-query";
-import React from "react";
-import { useState } from "react";
-import { AiOutlineFire } from "react-icons/ai";
+import React, { useState } from "react";
 import { IoMdAdd } from "react-icons/io";
-import { Link } from "react-router-dom";
 import { useStateContext } from "../../../../Contexts/ContextProvider";
-import interceptor from "../../../../utils/interceptors";
 import { staticAxios } from "../../../../utils/myAxios";
 import ItemDetails from "../../../Modals/Frontend/ItemDetails";
-import PopularFoodTabs from "../../PopularFood/PopularFoodTabs";
 
 const Food = ({ id }) => {
   const { setCart, cart, setIngredientId, activeMenu } = useStateContext();
   const [openModal, setOpenModal] = useState(false);
   const [size, setSize] = useState({});
-  const [size2, setSize2] = useState({});
   const [item, setItem] = useState(null);
 
   const { data: popularFood = [] } = useQuery(["popular"], async () => {
@@ -51,17 +40,28 @@ const Food = ({ id }) => {
       [checkbox.index]: checkbox.key,
     });
   };
-  const handleChange2 = () => {
-    setSize2({
-      ...size2,
-    });
-  };
 
-  const handleAddToCart2 = (param, key) => {
-    console.log(key);
+  const handleAddToCartSingleValue = (param, key) => {
     const item = { ...param, extra: {} };
     setIngredientId(item.category);
-    item.price = key;
+    console.log(key);
+    // console.log(!size === {});
+    // item.price = size[index][1] ? size[index][1] : key;
+    // console.log(Boolean(Object.entries(size).length));
+    // if (Boolean(Object.entries(size).length)) {
+    //   console.log(Boolean(Object.entries(size).length));
+    //   console.log(key);
+    //   // setSize({
+    //   //   ...size,
+    //   //   [index]: key[0],
+    //   // });
+    item.price = key[1];
+    item.size = key[0];
+    // } else {
+    //   item.price = key[1];
+    //   item.size = "regular";
+    // }
+
     if (cart.find((i) => i.item)) {
       setCart(
         cart?.map((e) => {
@@ -77,26 +77,12 @@ const Food = ({ id }) => {
     }
   };
   console.log(size);
-  const handleAddToCart = (param, index) => {
+  const handleAddToCart = (param, index, key) => {
     const item = { ...param, extra: {} };
     setIngredientId(item.category);
 
     item.price = size[index][1];
     item.size = size[index][0];
-
-    // if (cart.find((i) => i.id === item.id && i.size === item.size)) {
-    //   setCart(
-    //     cart?.map((e) => {
-    //       if (e.id === item.id && e.size === item.size) {
-    //         return { ...e, count: e.count + 1 };
-    //       } else {
-    //         return e;
-    //       }
-    //     })
-    //   );
-    // } else {
-    //   setCart([...cart, { ...item, count: 1 }]);
-    // }
 
     if (cart.find((i) => i.item)) {
       setCart(
@@ -152,7 +138,11 @@ const Food = ({ id }) => {
                     </Typography>
                     {/* --size-- */}
                     <div className="overflow-x-scroll">
-                      <div className="w-[550px] ">
+                      <div
+                        className={`${
+                          activeMenu ? "w-[550px]" : "w-[300px]"
+                        } relative`}
+                      >
                         <FormControl>
                           <RadioGroup
                             aria-labelledby="demo-radio-buttons-group-label"
@@ -216,64 +206,41 @@ const Food = ({ id }) => {
                               : Object.entries(item?.price).map((key) => {
                                   return (
                                     <Box
-                                      sx={{
-                                        display: "flex",
-                                        alignItems: "center",
-                                      }}
+                                      className="flex items-center"
+                                      // sx={{
+                                      //   display: "flex",
+                                      //   alignItems: "center",
+                                      //   justifyContent: "space-between",
+                                      //   // Object.entries(item?.price).length < 2
+                                      //   //   ? "space-between"
+                                      //   //   : "",
+                                      // }}
                                     >
-                                      {Object.values(item?.price).length < 2 ? (
-                                        <FormControlLabel
-                                          sx={{
-                                            "&.MuiFormControlLabel-root": {
-                                              mr: 0,
-                                              p: 2,
-                                            },
-                                          }}
-                                          control={
-                                            <Radio
-                                              style={{
-                                                color: "#FFC446",
-                                                display: "none",
-                                              }}
-                                            />
-                                          }
-                                          //   {
-                                          //     Object.values(item?.price).length ===
-                                          //       1
-                                          //  }
-                                          name="size"
-                                          value={key[1]}
-
-                                          // onChange={(e) =>
-                                          //   handleChange({ index, key })
-                                          // }
-                                        />
-                                      ) : (
-                                        <FormControlLabel
-                                          sx={{
-                                            "&.MuiFormControlLabel-root": {
-                                              mr: 0,
-                                            },
-                                          }}
-                                          control={
-                                            <Radio
-                                              style={{
-                                                color: "#FFC446",
-                                              }}
-                                            />
-                                          }
-                                          //   {
-                                          //     Object.values(item?.price).length ===
-                                          //       1
-                                          //  }
-                                          name="size"
-                                          value={key[1]}
-                                          onClick={(e) =>
-                                            handleChange({ index, key })
-                                          }
-                                        />
-                                      )}
-
+                                      <FormControlLabel
+                                        sx={{
+                                          "&.MuiFormControlLabel-root": {
+                                            mr: 0,
+                                            p: 2,
+                                          },
+                                        }}
+                                        control={
+                                          <Radio
+                                            style={{
+                                              color: "#FFC446",
+                                              display:
+                                                Object.values(item?.price)
+                                                  .length < 2
+                                                  ? "none"
+                                                  : "block",
+                                            }}
+                                          />
+                                        }
+                                        name="size"
+                                        value={key[1]}
+                                        onClick={(e) =>
+                                          handleChange({ index, key })
+                                        }
+                                      />
                                       <Typography
                                         sx={{
                                           fontSize: "17px",
@@ -282,12 +249,24 @@ const Food = ({ id }) => {
                                       >{`${key[0].replace("inch", '"')} ${
                                         key[1]
                                       } ৳`}</Typography>
-                                      {/* <IoMdAdd
-                                        className="border inline-block md:w-4 md:h-4 w-8 h-8 rounded-md "
+                                      <IoMdAdd
+                                        style={{
+                                          cursor: "pointer",
+                                          display:
+                                            Object.values(item?.price).length >
+                                            1
+                                              ? "none"
+                                              : "block",
+                                        }}
+                                        className={`border absolute w-8 h-8 rounded-md ${
+                                          activeMenu
+                                            ? "left-[500px]"
+                                            : "left-[300px]"
+                                        }`}
                                         onClick={() =>
-                                          handleAddToCart2(item, key[1])
+                                          handleAddToCartSingleValue(item, key)
                                         }
-                                      /> */}
+                                      />
                                     </Box>
                                   );
                                 })}
@@ -297,15 +276,19 @@ const Food = ({ id }) => {
                     </div>
                   </div>
                 </div>
-                <div className="absolute md:right-0 md:top-16 right-0 top-[7.9rem]">
+                <div
+                  style={{
+                    display:
+                      Object.values(item?.price).length === 1
+                        ? "none"
+                        : "block",
+                  }}
+                  className="absolute md:right-0 md:top-16 right-0 top-[7.9rem]"
+                >
                   <IoMdAdd
                     className="border inline-block md:w-10 md:h-10 w-8 h-8 rounded-md cursor-pointer hover:bg[#FFC446]"
                     onClick={() => handleAddToCart(item, index)}
                   />
-                  {/* <IoMdAdd
-                    className="border inline-block md:w-4 md:h-4 w-8 h-8 rounded-md "
-                    onClick={() => handleAddToCart2(item, index)}
-                  /> */}
                 </div>
               </div>
             </div>
