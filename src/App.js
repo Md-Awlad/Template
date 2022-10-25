@@ -1,32 +1,30 @@
 import { Navigate, useRoutes } from "react-router-dom";
 
-import "./App.css";
-import NavLayout from "./Components/Layouts/NavLayout";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import "./App.css";
+import ChangePassword from "./Components/ChangePassword";
+import NavLayout from "./Components/Layouts/NavLayout";
 import ThemeLayout from "./Components/Layouts/ThemeLayout";
+import MainLoader from "./Components/Loaders/MainLoader";
+import NotFound from "./Components/NotFound/NotFound";
 import { useStateContext } from "./Contexts/ContextProvider";
 import {
-  DashBoard,
-  Login,
-  Order,
-  FoodItem,
-  Register,
-  Discount,
+  CancelOrder,
   CompleteOrder,
+  ConfirmedOrder,
+  DashBoard,
+  Discount,
+  FoodItem,
   LandingPage,
+  Login,
+  MonthReport,
+  Order,
   OrderSummary,
   Survey,
   SurveyList,
-  ConfirmedOrder,
-  MonthReport,
-  CancelOrder,
 } from "./Pages";
-import NotFound from "./Components/NotFound/NotFound";
-import { ToastContainer } from "react-toastify";
-import MainLoader from "./Components/Loaders/MainLoader";
 import CartInfo from "./Pages/Frontend/CartInfo";
-import ChangePassword from "./Components/ChangePassword";
-import Test from "./Pages/Frontend/Test";
 
 const App = () => {
   const { currentMode, currentUser, isLoading, orderId } = useStateContext();
@@ -34,6 +32,10 @@ const App = () => {
   const routes = [
     {
       path: "",
+      element: <Navigate to="home" />,
+    },
+    {
+      path: "home",
       element: <LandingPage />,
     },
     {
@@ -57,7 +59,11 @@ const App = () => {
       element: <NotFound />,
     },
     {
-      path: "/dashboard",
+      path: "admin",
+      element: <Navigate to="dashboard" />,
+    },
+    {
+      path: "dashboard",
       element: currentUser?.id ? <NavLayout /> : <Login />,
       children: [
         {
