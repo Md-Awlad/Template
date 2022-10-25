@@ -4,15 +4,18 @@ import {
   Modal,
   Radio,
   RadioGroup,
+  Rating,
   Typography,
 } from "@mui/material";
 import Box from "@mui/material/Box";
 import { useQuery } from "@tanstack/react-query";
 import React, { useState } from "react";
 import { IoMdAdd } from "react-icons/io";
+import { FiStar } from "react-icons/fi";
 import { useStateContext } from "../../../../Contexts/ContextProvider";
 import { staticAxios } from "../../../../utils/myAxios";
 import ItemDetails from "../../../Modals/Frontend/ItemDetails";
+import { FaStar } from "react-icons/fa";
 
 const Food = ({ id }) => {
   const { setCart, cart, setIngredientId, activeMenu } = useStateContext();
@@ -82,7 +85,6 @@ const Food = ({ id }) => {
     console.log(item);
     item.price = size[index][1];
     item.sId = Number(Math.round(Math.random() * 100).toFixed(2));
-    // console.log(item.sId + Number(Math.round(Math.random() * 100).toFixed(2)));
     console.log(item.sId);
     item.size = size[index][0];
 
@@ -122,7 +124,7 @@ const Food = ({ id }) => {
               <div className="relative">
                 <div className="md:flex gap-5">
                   <img
-                    className="md:w-56 md:h-44 w-56 h-28 object-cover rounded-lg  md:rounded-2xl lg:m-0 m-auto"
+                    className="md:w-56 md:h-44 w-56 h-28 object-cover rounded-md md:m-0 m-auto"
                     src={item?.image}
                     alt=""
                   />
@@ -141,9 +143,7 @@ const Food = ({ id }) => {
                     {/* --size-- */}
                     <div className="overflow-x-scroll">
                       <div
-                        className={`${
-                          activeMenu ? "w-[550px]" : "w-[300px]"
-                        } relative`}
+                        className={`${activeMenu ? "w-[550px]" : "w-[550px]"} `}
                       >
                         <FormControl>
                           <RadioGroup
@@ -279,6 +279,11 @@ const Food = ({ id }) => {
                     </div>
                   </div>
                 </div>
+                <Box className="flex gap-2 items-center absolute lg:top-0 md:top-4 md:right-3 lg:right-2 right-10 top-[8.2rem] ">
+                  <FaStar className="text-[#F0A70B]" />
+                  <h2>{item.review}.0</h2>
+                </Box>
+
                 <div
                   style={{
                     display:
@@ -286,7 +291,7 @@ const Food = ({ id }) => {
                         ? "none"
                         : "block",
                   }}
-                  className="absolute md:right-0 md:top-16 right-0 top-[7.9rem]"
+                  className="absolute lg:right-2 lg:top-16 md:bottom-0 md:right-3 right-0 top-[7.9rem]"
                 >
                   <IoMdAdd
                     className="border border-[#F0A70B] inline-block md:w-10 md:h-10 w-8 h-8 rounded-md text-[#F0A70B]"
