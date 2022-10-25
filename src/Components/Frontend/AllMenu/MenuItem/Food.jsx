@@ -289,7 +289,7 @@ const Food = ({ id }) => {
                         ? "none"
                         : "block",
                   }}
-                  className="absolute lg:right-2 lg:top-20 md:right-3 md:top-36 right-0 top-[10rem]"
+                  className="absolute lg:right-2 lg:bottom-0 md:right-3 md:top-36 right-0 top-[10rem]"
                 >
                   <IoMdAdd
                     className="border border-[#F0A70B] inline-block w-8 h-8 rounded-md text-[#F0A70B]"
@@ -303,7 +303,7 @@ const Food = ({ id }) => {
                     })
                   : Object.entries(item?.price).map((key) => {
                       return (
-                        <Box className="absolute lg:left-[24.6rem] md:left-[22.3rem] md:top-36 -left-3 top-[10rem]">
+                        <Box className="absolute md:left-[16.3rem] md:top-36 -left-3 top-[10rem]">
                           <IoMdAdd
                             style={{
                               cursor: "pointer",
