@@ -12,13 +12,15 @@ const PhoneHeader = () => {
   return (
     <Box className="bg-[#F0A70B] px-10 md:py-6 py-3  flex justify-between items-center md:gap-0 gap-5 md:items-center fixed bottom-0 left-0 right-0 z-10 rounded-tr-xl rounded-tl-xl">
       <Box className="flex justify-between items-center w-full">
-        <Badge
-          className="cursor-pointer"
-          badgeContent={cart.length}
-          color="primary"
-        >
-          <AiOutlineShoppingCart className="inline md:w-20 md:h-20 w-10 h-10 text-neutral cursor-pointer" />
-        </Badge>
+        <Link to="/carts">
+          <Badge
+            className="cursor-pointer"
+            badgeContent={cart.length}
+            color="primary"
+          >
+            <AiOutlineShoppingCart className="inline md:w-20 md:h-20 w-10 h-10 text-neutral cursor-pointer" />
+          </Badge>
+        </Link>
         {activeMenu ? null : cart?.length ? (
           <CustomDrawer />
         ) : (
