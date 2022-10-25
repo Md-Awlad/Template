@@ -55,7 +55,7 @@ const ApplyDiscountList = ({
             ))}
             placement="top"
           >
-            <Box sx={{ height: 60, overflow: "scroll", mt: 4 }}>
+            <Box sx={{ height: 60, overflow: "scroll" }}>
               {row?.food?.map((data) => (
                 <Typography key={data.id}>{data.food_name}</Typography>
               ))}

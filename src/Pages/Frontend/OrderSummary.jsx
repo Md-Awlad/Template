@@ -38,14 +38,12 @@ const OrderSummary = () => {
       }}
     >
       {activeMenu ? <Header /> : <PhoneHeader />}
-      {/* {`${activeMenu ? "pt-10" : ""}`} */}
       <Box
-        className={`${activeMenu ? "flex lg:mt-10" : ""}`}
-        // sx={{
-        //   display: "flex",
-        //   justifyContent: "flex-end",
-        //   marginTop: { md: 7, xs: 10 },
-        // }}
+        sx={{
+          display: "flex",
+          justifyContent: "flex-end",
+          marginTop: { md: 7 },
+        }}
       >
         <Button
           size="small"
@@ -94,13 +92,13 @@ const OrderSummary = () => {
               Order Details
             </Typography>
             <Box>
-              <Typography variant="h6" sx={{ fontSize: "15px" }}>
+              <Typography variant="h6" sx={{ fontSize: {xs:14} }}>
                 Name: {orderSummary.name}
               </Typography>
-              <Typography variant="h6" sx={{ fontSize: "15px" }}>
+              <Typography variant="h6" sx={{ fontSize: {xs:14} }}>
                 Phone: {orderSummary.phone}
               </Typography>
-              <Typography variant="h6" sx={{ fontSize: "15px" }}>
+              <Typography variant="h6" sx={{ fontSize: {xs:14} }}>
                 Order Type: {orderSummary.order_type}
               </Typography>
             </Box>
@@ -111,13 +109,13 @@ const OrderSummary = () => {
               Delivery Details
             </Typography>
             <Box>
-              <Typography variant="h6" sx={{ fontSize: "15px" }}>
+              <Typography variant="h6" sx={{ fontSize: {xs:14} }}>
                 Name: {orderSummary.name}
               </Typography>
-              <Typography variant="h6" sx={{ fontSize: "15px" }}>
+              <Typography variant="h6" sx={{ fontSize: {xs:14} }}>
                 Phone: {orderSummary.phone}
               </Typography>
-              <Typography variant="h6" sx={{ fontSize: "15px" }}>
+              <Typography variant="h6" sx={{ fontSize: {xs:14} }}>
                 Order Type: {orderSummary.order_type}
               </Typography>
             </Box>
@@ -173,43 +171,47 @@ const OrderSummary = () => {
           <Box sx={{ display: "flex", justifyContent: "flex-end", marginY: 5 }}>
             <Box>
               <Box className="grid grid-cols-3 gap-8">
-                <Typography variant="h6" sx={{ fontSize: "15px" }}>
+                <Typography variant="h6" sx={{ fontSize: {xs:14} }}>
                   Packaging
                 </Typography>
-                <Typography variant="h6" sx={{ fontSize: "15px" }}>
+                <Typography variant="h6" sx={{ fontSize: {xs:14} }}>
                   :
                 </Typography>
-                <Typography variant="h6" sx={{ fontSize: "15px" }}>
+                <Typography variant="h6" sx={{ fontSize: {xs:14} }}>
                   $ {orderSummary.packaging ? orderSummary.packaging : "00"}
                 </Typography>
               </Box>
               <Box className="grid grid-cols-3 gap-8 ">
-                <Typography variant="h6" sx={{ fontSize: "15px" }}>
+                <Typography variant="h6" sx={{ fontSize: {xs:14} }}>
                   Total
                 </Typography>
-                <Typography variant="h6" sx={{ fontSize: "15px" }}>
+                <Typography variant="h6" sx={{ fontSize: {xs:14} }}>
                   :
                 </Typography>
-                <Typography variant="h6" sx={{ fontSize: "15px" }}>
+                <Typography variant="h6" sx={{ fontSize: {xs:14} }}>
                   $ {orderSummary.sub_total ? orderSummary.sub_total : "00"}
                 </Typography>
               </Box>
               <Box className="grid grid-cols-3 gap-8">
-                <Typography variant="h6" sx={{ fontSize: "15px" }}>
+                <Typography variant="h6" sx={{ fontSize: {xs:14} }}>
                   Discount
                 </Typography>
-                <Typography variant="h6" sx={{ fontSize: "15px" }}>
+                <Typography variant="h6" sx={{ fontSize: {xs:14} }}>
                   :
                 </Typography>
-                <Typography variant="h6" sx={{ fontSize: "15px" }}>
+                <Typography variant="h6" sx={{ fontSize: {xs:14} }}>
                   $ {orderSummary.discount ? orderSummary.discount : "00"}
                 </Typography>
               </Box>
               <hr />
               <Box className="grid grid-cols-3 gap-8">
-                <Typography variant="h6">Total Amount</Typography>
-                <Typography variant="h6">:</Typography>
-                <Typography variant="h6">
+                <Typography variant="h6" sx={{ fontSize: { xs: 14 } }}>
+                  Total Amount
+                </Typography>
+                <Typography variant="h6" sx={{ fontSize: { xs: 14 } }}>
+                  :
+                </Typography>
+                <Typography variant="h6" sx={{ fontSize: { xs: 14 } }}>
                   ${" "}
                   {orderSummary.total_amount ? orderSummary.total_amount : "00"}
                 </Typography>

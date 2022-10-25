@@ -64,7 +64,7 @@ const TodaySell = ({ orders }) => {
         <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
           <Box
             sx={{
-              backgroundColor: "#FFC446",
+              backgroundColor: "#F0A70B",
               width: 12,
               height: 12,
               marginTop: 0.5,

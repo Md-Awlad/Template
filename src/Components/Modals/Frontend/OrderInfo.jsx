@@ -160,11 +160,11 @@ const OrderInfo = ({
                 variant="outlined"
                 sx={{
                   ":hover": {
-                    backgroundColor: "#FFC446",
-                    borderColor: "#FFC446",
+                    backgroundColor: "#F0A70B",
+                    borderColor: "#F0A70B",
                   },
-                  backgroundColor: "#FFC446",
-                  borderColor: "#FFC446",
+                  backgroundColor: "#F0A70B",
+                  borderColor: "#F0A70B",
                   width: 100,
                   height: 40,
                   color: "#000",

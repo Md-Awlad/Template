@@ -76,7 +76,7 @@ const FoodChart = () => {
         <Bar
           dataKey="process"
           fill={`${currentColor}`}
-          background={{ fill: "#FFC446" }}
+          background={{ fill: "#F0A70B" }}
         />
       </BarChart>
     </div>

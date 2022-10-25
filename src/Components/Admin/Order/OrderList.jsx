@@ -289,7 +289,6 @@ const OrderList = ({ orders, orderRefetch }) => {
             key={item.id}
             className="space-y-1 dark:bg-secondary-dark-bg dark:text-neutral"
             sx={{
-              width: 300,
               height: 350,
               overflowY: "scroll",
               px: 2,
@@ -298,7 +297,7 @@ const OrderList = ({ orders, orderRefetch }) => {
               border: "1px solid #ccc",
             }}
           >
-            <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+            <Box sx={{ display: "flex", gap: 2 }}>
               <Typography
                 style={{ color: currentColor }}
                 sx={{ fontSize: 14, fontWeight: 500 }}
@@ -350,7 +349,7 @@ const OrderList = ({ orders, orderRefetch }) => {
                 <MdEmail /> {item?.note?.email}
               </Typography>
             </Box>
-            <hr className="border-[#FFC446]" />
+            <hr className="border-[#F0A70B]" />
             <Box
               sx={{
                 display: "flex",
@@ -451,7 +450,7 @@ const OrderList = ({ orders, orderRefetch }) => {
                 </Box>
               ))}
             </Box> */}
-            <hr className="border-[#FFC446]" />
+            <hr className="border-[#F0A70B]" />
             <Box className="space-y-7">
               <Box
                 sx={{

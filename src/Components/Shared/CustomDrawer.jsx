@@ -1,81 +1,15 @@
 import React from "react";
-import { styled, useTheme } from "@mui/material/styles";
+import cookImg from "../../image/Cook.svg";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
-import MuiAppBar from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
-import CssBaseline from "@mui/material/CssBaseline";
-import List from "@mui/material/List";
-import Typography from "@mui/material/Typography";
-import Divider from "@mui/material/Divider";
-import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
 import Cart from "../Frontend/Cart/Cart";
-import { Badge } from "@mui/material";
+import { Badge, Typography } from "@mui/material";
 import { MdOutlineAddShoppingCart } from "react-icons/md";
 import { useStateContext } from "../../Contexts/ContextProvider";
-import { Link } from "react-router-dom";
-import logo from "../../image/logo.png";
-import { GrClose } from "react-icons/gr";
-
-const drawerWidth = 350;
-
-const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
-  ({ theme, open }) => ({
-    flexGrow: 1,
-    padding: theme.spacing(3),
-    transition: theme.transitions.create("margin", {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-    marginRight: -drawerWidth,
-    ...(open && {
-      transition: theme.transitions.create("margin", {
-        easing: theme.transitions.easing.easeOut,
-        duration: theme.transitions.duration.enteringScreen,
-      }),
-      marginRight: 0,
-    }),
-  })
-);
-
-// const AppBar = styled(MuiAppBar, {
-//   shouldForwardProp: (prop) => prop !== "open",
-// })(({ theme, open }) => ({
-//   transition: theme.transitions.create(["margin", "width"], {
-//     easing: theme.transitions.easing.sharp,
-//     duration: theme.transitions.duration.leavingScreen,
-//   }),
-//   ...(open && {
-//     width: `calc(100% - ${drawerWidth}px)`,
-//     transition: theme.transitions.create(["margin", "width"], {
-//       easing: theme.transitions.easing.easeOut,
-//       duration: theme.transitions.duration.enteringScreen,
-//     }),
-//     marginRight: drawerWidth,
-//   }),
-// }));
-
-// const DrawerHeader = styled("div")(({ theme }) => ({
-//   display: "flex",
-//   alignItems: "center",
-//   padding: theme.spacing(0, 1),
-//   // necessary for content to be below app bar
-//   ...theme.mixins.toolbar,
-//   justifyContent: "flex-start",
-// }));
+import { IoIosArrowForward } from "react-icons/io";
 
 const CustomDrawer = () => {
   const { cart } = useStateContext();
-  // const theme = useTheme();
   const [open, setOpen] = React.useState(false);
 
   const handleDrawerOpen = () => {
@@ -87,50 +21,48 @@ const CustomDrawer = () => {
   };
   return (
     <Box>
-      {/* <CssBaseline /> */}
-      {/* <AppBar position="fixed" open={open}> */}
-      {/* <Toolbar> */}
-      {/* <IconButton
-          color="inherit"
-          aria-label="open drawer"
-          edge="end"
-          onClick={handleDrawerOpen}
-          sx={{ ...(open && { display: "none" }) }}
-        >
-          <MenuIcon />
-        </IconButton> */}
-      {/* </Toolbar> */}
-      {/* </AppBar> */}
-
-      <Badge
+      {/* <Badge
         className="cursor-pointer"
         badgeContent={cart.length}
         color="primary"
       >
         <MdOutlineAddShoppingCart
           onClick={handleDrawerOpen}
-          className="inline w-8 h-8 cursor-pointer"
+          className="inline md:w-20 md:h-20 w-10 h-10 text-neutral cursor-pointer"
           color="action"
         />
-      </Badge>
-      <Drawer
-        // sx={{
-        //   width: drawerWidth,
-        //   flexShrink: 0,
-        //   "& .MuiDrawer-paper": {
-        //     width: drawerWidth,
-        //   },
-        // }}
-        variant="persistent"
-        anchor="right"
-        open={open}
+      </Badge> */}
+      <Box
+        onClick={handleDrawerOpen}
+        className="md:w-32 md:h-32 w-20 h-20 rounded-full md:-mt-16 -mt-10 bg-neutral"
       >
-        <div className="flex justify-start mx-3 my-2">
-          <GrClose
-            className="inline w-6 h-6 border border-red-600 rounded-full p-1 "
+        <Box className="border-4 w-full h-full border-gray-200 rounded-full md:p-2 p-1">
+          <img
+            className="md:w-20 md:h-20 w-10 h-10 mx-auto "
+            style={{ color: "blue" }}
+            src={cookImg}
+            alt=""
+          />
+          <Typography
+            sx={{
+              fontSize: { sm: 16, xs: 10 },
+              fontWeight: 500,
+              pl: 1,
+              color: "#F0A70B",
+            }}
+          >
+            Order Now
+          </Typography>
+        </Box>
+      </Box>
+
+      <Drawer variant="persistent" anchor="right" open={open}>
+        <Box className="flex justify-start mx-3 my-2">
+          <IoIosArrowForward
+            className="inline w-6 h-6 cursor-pointer"
             onClick={handleDrawerClose}
           />
-        </div>
+        </Box>
         <Cart />
       </Drawer>
     </Box>

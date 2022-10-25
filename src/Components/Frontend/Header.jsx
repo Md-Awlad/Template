@@ -28,14 +28,14 @@ const Header = () => {
   const { cart, activeMenu } = useStateContext();
 
   return (
-    <Box className="bg-[#E3493F] px-4 py-3 flex justify-between items-center md:gap-0 gap-5 md:items-center fixed top-0 left-0 right-0 z-10 lg:mb-6">
+    <Box className="bg-[#F0A70B] px-4 py-3 flex justify-between items-center md:gap-0 gap-5 md:items-center fixed top-0 left-0 right-0 z-10 lg:mb-6">
       <Link to="/">
         <img className="w-16 " src={logo} alt="" />
       </Link>
       {/* <Typography
         variant="h6"
         sx={{
-          color: "#FFC446",
+          color: "#F0A70B",
           letterSpacing: { md: "2rem", xs: "1rem" },
           textTransform: "uppercase",
           fontWeight: 500,

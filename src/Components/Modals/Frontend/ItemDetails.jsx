@@ -53,7 +53,7 @@ const ItemDetails = ({ handleModalClose, item }) => {
         </div>
       </div>
       {/* --image-- */}
-      <div className="w-72 bg-[#FFC446] rounded-tl-3xl rounded-br-3xl relative mt-16">
+      <div className="w-72 bg-[#F0A70B] rounded-tl-3xl rounded-br-3xl relative mt-16">
         <div className="relative">
           <div className="flex justify-between items-center pt-40 pb-5 px-4">
             <div className="font-bold">

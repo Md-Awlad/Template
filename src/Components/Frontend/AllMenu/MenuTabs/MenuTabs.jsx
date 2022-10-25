@@ -49,7 +49,7 @@ const MenuTabs = ({ setCart, cart }) => {
         allowScrollButtonsMobile
         sx={{
           "& .MuiTabs-indicator": {
-            backgroundColor: "#FFC446",
+            backgroundColor: "#F0A70B",
           },
           "& button": {
             color: "#000",
@@ -57,7 +57,7 @@ const MenuTabs = ({ setCart, cart }) => {
             paddingX: 3,
           },
           "& button.Mui-selected": {
-            backgroundColor: "#FFC446",
+            backgroundColor: "#F0A70B",
             color: "#000",
           },
         }}

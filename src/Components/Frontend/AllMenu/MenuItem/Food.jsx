@@ -45,7 +45,6 @@ const Food = ({ id }) => {
   };
 
   const handleChange = (checkbox) => {
-    console.log(checkbox);
     setSize({
       ...size,
       [checkbox.index]: checkbox.key,
@@ -58,7 +57,6 @@ const Food = ({ id }) => {
   };
 
   const handleAddToCart2 = (param, key) => {
-    console.log(key);
     const item = { ...param, extra: {} };
     setIngredientId(item.category);
     item.price = key;
@@ -76,12 +74,15 @@ const Food = ({ id }) => {
       setCart([...cart, { ...item, count: 1 }]);
     }
   };
-  console.log(size);
   const handleAddToCart = (param, index) => {
+    console.log(index);
     const item = { ...param, extra: {} };
     setIngredientId(item.category);
-
+    console.log(item);
     item.price = size[index][1];
+    item.sId = Number(Math.round(Math.random() * 100).toFixed(2));
+    // console.log(item.sId + Number(Math.round(Math.random() * 100).toFixed(2)));
+    console.log(item.sId);
     item.size = size[index][0];
 
     // if (cart.find((i) => i.id === item.id && i.size === item.size)) {
@@ -177,7 +178,7 @@ const Food = ({ id }) => {
                                         control={
                                           <Radio
                                             style={{
-                                              color: "#FFC446",
+                                              color: "#F0A70B",
                                             }}
                                           />
                                         }
@@ -232,7 +233,7 @@ const Food = ({ id }) => {
                                           control={
                                             <Radio
                                               style={{
-                                                color: "#FFC446",
+                                                color: "#F0A70B",
                                                 display: "none",
                                               }}
                                             />
@@ -258,7 +259,7 @@ const Food = ({ id }) => {
                                           control={
                                             <Radio
                                               style={{
-                                                color: "#FFC446",
+                                                color: "#F0A70B",
                                               }}
                                             />
                                           }
@@ -277,6 +278,7 @@ const Food = ({ id }) => {
                                       <Typography
                                         sx={{
                                           fontSize: "17px",
+                                          mr: { xs: 1 },
                                         }}
                                         variant="h6"
                                       >{`${key[0].replace("inch", '"')} ${
@@ -299,7 +301,7 @@ const Food = ({ id }) => {
                 </div>
                 <div className="absolute md:right-0 md:top-16 right-0 top-[7.9rem]">
                   <IoMdAdd
-                    className="border inline-block md:w-10 md:h-10 w-8 h-8 rounded-md cursor-pointer hover:bg[#FFC446]"
+                    className="border border-[#F0A70B] inline-block md:w-10 md:h-10 w-8 h-8 rounded-md text-[#F0A70B]"
                     onClick={() => handleAddToCart(item, index)}
                   />
                   {/* <IoMdAdd
@@ -350,15 +352,15 @@ export default Food;
                   variant="outlined"
                   sx={{
                     // ":hover": {
-                    //   backgroundColor: "#FFC446",
-                    //   borderColor: "#FFC446",
+                    //   backgroundColor: "#F0A70B",
+                    //   borderColor: "#F0A70B",
                     // },
                     // position: "absolute",
                     // bottom: { md: 0 },
                     // right: { md: 0 },
                     // height: 35,
-                    // backgroundColor: "#FFC446",
-                    // borderColor: "#FFC446",
+                    // backgroundColor: "#F0A70B",
+                    // borderColor: "#F0A70B",
                     // color: "#000",
                     // borderRadius: "7px",
                     "&.MuiButton-root": {
@@ -368,7 +370,7 @@ export default Food;
                     },
                   }}
 
-                  // className="md:w-32 h-8 w-full text-sm font-bold rounded border border-gray-300 cursor-pointer bg-[#FFC446] absolute md:right-0 md:bottom-0 -bottom-12"
+                  // className="md:w-32 h-8 w-full text-sm font-bold rounded border border-gray-300 cursor-pointer bg-[#F0A70B] absolute md:right-0 md:bottom-0 -bottom-12"
                 >
                 </Button>
 

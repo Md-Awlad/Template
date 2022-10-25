@@ -140,7 +140,6 @@ const EditFood = ({ editId, handleModalClose }) => {
                 id="image"
                 type="file"
                 label="Food Image"
-                required
                 InputLabelProps={{
                   shrink: true,
                 }}
