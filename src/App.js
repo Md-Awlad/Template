@@ -1,4 +1,4 @@
-import { Navigate, useRoutes } from "react-router-dom";
+import { Navigate, useRoutes, useSearchParams } from "react-router-dom";
 
 import "./App.css";
 import NavLayout from "./Components/Layouts/NavLayout";
@@ -29,7 +29,8 @@ import ChangePassword from "./Components/ChangePassword";
 import Test from "./Pages/Frontend/Test";
 
 const App = () => {
-  const { currentMode, currentUser, isLoading, orderId } = useStateContext();
+  const [searchParams] = useSearchParams();
+  const { currentMode, currentUser, isLoading, orderId,activeMenu } = useStateContext();
 
   const routes = [
     {
@@ -38,6 +39,10 @@ const App = () => {
     },
     {
       path: "cart",
+      element: <CartInfo />,
+    },
+    {
+      path: "viewcart",
       element: <CartInfo />,
     },
     {

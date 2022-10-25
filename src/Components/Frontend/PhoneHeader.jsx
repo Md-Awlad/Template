@@ -5,14 +5,15 @@ import { MdOutlineAddShoppingCart } from "react-icons/md";
 import cookImg from "../../image/Cook.svg";
 import { useStateContext } from "../../Contexts/ContextProvider";
 import CustomDrawer from "../Shared/CustomDrawer";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 
 const PhoneHeader = () => {
   const { cart, activeMenu } = useStateContext();
+  const [searchParams] = useSearchParams();
   return (
     <Box className="bg-[#F0A70B] px-10 md:py-6 py-3  flex justify-between items-center md:gap-0 gap-5 md:items-center fixed bottom-0 left-0 right-0 z-10 rounded-tr-xl rounded-tl-xl">
       <Box className="flex justify-between items-center w-full">
-        <Link to="/carts">
+        {searchParams.get("table") ? (
           <Badge
             className="cursor-pointer"
             badgeContent={cart.length}
@@ -20,7 +21,17 @@ const PhoneHeader = () => {
           >
             <AiOutlineShoppingCart className="inline md:w-20 md:h-20 w-10 h-10 text-neutral cursor-pointer" />
           </Badge>
-        </Link>
+        ) : (
+          <Link to="/viewcart">
+            <Badge
+              className="cursor-pointer"
+              badgeContent={cart.length}
+              color="primary"
+            >
+              <AiOutlineShoppingCart className="inline md:w-20 md:h-20 w-10 h-10 text-neutral cursor-pointer" />
+            </Badge>
+          </Link>
+        )}
         {activeMenu ? null : cart?.length ? (
           <CustomDrawer />
         ) : (
