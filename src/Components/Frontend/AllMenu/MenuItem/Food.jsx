@@ -46,7 +46,7 @@ const Food = ({ id }) => {
   const handleAddToCartSingleValue = (param, key) => {
     const item = { ...param, extra: {} };
     setIngredientId(item.category);
-    console.log(key);
+    item.sId = Number(Math.round(Math.random() * 100).toFixed(2));
     // console.log(!size === {});
     // item.price = size[index][1] ? size[index][1] : key;
     // console.log(Boolean(Object.entries(size).length));
@@ -78,14 +78,11 @@ const Food = ({ id }) => {
       setCart([...cart, { ...item, count: 1 }]);
     }
   };
-  console.log(size);
   const handleAddToCart = (param, index, key) => {
     const item = { ...param, extra: {} };
     setIngredientId(item.category);
-    console.log(item);
     item.price = size[index][1];
     item.sId = Number(Math.round(Math.random() * 100).toFixed(2));
-    console.log(item.sId);
     item.size = size[index][0];
 
     if (cart.find((i) => i.item)) {
@@ -261,7 +258,7 @@ const Food = ({ id }) => {
                                               ? "none"
                                               : "block",
                                         }}
-                                        className={`border absolute w-8 h-8 rounded-md ${
+                                        className={`border border-[#F0A70B] text-[#F0A70B] absolute inline-block md:w-10 md:h-10 w-8 h-8 cursor-pointer rounded-md ${
                                           activeMenu
                                             ? "left-[500px]"
                                             : "left-[300px]"
@@ -279,7 +276,7 @@ const Food = ({ id }) => {
                     </div>
                   </div>
                 </div>
-                <Box className="flex gap-2 items-center absolute lg:top-0 md:top-4 md:right-3 lg:right-2 right-10 top-[8.2rem] ">
+                <Box className="flex gap-2 items-center absolute lg:top-0 md:top-4 md:right-3 lg:right-2 right-10 top-[8.2rem]  ">
                   <FaStar className="text-[#F0A70B]" />
                   <h2>{item.review}.0</h2>
                 </Box>
