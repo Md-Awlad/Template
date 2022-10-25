@@ -154,7 +154,7 @@ const SurveyInfo = () => {
                   control={
                     <Radio
                       style={{
-                        color: "#FFC446",
+                        color: "#F0A70B",
                       }}
                     />
                   }
@@ -165,7 +165,7 @@ const SurveyInfo = () => {
                   control={
                     <Radio
                       style={{
-                        color: "#FFC446",
+                        color: "#F0A70B",
                       }}
                     />
                   }
@@ -176,7 +176,7 @@ const SurveyInfo = () => {
                   control={
                     <Radio
                       style={{
-                        color: "#FFC446",
+                        color: "#F0A70B",
                       }}
                     />
                   }
@@ -187,7 +187,7 @@ const SurveyInfo = () => {
                   control={
                     <Radio
                       style={{
-                        color: "#FFC446",
+                        color: "#F0A70B",
                       }}
                     />
                   }
@@ -198,7 +198,7 @@ const SurveyInfo = () => {
                   control={
                     <Radio
                       style={{
-                        color: "#FFC446",
+                        color: "#F0A70B",
                       }}
                     />
                   }
@@ -209,7 +209,7 @@ const SurveyInfo = () => {
                   control={
                     <Radio
                       style={{
-                        color: "#FFC446",
+                        color: "#F0A70B",
                       }}
                     />
                   }
@@ -236,7 +236,7 @@ const SurveyInfo = () => {
                   control={
                     <Radio
                       style={{
-                        color: "#FFC446",
+                        color: "#F0A70B",
                       }}
                     />
                   }
@@ -247,7 +247,7 @@ const SurveyInfo = () => {
                   control={
                     <Radio
                       style={{
-                        color: "#FFC446",
+                        color: "#F0A70B",
                       }}
                     />
                   }
@@ -258,7 +258,7 @@ const SurveyInfo = () => {
                   control={
                     <Radio
                       style={{
-                        color: "#FFC446",
+                        color: "#F0A70B",
                       }}
                     />
                   }
@@ -269,7 +269,7 @@ const SurveyInfo = () => {
                   control={
                     <Radio
                       style={{
-                        color: "#FFC446",
+                        color: "#F0A70B",
                       }}
                     />
                   }
@@ -280,7 +280,7 @@ const SurveyInfo = () => {
                   control={
                     <Radio
                       style={{
-                        color: "#FFC446",
+                        color: "#F0A70B",
                       }}
                     />
                   }
@@ -291,7 +291,7 @@ const SurveyInfo = () => {
                   control={
                     <Radio
                       style={{
-                        color: "#FFC446",
+                        color: "#F0A70B",
                       }}
                     />
                   }
@@ -318,7 +318,7 @@ const SurveyInfo = () => {
                   control={
                     <Radio
                       style={{
-                        color: "#FFC446",
+                        color: "#F0A70B",
                       }}
                     />
                   }
@@ -329,7 +329,7 @@ const SurveyInfo = () => {
                   control={
                     <Radio
                       style={{
-                        color: "#FFC446",
+                        color: "#F0A70B",
                       }}
                     />
                   }
@@ -340,7 +340,7 @@ const SurveyInfo = () => {
                   control={
                     <Radio
                       style={{
-                        color: "#FFC446",
+                        color: "#F0A70B",
                       }}
                     />
                   }
@@ -351,7 +351,7 @@ const SurveyInfo = () => {
                   control={
                     <Radio
                       style={{
-                        color: "#FFC446",
+                        color: "#F0A70B",
                       }}
                     />
                   }
@@ -362,7 +362,7 @@ const SurveyInfo = () => {
                   control={
                     <Radio
                       style={{
-                        color: "#FFC446",
+                        color: "#F0A70B",
                       }}
                     />
                   }
@@ -373,7 +373,7 @@ const SurveyInfo = () => {
                   control={
                     <Radio
                       style={{
-                        color: "#FFC446",
+                        color: "#F0A70B",
                       }}
                     />
                   }
@@ -400,7 +400,7 @@ const SurveyInfo = () => {
                   control={
                     <Radio
                       style={{
-                        color: "#FFC446",
+                        color: "#F0A70B",
                       }}
                     />
                   }
@@ -411,7 +411,7 @@ const SurveyInfo = () => {
                   control={
                     <Radio
                       style={{
-                        color: "#FFC446",
+                        color: "#F0A70B",
                       }}
                     />
                   }
@@ -422,7 +422,7 @@ const SurveyInfo = () => {
                   control={
                     <Radio
                       style={{
-                        color: "#FFC446",
+                        color: "#F0A70B",
                       }}
                     />
                   }
@@ -433,7 +433,7 @@ const SurveyInfo = () => {
                   control={
                     <Radio
                       style={{
-                        color: "#FFC446",
+                        color: "#F0A70B",
                       }}
                     />
                   }
@@ -444,7 +444,7 @@ const SurveyInfo = () => {
                   control={
                     <Radio
                       style={{
-                        color: "#FFC446",
+                        color: "#F0A70B",
                       }}
                     />
                   }
@@ -455,7 +455,7 @@ const SurveyInfo = () => {
                   control={
                     <Radio
                       style={{
-                        color: "#FFC446",
+                        color: "#F0A70B",
                       }}
                     />
                   }
@@ -482,7 +482,7 @@ const SurveyInfo = () => {
                   control={
                     <Radio
                       style={{
-                        color: "#FFC446",
+                        color: "#F0A70B",
                       }}
                     />
                   }
@@ -493,7 +493,7 @@ const SurveyInfo = () => {
                   control={
                     <Radio
                       style={{
-                        color: "#FFC446",
+                        color: "#F0A70B",
                       }}
                     />
                   }
@@ -504,7 +504,7 @@ const SurveyInfo = () => {
                   control={
                     <Radio
                       style={{
-                        color: "#FFC446",
+                        color: "#F0A70B",
                       }}
                     />
                   }
@@ -515,7 +515,7 @@ const SurveyInfo = () => {
                   control={
                     <Radio
                       style={{
-                        color: "#FFC446",
+                        color: "#F0A70B",
                       }}
                     />
                   }
@@ -526,7 +526,7 @@ const SurveyInfo = () => {
                   control={
                     <Radio
                       style={{
-                        color: "#FFC446",
+                        color: "#F0A70B",
                       }}
                     />
                   }
@@ -537,7 +537,7 @@ const SurveyInfo = () => {
                   control={
                     <Radio
                       style={{
-                        color: "#FFC446",
+                        color: "#F0A70B",
                       }}
                     />
                   }
@@ -564,7 +564,7 @@ const SurveyInfo = () => {
                   control={
                     <Radio
                       style={{
-                        color: "#FFC446",
+                        color: "#F0A70B",
                       }}
                     />
                   }
@@ -575,7 +575,7 @@ const SurveyInfo = () => {
                   control={
                     <Radio
                       style={{
-                        color: "#FFC446",
+                        color: "#F0A70B",
                       }}
                     />
                   }
@@ -586,7 +586,7 @@ const SurveyInfo = () => {
                   control={
                     <Radio
                       style={{
-                        color: "#FFC446",
+                        color: "#F0A70B",
                       }}
                     />
                   }
@@ -597,7 +597,7 @@ const SurveyInfo = () => {
                   control={
                     <Radio
                       style={{
-                        color: "#FFC446",
+                        color: "#F0A70B",
                       }}
                     />
                   }
@@ -608,7 +608,7 @@ const SurveyInfo = () => {
                   control={
                     <Radio
                       style={{
-                        color: "#FFC446",
+                        color: "#F0A70B",
                       }}
                     />
                   }
@@ -619,7 +619,7 @@ const SurveyInfo = () => {
                   control={
                     <Radio
                       style={{
-                        color: "#FFC446",
+                        color: "#F0A70B",
                       }}
                     />
                   }
@@ -645,7 +645,7 @@ const SurveyInfo = () => {
                   control={
                     <Radio
                       style={{
-                        color: "#FFC446",
+                        color: "#F0A70B",
                       }}
                     />
                   }
@@ -656,7 +656,7 @@ const SurveyInfo = () => {
                   control={
                     <Radio
                       style={{
-                        color: "#FFC446",
+                        color: "#F0A70B",
                       }}
                     />
                   }
@@ -704,12 +704,12 @@ const SurveyInfo = () => {
             variant="outlined"
             sx={{
               ":hover": {
-                borderColor: "#FFC446",
+                borderColor: "#F0A70B",
               },
               width: "100%",
               height: { md: 35, xs: 50 },
-              backgroundColor: "#FFC446",
-              borderColor: "#FFC446",
+              backgroundColor: "#F0A70B",
+              borderColor: "#F0A70B",
               color: "#000",
               borderRadius: "20px",
               fontSize: { xs: 17, md: 14 },

@@ -4,15 +4,18 @@ import {
   Modal,
   Radio,
   RadioGroup,
+  Rating,
   Typography,
 } from "@mui/material";
 import Box from "@mui/material/Box";
 import { useQuery } from "@tanstack/react-query";
 import React, { useState } from "react";
 import { IoMdAdd } from "react-icons/io";
+import { FiStar } from "react-icons/fi";
 import { useStateContext } from "../../../../Contexts/ContextProvider";
 import { staticAxios } from "../../../../utils/myAxios";
 import ItemDetails from "../../../Modals/Frontend/ItemDetails";
+import { FaStar } from "react-icons/fa";
 
 const Food = ({ id }) => {
   const { setCart, cart, setIngredientId, activeMenu } = useStateContext();
@@ -34,7 +37,6 @@ const Food = ({ id }) => {
   };
 
   const handleChange = (checkbox) => {
-    console.log(checkbox);
     setSize({
       ...size,
       [checkbox.index]: checkbox.key,
@@ -80,8 +82,10 @@ const Food = ({ id }) => {
   const handleAddToCart = (param, index, key) => {
     const item = { ...param, extra: {} };
     setIngredientId(item.category);
-
+    console.log(item);
     item.price = size[index][1];
+    item.sId = Number(Math.round(Math.random() * 100).toFixed(2));
+    console.log(item.sId);
     item.size = size[index][0];
 
     if (cart.find((i) => i.item)) {
@@ -120,7 +124,7 @@ const Food = ({ id }) => {
               <div className="relative">
                 <div className="md:flex gap-5">
                   <img
-                    className="md:w-56 md:h-44 w-56 h-28 object-cover rounded-lg  md:rounded-2xl lg:m-0 m-auto"
+                    className="md:w-56 md:h-44 w-56 h-28 object-cover rounded-md md:m-0 m-auto"
                     src={item?.image}
                     alt=""
                   />
@@ -139,9 +143,7 @@ const Food = ({ id }) => {
                     {/* --size-- */}
                     <div className="overflow-x-scroll">
                       <div
-                        className={`${
-                          activeMenu ? "w-[550px]" : "w-[300px]"
-                        } relative`}
+                        className={`${activeMenu ? "w-[550px]" : "w-[550px]"} `}
                       >
                         <FormControl>
                           <RadioGroup
@@ -167,7 +169,7 @@ const Food = ({ id }) => {
                                         control={
                                           <Radio
                                             style={{
-                                              color: "#FFC446",
+                                              color: "#F0A70B",
                                             }}
                                           />
                                         }
@@ -244,6 +246,7 @@ const Food = ({ id }) => {
                                       <Typography
                                         sx={{
                                           fontSize: "17px",
+                                          mr: { xs: 1 },
                                         }}
                                         variant="h6"
                                       >{`${key[0].replace("inch", '"')} ${
@@ -276,6 +279,11 @@ const Food = ({ id }) => {
                     </div>
                   </div>
                 </div>
+                <Box className="flex gap-2 items-center absolute lg:top-0 md:top-4 md:right-3 lg:right-2 right-10 top-[8.2rem] ">
+                  <FaStar className="text-[#F0A70B]" />
+                  <h2>{item.review}.0</h2>
+                </Box>
+
                 <div
                   style={{
                     display:
@@ -283,10 +291,10 @@ const Food = ({ id }) => {
                         ? "none"
                         : "block",
                   }}
-                  className="absolute md:right-0 md:top-16 right-0 top-[7.9rem]"
+                  className="absolute lg:right-2 lg:top-16 md:bottom-0 md:right-3 right-0 top-[7.9rem]"
                 >
                   <IoMdAdd
-                    className="border inline-block md:w-10 md:h-10 w-8 h-8 rounded-md cursor-pointer hover:bg[#FFC446]"
+                    className="border border-[#F0A70B] inline-block md:w-10 md:h-10 w-8 h-8 rounded-md text-[#F0A70B]"
                     onClick={() => handleAddToCart(item, index)}
                   />
                 </div>
@@ -333,15 +341,15 @@ export default Food;
                   variant="outlined"
                   sx={{
                     // ":hover": {
-                    //   backgroundColor: "#FFC446",
-                    //   borderColor: "#FFC446",
+                    //   backgroundColor: "#F0A70B",
+                    //   borderColor: "#F0A70B",
                     // },
                     // position: "absolute",
                     // bottom: { md: 0 },
                     // right: { md: 0 },
                     // height: 35,
-                    // backgroundColor: "#FFC446",
-                    // borderColor: "#FFC446",
+                    // backgroundColor: "#F0A70B",
+                    // borderColor: "#F0A70B",
                     // color: "#000",
                     // borderRadius: "7px",
                     "&.MuiButton-root": {
@@ -351,7 +359,7 @@ export default Food;
                     },
                   }}
 
-                  // className="md:w-32 h-8 w-full text-sm font-bold rounded border border-gray-300 cursor-pointer bg-[#FFC446] absolute md:right-0 md:bottom-0 -bottom-12"
+                  // className="md:w-32 h-8 w-full text-sm font-bold rounded border border-gray-300 cursor-pointer bg-[#F0A70B] absolute md:right-0 md:bottom-0 -bottom-12"
                 >
                 </Button>
 

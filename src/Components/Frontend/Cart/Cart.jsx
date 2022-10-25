@@ -227,7 +227,7 @@ const Cart = () => {
                   <span>৳</span>
                 </Typography>
               </Box>
-              <hr className="border-[#FFC446]" />
+              <hr className="border-[#F0A70B]" />
               {/* --total-- */}
               <Box
                 sx={{
@@ -246,7 +246,7 @@ const Cart = () => {
                   <span>৳</span>
                 </Typography>
               </Box>
-              <hr className="border-[#FFC446]" />
+              <hr className="border-[#F0A70B]" />
               <Box>
                 <Tabs
                   value={value}
@@ -257,7 +257,7 @@ const Cart = () => {
                   allowScrollButtonsMobile
                   sx={{
                     "& .MuiTabs-indicator": {
-                      backgroundColor: "#FFC446",
+                      backgroundColor: "#F0A70B",
                     },
                     "& button": {
                       color: "#000",
@@ -265,7 +265,7 @@ const Cart = () => {
                       paddingX: 3,
                     },
                     "& button.Mui-selected": {
-                      backgroundColor: "#FFC446",
+                      backgroundColor: "#F0A70B",
                       color: "#000",
                     },
                   }}
@@ -412,12 +412,12 @@ const Cart = () => {
               variant="outlined"
               sx={{
                 ":hover": {
-                  borderColor: "#FFC446",
+                  borderColor: "#F0A70B",
                 },
                 width: "100%",
                 height: { md: 35, xs: 50 },
-                backgroundColor: "#FFC446",
-                borderColor: "#FFC446",
+                backgroundColor: "#F0A70B",
+                borderColor: "#F0A70B",
                 color: "#000",
                 borderRadius: "20px",
                 fontSize: { xs: 17, md: 14 },

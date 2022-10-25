@@ -68,7 +68,7 @@ const YearPerformance = () => {
             // interval={2}
           />
           <Tooltip content={<CustomChartTooltip />} />
-          <Bar dataKey="total_order" stackId="a" fill="#FFC446" barSize={35} />
+          <Bar dataKey="total_order" stackId="a" fill="#F0A70B" barSize={35} />
           <Bar
             dataKey="complete_order"
             stackId="a"

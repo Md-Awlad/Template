@@ -86,7 +86,7 @@ const Report = () => {
       />
       <DataGrid
         sx={{
-          // "& .MuiDataGrid-columnHeader": { backgroundColor: "#FFC446" },
+          // "& .MuiDataGrid-columnHeader": { backgroundColor: "#F0A70B" },
           color: currentMode === "Dark" ? "#fff" : "#000",
           "& .MuiIconButton-root": {
             color: "unset !important",

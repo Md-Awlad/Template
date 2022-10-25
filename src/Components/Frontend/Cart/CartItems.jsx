@@ -145,8 +145,8 @@ const CartItems = ({ cart, setCart, item }) => {
   // ]);
 
   // --remove item--
-  const removeItem = (id) => {
-    const deleted = cart.filter((item) => item.id !== id);
+  const removeItem = (sId) => {
+    const deleted = cart.filter((item) => item.sId !== sId);
     setCart(deleted);
   };
   return (
@@ -183,7 +183,7 @@ const CartItems = ({ cart, setCart, item }) => {
 
         {/* --remove-- */}
         <MdClose
-          onClick={() => removeItem(item.id)}
+          onClick={() => removeItem(item.sId, item.index)}
           className="absolute md:right-0 -right-2 top-0 cursor-pointer text-red-600 text-xl border border-gray-700 rounded-full"
         />
       </Box>
@@ -270,7 +270,7 @@ const CartItems = ({ cart, setCart, item }) => {
                     control={
                       <Checkbox
                         style={{
-                          color: "#FFC446",
+                          color: "#F0A70B",
                         }}
                       />
                     }

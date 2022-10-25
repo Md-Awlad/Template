@@ -32,7 +32,7 @@ const Banner = () => {
         gradientColor
         pauseOnHover
         speed={50}
-        style={{ backgroundColor: "#FFC446", height: "8vh" }}
+        style={{ backgroundColor: "#F0A70B", height: "8vh" }}
       >
         {discounts
           .filter((e) => e.is_active)
@@ -54,7 +54,7 @@ const Banner = () => {
             gradientColor
             pauseOnHover
             Speed="80px"
-            style={{ backgroundColor: "#FFC446", height: "8vh" }}
+            style={{ backgroundColor: "#F0A70B", height: "8vh" }}
           >
             <Typography>{notice.notice}</Typography>
           </Marquee>

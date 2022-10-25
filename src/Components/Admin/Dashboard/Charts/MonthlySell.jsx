@@ -82,8 +82,8 @@ const MonthlySell = () => {
     datasets: [
       {
         data: [months.order, months.complete_order, months.sell],
-        backgroundColor: ["#FFC446", `${currentColor}`, `${currentColor}90`],
-        borderColor: ["#FFC446", `${currentColor}`, `${currentColor}90`],
+        backgroundColor: ["#F0A70B", `${currentColor}`, `${currentColor}90`],
+        borderColor: ["#F0A70B", `${currentColor}`, `${currentColor}90`],
         borderWidth: 1,
       },
     ],
@@ -131,7 +131,7 @@ const MonthlySell = () => {
         <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
           <Box
             sx={{ width: 12, height: 12, marginTop: 0.5 }}
-            style={{ backgroundColor: "#FFC446" }}
+            style={{ backgroundColor: "#F0A70B" }}
           ></Box>
           <Box>
             <Typography variant="h6" sx={{ fontSize: "14px" }}>

@@ -12,8 +12,8 @@ const ItemChart = () => {
     datasets: [
       {
         data: [100, 70],
-        backgroundColor: ["#FFC446", `${currentColor}`],
-        borderColor: ["#FFC446", `${currentColor}`],
+        backgroundColor: ["#F0A70B", `${currentColor}`],
+        borderColor: ["#F0A70B", `${currentColor}`],
         borderWidth: 1,
       },
     ],
