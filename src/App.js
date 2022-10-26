@@ -60,10 +60,10 @@ const App = () => {
     },
     {
       path: "admin",
-      element: <Navigate to="dashboard" />,
+      element: <Navigate to="admin" />,
     },
     {
-      path: "dashboard",
+      path: "admin",
       element: currentUser?.id ? <NavLayout /> : <Login />,
       children: [
         {
