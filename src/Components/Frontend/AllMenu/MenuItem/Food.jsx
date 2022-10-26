@@ -303,7 +303,7 @@ const Food = ({ id }) => {
                     })
                   : Object.entries(item?.price).map((key) => {
                       return (
-                        <Box className="absolute md:left-[16.3rem] md:top-36 -left-3 top-[10rem]">
+                        <Box className="absolute md:left-[18.3rem] md:top-36 -left-3 top-[10rem]">
                           <IoMdAdd
                             style={{
                               cursor: "pointer",

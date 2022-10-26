@@ -184,7 +184,7 @@ const CartItems = ({ cart, setCart, item }) => {
         {/* --remove-- */}
         <MdClose
           onClick={() => removeItem(item.sId, item.index)}
-          className="absolute md:right-0 -right-2 top-0 cursor-pointer text-red-600 text-xl border border-gray-700 rounded-full"
+          className="absolute md:right-0 -right-2 top-0 text-red-600 text-xl border border-gray-700 rounded-full"
         />
       </Box>
       {/* --countBtn-- */}

@@ -34,20 +34,24 @@ const CustomDrawer = () => {
       </Badge> */}
       <Box
         onClick={handleDrawerOpen}
-        className="md:w-32 md:h-32 w-20 h-20 rounded-full md:-mt-16 -mt-10 bg-neutral"
+        className="md:w-28 md:h-28 w-20 h-20 border-8 border-neutral rounded-full md:-mt-14 -mt-8 bg-neutral"
       >
-        <Box className="border-4 w-full h-full border-gray-200 rounded-full md:p-2 p-1">
+        <Box
+          className={`w-full h-full ${
+            cart.length ? "border-1 border-red-500" : "border-1"
+          } rounded-full md:p-2 p-1`}
+        >
           <img
-            className="md:w-20 md:h-20 w-10 h-10 mx-auto "
+            className="md:w-16 md:h-16 w-10 h-10 mx-auto "
             style={{ color: "blue" }}
             src={cookImg}
             alt=""
           />
           <Typography
             sx={{
-              fontSize: { sm: 16, xs: 10 },
+              fontSize: { sm: 14, xs: 8 },
               fontWeight: 500,
-              pl: 1,
+              pl: 0.9,
               color: "#F0A70B",
             }}
           >
@@ -57,9 +61,9 @@ const CustomDrawer = () => {
       </Box>
 
       <Drawer variant="persistent" anchor="right" open={open}>
-        <Box className="flex justify-start mx-3 my-2">
+        <Box className="flex justify-start mx-3 md:my-2 my-4">
           <IoIosArrowForward
-            className="inline w-6 h-6 cursor-pointer"
+            className="inline w-6 h-6"
             onClick={handleDrawerClose}
           />
         </Box>
