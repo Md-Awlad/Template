@@ -28,7 +28,8 @@ import CartInfo from "./Pages/Frontend/CartInfo";
 
 const App = () => {
   const [searchParams] = useSearchParams();
-  const { currentMode, currentUser, isLoading, orderId,activeMenu } = useStateContext();
+  const { currentMode, currentUser, isLoading, orderId, activeMenu } =
+    useStateContext();
 
   const routes = [
     {
@@ -64,11 +65,11 @@ const App = () => {
       element: <NotFound />,
     },
     {
-      path: "admin",
-      element: <Navigate to="admin" />,
+      path: "dashboard",
+      element: <Navigate to="dashboard" />,
     },
     {
-      path: "admin",
+      path: "dashboard",
       element: currentUser?.id ? <NavLayout /> : <Login />,
       children: [
         {

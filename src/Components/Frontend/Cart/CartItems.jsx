@@ -151,13 +151,15 @@ const CartItems = ({ cart, setCart, item }) => {
   };
   return (
     <Box
+      className="border-2"
       sx={{
         // marginX: 1,
         marginY: 1,
         paddingY: 1,
         paddingX: 2,
+
         borderRadius: "5px",
-        boxShadow: "0px 0px 5px 0px rgb(0 0 0 / 20%)",
+        // boxShadow: "0px 0px 5px 0px rgb(0 0 0 / 20%)",
       }}
     >
       <Box
@@ -226,6 +228,7 @@ const CartItems = ({ cart, setCart, item }) => {
       {/* --extra-- */}
       <Accordion
         sx={{
+          bgcolor: "unset",
           "& .MuiAccordionSummary-root": {
             padding: "0 !important",
           },

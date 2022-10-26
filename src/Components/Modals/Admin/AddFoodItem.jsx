@@ -46,6 +46,7 @@ const AddFoodItem = ({ handleModalCloseTwo, categories, foodRefetch }) => {
   } = useForm();
 
   const onSubmit = async (data) => {
+    console.log(data.package);
     const price = {};
     data.item?.forEach((item) => {
       if (item.title.endsWith('"')) {
@@ -56,9 +57,11 @@ const AddFoodItem = ({ handleModalCloseTwo, categories, foodRefetch }) => {
         console.log(price);
       } else {
         console.log(item.title, item.price);
-        price[item.price] = item.price;
-        price[item.title] = "regular";
-        console.log(price[item.title]);
+        price["regular"] = item.price;
+
+        // price[item.price] = item.price;
+        // price[item.title] = "regular";
+        // console.log(price[item.title]);
       }
     });
     const payloadForm = {
@@ -68,7 +71,7 @@ const AddFoodItem = ({ handleModalCloseTwo, categories, foodRefetch }) => {
       base_ingredient: data?.ingredient,
       review: data?.review,
       taste: data?.taste,
-      packaging: data?.package,
+      packaging: data?.package === null ? 0 : data?.package,
       category: category,
     };
 
