@@ -8,8 +8,6 @@ import staticAxios from "../../utils/myAxios";
 import { useStateContext } from "../../Contexts/ContextProvider";
 import Header from "../../Components/Frontend/Header";
 import Footer from "../../Components/Frontend/Footer";
-import { Link } from "react-router-dom";
-import { AiOutlineArrowLeft } from "react-icons/ai";
 import PhoneHeader from "../../Components/Frontend/PhoneHeader";
 
 const OrderSummary = () => {

@@ -34,9 +34,10 @@ const ApplyDiscountList = ({
       renderCell: ({ row }) => {
         return (
           <Box sx={{ height: 60, overflow: "scroll" }}>
-            {row?.category?.map((data) => (
-              <Typography key={data.id}>{data.name}</Typography>
-            ))}
+            {row?.category?.map((data) => {
+              console.log(data);
+              return <Typography key={data.id}>{data.name}</Typography>;
+            })}
           </Box>
         );
       },

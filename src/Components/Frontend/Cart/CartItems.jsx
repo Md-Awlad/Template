@@ -13,9 +13,13 @@ import React from "react";
 import { AiOutlineMinus } from "react-icons/ai";
 import { GrAdd } from "react-icons/gr";
 import { MdClose } from "react-icons/md";
+import { useSearchParams } from "react-router-dom";
+import { useStateContext } from "../../../Contexts/ContextProvider";
 import { staticAxios } from "../../../utils/myAxios";
 
 const CartItems = ({ cart, setCart, item }) => {
+  const { activeMenu } = useStateContext();
+  const [searchParams] = useSearchParams();
   // const addExtra = (extraId, price = 0) => {
   //   setCart(
   //     cart.map((e) => {
@@ -184,6 +188,7 @@ const CartItems = ({ cart, setCart, item }) => {
         </Box>
 
         {/* --remove-- */}
+
         <MdClose
           onClick={() => removeItem(item.sId, item.index)}
           className="absolute md:right-0 -right-2 top-0 text-red-600 text-xl border border-gray-700 rounded-full"
@@ -199,7 +204,7 @@ const CartItems = ({ cart, setCart, item }) => {
         }}
         // className="flex justify-between items-center relative"
       >
-        <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+        <Box sx={{ display: "flex", alignItems: "center", gap: 2,mt:1 }}>
           <AiOutlineMinus
             onClick={() => handleDecrement(item)}
             className="inline lg:w-5 lg:h-5 w-6 h-6 border border-gray-600 md:rounded rounded-sm cursor-pointer"

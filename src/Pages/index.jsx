@@ -1,5 +1,6 @@
 export { default as DashBoard } from "./Admin/Dashboard";
 export { default as FoodItem } from "./Admin/FoodItem";
+export { default as CustomizeFood } from "./Admin/CustomizeFood";
 export { default as Order } from "./Admin/Order";
 export { default as CompleteOrder } from "./Admin/CompleteOrder";
 export { default as CancelOrder } from "./Admin/CancelOrder";

@@ -2,7 +2,15 @@ import { Box } from "@mui/system";
 import React from "react";
 import TextField from "@mui/material/TextField";
 import { useForm } from "react-hook-form";
-import { FormControl, Grid, InputLabel, MenuItem, Select } from "@mui/material";
+import {
+  FormControl,
+  Grid,
+  InputLabel,
+  MenuItem,
+  Select,
+  Tab,
+  Tabs,
+} from "@mui/material";
 import { toast } from "react-toastify";
 import moment from "moment";
 import { DatePicker } from "@mui/x-date-pickers";
@@ -29,6 +37,7 @@ const AddDiscount = ({ handleModalClose, discountRefetch }) => {
   const { currentColor, currentMode } = useStateContext();
   const [status, setStatus] = useState(false);
   const [date, setDate] = useState(moment());
+  const [selectTab, setSelectTab] = useState(false);
   const {
     register,
     handleSubmit,
@@ -41,6 +50,7 @@ const AddDiscount = ({ handleModalClose, discountRefetch }) => {
 
   const onSubmit = async (data) => {
     const payloadForm = new FormData();
+    payloadForm.append("name", data?.name);
     payloadForm.append("notice", data?.notice);
     payloadForm.append("amount", data?.amount);
     payloadForm.append("condition", data?.condition);
@@ -73,42 +83,93 @@ const AddDiscount = ({ handleModalClose, discountRefetch }) => {
     <Box sx={{ ...style, width: 600 }}>
       <h2 className="text-xl font-bold pb-3">Add Discount</h2>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
-        <div className="grid grid-cols-2 gap-4">
-          {/* --notice-- */}
-          <Grid
-          
-            item
-            xs={12}
-            md={6}
+        {/* --name-- */}
+        <Grid item xs={12} md={6}>
+          <TextField
+            id="name"
+            label="Discount Name"
+            type="text"
+            error={Boolean(errors.name)}
+            helperText={errors.name && "This name field is required *"}
+            {...register("name", { required: true })}
+            fullWidth
+          />
+        </Grid>
+        {/* --notice-- */}
+        <Grid item xs={12}>
+          <TextField
+            id="notice"
+            label="Notice"
+            type="text"
+            error={Boolean(errors.notice)}
+            helperText={errors.notice && "This notice field is required *"}
+            {...register("notice", { required: true })}
+            fullWidth
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <Tabs
+            centered
+            value={selectTab}
+            onChange={(event, newValue) => {
+              setSelectTab(newValue);
+            }}
+            sx={{
+              border: "1px solid #e0e0e0",
+              borderRadius: "6px",
+              minHeight: "35px",
+              "& button": {
+                borderRadius: "5px",
+              },
+              "& button.Mui-selected": {
+                backgroundColor: "primary.main",
+                color: "white",
+              },
+            }}
+            TabIndicatorProps={{
+              hidden: true,
+            }}
           >
-            <TextField
-              id="notice"
-              label="Notice"
-              type="text"
-              error={Boolean(errors.notice)}
-              helperText={errors.notice && "This notice field is required *"}
-              {...register("notice", { required: true })}
-              fullWidth
+            <Tab
+              value={false}
+              label="Conditional Discount"
+              sx={{ flexGrow: 1, p: 0, minHeight: "35px" }}
             />
-          </Grid>
-          {/* --amount-- */}
-          <Grid
-          
-            item
-            xs={12}
-            md={6}
-          >
+            <Tab
+              value={true}
+              label="Fixed Discount"
+              sx={{ flexGrow: 1, p: 0, minHeight: "35px" }}
+            />
+          </Tabs>
+        </Grid>
+        <Grid item xs={12}>
+          {selectTab ? (
             <TextField
               id="amount"
               label="Amount"
               type="number"
-              error={Boolean(errors.amount)}
-              helperText={errors.amount && "This amount field is required *"}
-              {...register("amount", { required: true })}
+              {...register("amount")}
               fullWidth
             />
-          </Grid>
-        </div>
+          ) : (
+            <Box className="grid grid-cols-2 gap-4">
+              <TextField
+                id="condition"
+                label="Conditional Amount"
+                type="number"
+                {...register("condition")}
+                fullWidth
+              />
+              <TextField
+                id="amount"
+                label="Amount"
+                type="number"
+                {...register("amount")}
+                fullWidth
+              />
+            </Box>
+          )}
+        </Grid>
         <div className="grid grid-cols-2 gap-4">
           {/* --date-- */}
           <Grid item xs={12} md={6}>
@@ -138,30 +199,11 @@ const AddDiscount = ({ handleModalClose, discountRefetch }) => {
               label="Status"
               onChange={handleChange}
             >
-              <MenuItem value={true}>Active</MenuItem>
-              <MenuItem value={false}>Inactive</MenuItem>
+              <MenuItem value={true}>Fixed</MenuItem>
+              <MenuItem value={false}>Parentage</MenuItem>
             </Select>
           </FormControl>
         </div>
-        {/* --condition-- */}
-        <Grid
-        
-          item
-          xs={12}
-          md={6}
-        >
-          <TextField
-            id="condition"
-            label="Conditional Amount"
-            type="number"
-            error={Boolean(errors.condition)}
-            helperText={
-              errors.condition && "This condition field is required *"
-            }
-            {...register("condition", { required: true })}
-            fullWidth
-          />
-        </Grid>
         <button
           type="submit"
           style={{ backgroundColor: currentColor }}

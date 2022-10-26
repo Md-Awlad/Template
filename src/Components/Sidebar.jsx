@@ -92,6 +92,17 @@ const Sidebar = () => {
               <span className="capitalize ">food item</span>
             </NavLink>
             <NavLink
+              to="customfood"
+              onClick={handleCloseSidebar}
+              style={({ isActive }) => ({
+                backgroundColor: isActive ? currentColor : "",
+              })}
+              className={({ isActive }) => (isActive ? activeLink : normalLink)}
+            >
+              <MdFastfood />
+              <span className="capitalize ">custom food</span>
+            </NavLink>
+            <NavLink
               to="order"
               onClick={handleCloseSidebar}
               style={({ isActive }) => ({
@@ -191,6 +202,18 @@ const Sidebar = () => {
             </NavLink>
             <NavLink
               to="fooditem"
+              onClick={handleCloseSidebar}
+              style={({ isActive }) => ({
+                backgroundColor: isActive ? currentColor : "",
+              })}
+              className={({ isActive }) =>
+                isActive ? smActiveLink : smNormalLink
+              }
+            >
+              <MdFastfood className="text-3xl" />
+            </NavLink>
+            <NavLink
+              to="customfood"
               onClick={handleCloseSidebar}
               style={({ isActive }) => ({
                 backgroundColor: isActive ? currentColor : "",

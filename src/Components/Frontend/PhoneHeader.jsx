@@ -19,7 +19,7 @@ const PhoneHeader = () => {
             badgeContent={cart.length}
             color="primary"
           >
-            <AiOutlineShoppingCart className="inline md:w-16 md:h-16 w-8 h-8 text-neutral cursor-pointer" />
+            <AiOutlineShoppingCart className="inline md:w-16 md:h-16 w-8 h-8 text-neutral " />
           </Badge>
         ) : (
           <Link to="/viewcart">
@@ -28,7 +28,7 @@ const PhoneHeader = () => {
               badgeContent={cart.length}
               color="primary"
             >
-              <AiOutlineShoppingCart className="inline md:w-16 md:h-16 w-8 h-8 text-neutral cursor-pointer" />
+              <AiOutlineShoppingCart className="inline md:w-16 md:h-16 w-8 h-8 text-neutral " />
             </Badge>
           </Link>
         )}
