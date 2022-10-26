@@ -121,7 +121,7 @@ const Food = ({ id }) => {
               <div className="relative">
                 <div className="md:flex gap-5">
                   <img
-                    className="md:w-56 md:h-44 w-56 h-28 object-cover rounded-md md:m-0 m-auto"
+                    className="md:w-56 md:h-44 w-full h-36 object-cover rounded-md md:m-0 m-auto"
                     src={item?.image}
                     alt=""
                   />
@@ -135,7 +135,8 @@ const Food = ({ id }) => {
                       }}
                       // onClick={() => handleModalOpen(item)}
                     >
-                      {item.food_name}
+                      {item.food_name.substr(0, 20) +
+                        `${item.food_name.length > 20 ? ".." : ""}`}
                     </Typography>
                     {/* --size-- */}
                     <div className="overflow-x-scroll">
@@ -249,7 +250,7 @@ const Food = ({ id }) => {
                                       >{`${key[0].replace("inch", '"')} ${
                                         key[1]
                                       } ৳`}</Typography>
-                                      <IoMdAdd
+                                      {/* <IoMdAdd
                                         style={{
                                           cursor: "pointer",
                                           display:
@@ -258,7 +259,7 @@ const Food = ({ id }) => {
                                               ? "none"
                                               : "block",
                                         }}
-                                        className={`border border-[#F0A70B] text-[#F0A70B] absolute inline-block md:w-10 md:h-10 w-8 h-8 cursor-pointer rounded-md ${
+                                        className={`border border-[#F0A70B] text-[#F0A70B] absolute inline-block w-8 h-8 cursor-pointer rounded-md ${
                                           activeMenu
                                             ? "left-[500px]"
                                             : "left-[300px]"
@@ -266,7 +267,7 @@ const Food = ({ id }) => {
                                         onClick={() =>
                                           handleAddToCartSingleValue(item, key)
                                         }
-                                      />
+                                      /> */}
                                     </Box>
                                   );
                                 })}
@@ -276,7 +277,7 @@ const Food = ({ id }) => {
                     </div>
                   </div>
                 </div>
-                <Box className="flex gap-2 items-center absolute lg:top-0 md:top-4 md:right-3 lg:right-2 right-10 top-[8.2rem]  ">
+                <Box className="flex gap-2 items-center absolute lg:top-0 md:top-4 md:right-3 lg:right-2 right-10 top-[10.3rem]  ">
                   <FaStar className="text-[#F0A70B]" />
                   <h2>{item.review}.0</h2>
                 </Box>
@@ -288,13 +289,59 @@ const Food = ({ id }) => {
                         ? "none"
                         : "block",
                   }}
-                  className="absolute lg:right-2 lg:top-16 md:bottom-0 md:right-3 right-0 top-[7.9rem]"
+                  className="absolute lg:right-2 lg:bottom-0 md:right-3 md:top-36 right-0 top-[10rem]"
                 >
                   <IoMdAdd
-                    className="border border-[#F0A70B] inline-block md:w-10 md:h-10 w-8 h-8 rounded-md text-[#F0A70B]"
+                    className="border border-[#F0A70B] inline-block w-8 h-8 rounded-md text-[#F0A70B]"
                     onClick={() => handleAddToCart(item, index)}
                   />
                 </div>
+
+                {Boolean(item?.discount_price)
+                  ? Object.entries(item?.discount_price).map((key) => {
+                      return <Box></Box>;
+                    })
+                  : Object.entries(item?.price).map((key) => {
+                      return (
+                        <Box className="absolute md:left-[18.3rem] md:top-36 -left-3 top-[10rem]">
+                          <IoMdAdd
+                            style={{
+                              cursor: "pointer",
+                              display:
+                                Object.values(item?.price).length > 1
+                                  ? "none"
+                                  : "block",
+                            }}
+                            className={`border border-[#F0A70B] text-[#F0A70B] absolute inline-block w-8 h-8 cursor-pointer rounded-md ${
+                              activeMenu ? "left-[500px]" : "left-[300px]"
+                            }`}
+                            onClick={() =>
+                              handleAddToCartSingleValue(item, key)
+                            }
+                          />
+                        </Box>
+                      );
+                    })}
+
+                {/* {Object.entries(item?.price)?.map((key) => {
+                  return (
+                    <Box className="absolute lg:left-[24.6rem] md:left-[22.3rem] md:top-36 -left-3 top-[10rem]">
+                      <IoMdAdd
+                        style={{
+                          cursor: "pointer",
+                          display:
+                            Object.values(item?.price).length > 1
+                              ? "none"
+                              : "block",
+                        }}
+                        className={`border border-[#F0A70B] text-[#F0A70B] absolute inline-block w-8 h-8 cursor-pointer rounded-md ${
+                          activeMenu ? "left-[500px]" : "left-[300px]"
+                        }`}
+                        onClick={() => handleAddToCartSingleValue(item, key)}
+                      />
+                    </Box>
+                  );
+                })} */}
               </div>
             </div>
           </div>
@@ -309,7 +356,6 @@ const Food = ({ id }) => {
 export default Food;
 
 /*
-
  --review-- 
                    <Box
                     sx={{
@@ -333,7 +379,6 @@ export default Food;
                       readOnly
                     />
                   </Box> 
-
 <Button
                   variant="outlined"
                   sx={{
@@ -355,11 +400,9 @@ export default Food;
                       padding: 0,
                     },
                   }}
-
                   // className="md:w-32 h-8 w-full text-sm font-bold rounded border border-gray-300 cursor-pointer bg-[#F0A70B] absolute md:right-0 md:bottom-0 -bottom-12"
                 >
                 </Button>
-
  <Typography
                       sx={{
                         width: { xs: 1, md: 500 },
@@ -369,5 +412,4 @@ export default Food;
                       {item.food_detail.substr(0, 65) +
                         `${item.food_detail.length > 65 ? "..." : ""}`}
                     </Typography>
-
 */

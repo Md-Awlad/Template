@@ -167,7 +167,6 @@ const CartItems = ({ cart, setCart, item }) => {
           gap: 2,
           position: "relative",
         }}
-        // className="flex items-center gap-3 md:flex-nowrap flex-wrap relative"
       >
         <img
           className="lg:w-16 lg:h-16 w-20 h-20 object-cover rounded-full border-2 border-gray-400"
@@ -176,7 +175,8 @@ const CartItems = ({ cart, setCart, item }) => {
         />
         <Box>
           <Typography variant="h6" sx={{ fontWeight: 500 }}>
-            {item.food_name}
+            {item.food_name.substr(0, 20) +
+              `${item.food_name.length > 20 ? ".." : ""}`}
           </Typography>
           {item?.size && <Typography>{`Size:${item?.size}`}</Typography>}
         </Box>
@@ -184,7 +184,7 @@ const CartItems = ({ cart, setCart, item }) => {
         {/* --remove-- */}
         <MdClose
           onClick={() => removeItem(item.sId, item.index)}
-          className="absolute md:right-0 -right-2 top-0 cursor-pointer text-red-600 text-xl border border-gray-700 rounded-full"
+          className="absolute md:right-0 -right-2 top-0 text-red-600 text-xl border border-gray-700 rounded-full"
         />
       </Box>
       {/* --countBtn-- */}

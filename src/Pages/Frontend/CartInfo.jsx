@@ -1,11 +1,14 @@
 import React from "react";
 import Cart from "../../Components/Frontend/Cart/Cart";
+import PhoneViewCart from "../../Components/Frontend/Cart/PhoneViewCart";
 import Layout from "../../Components/Frontend/Layout/Layout";
+import { useStateContext } from "../../Contexts/ContextProvider";
 
 const CartInfo = () => {
+  const {activeMenu}=useStateContext()
   return (
     <Layout>
-      <Cart />
+     {activeMenu? <Cart />:<PhoneViewCart/>}
     </Layout>
   );
 };
