@@ -7,10 +7,11 @@ import { Badge, Typography } from "@mui/material";
 import { MdOutlineAddShoppingCart } from "react-icons/md";
 import { useStateContext } from "../../Contexts/ContextProvider";
 import { IoIosArrowForward } from "react-icons/io";
+import { useState } from "react";
 
 const CustomDrawer = () => {
   const { cart } = useStateContext();
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
 
   const handleDrawerOpen = () => {
     setOpen(true);

@@ -7,6 +7,7 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import TodaySell from "./Charts/TodaySell";
 import MonthlySell from "./Charts/MonthlySell";
 import YearPerformance from "./Charts/YearPerformance";
+import ProgressBar from "@ramonak/react-progress-bar";
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 function LinearProgressWithLabel(props) {
@@ -29,15 +30,15 @@ LinearProgressWithLabel.propTypes = {
 
 const OrderSummary = ({ orders }) => {
   const { currentColor } = useStateContext();
+  // const testData = [{ bgcolor: "#6a1b9a", completed: 60 }];
 
   return (
     <Box className="bg-neutral dark:bg-secondary-dark-bg dark:text-neutral md:px-10 px-4 py-4 border rounded-md text-2xl font-semibold shadow-sm dark:border-gray-700 space-y-8">
       <Typography variant="h5" sx={{ fontWeight: 500 }}>
         Orders Summary
       </Typography>
-      <Box
+      {/* <Box
         style={{ backgroundColor: `${currentColor}20` }}
-        // className="p-4 rounded-md shadow-sm"
         sx={{
           padding: 2,
           borderRadius: 2,
@@ -49,10 +50,22 @@ const OrderSummary = ({ orders }) => {
           variant="h6"
           sx={{ fontSize: "16px", fontWeight: 500, paddingY: 1 }}
         >
-          {orders.today_selling_performance}
+          Today Selling Performance
         </Typography>
         <LinearProgressWithLabel value={orders.percentage} />
-      </Box>
+        <ProgressBar style={{ height: "1rem" }} completed={orders.today_sell} />
+        <Typography
+          variant="h6"
+          sx={{ fontSize: "16px", fontWeight: 500, paddingY: 1 }}
+        >
+          Yesterday Selling Performance
+        </Typography>
+        <LinearProgressWithLabel value={orders.percentage} />
+        <ProgressBar
+          style={{ height: "1rem" }}
+          completed={orders.yesterday_sell}
+        />
+      </Box> */}
       <Box
         sx={{
           display: "grid",

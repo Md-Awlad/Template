@@ -1,48 +1,13 @@
 import {
-  Alert,
-  Badge,
   Box,
-  Button,
-  Tab,
-  Tabs,
-  TextField,
   Typography,
 } from "@mui/material";
 import React, { useState } from "react";
-import { MdOutlineAddShoppingCart } from "react-icons/md";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import { Controller, useForm } from "react-hook-form";
+import {  useQuery } from "@tanstack/react-query";
 import { useStateContext } from "../../../Contexts/ContextProvider";
-import interceptor from "../../../utils/interceptors";
 import CartItems from "./CartItems";
-import { Link, useNavigate, useSearchParams } from "react-router-dom";
-import { matchIsValidTel, MuiTelInput } from "mui-tel-input";
+import {  useSearchParams } from "react-router-dom";
 import { staticAxios } from "../../../utils/myAxios";
-import { AiOutlineArrowLeft } from "react-icons/ai";
-import { setOrderInfo } from "../../../utils/localStorages";
-
-function TabPanel(props) {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && <Box sx={{ mt: 2 }}>{children}</Box>}
-    </div>
-  );
-}
-
-function a11yProps(index) {
-  return {
-    id: `simple-tab-${index}`,
-    "aria-controls": `simple-tabpanel-${index}`,
-  };
-}
 
 const PhoneViewCart = () => {
   let [searchParams] = useSearchParams();
@@ -95,7 +60,7 @@ const PhoneViewCart = () => {
         ))}
       </Box>
 
-      <Box sx={{ marginY: 2 }}>
+      <Box sx={{ mt: 2,mb:10 }}>
         <Box className="space-y-4">
           <Box className="space-y-3">
             {/* --subTotal-- */}
@@ -155,6 +120,7 @@ const PhoneViewCart = () => {
                 display: "flex",
                 justifyContent: "space-between",
                 alignItems: "center",
+                mb:10
               }}
             >
               <Typography variant="h6" sx={{ fontSize: "16px" }}>
@@ -170,13 +136,6 @@ const PhoneViewCart = () => {
           </Box>
         </Box>
       </Box>
-
-      {/* <Link to="/">
-          <button className="flex items-center m-auto border border-gray-500 rounded-md px-2">
-            <AiOutlineArrowLeft />
-            Go back
-          </button>
-        </Link> */}
     </Box>
   );
 };
