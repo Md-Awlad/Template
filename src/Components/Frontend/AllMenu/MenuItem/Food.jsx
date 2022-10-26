@@ -4,18 +4,16 @@ import {
   Modal,
   Radio,
   RadioGroup,
-  Rating,
   Typography,
 } from "@mui/material";
 import Box from "@mui/material/Box";
 import { useQuery } from "@tanstack/react-query";
 import React, { useState } from "react";
+import { FaStar } from "react-icons/fa";
 import { IoMdAdd } from "react-icons/io";
-import { FiStar } from "react-icons/fi";
 import { useStateContext } from "../../../../Contexts/ContextProvider";
 import { staticAxios } from "../../../../utils/myAxios";
 import ItemDetails from "../../../Modals/Frontend/ItemDetails";
-import { FaStar } from "react-icons/fa";
 
 const Food = ({ id }) => {
   const { setCart, cart, setIngredientId, activeMenu } = useStateContext();
@@ -47,22 +45,9 @@ const Food = ({ id }) => {
     const item = { ...param, extra: {} };
     setIngredientId(item.category);
     item.sId = Number(Math.round(Math.random() * 100).toFixed(2));
-    // console.log(!size === {});
-    // item.price = size[index][1] ? size[index][1] : key;
-    // console.log(Boolean(Object.entries(size).length));
-    // if (Boolean(Object.entries(size).length)) {
-    //   console.log(Boolean(Object.entries(size).length));
-    //   console.log(key);
-    //   // setSize({
-    //   //   ...size,
-    //   //   [index]: key[0],
-    //   // });
+
     item.price = key[1];
     item.size = key[0];
-    // } else {
-    //   item.price = key[1];
-    //   item.size = "regular";
-    // }
 
     if (cart.find((i) => i.item)) {
       setCart(
@@ -111,6 +96,7 @@ const Food = ({ id }) => {
       </Modal>
       {/* --food-- */}
       <Box
+        className="lg:p-2 p-1"
         sx={{
           height: { md: "129vh", overflowY: "scroll" },
         }}
@@ -126,18 +112,118 @@ const Food = ({ id }) => {
                     alt=""
                   />
                   <div>
-                    <Typography
-                      variant="h6"
-                      sx={{
-                        my: { xs: 2 },
-                        fontSize: 20,
-                        fontWeight: 500,
-                      }}
-                      // onClick={() => handleModalOpen(item)}
-                    >
-                      {item.food_name.substr(0, 20) +
-                        `${item.food_name.length > 20 ? ".." : ""}`}
-                    </Typography>
+                    <div className="flex justify-between">
+                      <Typography
+                        variant="h6"
+                        sx={{
+                          my: { xs: 2 },
+                          fontSize: 20,
+                          fontWeight: 500,
+                        }}
+                        // onClick={() => handleModalOpen(item)}
+                      >
+                        {item.food_name.substr(0, 20) +
+                          `${item.food_name.length > 20 ? ".." : ""}`}
+                      </Typography>
+                      <Box className="flex gap-5 items-center">
+                        <Box className="  ">
+                          <FaStar className="text-[#F0A70B] text-xl" />
+                          <Typography variant="caption">
+                            {item.review}.0
+                          </Typography>
+                        </Box>
+                        <Box>
+                          {Boolean(item?.discount_price) ? (
+                            <Box>
+                              {Object.values(item?.discount_price).length <
+                              2 ? (
+                                Object.entries(item?.discount_price).map(
+                                  (key) => {
+                                    console.log(item?.discount_price);
+                                    return (
+                                      <IoMdAdd
+                                        style={{
+                                          cursor: "pointer",
+                                          // display:
+                                          //   Object.values(item?.discount_price).length > 1
+                                          //     ? "none"
+                                          //     : "block",
+                                        }}
+                                        className={`border border-[#F0A70B] text-[#F0A70B]  inline-block w-8 h-8 cursor-pointer rounded-md ${
+                                          activeMenu
+                                            ? "left-[500px]"
+                                            : "left-[300px]"
+                                        }`}
+                                        onClick={() =>
+                                          handleAddToCartSingleValue(item, key)
+                                        }
+                                      />
+                                    );
+                                  }
+                                )
+                              ) : (
+                                <IoMdAdd
+                                  style={{
+                                    cursor: "pointer",
+                                    display:
+                                      Object.values(item?.discount_price)
+                                        .length > 1
+                                        ? "block"
+                                        : "none",
+                                  }}
+                                  className={`border border-[#F0A70B] text-[#F0A70B]  inline-block w-8 h-8 cursor-pointer rounded-md ${
+                                    activeMenu ? "left-[500px]" : "left-[300px]"
+                                  }`}
+                                  onClick={() => handleAddToCart(item, index)}
+                                />
+                              )}
+                            </Box>
+                          ) : (
+                            <Box>
+                              {Object.values(item?.price).length < 2 ? (
+                                Object.entries(item?.price).map((key) => {
+                                  console.log(item?.price);
+                                  return (
+                                    <IoMdAdd
+                                      style={{
+                                        cursor: "pointer",
+                                        display:
+                                          Object.values(item?.price).length > 1
+                                            ? "none"
+                                            : "block",
+                                      }}
+                                      className={`border border-[#F0A70B] text-[#F0A70B]  inline-block w-8 h-8 cursor-pointer rounded-md ${
+                                        activeMenu
+                                          ? "left-[500px]"
+                                          : "left-[300px]"
+                                      }`}
+                                      onClick={() =>
+                                        handleAddToCartSingleValue(item, key)
+                                      }
+                                    />
+                                  );
+                                })
+                              ) : (
+                                <IoMdAdd
+                                  style={{
+                                    cursor: "pointer",
+                                    display:
+                                      Object.values(item?.price).length > 1
+                                        ? "block"
+                                        : "none",
+                                  }}
+                                  className={`border border-[#F0A70B] text-[#F0A70B]  inline-block w-8 h-8 cursor-pointer rounded-md ${
+                                    activeMenu ? "left-[500px]" : "left-[300px]"
+                                  }`}
+                                  onClick={() => handleAddToCart(item, index)}
+                                />
+                              )}
+                            </Box>
+                          )}
+                        </Box>
+                      </Box>
+                    </div>
+
                     {/* --size-- */}
                     <div className="overflow-x-scroll">
                       <div
@@ -277,17 +363,11 @@ const Food = ({ id }) => {
                     </div>
                   </div>
                 </div>
-                <Box className="flex gap-2 items-center absolute lg:top-0 md:top-4 md:right-3 lg:right-2 right-10 top-[10.3rem]  ">
-                  <FaStar className="text-[#F0A70B]" />
-                  <h2>{item.review}.0</h2>
-                </Box>
 
-                <div
+                {/* <div
                   style={{
                     display:
-                      Object.values(item?.price).length === 1
-                        ? "none"
-                        : "block",
+                      Object.values(item?.price).length < 2 ? "none" : "block",
                   }}
                   className="absolute lg:right-2 lg:bottom-0 md:right-3 md:top-36 right-0 top-[10rem]"
                 >
@@ -295,33 +375,7 @@ const Food = ({ id }) => {
                     className="border border-[#F0A70B] inline-block w-8 h-8 rounded-md text-[#F0A70B]"
                     onClick={() => handleAddToCart(item, index)}
                   />
-                </div>
-
-                {Boolean(item?.discount_price)
-                  ? Object.entries(item?.discount_price).map((key) => {
-                      return <Box></Box>;
-                    })
-                  : Object.entries(item?.price).map((key) => {
-                      return (
-                        <Box className="absolute md:left-[18.3rem] md:top-36 -left-3 top-[10rem]">
-                          <IoMdAdd
-                            style={{
-                              cursor: "pointer",
-                              display:
-                                Object.values(item?.price).length > 1
-                                  ? "none"
-                                  : "block",
-                            }}
-                            className={`border border-[#F0A70B] text-[#F0A70B] absolute inline-block w-8 h-8 cursor-pointer rounded-md ${
-                              activeMenu ? "left-[500px]" : "left-[300px]"
-                            }`}
-                            onClick={() =>
-                              handleAddToCartSingleValue(item, key)
-                            }
-                          />
-                        </Box>
-                      );
-                    })}
+                </div> */}
 
                 {/* {Object.entries(item?.price)?.map((key) => {
                   return (
