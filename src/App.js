@@ -20,6 +20,7 @@ import {
   ConfirmedOrder,
   MonthReport,
   CancelOrder,
+  CustomizeFood,
 } from "./Pages";
 import NotFound from "./Components/NotFound/NotFound";
 import { ToastContainer } from "react-toastify";
@@ -30,7 +31,8 @@ import Test from "./Pages/Frontend/Test";
 
 const App = () => {
   const [searchParams] = useSearchParams();
-  const { currentMode, currentUser, isLoading, orderId,activeMenu } = useStateContext();
+  const { currentMode, currentUser, isLoading, orderId, activeMenu } =
+    useStateContext();
 
   const routes = [
     {
@@ -76,6 +78,10 @@ const App = () => {
         {
           path: "order",
           element: <Order />,
+        },
+        {
+          path: "customfood",
+          element: <CustomizeFood />,
         },
         {
           path: "completeOrder",

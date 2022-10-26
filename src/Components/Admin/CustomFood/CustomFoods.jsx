@@ -9,7 +9,7 @@ import EditDiscount from "../../Modals/Admin/EditDiscount";
 import { Tooltip, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 
-const DiscountList = ({ discounts }) => {
+const CustomFoods = ({ customizeFood, categories, foods }) => {
   const { currentColor, currentMode } = useStateContext();
   const [editId, setEditId] = useState(null);
   const [deleteId, setDeleteId] = useState(null);
@@ -17,80 +17,73 @@ const DiscountList = ({ discounts }) => {
     {
       field: "id",
       headerName: "ID",
-      width: 100,
+      width: 80,
       headerAlign: "center",
       align: "center",
     },
     {
-      field: "name",
-      headerName: "Name",
+      field: "category",
+      headerName: "Category",
       width: 200,
-      headerAlign: "center",
-      align: "center",
-    },
-    {
-      field: "notice",
-      headerName: "Notice",
-      width: 230,
       headerAlign: "center",
       align: "center",
       renderCell: ({ row }) => {
         return (
           <Tooltip
-            title={row?.notice.length >= 15 ? row?.notice : ""}
+            title={row?.categories?.map((data) => (
+              <Typography key={data.id}>{data.name}</Typography>
+            ))}
             placement="top"
           >
-            <Box>
-              <Typography>
-                {row?.notice.length >= 15 ? row?.notice : ""}
-              </Typography>
+            <Box sx={{ height: 60, overflow: "scroll" }}>
+              {row?.categories?.map((data) => {
+                console.log(data);
+                return <Typography key={data.id}>{data.name}</Typography>;
+              })}
             </Box>
           </Tooltip>
         );
       },
     },
     {
-      field: "amount",
-      headerName: "Amount",
-      width: 150,
+      field: "food",
+      headerName: "Food",
+      width: 200,
       headerAlign: "center",
       align: "center",
-    },
-    {
-      field: "is_fixed",
-      headerName: "Fixed",
-      width: 130,
-      headerAlign: "center",
-      align: "center",
-      renderCell: (params) => {
+      renderCell: ({ row }) => {
+        console.log(row);
         return (
-          <div
-            className={`${
-              params?.value === true
-                ? "bg-green-200 text-green-900"
-                : "bg-yellow-200 text-yellow-700"
-            } px-5 rounded-md font-medium   `}
+          <Tooltip
+            title={row?.foods?.map((data) => (
+              <Typography key={data.id}>{data.food_name}</Typography>
+            ))}
+            placement="top"
           >
-            <p>{params?.value === true ? "true" : "false"}</p>
-          </div>
+            <Box sx={{ height: 60, overflow: "scroll" }}>
+              {row?.foods?.map((data) => {
+                return <Typography key={data.id}>{data.food_name}</Typography>;
+              })}
+            </Box>
+          </Tooltip>
         );
       },
     },
     {
-      field: "condition",
-      headerName: "Conditional Amount",
+      field: "ingredient_name",
+      headerName: "Extra Ingredients",
       width: 200,
       headerAlign: "center",
       align: "center",
     },
     {
-      field: "expired_at",
-      headerName: "Expired Date",
-      width: 200,
+      field: "price",
+      headerName: "Price",
+      width: 80,
       headerAlign: "center",
       align: "center",
-      valueGetter: ({ value }) => moment(value).format("LLL"),
     },
+
     {
       field: "action",
       headerName: "Action",
@@ -100,13 +93,13 @@ const DiscountList = ({ discounts }) => {
       renderCell: ({ row }) => {
         return (
           <Box className="flex gap-5 items-center">
-            <Tooltip title="Edit Discount" placement="top">
+            <Tooltip title="Edit Food" placement="top">
               <MdModeEdit
                 onClick={() => setEditId(row?.id)}
                 className="text-gray-600 dark:text-neutral text-xl cursor-pointer"
               />
             </Tooltip>
-            <Tooltip title="Delete Discount" placement="top">
+            <Tooltip title="Delete Food" placement="top">
               <RiDeleteBin6Line
                 onClick={() => setDeleteId(row?.id)}
                 className="text-red-400 dark:text-neutral text-xl cursor-pointer"
@@ -142,7 +135,7 @@ const DiscountList = ({ discounts }) => {
             color: currentMode === "Dark" ? "#fff" : "#000",
           },
         }}
-        rows={discounts}
+        rows={customizeFood}
         columns={columns}
         rowsPerPageOptions={[5]}
         disableSelectionOnClick
@@ -165,7 +158,7 @@ const DiscountList = ({ discounts }) => {
         // checkboxSelection
         // disableSelectionOnClick
       />
-      {Boolean(editId) && (
+      {/* {Boolean(editId) && (
         <EditDiscount editId={editId} handleClose={() => setEditId(null)} />
       )}
       {Boolean(deleteId) && (
@@ -173,9 +166,9 @@ const DiscountList = ({ discounts }) => {
           deleteId={deleteId}
           handleClose={() => setDeleteId(null)}
         />
-      )}
+      )} */}
     </div>
   );
 };
 
-export default DiscountList;
+export default CustomFoods;

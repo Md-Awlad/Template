@@ -55,6 +55,12 @@ const Cart = () => {
   const { cart, setCart } = useStateContext();
   const { register, handleSubmit, reset, control } = useForm();
 
+  const { data: orderSummary = [] } = useQuery(["orderSummary"], async () => {
+    const res = await staticAxios(`/order_summery/`);
+    return res.data;
+  });
+  console.log(orderSummary);
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };

@@ -38,10 +38,8 @@ const ApplyDiscount = ({
   const [food, setFood] = useState();
   const [date, setDate] = useState(moment());
   const queryClient = useQueryClient();
-
+  console.log(discounts);
   const { handleSubmit } = useForm();
-
-  console.log(discounts.map((a) => a.notice));
 
   const onSubmit = async (data) => {
     const payload = {
@@ -68,32 +66,22 @@ const ApplyDiscount = ({
       <h2 className="text-xl font-bold pb-3">Apply Discount</h2>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
         {/* --discount-- */}
-        <Grid
-       
-          item
-          xs={12}
-          md={6}
-        >
+        <Grid item xs={12} md={6}>
           <Autocomplete
             multiple
             disablePortal
             id="combo-box-demo"
             options={discounts?.map((discount) => discount)}
-            getOptionLabel={(option) => option?.notice}
+            getOptionLabel={(option) => option?.name}
             filterSelectedOptions
             onChange={(_, newValue) => setDiscount(newValue)}
             renderInput={(params) => (
-              <TextField {...params} label="Discount" fullWidth />
+              <TextField {...params} label="Discount Name" fullWidth />
             )}
           />
         </Grid>
         {/* --category-- */}
-        <Grid
-       
-          item
-          xs={12}
-          md={6}
-        >
+        <Grid item xs={12} md={6}>
           <Autocomplete
             multiple
             disablePortal
@@ -108,12 +96,7 @@ const ApplyDiscount = ({
           />
         </Grid>
         {/* --food-- */}
-        <Grid
-       
-          item
-          xs={12}
-          md={6}
-        >
+        <Grid item xs={12} md={6}>
           <Autocomplete
             multiple
             disablePortal

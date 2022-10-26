@@ -31,7 +31,7 @@ const Banner = () => {
         direction="left"
         gradientColor
         pauseOnHover
-        speed={50}
+        speed={30}
         style={{ backgroundColor: "#F0A70B", height: "8vh" }}
       >
         {discounts
