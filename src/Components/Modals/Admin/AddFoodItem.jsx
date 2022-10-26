@@ -1,9 +1,3 @@
-import { Box } from "@mui/system";
-import React, { useState } from "react";
-import TextField from "@mui/material/TextField";
-import { useForm } from "react-hook-form";
-import { FiUpload } from "react-icons/fi";
-import { toast } from "react-toastify";
 import {
   Button,
   FormControl,
@@ -13,12 +7,16 @@ import {
   MenuItem,
   Select,
 } from "@mui/material";
+import TextField from "@mui/material/TextField";
+import { Box } from "@mui/system";
 import { useQueryClient } from "@tanstack/react-query";
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import { AiOutlineClose } from "react-icons/ai";
+import { FiUpload } from "react-icons/fi";
+import { toast } from "react-toastify";
 import { useStateContext } from "../../../Contexts/ContextProvider";
 import myAxios from "../../../utils/myAxios";
-import { GrClose } from "react-icons/gr";
-import { AiOutlineClose } from "react-icons/ai";
-import { type } from "@testing-library/user-event/dist/type";
 
 const style = {
   position: "absolute",
@@ -51,10 +49,16 @@ const AddFoodItem = ({ handleModalCloseTwo, categories, foodRefetch }) => {
     const price = {};
     data.item?.forEach((item) => {
       if (item.title.endsWith('"')) {
+        console.log(item.title, item.price);
         const a = item?.title?.replace(/"/g, " inch");
+        console.log(a);
         price[a] = item.price;
+        console.log(price);
       } else {
-        price[item.title] = item.price;
+        console.log(item.title, item.price);
+        price[item.price] = item.price;
+        price[item.title] = "regular";
+        console.log(price[item.title]);
       }
     });
     const payloadForm = {
@@ -101,7 +105,7 @@ const AddFoodItem = ({ handleModalCloseTwo, categories, foodRefetch }) => {
               //   setFoodName(newValue);
               // }}
               error={Boolean(errors.foodName)}
-              helperText={errors.foodName && "This food name is required *"}
+              // helperText={errors.foodName && "This food name is required *"}
               {...register("foodName", { required: true })}
               fullWidth
             />
