@@ -1,94 +1,49 @@
-import {
-  FormControl,
-  FormControlLabel,
-  Modal,
-  Radio,
-  RadioGroup,
-  Typography,
-} from "@mui/material";
+import { Grid, Modal, Typography } from "@mui/material";
+
 import Box from "@mui/material/Box";
 import { useQuery } from "@tanstack/react-query";
 import React, { useState } from "react";
-import { FaStar } from "react-icons/fa";
-import { IoMdAdd } from "react-icons/io";
 import { useStateContext } from "../../../../Contexts/ContextProvider";
 import { staticAxios } from "../../../../utils/myAxios";
+import AddToCartModal from "../../../Modals/Frontend/AddToCartModal";
 import ItemDetails from "../../../Modals/Frontend/ItemDetails";
 
 const Food = ({ id }) => {
-  const { setCart, cart, setIngredientId, activeMenu } = useStateContext();
+  const { activeMenu } = useStateContext();
   const [openModal, setOpenModal] = useState(false);
-  const [size, setSize] = useState({});
   const [item, setItem] = useState(null);
-
-  const { data: popularFood = [] } = useQuery(["popular"], async () => {
-    const res = await staticAxios("/popularfood/");
-    return res.data;
-  });
-
-  const handleModalOpen = (item) => {
-    setItem(item);
-    setOpenModal(true);
+  const [foodItem, setFoodItem] = useState({});
+  const [foodIndex, setFoodIndex] = useState(null);
+  const [open, setOpen] = useState(false);
+  const toggleDrawer = (newOpen) => () => {
+    console.log(newOpen);
+    setOpen(newOpen);
   };
+
+  // const { data: popularFood = [] } = useQuery(["popular"], async () => {
+  //   const res = await staticAxios("/popularfood/");
+  //   return res.data;
+  // });
+
+  // const handleModalOpen = (item) => {
+  //   setItem(item);
+  //   setOpenModal(true);
+  // };
   const handleModalClose = (e) => {
     setOpenModal(false);
-  };
-
-  const handleChange = (checkbox) => {
-    setSize({
-      ...size,
-      [checkbox.index]: checkbox.key,
-    });
-  };
-
-  const handleAddToCartSingleValue = (param, key) => {
-    const item = { ...param, extra: {} };
-    setIngredientId(item.category);
-    item.sId = Number(Math.round(Math.random() * 100).toFixed(2));
-
-    item.price = key[1];
-    item.size = key[0];
-
-    if (cart.find((i) => i.item)) {
-      setCart(
-        cart?.map((e) => {
-          if (e === item) {
-            return { ...e, count: e.count + 1 };
-          } else {
-            return e;
-          }
-        })
-      );
-    } else {
-      setCart([...cart, { ...item, count: 1 }]);
-    }
-  };
-  const handleAddToCart = (param, index, key) => {
-    const item = { ...param, extra: {} };
-    setIngredientId(item.category);
-    item.price = size[index][1];
-    item.sId = Number(Math.round(Math.random() * 100).toFixed(2));
-    item.size = size[index][0];
-
-    if (cart.find((i) => i.item)) {
-      setCart(
-        cart?.map((e) => {
-          if (e === item) {
-            return { ...e, count: e.count + 1 };
-          } else {
-            return e;
-          }
-        })
-      );
-    } else {
-      setCart([...cart, { ...item, count: 1 }]);
-    }
   };
 
   const { data: food = [] } = useQuery(["food"], async () => {
     const res = await staticAxios(`category/${id}`);
     return res.data;
   });
+
+  const handleItemAndToggle = (foodItem, index) => {
+    console.log(foodItem);
+    setOpen(true);
+    setFoodIndex(index);
+    setFoodItem(foodItem);
+  };
   return (
     <Box sx={{ mb: 10 }}>
       <Modal open={openModal} onClose={handleModalClose}>
@@ -96,58 +51,64 @@ const Food = ({ id }) => {
       </Modal>
       {/* --food-- */}
       <Box
-        className="lg:p-2 "
+        className=" "
         sx={{
           height: { md: "129vh", overflowY: "scroll" },
         }}
       >
-        {food[0]?.foodItems_category?.map((item, index) => (
-          <div key={item.id}>
-            <div className="border-2 shadow-md  rounded-lg my-2 p-2 ">
-              <div className="md:flex justify-between">
-                <div className=" md:flex gap-5 ">
-                  <div className="md:w-56 md:h-44 w-full h-36 rounded-md md:m-0 m-auto">
-                    <img
-                      className="w-full h-full object-cover rounded-md "
-                      src={item?.image}
-                      alt=""
-                    />
-                  </div>
-                  <div>
-                    <div className="flex justify-between">
-                      <Typography
-                        variant="h6"
-                        sx={{
-                          my: { xs: 2 },
-                          fontSize: 20,
-                          fontWeight: 500,
-                        }}
-                        // onClick={() => handleModalOpen(item)}
-                      >
-                        {item.food_name.substr(0, 20) +
-                          `${item.food_name.length > 20 ? ".." : ""}`}
-                      </Typography>
-                    </div>
+        <Grid container sx={{ padding: 0 }}>
+          {food[0]?.foodItems_category?.map((item, index) => (
+            <Grid item xs={12} md={6} sx={{ padding: 0 }}>
+              <div
+                key={item.id}
+                onClick={() => handleItemAndToggle(item, index)}
+              >
+                <div className="border-2 shadow-md  rounded-lg   cursor-pointer">
+                  <div className="md:flex justify-between">
+                    <div className=" md:flex gap-5 p-2">
+                      <div className="md:w-32 md:h-32  md:m-0 m-auto ">
+                        <img
+                          className=" object-cover  w-full h-full rounded-md "
+                          src={item?.image}
+                          alt=""
+                        />
+                      </div>
+                      <div>
+                        <div className="flex justify-between">
+                          <Typography
+                            variant="h6"
+                            sx={{
+                              my: { xs: 2 },
+                              fontSize: 20,
+                              fontWeight: 500,
+                            }}
+                            // onClick={() => handleModalOpen(item)}
+                          >
+                            {item.food_name.substr(0, 20) +
+                              `${item.food_name.length > 20 ? ".." : ""}`}
+                          </Typography>
+                        </div>
 
-                    {/* --size-- */}
-                    <div className="overflow-x-scroll">
-                      <div
-                        className={`${
-                          activeMenu
-                            ? "w-[450px]"
-                            : `${
-                                Object.entries(
-                                  item?.discount_price || item.price
-                                ).length > 1 && "w-[550px]"
-                              }`
-                        } `}
-                      >
-                        <FormControl>
+                        {/* --size-- */}
+
+                        <div className="overflow-x-scroll">
+                          <div
+                            className={` ${
+                              activeMenu
+                                ? "550px"
+                                : `${
+                                    Object.entries(
+                                      item?.discount_price || item.price
+                                    ).length > 1 && "w-[550px]"
+                                  }`
+                            } `}
+                          >
+                            {/* <FormControl>
                           <RadioGroup
                             aria-labelledby="demo-radio-buttons-group-label"
                             name="radio-buttons-group"
                             row
-                          >
+                          > */}
                             {Boolean(item?.discount_price)
                               ? Object.entries(item?.discount_price).map(
                                   (key) => (
@@ -157,11 +118,16 @@ const Food = ({ id }) => {
                                         alignItems: "center",
                                       }}
                                     >
-                                      <FormControlLabel
+                                      {/* <FormControlLabel
                                         sx={{
                                           "&.MuiFormControlLabel-root": {
                                             mr: 0,
-                                            p: { md: 1 },
+                                            pl:
+                                              Object.values(
+                                                item?.discount_price
+                                              ).length < 2
+                                                ? 2
+                                                : 0,
                                           },
                                         }}
                                         control={
@@ -180,12 +146,9 @@ const Food = ({ id }) => {
                                             }}
                                           />
                                         }
-                                        name="size"
-                                        value={key[1]}
-                                        onChange={(e) =>
-                                          handleChange({ index, key })
-                                        }
-                                      />
+                                name="size" value={key[1]}
+                                onChange={(e) => handleChange({ index, key })}
+                                /> */}
                                       <Box
                                         sx={{
                                           display: "flex",
@@ -194,32 +157,22 @@ const Food = ({ id }) => {
                                         }}
                                         variant="h6"
                                       >
-                                        {/* <Typography
-                                          sx={{
-                                            fontSize: {
-                                              sm: "12px",
-                                              md: "16px",
-                                            },
-                                            pl: 2,
-                                          }}
-                                        >
-                                          {key[0]} :
-                                        </Typography> */}
                                         <Typography
                                           sx={{
                                             fontSize: {
-                                              sm: "12px",
-                                              md: "14px",
+                                              // sm: "12px",
+                                              md: "12px",
                                             },
+                                            // pl: 2,
                                           }}
                                         >
-                                          {"Price:"}
+                                          {key[0] ? key[0] : "Price:"} :
                                         </Typography>
+
                                         <Typography
                                           sx={{
                                             fontSize: {
                                               sm: "12px",
-                                              md: "14px",
                                             },
                                             textDecoration: "line-through",
                                           }}
@@ -230,8 +183,7 @@ const Food = ({ id }) => {
                                           sx={{
                                             fontWeight: 500,
                                             fontSize: {
-                                              sm: "20px",
-                                              md: "px",
+                                              sm: "14px",
                                             },
                                             mr: 1,
                                           }}
@@ -244,22 +196,16 @@ const Food = ({ id }) => {
                                 )
                               : Object.entries(item?.price).map((key) => {
                                   return (
-                                    <Box
-                                      className="flex items-center"
-                                      // sx={{
-                                      //   display: "flex",
-                                      //   alignItems: "center",
-                                      //   justifyContent: "space-between",
-                                      //   // Object.entries(item?.price).length < 2
-                                      //   //   ? "space-between"
-                                      //   //   : "",
-                                      // }}
-                                    >
-                                      <FormControlLabel
+                                    <Box className="flex items-center">
+                                      {/* <FormControlLabel
                                         sx={{
                                           "&.MuiFormControlLabel-root": {
                                             mr: 0,
-                                            p: 2,
+                                            pl:
+                                              Object.values(item?.price)
+                                                .length < 2
+                                                ? 2
+                                                : 0,
                                           },
                                         }}
                                         control={
@@ -279,9 +225,9 @@ const Food = ({ id }) => {
                                         onClick={(e) =>
                                           handleChange({ index, key })
                                         }
-                                      />
-                                      <Box className="flex gap-1 items-center">
-                                        {/* <Typography
+                                      /> */}
+                                      <Box className="flex  items-center">
+                                        <Typography
                                           sx={{
                                             fontWeight: 500,
                                             fontSize: {
@@ -290,20 +236,12 @@ const Food = ({ id }) => {
                                             mr: { xs: 1 },
                                           }}
                                           variant="h6"
-                                        >{`${key[0].replace(
-                                          "inch",
-                                          '"'
-                                        )}`}</Typography> */}
-                                        <Typography
-                                          sx={{
-                                            fontSize: {
-                                              sm: "12px",
-                                              md: "14px",
-                                            },
-                                          }}
-                                        >
-                                          {"Price:"}
-                                        </Typography>
+                                        >{`${
+                                          key[0]
+                                            ? key[0].replace("inch", '"')
+                                            : "price"
+                                        }`}</Typography>
+
                                         <Typography
                                           sx={{
                                             fontWeight: 500,
@@ -318,107 +256,31 @@ const Food = ({ id }) => {
                                     </Box>
                                   );
                                 })}
-                          </RadioGroup>
-                        </FormControl>
+                            {/* </RadioGroup>
+                        </FormControl> */}
+                          </div>
+                        </div>
+                        {/* --size End-- */}
                       </div>
                     </div>
                   </div>
                 </div>
-                <Box className="flex md:gap-5 justify-between items-center md:items-start p-2">
-                  <Box className="  ">
-                    <FaStar className="text-[#F0A70B] text-xl" />
-                    <Typography variant="caption">{item.review}.0</Typography>
-                  </Box>
-                  <Box>
-                    {Boolean(item?.discount_price) ? (
-                      <Box>
-                        {Object.values(item?.discount_price).length < 2 ? (
-                          Object.entries(item?.discount_price).map((key) => {
-                            console.log(item?.discount_price);
-                            return (
-                              <IoMdAdd
-                                style={{
-                                  cursor: "pointer",
-                                  display:
-                                    Object.values(item?.discount_price).length >
-                                    1
-                                      ? "none"
-                                      : "block",
-                                }}
-                                className={`border border-[#F0A70B] text-[#F0A70B]  inline-block  w-10 h-10 md:w-8 md:h-8 cursor-pointer rounded-md 
-                               
-                                `}
-                                onClick={() =>
-                                  handleAddToCartSingleValue(item, key)
-                                }
-                              />
-                            );
-                          })
-                        ) : (
-                          <IoMdAdd
-                            style={{
-                              cursor: "pointer",
-                              display:
-                                Object.values(item?.discount_price).length > 1
-                                  ? "block"
-                                  : "none",
-                            }}
-                            className={`border border-[#F0A70B] text-[#F0A70B]  inline-block w-10 h-10 md:w-8 md:h-8 cursor-pointer rounded-md ${
-                              activeMenu ? "left-[500px]" : "left-[300px]"
-                            }`}
-                            onClick={() => handleAddToCart(item, index)}
-                          />
-                        )}
-                      </Box>
-                    ) : (
-                      <Box>
-                        {Object.values(item?.price).length < 2 ? (
-                          Object.entries(item?.price).map((key) => {
-                            console.log(item?.price);
-                            return (
-                              <IoMdAdd
-                                style={{
-                                  cursor: "pointer",
-                                  display:
-                                    Object.values(item?.price).length > 1
-                                      ? "none"
-                                      : "block",
-                                }}
-                                className={`border border-[#F0A70B] text-[#F0A70B]  inline-block w-10 h-10 md:w-8 md:h-8 cursor-pointer rounded-md ${
-                                  activeMenu ? "left-[500px]" : "left-[300px]"
-                                }`}
-                                onClick={() =>
-                                  handleAddToCartSingleValue(item, key)
-                                }
-                              />
-                            );
-                          })
-                        ) : (
-                          <IoMdAdd
-                            style={{
-                              cursor: "pointer",
-                              display:
-                                Object.values(item?.price).length > 1
-                                  ? "block"
-                                  : "none",
-                            }}
-                            className={`border border-[#F0A70B] text-[#F0A70B]  inline-block w-10 h-10 md:w-8 md:h-8 cursor-pointer rounded-md ${
-                              activeMenu ? "left-[500px]" : "left-[300px]"
-                            }`}
-                            onClick={() => handleAddToCart(item, index)}
-                          />
-                        )}
-                      </Box>
-                    )}
-                  </Box>
-                </Box>
               </div>
-            </div>
-          </div>
-        ))}
+            </Grid>
+          ))}
+        </Grid>
       </Box>
       {/* --popularFood-- */}
       {/* <PopularFoodTabs /> */}
+
+      {open && (
+        <AddToCartModal
+          open={open}
+          index={foodIndex}
+          item={foodItem}
+          setOpen={() => setOpen(false)}
+        />
+      )}
     </Box>
   );
 };

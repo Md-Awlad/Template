@@ -64,6 +64,7 @@ const AddFoodItem = ({ handleModalCloseTwo, categories, foodRefetch }) => {
         // console.log(price[item.title]);
       }
     });
+    console.log(price);
     const payloadForm = {
       food_name: data?.foodName,
       price: `'${JSON.stringify(price)}'`,
