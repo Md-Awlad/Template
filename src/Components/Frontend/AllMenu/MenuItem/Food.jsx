@@ -78,7 +78,7 @@ const Food = ({ id }) => {
                           <Typography
                             variant="h6"
                             sx={{
-                              my: { xs: 2 },
+                              // my: { xs: 2 },
                               fontSize: 20,
                               fontWeight: 500,
                             }}
@@ -88,7 +88,18 @@ const Food = ({ id }) => {
                               `${item.food_name.length > 20 ? ".." : ""}`}
                           </Typography>
                         </div>
-
+                        <Typography
+                          variant="h6"
+                          sx={{
+                            // my: { xs: 2 },
+                            fontSize: 12,
+                            fontWeight: 500,
+                          }}
+                          // onClick={() => handleModalOpen(item)}
+                        >
+                          {item.base_ingredient.substr(0, 100) +
+                            `${item.base_ingredient.length > 100 ? ".." : ""}`}
+                        </Typography>
                         {/* --size-- */}
 
                         <div className="overflow-x-scroll">
