@@ -39,6 +39,12 @@ const FoodItem = () => {
       return res.data;
     }
   );
+
+  const { data: customizeFood = [] } = useQuery(["customizeFood"], async () => {
+    const res = await myAxios("/customize_food/");
+    return res.data;
+  });
+
   return (
     <Container>
       <Modal open={openModal} onClose={handleModalClose}>
@@ -52,6 +58,7 @@ const FoodItem = () => {
           foodRefetch={foodRefetch}
           handleModalCloseTwo={handleModalCloseTwo}
           categories={categories}
+          customizeFood={customizeFood}
         />
       </Modal>
       <PageTitle

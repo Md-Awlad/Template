@@ -80,7 +80,6 @@ const EditFood = ({ editId, handleModalClose }) => {
       });
     },
   });
-  console.log(data);
   return (
     <Modal open={Boolean(editId)} onClose={handleModalClose}>
       <Box sx={{ ...style, width: 600, height: 500, overflowY: "scroll" }}>

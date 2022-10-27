@@ -14,6 +14,7 @@ import { Badge, Box, Button, Paper, Typography } from "@mui/material";
 import { MdEmail, MdOutlineAddShoppingCart } from "react-icons/md";
 import { FaPhoneAlt } from "react-icons/fa";
 import { BsCheck2Circle } from "react-icons/bs";
+import QueryLoader from "../../Loaders/QueryLoader";
 
 const OrderList = ({ orders, orderRefetch }) => {
   const { currentColor, currentMode } = useStateContext();
@@ -284,151 +285,157 @@ const OrderList = ({ orders, orderRefetch }) => {
           gap: 2,
         }}
       >
-        {orders?.map((item) => (
-          <Paper
-            key={item.id}
-            className="space-y-1 dark:bg-secondary-dark-bg dark:text-neutral"
-            sx={{
-              height: 350,
-              overflowY: "scroll",
-              px: 2,
-              py: 1,
-              boxShadow: "0px 0px 5px 0px rgb(0 0 0 / 20%)",
-              border: "1px solid #ccc",
-            }}
-          >
-            <Box sx={{ display: "flex", gap: 2 }}>
-              <Typography
-                style={{ color: currentColor }}
-                sx={{ fontSize: 14, fontWeight: 500 }}
-                variant="h6"
-              >
-                Order ID: {item?.id}
-              </Typography>
-              <Typography
-                style={{ color: currentColor }}
-                sx={{ fontSize: 14, fontWeight: 500 }}
-                variant="h6"
-              >
-                Order Type: {item?.order_type}
-              </Typography>
-              <Typography
-                style={{ color: currentColor }}
-                sx={{ fontSize: 14, fontWeight: 500 }}
-                variant="h6"
-              >
-                Table No: {item?.table}
-              </Typography>
-            </Box>
-            <Box>
-              <Typography sx={{ fontSize: 14, fontWeight: 500 }} variant="h6">
-                Name: {item?.note?.name}
-              </Typography>
-              <Typography
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 1,
-                  fontSize: 14,
-                  fontWeight: 500,
-                }}
-                variant="h6"
-              >
-                <FaPhoneAlt /> {item?.note?.phone}
-              </Typography>
-              <Typography
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 1,
-                  fontSize: 14,
-                  fontWeight: 500,
-                }}
-                variant="h6"
-              >
-                <MdEmail /> {item?.note?.email}
-              </Typography>
-            </Box>
-            <hr className="border-[#F0A70B]" />
-            <Box
+        {<QueryLoader /> &&
+          orders?.map((item) => (
+            <Paper
+              key={item.id}
+              className="space-y-1 dark:bg-secondary-dark-bg dark:text-neutral"
               sx={{
-                display: "flex",
-                justifyContent: "space-between",
+                height: 350,
+                overflowY: "scroll",
+                px: 2,
+                py: 1,
+                boxShadow: "0px 0px 5px 0px rgb(0 0 0 / 20%)",
+                border: "1px solid #ccc",
               }}
             >
-              {/* --items-- */}
-              <Box>
+              <Box sx={{ display: "flex", gap: 1 }}>
                 <Typography
                   style={{ color: currentColor }}
-                  sx={{ fontSize: 14, fontWeight: 500 }}
+                  sx={{ fontSize: 13, fontWeight: 500 }}
                   variant="h6"
                 >
-                  Order Items
+                  Order ID: {item?.id}
                 </Typography>
-                {item?.order_items?.map((data, index) => (
-                  <Typography
-                    key={index}
-                    sx={{ fontSize: 14, fontWeight: 500 }}
-                    variant="h6"
-                  >
-                    {data?.food_name}
-                  </Typography>
-                ))}
-              </Box>
-              {/* --extra-- */}
-              <Box>
                 <Typography
                   style={{ color: currentColor }}
-                  sx={{ fontSize: 14, fontWeight: 500 }}
+                  sx={{ fontSize: 13, fontWeight: 500 }}
                   variant="h6"
                 >
-                  Extra
+                  Order Type:{" "}
+                  {`${
+                    item?.order_type === "takeaway"
+                      ? "Takeaway"
+                      : item?.order_type === "dine_in" && "Dine In"
+                  }`}
                 </Typography>
-                {item?.note?.order_items?.map((data) => (
-                  <Box key={data.id}>
-                    {data?.extra?.map((extra, index) => (
-                      <Typography
-                        key={index}
-                        sx={{ fontSize: 14, fontWeight: 500 }}
-                        variant="h6"
-                      >
-                        {extra?.name}
-                      </Typography>
-                    ))}
-                  </Box>
-                ))}
-                <hr />
-              </Box>
-              {/* --quantity-- */}
-              <Box>
                 <Typography
                   style={{ color: currentColor }}
+                  sx={{ fontSize: 13, fontWeight: 500 }}
+                  variant="h6"
+                >
+                  Table No: {item?.table}
+                </Typography>
+              </Box>
+              <Box>
+                <Typography sx={{ fontSize: 14, fontWeight: 500 }} variant="h6">
+                  Name: {item?.note?.name}
+                </Typography>
+                <Typography
                   sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 1,
                     fontSize: 14,
                     fontWeight: 500,
                   }}
                   variant="h6"
                 >
-                  Quantity
+                  <FaPhoneAlt /> {item?.note?.phone}
                 </Typography>
-                {item?.note?.order_items?.map((data) => (
-                  <Box key={data.id}>
+                <Typography
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 1,
+                    fontSize: 14,
+                    fontWeight: 500,
+                  }}
+                  variant="h6"
+                >
+                  <MdEmail /> {item?.note?.email}
+                </Typography>
+              </Box>
+              <hr className="border-[#F0A70B]" />
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                }}
+              >
+                {/* --items-- */}
+                <Box>
+                  <Typography
+                    style={{ color: currentColor }}
+                    sx={{ fontSize: 14, fontWeight: 500 }}
+                    variant="h6"
+                  >
+                    Order Items
+                  </Typography>
+                  {item?.order_items?.map((data, index) => (
                     <Typography
-                      sx={{
-                        fontSize: 14,
-                        fontWeight: 500,
-                        textAlign: "center",
-                      }}
+                      key={index}
+                      sx={{ fontSize: 14, fontWeight: 500 }}
                       variant="h6"
                     >
-                      {data?.quantity}
+                      {data?.food_name}
                     </Typography>
-                  </Box>
-                ))}
+                  ))}
+                </Box>
+                {/* --extra-- */}
+                <Box>
+                  <Typography
+                    style={{ color: currentColor }}
+                    sx={{ fontSize: 14, fontWeight: 500 }}
+                    variant="h6"
+                  >
+                    Extra
+                  </Typography>
+                  {item?.note?.order_items?.map((data) => (
+                    <Box key={data.id}>
+                      {data?.extra?.map((extra, index) => (
+                        <Typography
+                          key={index}
+                          sx={{ fontSize: 14, fontWeight: 500 }}
+                          variant="h6"
+                        >
+                          {extra?.name}
+                        </Typography>
+                      ))}
+                    </Box>
+                  ))}
+                  <hr />
+                </Box>
+                {/* --quantity-- */}
+                <Box>
+                  <Typography
+                    style={{ color: currentColor }}
+                    sx={{
+                      fontSize: 14,
+                      fontWeight: 500,
+                    }}
+                    variant="h6"
+                  >
+                    Quantity
+                  </Typography>
+                  {item?.note?.order_items?.map((data) => (
+                    <Box key={data.id}>
+                      <Typography
+                        sx={{
+                          fontSize: 14,
+                          fontWeight: 500,
+                          textAlign: "center",
+                        }}
+                        variant="h6"
+                      >
+                        {data?.quantity}
+                      </Typography>
+                    </Box>
+                  ))}
+                </Box>
               </Box>
-            </Box>
-            {/* --extra-- */}
-            {/* <Box>
+              {/* --extra-- */}
+              {/* <Box>
               <Typography
                 style={{ color: currentColor }}
                 sx={{ fontSize: 14, fontWeight: 500 }}
@@ -450,53 +457,59 @@ const OrderList = ({ orders, orderRefetch }) => {
                 </Box>
               ))}
             </Box> */}
-            <hr className="border-[#F0A70B]" />
-            <Box className="space-y-7">
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                }}
-              >
-                <Typography sx={{ fontSize: 18, fontWeight: 500 }} variant="h6">
-                  Total Amount:
-                </Typography>
-                <Typography sx={{ fontSize: 18, fontWeight: 500 }} variant="h6">
-                  {item?.price} ৳
-                </Typography>
-              </Box>
-              {/* --actionbtn-- */}
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  pt: 10,
-                }}
-              >
-                <form onSubmit={handleSubmit(onSubmit)}>
-                  <button>
-                    <BsCheck2Circle
-                      onClick={() => setComplete(item.id)}
-                      className="text-green-900 dark:text-green-600 text-2xl cursor-pointer "
-                    />
-                  </button>
-                </form>
+              <hr className="border-[#F0A70B]" />
+              <Box className="space-y-7">
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                  }}
+                >
+                  <Typography
+                    sx={{ fontSize: 18, fontWeight: 500 }}
+                    variant="h6"
+                  >
+                    Total Amount:
+                  </Typography>
+                  <Typography
+                    sx={{ fontSize: 18, fontWeight: 500 }}
+                    variant="h6"
+                  >
+                    {item?.price} ৳
+                  </Typography>
+                </Box>
+                {/* --actionbtn-- */}
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    pt: 10,
+                  }}
+                >
+                  <form onSubmit={handleSubmit(onSubmit)}>
+                    <button>
+                      <BsCheck2Circle
+                        onClick={() => setComplete(item.id)}
+                        className="text-green-900 dark:text-green-600 text-2xl cursor-pointer "
+                      />
+                    </button>
+                  </form>
 
-                <HighlightOffIcon
-                  onClick={() => setReject(item.id)}
-                  className="text-red-900 dark:text-red-600 text-2xl cursor-pointer"
-                />
+                  <HighlightOffIcon
+                    onClick={() => setReject(item.id)}
+                    className="text-red-900 dark:text-red-600 text-2xl cursor-pointer"
+                  />
 
-                <RiDeleteBin6Line
-                  onClick={() => setDeleteId(item.id)}
-                  className="text-blue-900 dark:text-blue-600 text-2xl cursor-pointer"
-                />
+                  <RiDeleteBin6Line
+                    onClick={() => setDeleteId(item.id)}
+                    className="text-blue-900 dark:text-blue-600 text-2xl cursor-pointer"
+                  />
+                </Box>
               </Box>
-            </Box>
-          </Paper>
-        ))}
+            </Paper>
+          ))}
       </Box>
       {Boolean(reject) && (
         <RejectOrder reject={reject} handleModalClose={() => setReject(null)} />

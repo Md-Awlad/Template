@@ -4,6 +4,7 @@ import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import React, { useState } from "react";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { useStateContext } from "../../../Contexts/ContextProvider";
+import QueryLoader from "../../Loaders/QueryLoader";
 import DeleteCancelOrder from "../../Modals/Admin/DeleteCancelOrder";
 
 const CancelOrderList = ({ cancelOrder }) => {
@@ -52,6 +53,15 @@ const CancelOrderList = ({ cancelOrder }) => {
       width: 120,
       headerAlign: "center",
       align: "center",
+      renderCell: ({ row }) => {
+        return (
+          <Typography>{`${
+            row?.order_type === "takeaway"
+              ? "Takeaway"
+              : row?.order_type === "dine_in" && "Dine In"
+          }`}</Typography>
+        );
+      },
     },
     {
       field: "phone",
@@ -129,51 +139,53 @@ const CancelOrderList = ({ cancelOrder }) => {
   return (
     <div>
       <div style={{ height: 510, width: "100%" }}>
-        <DataGrid
-          sx={{
-            color: currentMode === "Dark" ? "#fff" : "#000",
-            "& .MuiIconButton-root": {
-              color: "unset !important",
-            },
-            "& .MuiTablePagination-toolbar": {
+        {<QueryLoader /> && (
+          <DataGrid
+            sx={{
               color: currentMode === "Dark" ? "#fff" : "#000",
-            },
-            "& .MuiDataGrid-row:hover": {
-              bgcolor: currentMode === "Dark" ? `${currentColor}10` : "",
-            },
-            "& .MuiDataGrid-selectedRowCount": {
-              visibility: "hidden",
-            },
-            "& .MuiDataGrid-cell:focus-within": {
-              outline: "none",
-            },
-            "& .MuiInput-root": {
-              color: currentMode === "Dark" ? "#fff" : "#000",
-            },
-          }}
-          rows={cancelOrder}
-          columns={columns}
-          rowsPerPageOptions={[5]}
-          disableSelectionOnClick
-          disableColumnFilter
-          disableColumnSelector
-          disableDensitySelector
-          components={{ Toolbar: GridToolbar }}
-          componentsProps={{
-            toolbar: {
-              showQuickFilter: true,
-              quickFilterProps: { debounceMs: 500 },
-              printOptions: {
-                disableToolbarButton: true,
+              "& .MuiIconButton-root": {
+                color: "unset !important",
               },
-              csvOptions: {
-                disableToolbarButton: true,
+              "& .MuiTablePagination-toolbar": {
+                color: currentMode === "Dark" ? "#fff" : "#000",
               },
-            },
-          }}
-          // checkboxSelection
-          // disableSelectionOnClick
-        />
+              "& .MuiDataGrid-row:hover": {
+                bgcolor: currentMode === "Dark" ? `${currentColor}10` : "",
+              },
+              "& .MuiDataGrid-selectedRowCount": {
+                visibility: "hidden",
+              },
+              "& .MuiDataGrid-cell:focus-within": {
+                outline: "none",
+              },
+              "& .MuiInput-root": {
+                color: currentMode === "Dark" ? "#fff" : "#000",
+              },
+            }}
+            rows={cancelOrder}
+            columns={columns}
+            rowsPerPageOptions={[5]}
+            disableSelectionOnClick
+            disableColumnFilter
+            disableColumnSelector
+            disableDensitySelector
+            components={{ Toolbar: GridToolbar }}
+            componentsProps={{
+              toolbar: {
+                showQuickFilter: true,
+                quickFilterProps: { debounceMs: 500 },
+                printOptions: {
+                  disableToolbarButton: true,
+                },
+                csvOptions: {
+                  disableToolbarButton: true,
+                },
+              },
+            }}
+            // checkboxSelection
+            // disableSelectionOnClick
+          />
+        )}
       </div>
       {Boolean(deleteId) && (
         <DeleteCancelOrder

@@ -14,15 +14,21 @@ import {
 } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import React, { useState } from "react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 import { useStateContext } from "../../../Contexts/ContextProvider";
-import { getOrderInfo } from "../../../utils/localStorages";
+import {
+  getGmailInfo,
+  getOrderInfo,
+  getPhoneInfo,
+} from "../../../utils/localStorages";
 import myAxios, { staticAxios } from "../../../utils/myAxios";
 
 const SurveyInfo = () => {
   const { orderId } = useStateContext();
-  console.log(orderId);
   const [taste, setTaste] = useState(null);
+  const [review, setReview] = useState(null);
   const [environment, setEnvironment] = useState(null);
   const [cleanliness, setCleanliness] = useState(null);
   const [service, setService] = useState(null);
@@ -30,6 +36,15 @@ const SurveyInfo = () => {
   const [overall, setOverall] = useState(null);
   const [visit, setVisit] = useState(null);
   const [source, setSource] = useState();
+  // const [phoneInfo, setPhoneInfo] = useState(null);
+
+  const question = [
+    { label: "Social Media", value: "social_media" },
+    { label: "Website", value: "website" },
+    { label: "Search Engine", value: "search_engine" },
+    { label: "Friend or Family", value: "friend_or_family" },
+    { label: "Other", value: "other" },
+  ];
 
   const {
     register,
@@ -40,12 +55,12 @@ const SurveyInfo = () => {
   } = useForm();
 
   const onSubmit = async (data) => {
-    console.log(data);
     const payload = {
       order_id: data?.orderId,
       phone_number: data?.phoneNumber,
       email: data?.email,
       taste: Number(taste),
+      review: Number(review),
       environment: Number(environment),
       cleanliness: Number(cleanliness),
       service: Number(service),
@@ -56,10 +71,18 @@ const SurveyInfo = () => {
       used: Boolean(data?.message),
     };
 
-    const response = await myAxios.post("/survey/", payload);
+    const response = await toast.promise(
+      staticAxios.post("/survey/", payload),
+      {
+        pending: "Your Survey Pending...",
+        success: "Thank you Survey is Successfully Done",
+        error: "Your Survey is Error!",
+      }
+    );
     if (response.status === 201) {
       reset();
       setTaste(null);
+      setReview(null);
       setEnvironment(null);
       setCleanliness(null);
       setService(null);
@@ -70,21 +93,6 @@ const SurveyInfo = () => {
     }
   };
 
-  const orderInfo = getOrderInfo();
-  console.log(orderInfo);
-
-  const { data } = useQuery(
-    ["order"],
-    () => staticAxios(`/order/${orderInfo}/`),
-    {
-      onSuccess: ({ data: orders = [] }) => {
-        console.log(orders.phone);
-        setValue("orderId", orders?.id);
-        setValue("phoneNumber", orders?.phone);
-        setValue("email", orders?.email);
-      },
-    }
-  );
 
   return (
     <Box>
@@ -101,6 +109,7 @@ const SurveyInfo = () => {
             <TextField
               InputLabelProps={{ shrink: true }}
               id="orderId"
+              defaultValue={getOrderInfo()}
               label="Order ID"
               type="number"
               error={Boolean(errors.orderId)}
@@ -115,7 +124,8 @@ const SurveyInfo = () => {
               InputLabelProps={{ shrink: true }}
               id="phoneNumber"
               label="Type your phone number"
-              type="number"
+              type="text"
+              defaultValue={getPhoneInfo()}
               error={Boolean(errors.phoneNumber)}
               helperText={
                 errors.phoneNumber && "This phone number is required *"
@@ -131,6 +141,7 @@ const SurveyInfo = () => {
               id="email"
               label="Email"
               type="email"
+              defaultValue={getGmailInfo()}
               error={Boolean(errors.email)}
               helperText={errors.email && "This email is required *"}
               {...register("email", { required: true })}
@@ -149,6 +160,88 @@ const SurveyInfo = () => {
                 name="radio-buttons-group"
                 value={taste}
                 onChange={(e) => setTaste(e.target.value)}
+              >
+                <FormControlLabel
+                  control={
+                    <Radio
+                      style={{
+                        color: "#F0A70B",
+                      }}
+                    />
+                  }
+                  label="Poor"
+                  value={0}
+                />
+                <FormControlLabel
+                  control={
+                    <Radio
+                      style={{
+                        color: "#F0A70B",
+                      }}
+                    />
+                  }
+                  label="Ok"
+                  value={1}
+                />
+                <FormControlLabel
+                  control={
+                    <Radio
+                      style={{
+                        color: "#F0A70B",
+                      }}
+                    />
+                  }
+                  label="Average"
+                  value={2}
+                />
+                <FormControlLabel
+                  control={
+                    <Radio
+                      style={{
+                        color: "#F0A70B",
+                      }}
+                    />
+                  }
+                  label="Good"
+                  value={3}
+                />
+                <FormControlLabel
+                  control={
+                    <Radio
+                      style={{
+                        color: "#F0A70B",
+                      }}
+                    />
+                  }
+                  label="Better"
+                  value={4}
+                />
+                <FormControlLabel
+                  control={
+                    <Radio
+                      style={{
+                        color: "#F0A70B",
+                      }}
+                    />
+                  }
+                  label="Best"
+                  value={5}
+                />
+              </RadioGroup>
+            </FormControl>
+          </Grid>
+          {/* --review-- */}
+          <Grid item xs={12} md={6}>
+            <FormControl>
+              <FormLabel id="demo-controlled-radio-buttons-group">
+                Review*
+              </FormLabel>
+              <RadioGroup
+                row
+                aria-labelledby="demo-radio-buttons-group-label"
+                name="radio-buttons-group"
+                value={review}
+                onChange={(e) => setReview(e.target.value)}
               >
                 <FormControlLabel
                   control={
@@ -671,8 +764,8 @@ const SurveyInfo = () => {
             <Autocomplete
               disablePortal
               id="combo-box-demo"
-              options={data}
-              getOptionLabel={(option) => option?.label}
+              options={question}
+              getOptionLabel={(option) => option.label}
               onChange={(_, newValue) => setSource(newValue.value)}
               renderInput={(params) => (
                 <TextField
@@ -724,10 +817,3 @@ const SurveyInfo = () => {
 };
 
 export default SurveyInfo;
-const data = [
-  { label: "Social Media", value: "social_media" },
-  { label: "Website", value: "website" },
-  { label: "Search Engine", value: "search_engine" },
-  { label: "Friend or Family", value: "friend_or_family" },
-  { label: "Other", value: "other" },
-];

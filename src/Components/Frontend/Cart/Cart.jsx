@@ -19,7 +19,11 @@ import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { matchIsValidTel, MuiTelInput } from "mui-tel-input";
 import { staticAxios } from "../../../utils/myAxios";
 import { AiOutlineArrowLeft } from "react-icons/ai";
-import { setOrderInfo } from "../../../utils/localStorages";
+import {
+  setGmailInfo,
+  setOrderInfo,
+  setPhoneInfo,
+} from "../../../utils/localStorages";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -55,11 +59,11 @@ const Cart = () => {
   const { cart, setCart } = useStateContext();
   const { register, handleSubmit, reset, control } = useForm();
 
-  const { data: orderSummary = [] } = useQuery(["orderSummary"], async () => {
-    const res = await staticAxios(`/order_summery/`);
-    return res.data;
-  });
-  console.log(orderSummary);
+  // const { data: orderSummary = [] } = useQuery(["orderSummary"], async () => {
+  //   const res = await staticAxios(`/order_summery/`);
+  //   return res.data;
+  // });
+  // console.log(orderSummary);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -95,6 +99,8 @@ const Cart = () => {
         navigate("/ordersummary");
         setOrderId(data?.id);
         setOrderInfo(data?.id);
+        setPhoneInfo(data?.phone);
+        setGmailInfo(data?.email);
       },
     }
   );

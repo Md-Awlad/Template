@@ -32,7 +32,6 @@ const AddCategory = ({ handleModalClose, categoryRefetch }) => {
   } = useForm();
 
   const onSubmit = async (data) => {
-    console.log(data);
     const payloadForm = new FormData();
     payloadForm.append("name", data?.category);
     if (data?.image[0]) {
