@@ -9,6 +9,18 @@ const setOrderInfo = (orderInfo) => {
 const getOrderInfo = () => {
   return localStorage.getItem("orderInfo");
 };
+const setGmailInfo = (gmailInfo) => {
+  localStorage.setItem("gmailInfo", gmailInfo);
+};
+const getGmailInfo = () => {
+  return localStorage.getItem("gmailInfo");
+};
+const setPhoneInfo = (phoneInfo) => {
+  localStorage.setItem("phoneInfo", phoneInfo);
+};
+const getPhoneInfo = () => {
+  return localStorage.getItem("phoneInfo");
+};
 
 const setColorInfo = (colorInfo) => {
   return localStorage.setItem("colorInfo");
@@ -47,6 +59,10 @@ export {
   removeTokens,
   setOrderInfo,
   getOrderInfo,
+  setGmailInfo,
+  getGmailInfo,
+  setPhoneInfo,
+  getPhoneInfo,
   setColorInfo,
   getColorInfo,
 };

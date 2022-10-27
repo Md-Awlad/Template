@@ -81,17 +81,6 @@ const Sidebar = () => {
               <span className="capitalize ">dashboard</span>
             </NavLink>
             <NavLink
-              to="fooditem"
-              onClick={handleCloseSidebar}
-              style={({ isActive }) => ({
-                backgroundColor: isActive ? currentColor : "",
-              })}
-              className={({ isActive }) => (isActive ? activeLink : normalLink)}
-            >
-              <MdFastfood />
-              <span className="capitalize ">food item</span>
-            </NavLink>
-            <NavLink
               to="customfood"
               onClick={handleCloseSidebar}
               style={({ isActive }) => ({
@@ -102,6 +91,18 @@ const Sidebar = () => {
               <MdFastfood />
               <span className="capitalize ">custom food</span>
             </NavLink>
+            <NavLink
+              to="fooditem"
+              onClick={handleCloseSidebar}
+              style={({ isActive }) => ({
+                backgroundColor: isActive ? currentColor : "",
+              })}
+              className={({ isActive }) => (isActive ? activeLink : normalLink)}
+            >
+              <MdFastfood />
+              <span className="capitalize ">food item</span>
+            </NavLink>
+
             <NavLink
               to="order"
               onClick={handleCloseSidebar}
@@ -201,18 +202,6 @@ const Sidebar = () => {
               <MdDashboard className="text-3xl" />
             </NavLink>
             <NavLink
-              to="fooditem"
-              onClick={handleCloseSidebar}
-              style={({ isActive }) => ({
-                backgroundColor: isActive ? currentColor : "",
-              })}
-              className={({ isActive }) =>
-                isActive ? smActiveLink : smNormalLink
-              }
-            >
-              <MdFastfood className="text-3xl" />
-            </NavLink>
-            <NavLink
               to="customfood"
               onClick={handleCloseSidebar}
               style={({ isActive }) => ({
@@ -224,6 +213,19 @@ const Sidebar = () => {
             >
               <MdFastfood className="text-3xl" />
             </NavLink>
+            <NavLink
+              to="fooditem"
+              onClick={handleCloseSidebar}
+              style={({ isActive }) => ({
+                backgroundColor: isActive ? currentColor : "",
+              })}
+              className={({ isActive }) =>
+                isActive ? smActiveLink : smNormalLink
+              }
+            >
+              <MdFastfood className="text-3xl" />
+            </NavLink>
+
             <NavLink
               to="order"
               onClick={handleCloseSidebar}

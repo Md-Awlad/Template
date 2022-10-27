@@ -202,24 +202,29 @@ const CompleteOrderList = ({ completes }) => {
               border: "1px solid #ccc",
             }}
           >
-            <Box sx={{ display: "flex", gap: 2 }}>
+            <Box sx={{ display: "flex", gap: 1 }}>
               <Typography
                 style={{ color: currentColor }}
-                sx={{ fontSize: 14, fontWeight: 500 }}
+                sx={{ fontSize: 13, fontWeight: 500 }}
                 variant="h6"
               >
                 Order ID: {item?.id}
               </Typography>
               <Typography
                 style={{ color: currentColor }}
-                sx={{ fontSize: 14, fontWeight: 500 }}
+                sx={{ fontSize: 13, fontWeight: 500 }}
                 variant="h6"
               >
-                Order Type: {item?.order_type}
+                Order Type:{" "}
+                {`${
+                  item?.order_type === "takeaway"
+                    ? "Takeaway"
+                    : item?.order_type === "dine_in" && "Dine In"
+                }`}
               </Typography>
               <Typography
                 style={{ color: currentColor }}
-                sx={{ fontSize: 14, fontWeight: 500 }}
+                sx={{ fontSize: 13, fontWeight: 500 }}
                 variant="h6"
               >
                 Table No: {item?.table}
@@ -261,6 +266,7 @@ const CompleteOrderList = ({ completes }) => {
                 justifyContent: "space-between",
               }}
             >
+              {/* --items-- */}
               <Box>
                 <Typography
                   style={{ color: currentColor }}
@@ -279,6 +285,31 @@ const CompleteOrderList = ({ completes }) => {
                   </Typography>
                 ))}
               </Box>
+              {/* --extra-- */}
+              <Box>
+                <Typography
+                  style={{ color: currentColor }}
+                  sx={{ fontSize: 14, fontWeight: 500 }}
+                  variant="h6"
+                >
+                  Extra
+                </Typography>
+                {item?.note?.order_items?.map((data) => (
+                  <Box key={data.id}>
+                    {data?.extra?.map((extra, index) => (
+                      <Typography
+                        key={index}
+                        sx={{ fontSize: 14, fontWeight: 500 }}
+                        variant="h6"
+                      >
+                        {extra?.name}
+                      </Typography>
+                    ))}
+                  </Box>
+                ))}
+                <hr />
+              </Box>
+              {/* --quantity-- */}
               <Box>
                 <Typography
                   style={{ color: currentColor }}
@@ -307,7 +338,7 @@ const CompleteOrderList = ({ completes }) => {
               </Box>
             </Box>
             {/* --extra-- */}
-            <Box>
+            {/* <Box>
               <Typography
                 style={{ color: currentColor }}
                 sx={{ fontSize: 14, fontWeight: 500 }}
@@ -328,9 +359,9 @@ const CompleteOrderList = ({ completes }) => {
                   ))}
                 </Box>
               ))}
-            </Box>
+            </Box> */}
             <hr className="border-[#F0A70B]" />
-            <Box className="space-y-7">
+            <Box>
               <Box
                 sx={{
                   display: "flex",
@@ -345,10 +376,10 @@ const CompleteOrderList = ({ completes }) => {
                   {item?.price} ৳
                 </Typography>
               </Box>
-              {/* --actionbtn-- */}
+              {/* <--action Button--> */}
 
               <Button
-                sx={{ width: 1 }}
+                sx={{ width: 1, mt: 7 }}
                 color="error"
                 variant="outlined"
                 onClick={() => setDeleteId(item.id)}

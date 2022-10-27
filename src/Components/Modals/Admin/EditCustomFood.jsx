@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 import { useStateContext } from "../../../Contexts/ContextProvider";
 import myAxios from "../../../utils/myAxios";
 import { useState } from "react";
-import { useQueryClient } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 const style = {
   position: "absolute",
@@ -24,13 +24,9 @@ const style = {
   pb: 3,
 };
 
-const AddCustomFood = ({ handleModalClose, categories, foods }) => {
+const EditCustomFood = ({ handleClose, editId }) => {
   const { currentColor } = useStateContext();
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+  const { register, handleSubmit, setValue } = useForm();
   const queryClient = useQueryClient();
 
   const onSubmit = async (data) => {
@@ -41,20 +37,31 @@ const AddCustomFood = ({ handleModalClose, categories, foods }) => {
     console.log(payload);
 
     const response = await toast.promise(
-      myAxios.post("/customize_food/", payload),
+      myAxios.patch(`/customize_food/${editId}/`, payload),
       {
-        pending: "Adding Extra...",
+        pending: "Edit Extra...",
         success: "Extra Added",
-        error: "Error Adding Extra!",
+        error: "Error Edit Extra!",
       }
     );
     queryClient.invalidateQueries("customize_food");
-    handleModalClose();
+    handleClose();
   };
+
+  const { data } = useQuery(
+    [`customize_food`],
+    () => myAxios(`/customize_food/${editId}`),
+    {
+      onSuccess: ({ data }) => {
+        setValue("extraName", data?.ingredient_name);
+        setValue("extraPrice", data?.price);
+      },
+    }
+  );
 
   return (
     <Box sx={{ ...style }}>
-      <h2 className="text-xl font-bold pb-3">Add Custom Food</h2>
+      <h2 className="text-xl font-bold pb-3">Edit Custom Food</h2>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
         {/* --Extra Name-- */}
         <Grid item xs={12} md={6}>
@@ -62,9 +69,8 @@ const AddCustomFood = ({ handleModalClose, categories, foods }) => {
             id="extraName"
             label="Extra Ingredients Name"
             type="text"
-            error={Boolean(errors.extraName)}
-            helperText={errors.extraName && "This name field is required *"}
-            {...register("extraName", { required: true })}
+            InputLabelProps={{ shrink: true }}
+            {...register("extraName")}
             fullWidth
           />
         </Grid>
@@ -74,22 +80,29 @@ const AddCustomFood = ({ handleModalClose, categories, foods }) => {
             id="extraPrice"
             label="Extra Ingredients Price"
             type="number"
-            error={Boolean(errors.extraPrice)}
-            helperText={errors.extraPrice && "This price field is required *"}
-            {...register("extraPrice", { required: true })}
+            InputLabelProps={{ shrink: true }}
+            {...register("extraPrice")}
             fullWidth
           />
         </Grid>
-        <button
-          type="submit"
-          style={{ backgroundColor: currentColor }}
-          className="w-full px-8 py-2 rounded-md text-neutral text-lg uppercase"
-        >
-          add
-        </button>
+        <div className="flex justify-end">
+          <button
+            type="submit"
+            style={{ backgroundColor: currentColor }}
+            className="rounded drop-shadow-sm bg-primary mx-3 w-24 p-2 text-base font-semibold text-white outline-none"
+          >
+            Update
+          </button>
+          <button
+            onClick={handleClose}
+            className="w-24 p-2 rounded-md font-semibold text-white bg-red-500"
+          >
+            Cancel
+          </button>
+        </div>
       </form>
     </Box>
   );
 };
 
-export default AddCustomFood;
+export default EditCustomFood;

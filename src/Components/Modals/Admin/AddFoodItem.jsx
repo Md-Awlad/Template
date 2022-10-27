@@ -1,4 +1,5 @@
 import {
+  Autocomplete,
   Button,
   FormControl,
   Grid,
@@ -33,10 +34,16 @@ const style = {
   pb: 3,
 };
 
-const AddFoodItem = ({ handleModalCloseTwo, categories, foodRefetch }) => {
-  const { currentColor, currentMode } = useStateContext();
+const AddFoodItem = ({
+  handleModalCloseTwo,
+  categories,
+  foodRefetch,
+  customizeFood,
+}) => {
+  const { currentColor } = useStateContext();
   const [variants, setVariants] = useState(1);
-  const [category, setCategory] = useState(0);
+  const [category, setCategory] = useState();
+  const [extra, setExtra] = useState(0);
   const queryClient = useQueryClient();
 
   const {
@@ -52,11 +59,9 @@ const AddFoodItem = ({ handleModalCloseTwo, categories, foodRefetch }) => {
       if (item.title.endsWith('"')) {
         console.log(item.title, item.price);
         const a = item?.title?.replace(/"/g, " inch");
-        console.log(a);
         price[a] = item.price;
         console.log(price);
       } else {
-        console.log(item.title, item.price);
         price["regular"] = item.price;
 
         // price[item.price] = item.price;
@@ -73,6 +78,7 @@ const AddFoodItem = ({ handleModalCloseTwo, categories, foodRefetch }) => {
       taste: data?.taste,
       packaging: data?.package === null ? 0 : data?.package,
       category: category,
+      extra: extra?.map((a) => a.id),
     };
 
     const response = await toast.promise(
@@ -93,7 +99,14 @@ const AddFoodItem = ({ handleModalCloseTwo, categories, foodRefetch }) => {
   };
 
   return (
-    <Box sx={{ ...style, width: 600, height: 500, overflowY: "scroll" }}>
+    <Box
+      sx={{
+        ...style,
+        width: { sm: 600, xs: 400 },
+        height: 500,
+        overflowY: "scroll",
+      }}
+    >
       <h2 className="text-3xl font-bold pb-3 text-center">Add Food Item</h2>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="space-y-5">
@@ -235,6 +248,21 @@ const AddFoodItem = ({ handleModalCloseTwo, categories, foodRefetch }) => {
                 ))}
               </Select>
             </FormControl>
+          </Grid>
+          {/* --extra-- */}
+          <Grid item xs={12} md={6}>
+            <Autocomplete
+              multiple
+              disablePortal
+              id="combo-box-demo"
+              options={customizeFood?.map((custom) => custom)}
+              getOptionLabel={(option) => option?.ingredient_name}
+              filterSelectedOptions
+              onChange={(_, newValue) => setExtra(newValue)}
+              renderInput={(params) => (
+                <TextField {...params} label="Extra Ingredients" fullWidth />
+              )}
+            />
           </Grid>
           <div className="flex justify-end">
             <button
