@@ -12,52 +12,20 @@ import {
 import Box from "@mui/material/Box";
 import { grey } from "@mui/material/colors";
 import CssBaseline from "@mui/material/CssBaseline";
-import Skeleton from "@mui/material/Skeleton";
 import { styled } from "@mui/material/styles";
 import SwipeableDrawer from "@mui/material/SwipeableDrawer";
 import Typography from "@mui/material/Typography";
+import { useQuery } from "@tanstack/react-query";
 import PropTypes from "prop-types";
 import * as React from "react";
+import { AiOutlineMinus } from "react-icons/ai";
 import { FaStar } from "react-icons/fa";
+import { GrAdd } from "react-icons/gr";
 import { IoMdAdd } from "react-icons/io";
 import { useStateContext } from "../../../Contexts/ContextProvider";
-// const Accordion = styled((props) => (
-//   <MuiAccordion disableGutters elevation={0} square {...props} />
-// ))(({ theme }) => ({
-//   width: "300px",
-//   // border: `1px solid ${theme.palette.divider}`,
-//   backgroundColor: "unset",
-//   "&:not(:last-child)": {
-//     borderBottom: 0,
-//   },
-//   "&:before": {
-//     display: "none",
-//   },
-// }));
+import { staticAxios } from "../../../utils/myAxios";
 
-// const AccordionSummary = styled((props) => (
-//   <MuiAccordionSummary
-//     expandIcon={<ArrowForwardIosSharpIcon sx={{ fontSize: "0.9rem" }} />}
-//     {...props}
-//   />
-// ))(({ theme }) => ({
-//   backgroundColor:
-//     theme.palette.mode === "dark"
-//       ? "rgba(255, 255, 255, .05)"
-//       : "rgba(0, 0, 0, .03)",
-//   flexDirection: "row-reverse",
-//   "& .MuiAccordionSummary-expandIconWrapper.Mui-expanded": {
-//     transform: "rotate(90deg)",
-//   },
-//   "& .MuiAccordionSummary-content": {
-//     marginLeft: theme.spacing(1),
-//   },
-// }));
-
-// const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
-//   padding: theme.spacing(2),
-//   borderTop: "1px solid rgba(0, 0, 0, .125)",
-// }));
+/* Creating a drawer that is 56px wide. */
 const drawerBleeding = 56;
 
 const Root = styled("div")(({ theme }) => ({
@@ -144,6 +112,79 @@ function AddToCartModal(props) {
       setCart([...cart, { ...item, count: 1 }]);
     }
   };
+
+  /* Using the useQuery hook to fetch data from the server. */
+  const { data: { data: ingredients = [] } = {} } = useQuery(
+    [`/customize_food_category/${item.category}`],
+    () => staticAxios(`/customize_food_category/${item.category}`)
+  );
+
+  /**
+   * If the item is in the cart, increment the count. If not, add it to the cart with a count of 1.
+   */
+  const handleIncrement = (item) => {
+    if (cart.find((i) => i === item && Object.keys(item?.extra))) {
+      setCart(
+        cart.map((e) => {
+          if (e === item && Object.keys(item?.extra)) {
+            return { ...e, count: e.count + 1 };
+          } else {
+            return e;
+          }
+        })
+      );
+    } else {
+      setCart([...cart, { ...item, count: 1 }]);
+    }
+  };
+
+  /**
+   * If the item is in the cart, then decrement the count of the item in the cart.
+   */
+  const handleDecrement = (item) => {
+    if (cart.find((i) => i === item)) {
+      setCart(
+        cart.map((e) => {
+          if (e === item && e.count > 1) {
+            return { ...e, count: e.count - 1 };
+          } else {
+            return e;
+          }
+        })
+      );
+    }
+  };
+  const addExtra = (extraId, price = 0) => {
+    setCart(
+      cart.map((e) => {
+        //e.id === item.id && e.size === item.size
+        if (e === item) {
+          const existing = e?.extra && Boolean(e.extra[extraId]);
+
+          if (Object.keys(e.extra).length) {
+            Object.keys(e.extra).map((ex) => {
+              if (parseInt(ex) === extraId) {
+                delete e.extra[extraId];
+              } else {
+                e["extra"] = {
+                  ...e?.extra,
+                  [extraId]: price,
+                };
+              }
+            });
+          } else {
+            e["extra"] = {
+              [extraId]: price,
+            };
+          }
+          return e;
+        } else {
+          return e;
+        }
+      })
+    );
+  };
+
   return (
     <Root>
       <CssBaseline />
@@ -427,6 +468,44 @@ function AddToCartModal(props) {
                 </Box>
               </Box>
             </Box>
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              position: "relative",
+            }}
+            // className="flex justify-between items-center relative"
+          >
+            <Box sx={{ display: "flex", alignItems: "center", gap: 2, mt: 2 }}>
+              <AiOutlineMinus
+                onClick={() => handleDecrement(item)}
+                className="inline text-xl  cursor-pointer"
+              />
+              <Typography className="text-2xl">{item?.count}</Typography>
+              <GrAdd
+                onClick={() => handleIncrement(item)}
+                style={{}}
+                className="inline text-xl    cursor-pointer"
+              />
+            </Box>
+            <div>
+              <h3 className="lg:text-xl text-xl font-semibold">
+                {item?.price
+                  ? Number(item?.price * item?.count) +
+                    Number(
+                      item?.extra
+                        ? Object.values(item?.extra)?.reduce(
+                            (a, b) => a + b,
+                            0
+                          ) * item?.count
+                        : 0
+                    )
+                  : 0}
+                <span className="md:text-lg font-semibold pl-1">৳</span>
+              </h3>
+            </div>
           </Box>
         </StyledBox>
         {/* <StyledBox

@@ -3,6 +3,7 @@ import { Grid, Modal, Typography } from "@mui/material";
 import Box from "@mui/material/Box";
 import { useQuery } from "@tanstack/react-query";
 import React, { useState } from "react";
+import { IoMdAdd } from "react-icons/io";
 import { useStateContext } from "../../../../Contexts/ContextProvider";
 import { staticAxios } from "../../../../utils/myAxios";
 import AddToCartModal from "../../../Modals/Frontend/AddToCartModal";
@@ -58,28 +59,29 @@ const Food = ({ id }) => {
       >
         <Grid container sx={{ padding: 0 }}>
           {food[0]?.foodItems_category?.map((item, index) => (
-            <Grid item xs={12} md={6} sx={{ padding: 0 }}>
+            <Grid item sm={6} md={6} sx={{ padding: 0 }}>
               <div
                 key={item.id}
                 onClick={() => handleItemAndToggle(item, index)}
               >
-                <div className="border-2 shadow-md  rounded-lg   cursor-pointer">
+                <div className="border-2 shadow-md  rounded-lg   cursor-pointer relative">
                   <div className="md:flex justify-between">
                     <div className=" md:flex gap-5 p-2">
-                      <div className="md:w-32 md:h-32  md:m-0 m-auto ">
+                      <div className="md:w-32 md:h-32  md:m-0 m-auto relative ">
                         <img
-                          className=" object-cover  w-full h-full rounded-md "
+                          className=" object-cover  w-full h-full rounded-md  "
                           src={item?.image}
                           alt=""
                         />
+                        <IoMdAdd className="absolute text-xl font-bold bottom-1 right-1 bg-white text-gray-900 rounded-md p-1" />
                       </div>
                       <div>
                         <div className="flex justify-between">
                           <Typography
-                            variant="h6"
+                            // variant="h6"
                             sx={{
                               // my: { xs: 2 },
-                              fontSize: 20,
+                              fontSize: 18,
                               fontWeight: 500,
                             }}
                             // onClick={() => handleModalOpen(item)}
@@ -89,7 +91,7 @@ const Food = ({ id }) => {
                           </Typography>
                         </div>
                         <Typography
-                          variant="h6"
+                          // variant="h6"
                           sx={{
                             // my: { xs: 2 },
                             fontSize: 12,
@@ -104,15 +106,15 @@ const Food = ({ id }) => {
 
                         <div className="overflow-x-scroll">
                           <div
-                            className={` ${
-                              activeMenu
-                                ? "550px"
-                                : `${
-                                    Object.entries(
-                                      item?.discount_price || item.price
-                                    ).length > 1 && "w-[550px]"
-                                  }`
-                            } `}
+                          // className={` ${
+                          //   activeMenu
+                          //     ? "550px"
+                          //     : `${
+                          //         Object.entries(
+                          //           item?.discount_price || item.price
+                          //         ).length > 1 && "w-[550px]"
+                          //       }`
+                          // } `}
                           >
                             {/* <FormControl>
                           <RadioGroup
@@ -122,7 +124,7 @@ const Food = ({ id }) => {
                           > */}
                             {Boolean(item?.discount_price)
                               ? Object.entries(item?.discount_price).map(
-                                  (key) => (
+                                  (key, index) => (
                                     <Box
                                       sx={{
                                         display: "flex",
@@ -160,55 +162,60 @@ const Food = ({ id }) => {
                                 name="size" value={key[1]}
                                 onChange={(e) => handleChange({ index, key })}
                                 /> */}
-                                      <Box
-                                        sx={{
-                                          display: "flex",
-                                          alignItems: "center",
-                                          gap: 1,
-                                        }}
-                                        variant="h6"
-                                      >
-                                        <Typography
-                                          sx={{
-                                            fontSize: {
-                                              // sm: "12px",
-                                              md: "12px",
-                                            },
-                                            // pl: 2,
-                                          }}
+                                      {index === 0 && (
+                                        <Box
+                                          // sx={{
+                                          //   display: "flex",
+                                          //   alignItems: "center",
+                                          //   gap: 1,
+                                          // }}
+                                          // variant="h6"
+                                          className="absolute flex  items-center bottom-3"
                                         >
-                                          {key[0] ? key[0] : "Price:"} :
-                                        </Typography>
+                                          <Typography
+                                            sx={{
+                                              fontSize: {
+                                                // sm: "12px",
+                                                md: "16px",
+                                              },
+                                              pr: 1,
+                                            }}
+                                          >
+                                            {`from TK `}
+                                            {/* {key[0] ? key[0] : "Price:"} : */}
+                                          </Typography>
 
-                                        <Typography
-                                          sx={{
-                                            fontSize: {
-                                              sm: "12px",
-                                            },
-                                            textDecoration: "line-through",
-                                          }}
-                                        >
-                                          {item.price[key[0]]}
-                                        </Typography>
-                                        <Typography
-                                          sx={{
-                                            fontWeight: 500,
-                                            fontSize: {
-                                              sm: "14px",
-                                            },
-                                            mr: 1,
-                                          }}
-                                        >
-                                          {key[1]} ৳
-                                        </Typography>
-                                      </Box>
+                                          <Typography
+                                            sx={{
+                                              fontSize: {
+                                                sm: "13px",
+                                              },
+                                              textDecoration: "line-through",
+                                            }}
+                                          >
+                                            {item.price[key[0]]}
+                                          </Typography>
+                                          <Typography
+                                            sx={{
+                                              fontWeight: 500,
+                                              fontSize: {
+                                                sm: "18px",
+                                              },
+                                              mr: 1,
+                                            }}
+                                          >
+                                            {key[1]} ৳
+                                          </Typography>
+                                        </Box>
+                                      )}
                                     </Box>
                                   )
                                 )
-                              : Object.entries(item?.price).map((key) => {
-                                  return (
-                                    <Box className="flex items-center">
-                                      {/* <FormControlLabel
+                              : Object.entries(item?.price).map(
+                                  (key, index) => {
+                                    return (
+                                      <Box className="flex items-center">
+                                        {/* <FormControlLabel
                                         sx={{
                                           "&.MuiFormControlLabel-root": {
                                             mr: 0,
@@ -237,36 +244,36 @@ const Food = ({ id }) => {
                                           handleChange({ index, key })
                                         }
                                       /> */}
-                                      <Box className="flex  items-center">
-                                        <Typography
-                                          sx={{
-                                            fontWeight: 500,
-                                            fontSize: {
-                                              sm: "14px",
-                                            },
-                                            mr: { xs: 1 },
-                                          }}
-                                          variant="h6"
-                                        >{`${
-                                          key[0]
-                                            ? key[0].replace("inch", '"')
-                                            : "price"
-                                        }`}</Typography>
+                                        {Boolean(index === 0) && (
+                                          <Box className=" absolute flex  items-center bottom-3">
+                                            <Typography
+                                              sx={{
+                                                fontSize: "16px",
 
-                                        <Typography
-                                          sx={{
-                                            fontWeight: 500,
-                                            fontSize: {
-                                              sm: "20px",
-                                            },
-                                            mr: { xs: 1 },
-                                          }}
-                                          variant="h6"
-                                        >{`${key[1]} ৳`}</Typography>
+                                                pr: 1,
+                                              }}
+                                            >
+                                              {`from TK `}
+                                              {/* {key[0] ? key[0] : "Price:"} : */}
+                                            </Typography>
+
+                                            <Typography
+                                              sx={{
+                                                fontWeight: 500,
+                                                fontSize: {
+                                                  sm: "18px",
+                                                },
+                                                mr: 1,
+                                              }}
+                                            >
+                                              {key[1]} ৳
+                                            </Typography>
+                                          </Box>
+                                        )}
                                       </Box>
-                                    </Box>
-                                  );
-                                })}
+                                    );
+                                  }
+                                )}
                             {/* </RadioGroup>
                         </FormControl> */}
                           </div>
