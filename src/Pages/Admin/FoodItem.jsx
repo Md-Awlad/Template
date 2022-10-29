@@ -24,13 +24,15 @@ const FoodItem = () => {
     setOpenModalTwo(false);
   };
 
-  const { data: categories = [], refetch: categoryRefetch } = useQuery(
-    ["category"],
-    async () => {
-      const res = await myAxios("/category/");
-      return res.data;
-    }
-  );
+  const {
+    data: categories = [],
+    isLoading,
+    isError,
+    refetch: categoryRefetch,
+  } = useQuery(["category"], async () => {
+    const res = await myAxios("/category/");
+    return res.data;
+  });
 
   const { data: foods = [], refetch: foodRefetch } = useQuery(
     ["food"],
@@ -69,7 +71,11 @@ const FoodItem = () => {
         modalOpen={handleModalOpen}
         modalOpenTwo={handleModalOpenTwo}
       />
-      <FoodCategory categories={categories} />
+      <FoodCategory
+        categories={categories}
+        isLoading={isLoading}
+        isError={isError}
+      />
     </Container>
   );
 };

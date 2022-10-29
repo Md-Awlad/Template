@@ -43,8 +43,11 @@ const AddFoodItem = ({
   const { currentColor } = useStateContext();
   const [variants, setVariants] = useState(1);
   const [category, setCategory] = useState();
-  const [extra, setExtra] = useState(0);
+  const [extra, setExtra] = useState([]);
+
   const queryClient = useQueryClient();
+
+  console.log(extra?.map((a) => Array(a?.id)));
 
   const {
     register,
@@ -62,6 +65,7 @@ const AddFoodItem = ({
         price[a] = item.price;
         console.log(price);
       } else {
+        console.log("regular");
         price["regular"] = item.price;
 
         // price[item.price] = item.price;
@@ -79,10 +83,10 @@ const AddFoodItem = ({
       taste: data?.taste,
       packaging: data?.package === null ? 0 : data?.package,
       category: category,
-      extra: extra?.map((a) => a.id),
+      customize_food: extra?.map((a) => a?.id),
     };
 
-    const response = await toast.promise(
+    toast.promise(
       myAxios.post("/food/", payloadForm, {
         headers: {
           "content-type": "multipart/form-data",
@@ -261,7 +265,7 @@ const AddFoodItem = ({
               filterSelectedOptions
               onChange={(_, newValue) => setExtra(newValue)}
               renderInput={(params) => (
-                <TextField {...params} label="Extra Ingredients" fullWidth />
+                <TextField {...params} label="Discount Name" fullWidth />
               )}
             />
           </Grid>

@@ -25,7 +25,7 @@ const style = {
 };
 
 const EditCategory = ({ editId, handleClose }) => {
-  const { currentColor, currentMode } = useStateContext();
+  const { currentColor } = useStateContext();
   const { register, handleSubmit, setValue } = useForm();
   const queryClient = useQueryClient();
 
@@ -65,16 +65,11 @@ const EditCategory = ({ editId, handleClose }) => {
 
   return (
     <Modal open={Boolean(editId)} onClose={handleClose}>
-      <Box sx={{ ...style, width: 600 }}>
+      <Box sx={{ ...style, width: { sm: 700, xs: 400 } }}>
         <h2 className="text-3xl font-bold pb-3 text-center">Edit Category</h2>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="space-y-5">
-            <Grid
-            
-              item
-              xs={12}
-              md={6}
-            >
+            <Grid item xs={12} md={6}>
               <TextField
                 InputLabelProps={{ shrink: true }}
                 id="category"

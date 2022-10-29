@@ -50,7 +50,7 @@ const LoaderSource = (props) => {
         shapeRendering: "auto",
       }}
       width={100}
-      height={100}
+      height="50vh"
       viewBox="0 0 100 100"
       preserveAspectRatio="xMidYMid"
       {...props}

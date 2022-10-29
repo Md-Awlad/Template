@@ -25,8 +25,7 @@ const style = {
 };
 
 const EditFood = ({ editId, handleModalClose }) => {
-  console.log(editId);
-  const { currentColor, currentMode } = useStateContext();
+  const { currentColor } = useStateContext();
   const [variants, setVariants] = useState(1);
   const { register, handleSubmit, setValue } = useForm();
   const queryClient = useQueryClient();
@@ -82,7 +81,14 @@ const EditFood = ({ editId, handleModalClose }) => {
   });
   return (
     <Modal open={Boolean(editId)} onClose={handleModalClose}>
-      <Box sx={{ ...style, width: 600, height: 500, overflowY: "scroll" }}>
+      <Box
+        sx={{
+          ...style,
+          width: { sm: 700, xs: 400 },
+          height: 500,
+          overflowY: "scroll",
+        }}
+      >
         <h2 className="text-3xl font-bold pb-3 text-center">Edit Food Item</h2>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="space-y-5">

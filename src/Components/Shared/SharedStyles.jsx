@@ -29,7 +29,7 @@ export const SuspenseLoader = ({ children }) => {
 export const CustomModal = ({ open, onClose, children }) => {
   const { currentMode } = useStateContext();
   return (
-    <Modal open={Boolean(open)} onClose={onClose}>
+    <Modal open={Boolean(open)} onClose={onClose} sx={{ overflowY: "scroll" }}>
       <Box
         className={currentMode === "Dark" ? "dark" : ""}
         sx={{
@@ -38,13 +38,13 @@ export const CustomModal = ({ open, onClose, children }) => {
           left: "50%",
           transform: "translate(-50%, -50%)",
           minWidth: { xs: "90%", md: 600 },
-          maxHeight: { xs: "80%", md: "auto" },
+          // maxHeight: { xs: "100%", md: "auto" },
           bgcolor: currentMode === "Dark" ? "#33373E" : "background.paper",
-          border: "1px solid #707070",
+          // border: "1px solid #707070",
           borderRadius: "4px",
           boxShadow: 24,
-          padding: 2,
-          overflowY: "auto",
+          // padding: 2,
+          // overflowY: "auto",
         }}
       >
         <Box className="dark:text-neutral">{children}</Box>

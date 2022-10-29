@@ -72,7 +72,9 @@ const MonthlySell = () => {
     setCurrentMonth(event.target.value);
   };
 
-  const { data: months = [] } = useQuery(["month", currentMonth], async () => {
+  const {
+    data: months = [],
+  } = useQuery(["month", currentMonth], async () => {
     const res = await myAxios(`/month_performance/${currentMonth}/`);
     return res.data;
   });

@@ -67,13 +67,15 @@ const Discount = () => {
     }
   );
 
-  const { data: applyDiscount = [], refetch: applyRefetch } = useQuery(
-    ["applyDiscounts"],
-    async () => {
-      const res = await myAxios("/apply_discount/");
-      return res.data;
-    }
-  );
+  const {
+    data: applyDiscount = [],
+    refetch: applyRefetch,
+    isError,
+    isLoading,
+  } = useQuery(["applyDiscounts"], async () => {
+    const res = await myAxios("/apply_discount/");
+    return res.data;
+  });
 
   const { data: categories = [] } = useQuery(["category"], async () => {
     const res = await myAxios("/category/");
@@ -147,6 +149,8 @@ const Discount = () => {
           <DiscountList
             discounts={discounts}
             handleModalClose={handleModalClose}
+            isLoading={isLoading}
+            isError={isError}
           />
         </TabPanel>
         {/* --takeaway-- */}
@@ -156,6 +160,8 @@ const Discount = () => {
             applyRefetch={applyRefetch}
             categories={categories}
             foods={foods}
+            isLoading={isLoading}
+            isError={isError}
           />
         </TabPanel>
       </Box>

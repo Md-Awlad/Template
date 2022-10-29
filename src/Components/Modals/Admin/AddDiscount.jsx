@@ -34,7 +34,7 @@ const style = {
 };
 
 const AddDiscount = ({ handleModalClose, discountRefetch }) => {
-  const { currentColor, currentMode } = useStateContext();
+  const { currentColor } = useStateContext();
   const [status, setStatus] = useState(false);
   const [date, setDate] = useState(moment());
   const [selectTab, setSelectTab] = useState(false);
@@ -80,7 +80,7 @@ const AddDiscount = ({ handleModalClose, discountRefetch }) => {
   };
 
   return (
-    <Box sx={{ ...style, width: 600 }}>
+    <Box sx={{ ...style, width: { sm: 700, xs: 400 } }}>
       <h2 className="text-xl font-bold pb-3">Add Discount</h2>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
         {/* --name-- */}

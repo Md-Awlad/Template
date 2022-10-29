@@ -86,7 +86,7 @@ const Food = ({ category, foodRefetch }) => {
       headerAlign: "center",
       align: "center",
       renderCell: ({ row }) => {
-        console.log(row);
+        // console.log(row);
       },
       // renderCell: ({ value }) => {
       //   return (

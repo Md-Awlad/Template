@@ -36,10 +36,10 @@ export const ContextProvider = ({ children }) => {
     }
   );
 
-  const { data: create_menu = {} } = useQuery(["create_menu"], async () => {
-    const res = await myAxios("/create_menu");
-    return res?.data;
-  });
+  // const { data: create_menu = {} } = useQuery(["create_menu"], async () => {
+  //   const res = await myAxios("/create_menu");
+  //   return res?.data;
+  // });
 
   const setMode = (value) => {
     setCurrentMode(value);
@@ -86,7 +86,6 @@ export const ContextProvider = ({ children }) => {
         expandedMenu,
         currentColor,
         orderId,
-        create_menu,
         customColor,
         setCustomColor,
         setOrderId,
