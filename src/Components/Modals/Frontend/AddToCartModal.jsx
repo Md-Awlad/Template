@@ -221,11 +221,11 @@ function AddToCartModal(props) {
           }}
         >
           <Puller />
-          <Typography sx={{ p: 2, color: "text.secondary" }}>
+          {/* <Typography sx={{ p: 2, color: "text.secondary" }}>
             51 results
-          </Typography>
+          </Typography> */}
 
-          <Box className="p-5">
+          <Box className="p-10">
             <FormControl>
               <RadioGroup
                 aria-labelledby="demo-radio-buttons-group-label"
@@ -476,6 +476,7 @@ function AddToCartModal(props) {
               alignItems: "center",
               position: "relative",
             }}
+            className="p-5"
             // className="flex justify-between items-center relative"
           >
             <Box sx={{ display: "flex", alignItems: "center", gap: 2, mt: 2 }}>
@@ -490,7 +491,7 @@ function AddToCartModal(props) {
                 className="inline text-xl    cursor-pointer"
               />
             </Box>
-            <div>
+            {/* <div>
               <h3 className="lg:text-xl text-xl font-semibold">
                 {item?.price
                   ? Number(item?.price * item?.count) +
@@ -505,7 +506,7 @@ function AddToCartModal(props) {
                   : 0}
                 <span className="md:text-lg font-semibold pl-1">৳</span>
               </h3>
-            </div>
+            </div> */}
           </Box>
         </StyledBox>
         {/* <StyledBox
