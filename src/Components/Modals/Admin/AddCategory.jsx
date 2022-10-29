@@ -56,7 +56,7 @@ const AddCategory = ({ handleModalClose, categoryRefetch }) => {
   };
 
   return (
-    <Box sx={{ ...style }}>
+    <Box sx={{ ...style ,width: { sm: 700, xs: 400 }}}>
       <h2 className="text-xl font-bold pb-3">Add Category</h2>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
         <Grid item xs={12} md={6}>

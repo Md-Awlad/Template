@@ -5,7 +5,9 @@ import "./App.css";
 import ChangePassword from "./Components/ChangePassword";
 import NavLayout from "./Components/Layouts/NavLayout";
 import ThemeLayout from "./Components/Layouts/ThemeLayout";
+import LoaderSource from "./Components/Loaders/LoaderSource";
 import MainLoader from "./Components/Loaders/MainLoader";
+import QueryLoader from "./Components/Loaders/QueryLoader";
 import NotFound from "./Components/NotFound/NotFound";
 import { useStateContext } from "./Contexts/ContextProvider";
 import {
@@ -123,7 +125,7 @@ const App = () => {
     <ThemeLayout>
       <div className={currentMode === "Dark" ? "dark" : ""}>
         <div className="overflow-hidden">
-          {isLoading ? <MainLoader /> : allRoutes}
+          {isLoading ? <QueryLoader /> : allRoutes}
           {/* {allRoutes} */}
         </div>
         <ToastContainer

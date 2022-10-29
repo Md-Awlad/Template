@@ -62,7 +62,7 @@ const ApplyDiscount = ({
   };
 
   return (
-    <Box sx={{ ...style }}>
+    <Box sx={{ ...style, width: { sm: 700, xs: 400 } }}>
       <h2 className="text-xl font-bold pb-3">Apply Discount</h2>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
         {/* --discount-- */}

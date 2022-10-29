@@ -85,7 +85,7 @@ const EditDiscount = ({ editId, handleClose }) => {
 
   return (
     <Modal open={Boolean(editId)} onClose={handleClose}>
-      <Box sx={{ ...style, width: 600 }}>
+      <Box sx={{ ...style, width: { sm: 700, xs: 400 } }}>
         <h2 className="text-3xl font-bold pb-3 text-center">Edit Discount</h2>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
           <div className="grid grid-cols-2 gap-4">

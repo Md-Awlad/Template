@@ -1,16 +1,18 @@
-import { Tooltip, Typography } from "@mui/material";
+import { Alert, AlertTitle, Tooltip, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import React, { useState } from "react";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { useStateContext } from "../../../Contexts/ContextProvider";
+import LoaderSource from "../../Loaders/LoaderSource";
 import QueryLoader from "../../Loaders/QueryLoader";
 import DeleteCancelOrder from "../../Modals/Admin/DeleteCancelOrder";
 
-const CancelOrderList = ({ cancelOrder }) => {
+const CancelOrderList = ({ cancelOrder, isLoading, isError }) => {
   console.log(cancelOrder);
   const { currentColor, currentMode } = useStateContext();
   const [deleteId, setDeleteId] = useState();
+
   const columns = [
     {
       field: "id",
@@ -137,9 +139,16 @@ const CancelOrderList = ({ cancelOrder }) => {
     },
   ];
   return (
-    <div>
+    <>
       <div style={{ height: 510, width: "100%" }}>
-        {<QueryLoader /> && (
+        {isLoading ? (
+          <LoaderSource />
+        ) : isError ? (
+          <Alert severity="error">
+            <AlertTitle>Error</AlertTitle>
+            Could not get Cancel Orders
+          </Alert>
+        ) : (
           <DataGrid
             sx={{
               color: currentMode === "Dark" ? "#fff" : "#000",
@@ -193,7 +202,7 @@ const CancelOrderList = ({ cancelOrder }) => {
           handleClose={() => setDeleteId(null)}
         />
       )}
-    </div>
+    </>
   );
 };
 

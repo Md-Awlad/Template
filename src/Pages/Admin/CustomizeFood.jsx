@@ -19,13 +19,15 @@ const CustomizeFood = () => {
     setOpenModal(false);
   };
 
-  const { data: customizeFood = [], refetch: foodRefetch } = useQuery(
-    ["customizeFood"],
-    async () => {
-      const res = await myAxios("/customize_food/");
-      return res.data;
-    }
-  );
+  const {
+    data: customizeFood = [],
+    refetch: foodRefetch,
+    isLoading,
+    isError,
+  } = useQuery(["customizeFood"], async () => {
+    const res = await myAxios("/customize_food/");
+    return res.data;
+  });
 
   const { data: foods = [] } = useQuery(["food"], async () => {
     const res = await myAxios("/food/");
@@ -58,6 +60,8 @@ const CustomizeFood = () => {
         customizeFood={customizeFood}
         categories={categories}
         foods={foods}
+        isLoading={isLoading}
+        isError={isError}
       />
     </Container>
   );

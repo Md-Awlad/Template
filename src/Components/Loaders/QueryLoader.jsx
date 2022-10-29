@@ -12,7 +12,7 @@ const QueryLoader = () => {
   return (
     <div style={loaderStyle}>
       <img className="w-20" src={gif} alt="Loading..." />
-      <LoaderSource />
+      {/* <LoaderSource /> */}
       {/* <CircularProgress
         sx={{
           color: "#000",

@@ -3,34 +3,37 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { useStateContext } from "../../../Contexts/ContextProvider";
 import { MdModeEdit } from "react-icons/md";
-import { Tooltip } from "@mui/material";
+import { Alert, AlertTitle } from "@mui/material";
 import { Box } from "@mui/system";
 import EditCustomFood from "../../Modals/Admin/EditCustomFood";
 import DeleteCustomFood from "../../Modals/Admin/DeleteCustomFood";
+import QueryLoader from "../../Loaders/QueryLoader";
+import LoaderSource from "../../Loaders/LoaderSource";
 
-const CustomFoods = ({ customizeFood }) => {
+const CustomFoods = ({ customizeFood, isLoading, isError }) => {
   const { currentColor, currentMode } = useStateContext();
   const [editId, setEditId] = useState(null);
   const [deleteId, setDeleteId] = useState(null);
+
   const columns = [
     {
       field: "id",
       headerName: "ID",
-      width: 80,
+      width: 200,
       headerAlign: "center",
       align: "center",
     },
     {
       field: "ingredient_name",
       headerName: "Extra Ingredients",
-      width: 200,
+      width: 350,
       headerAlign: "center",
       align: "center",
     },
     {
       field: "price",
       headerName: "Price",
-      width: 80,
+      width: 250,
       headerAlign: "center",
       align: "center",
     },
@@ -38,7 +41,7 @@ const CustomFoods = ({ customizeFood }) => {
     {
       field: "action",
       headerName: "Action",
-      width: 150,
+      width: 200,
       headerAlign: "center",
       align: "center",
       renderCell: ({ row }) => {
@@ -59,50 +62,60 @@ const CustomFoods = ({ customizeFood }) => {
   ];
 
   return (
-    <div style={{ height: 510, width: "100%" }}>
-      <DataGrid
-        sx={{
-          color: currentMode === "Dark" ? "#fff" : "#000",
-          "& .MuiIconButton-root": {
-            color: "unset !important",
-          },
-          "& .MuiTablePagination-toolbar": {
+    <Box style={{ height: 510, width: "100%" }}>
+      {isLoading ? (
+        <LoaderSource />
+      ) : isError ? (
+        <Alert severity="error">
+          <AlertTitle>Error</AlertTitle>
+          Could not get Customize Food..!
+        </Alert>
+      ) : (
+        <DataGrid
+          sx={{
             color: currentMode === "Dark" ? "#fff" : "#000",
-          },
-          "& .MuiDataGrid-row:hover": {
-            bgcolor: currentMode === "Dark" ? `${currentColor}10` : "",
-          },
-          "& .MuiDataGrid-selectedRowCount": {
-            visibility: "hidden",
-          },
-          "& .MuiDataGrid-cell:focus-within": {
-            outline: "none",
-          },
-          "& .MuiInput-root": {
-            color: currentMode === "Dark" ? "#fff" : "#000",
-          },
-        }}
-        rows={customizeFood}
-        columns={columns}
-        rowsPerPageOptions={[5]}
-        disableSelectionOnClick
-        disableColumnFilter
-        disableColumnSelector
-        disableDensitySelector
-        components={{ Toolbar: GridToolbar }}
-        componentsProps={{
-          toolbar: {
-            showQuickFilter: true,
-            quickFilterProps: { debounceMs: 500 },
-            printOptions: {
-              disableToolbarButton: true,
+            "& .MuiIconButton-root": {
+              color: "unset !important",
             },
-            csvOptions: {
-              disableToolbarButton: true,
+            "& .MuiTablePagination-toolbar": {
+              color: currentMode === "Dark" ? "#fff" : "#000",
             },
-          },
-        }}
-      />
+            "& .MuiDataGrid-row:hover": {
+              bgcolor: currentMode === "Dark" ? `${currentColor}10` : "",
+            },
+            "& .MuiDataGrid-selectedRowCount": {
+              visibility: "hidden",
+            },
+            "& .MuiDataGrid-cell:focus-within": {
+              outline: "none",
+            },
+            "& .MuiInput-root": {
+              color: currentMode === "Dark" ? "#fff" : "#000",
+            },
+          }}
+          rows={customizeFood}
+          isLoading={isLoading}
+          columns={columns}
+          rowsPerPageOptions={[5]}
+          disableSelectionOnClick
+          disableColumnFilter
+          disableColumnSelector
+          disableDensitySelector
+          components={{ Toolbar: GridToolbar }}
+          componentsProps={{
+            toolbar: {
+              showQuickFilter: true,
+              quickFilterProps: { debounceMs: 500 },
+              printOptions: {
+                disableToolbarButton: true,
+              },
+              csvOptions: {
+                disableToolbarButton: true,
+              },
+            },
+          }}
+        />
+      )}
       {Boolean(editId) && (
         <EditCustomFood editId={editId} handleClose={() => setEditId(null)} />
       )}
@@ -112,7 +125,7 @@ const CustomFoods = ({ customizeFood }) => {
           handleClose={() => setDeleteId(null)}
         />
       )}
-    </div>
+    </Box>
   );
 };
 
