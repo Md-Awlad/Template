@@ -34,10 +34,6 @@ const App = () => {
   const routes = [
     {
       path: "",
-      element: <Navigate to="home" />,
-    },
-    {
-      path: "home",
       element: <LandingPage />,
     },
     {

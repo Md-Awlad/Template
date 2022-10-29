@@ -144,10 +144,6 @@ const CartItems = ({ cart, setCart, item }) => {
     () => staticAxios(`/customize_food_category/${item.category}`)
   );
 
-  // const { data: ingredients = [] } = useQuery([
-  //   `/customize_food_category/${item.category}`,
-  // ]);
-
   // --remove item--
   const removeItem = (sId) => {
     const deleted = cart.filter((item) => item.sId !== sId);
@@ -159,8 +155,7 @@ const CartItems = ({ cart, setCart, item }) => {
       sx={{
         // marginX: 1,
         marginY: 1,
-        paddingY: 1,
-        paddingX: 2,
+        padding: 2,
 
         borderRadius: "5px",
         // boxShadow: "0px 0px 5px 0px rgb(0 0 0 / 20%)",
@@ -191,7 +186,7 @@ const CartItems = ({ cart, setCart, item }) => {
 
         <MdClose
           onClick={() => removeItem(item.sId, item.index)}
-          className="absolute md:right-0 -right-2 top-0 text-red-600 text-xl border border-gray-700 rounded-full"
+          className="absolute md:right-0 -right-2 top-0 text-red-600 text-xl border border-gray-700 rounded-full cursor-pointer"
         />
       </Box>
       {/* --countBtn-- */}
@@ -204,15 +199,16 @@ const CartItems = ({ cart, setCart, item }) => {
         }}
         // className="flex justify-between items-center relative"
       >
-        <Box sx={{ display: "flex", alignItems: "center", gap: 2,mt:1 }}>
+        <Box sx={{ display: "flex", alignItems: "center", gap: 2, mt: 2 }}>
           <AiOutlineMinus
             onClick={() => handleDecrement(item)}
-            className="inline lg:w-5 lg:h-5 w-6 h-6 border border-gray-600 md:rounded rounded-sm cursor-pointer"
+            className="inline text-xl  cursor-pointer"
           />
-          <Typography className="text-xl">{item?.count}</Typography>
+          <Typography className="text-2xl">{item?.count}</Typography>
           <GrAdd
             onClick={() => handleIncrement(item)}
-            className="inline lg:w-5 lg:h-5 w-6 h-6 border border-gray-800 md:rounded rounded-sm cursor-pointer"
+            style={{}}
+            className="inline text-xl    cursor-pointer"
           />
         </Box>
         <div>
@@ -231,73 +227,77 @@ const CartItems = ({ cart, setCart, item }) => {
         </div>
       </Box>
       {/* --extra-- */}
-      <Accordion
-        sx={{
-          bgcolor: "unset",
-          "& .MuiAccordionSummary-root": {
-            padding: "0 !important",
-          },
-          "& .MuiAccordionDetails-root": {
-            padding: 0,
-          },
-          boxShadow: "none",
-          "&:before": {
-            display: "none",
-          },
-        }}
-      >
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel1a-content"
-          id="panel1a-header"
+      {Boolean(ingredients?.length > 0) && (
+        <Accordion
+          sx={{
+            bgcolor: "unset",
+            "& .MuiAccordionSummary-root": {
+              padding: "0 !important",
+            },
+            "& .MuiAccordionDetails-root": {
+              padding: 0,
+            },
+            boxShadow: "none",
+            "&:before": {
+              display: "none",
+            },
+          }}
         >
-          <Typography
-            sx={{
-              fontWeight: "semibold",
-              fontSize: { md: 16, xs: 20 },
-            }}
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel1a-content"
+            id="panel1a-header"
           >
-            Extra Ingredients
-          </Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Typography>
-            {ingredients?.map((extraPrice, index) => (
-              <Box
-                key={index}
-                sx={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  flexWrap: { xs: "wrap", gap: 1 },
-                }}
-              >
-                <Box>
-                  <FormControlLabel
-                    sx={{ "& .MuiCheckbox-root": { padding: 1 } }}
-                    control={
-                      <Checkbox
-                        style={{
-                          color: "#F0A70B",
-                        }}
-                      />
-                    }
-                    label={extraPrice.ingredient_name}
-                    name="size"
-                    value={
-                      item?.extra ? Boolean(item?.extra[extraPrice?.id]) : false
-                    }
-                    onChange={() => addExtra(extraPrice.id, extraPrice.price)}
-                  />
+            <Typography
+              sx={{
+                fontWeight: "semibold",
+                fontSize: { md: 16, xs: 20 },
+              }}
+            >
+              Extra Ingredients
+            </Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <Typography>
+              {ingredients?.map((extraPrice, index) => (
+                <Box
+                  key={index}
+                  sx={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    flexWrap: { xs: "wrap", gap: 1 },
+                  }}
+                >
+                  <Box>
+                    <FormControlLabel
+                      sx={{ "& .MuiCheckbox-root": { padding: 1 } }}
+                      control={
+                        <Checkbox
+                          style={{
+                            color: "#F0A70B",
+                          }}
+                        />
+                      }
+                      label={extraPrice.ingredient_name}
+                      name="size"
+                      value={
+                        item?.extra
+                          ? Boolean(item?.extra[extraPrice?.id])
+                          : false
+                      }
+                      onChange={() => addExtra(extraPrice.id, extraPrice.price)}
+                    />
+                  </Box>
+                  <Typography variant="h6" sx={{ fontSize: "14px" }}>
+                    {extraPrice.price} ৳
+                  </Typography>
                 </Box>
-                <Typography variant="h6" sx={{ fontSize: "14px" }}>
-                  {extraPrice.price} ৳
-                </Typography>
-              </Box>
-            ))}
-          </Typography>
-        </AccordionDetails>
-      </Accordion>
+              ))}
+            </Typography>
+          </AccordionDetails>
+        </Accordion>
+      )}
     </Box>
   );
 };

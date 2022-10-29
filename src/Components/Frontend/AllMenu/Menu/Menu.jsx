@@ -1,9 +1,9 @@
-import React from "react";
-import { Box } from "@mui/system";
 import Grid from "@mui/material/Grid";
-import MenuTabs from "../MenuTabs/MenuTabs";
-import Cart from "../../Cart/Cart";
+import { Box } from "@mui/system";
+import React from "react";
 import { useStateContext } from "../../../../Contexts/ContextProvider";
+import Cart from "../../Cart/Cart";
+import MenuTabs from "../MenuTabs/MenuTabs";
 
 const Menu = () => {
   const { activeMenu } = useStateContext();
@@ -18,7 +18,7 @@ const Menu = () => {
         },
       }}
     >
-      <Grid container sx={{ "& .MuiGrid-root": { margin: 0, padding: 3 } }}>
+      <Grid container sx={{ "& .MuiGrid-root": { margin: 0, padding: 1 } }}>
         <Grid item xs={12} md={8}>
           <MenuTabs />
         </Grid>
@@ -26,7 +26,9 @@ const Menu = () => {
           <Grid item xs={12} md={4}>
             <Cart />
           </Grid>
-        ):[]}
+        ) : (
+          []
+        )}
       </Grid>
     </Box>
   );

@@ -3,27 +3,27 @@ import {
   Badge,
   Box,
   Button,
+  Divider,
   Tab,
   Tabs,
   TextField,
   Typography,
 } from "@mui/material";
-import React, { useState } from "react";
-import { MdOutlineAddShoppingCart } from "react-icons/md";
 import { useMutation, useQuery } from "@tanstack/react-query";
+import { matchIsValidTel, MuiTelInput } from "mui-tel-input";
+import React, { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
+import { BiShoppingBag } from "react-icons/bi";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { useStateContext } from "../../../Contexts/ContextProvider";
 import interceptor from "../../../utils/interceptors";
-import CartItems from "./CartItems";
-import { Link, useNavigate, useSearchParams } from "react-router-dom";
-import { matchIsValidTel, MuiTelInput } from "mui-tel-input";
-import { staticAxios } from "../../../utils/myAxios";
-import { AiOutlineArrowLeft } from "react-icons/ai";
 import {
   setGmailInfo,
   setOrderInfo,
   setPhoneInfo,
 } from "../../../utils/localStorages";
+import { staticAxios } from "../../../utils/myAxios";
+import CartItems from "./CartItems";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -162,19 +162,25 @@ const Cart = () => {
           <Typography variant="h6" sx={{ textTransform: "uppercase" }}>
             your food
           </Typography>
+          <Divider className="border-2" />
           <Badge
             className="cursor-pointer"
             badgeContent={cart.length}
             color="primary"
           >
-            <MdOutlineAddShoppingCart
-              className="inline w-8 h-8 cursor-pointer"
+            <BiShoppingBag
+              className="inline text-2xl cursor-pointer"
               color="action"
             />
           </Badge>
         </Box>
       ) : null}
-      <Box sx={{ height: "60vh", overflow: "scroll" }}>
+      <Box
+        sx={{
+          maxHeight: Boolean(cart?.length) ? "60vh" : "10vh",
+          overflow: "scroll",
+        }}
+      >
         {cart?.map((item, index) => (
           <CartItems key={index} item={item} cart={cart} setCart={setCart} />
         ))}
