@@ -926,7 +926,8 @@ function AddToCartModal(props) {
                   />
                 </Box>
                 {/* Add To Cart */}
-                <Button
+                {/* <Button
+
                   variant="contained"
                   sx={{
                     width: "80%",
@@ -934,7 +935,111 @@ function AddToCartModal(props) {
                   className=""
                 >
                   Add to cart
-                </Button>
+                </Button> */}
+                <Box>
+                  {Boolean(item?.discount_price) ? (
+                    <Box>
+                      {Object.values(item?.discount_price).length < 2 ? (
+                        Object.entries(item?.discount_price).map((key, i) => {
+                          console.log(item?.discount_price);
+                          return (
+                            <Button
+                              key={i}
+                              variant="contained"
+                              sx={{
+                                cursor: "pointer",
+                                display:
+                                  Object.values(item?.discount_price).length > 1
+                                    ? "none"
+                                    : "block",
+                              }}
+                              // className={`border bg-yellow-600  inline-block px-2   cursor-pointer rounded-md
+
+                              //   `}
+                              onClick={(e) => {
+                                console.log(e);
+                                handleAddToCartSingleValue(item, key);
+                              }}
+                            >
+                              Add To Cart
+                            </Button>
+                          );
+                        })
+                      ) : (
+                        <Button
+                          variant="contained"
+                          sx={{
+                            cursor: "pointer",
+                            display:
+                              Object.values(item?.discount_price).length > 1
+                                ? "block"
+                                : "none",
+                          }}
+                          // className={`bg-yellow-600   inline-block   cursor-pointer rounded-md ${
+                          //   activeMenu ? "left-[500px]" : "left-[300px]"
+                          // }`}
+                          onClick={(e) => {
+                            console.log(e);
+                            handleAddToCart(item, index);
+                          }}
+                        >
+                          Add To cart
+                        </Button>
+                      )}
+                    </Box>
+                  ) : (
+                    <Box>
+                      {Object.values(item?.price).length < 2 ? (
+                        Object.entries(item?.price).map((key, i) => {
+                          console.log(item?.price);
+                          return (
+                            <Button
+                              key={i}
+                              variant="contained"
+                              sx={{
+                                cursor: "pointer",
+                                display:
+                                  Object.values(item?.price).length > 1
+                                    ? "none"
+                                    : "block",
+                              }}
+                              // className={`  inline-block cursor-pointer rounded-md ${
+                              //   activeMenu ? "left-[500px]" : "left-[300px]"
+                              // }`}
+                              onClick={(e) => {
+                                console.log(e);
+                                handleAddToCartSingleValue(item, key);
+                              }}
+                            >
+                              {" "}
+                              Add To Cart
+                            </Button>
+                          );
+                        })
+                      ) : (
+                        <Button
+                          variant="contained"
+                          sx={{
+                            cursor: "pointer",
+                            display:
+                              Object.values(item?.price).length > 1
+                                ? "block"
+                                : "none",
+                          }}
+                          // className={`border border-[#F0A70B] text-[#F0A70B]  inline-block w-10 h-10 md:w-8 md:h-8 cursor-pointer rounded-md ${
+                          //   activeMenu ? "left-[500px]" : "left-[300px]"
+                          // }`}
+                          onClick={(e) => {
+                            console.log(e);
+                            handleAddToCart(item, index);
+                          }}
+                        >
+                          Add To Cart{" "}
+                        </Button>
+                      )}
+                    </Box>
+                  )}
+                </Box>
               </Box>
             </Stack>
           </Box>
