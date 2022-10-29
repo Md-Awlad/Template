@@ -1,6 +1,9 @@
+import { Container } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
+import LoaderSource from "../../Components/Loaders/LoaderSource";
+import PageTitle from "../../Components/PageTitle/PageTitle";
 import { useStateContext } from "../../Contexts/ContextProvider";
 import myAxios from "../../utils/myAxios";
 
@@ -107,63 +110,70 @@ const SurveyList = () => {
     },
   ];
 
-  const { data: surveyList = [], refetch: orderRefetch } = useQuery(
-    ["surveyList"],
-    async () => {
-      const res = await myAxios("/survey/");
-      return res.data;
-    }
-  );
+  const {
+    data: surveyList = [],
+    refetch: orderRefetch,
+    isLoading,
+  } = useQuery(["surveyList"], async () => {
+    const res = await myAxios("/survey/");
+    return res.data;
+  });
 
   return (
-    <div>
+    <Container>
+      <PageTitle headingText="Survey" pageName="Survey" />
+
       <div style={{ height: 510, width: "100%" }}>
-        <DataGrid
-          sx={{
-            color: currentMode === "Dark" ? "#fff" : "#000",
-            "& .MuiIconButton-root": {
-              color: "unset !important",
-            },
-            "& .MuiTablePagination-toolbar": {
+        {isLoading ? (
+          <LoaderSource />
+        ) : (
+          <DataGrid
+            sx={{
               color: currentMode === "Dark" ? "#fff" : "#000",
-            },
-            "& .MuiDataGrid-row:hover": {
-              bgcolor: currentMode === "Dark" ? `${currentColor}10` : "",
-            },
-            "& .MuiDataGrid-selectedRowCount": {
-              visibility: "hidden",
-            },
-            "& .MuiDataGrid-cell:focus-within": {
-              outline: "none",
-            },
-            "& .MuiInput-root": {
-              color: currentMode === "Dark" ? "#fff" : "#000",
-            },
-          }}
-          rows={surveyList}
-          columns={columns}
-          orderRefetch={orderRefetch}
-          rowsPerPageOptions={[5]}
-          disableSelectionOnClick
-          disableColumnFilter
-          disableColumnSelector
-          disableDensitySelector
-          components={{ Toolbar: GridToolbar }}
-          componentsProps={{
-            toolbar: {
-              showQuickFilter: true,
-              quickFilterProps: { debounceMs: 500 },
-              printOptions: {
-                disableToolbarButton: true,
+              "& .MuiIconButton-root": {
+                color: "unset !important",
               },
-              csvOptions: {
-                disableToolbarButton: true,
+              "& .MuiTablePagination-toolbar": {
+                color: currentMode === "Dark" ? "#fff" : "#000",
               },
-            },
-          }}
-        />
+              "& .MuiDataGrid-row:hover": {
+                bgcolor: currentMode === "Dark" ? `${currentColor}10` : "",
+              },
+              "& .MuiDataGrid-selectedRowCount": {
+                visibility: "hidden",
+              },
+              "& .MuiDataGrid-cell:focus-within": {
+                outline: "none",
+              },
+              "& .MuiInput-root": {
+                color: currentMode === "Dark" ? "#fff" : "#000",
+              },
+            }}
+            rows={surveyList}
+            columns={columns}
+            orderRefetch={orderRefetch}
+            rowsPerPageOptions={[5]}
+            disableSelectionOnClick
+            disableColumnFilter
+            disableColumnSelector
+            disableDensitySelector
+            components={{ Toolbar: GridToolbar }}
+            componentsProps={{
+              toolbar: {
+                showQuickFilter: true,
+                quickFilterProps: { debounceMs: 500 },
+                printOptions: {
+                  disableToolbarButton: true,
+                },
+                csvOptions: {
+                  disableToolbarButton: true,
+                },
+              },
+            }}
+          />
+        )}
       </div>
-    </div>
+    </Container>
   );
 };
 

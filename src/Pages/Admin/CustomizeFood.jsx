@@ -3,9 +3,6 @@ import { useState } from "react";
 import PageTitle from "../../Components/PageTitle/PageTitle";
 import { useQuery } from "@tanstack/react-query";
 import myAxios from "../../utils/myAxios";
-import FoodCategory from "../../Components/Admin/FoodItem/FoodCategory";
-import AddFoodItem from "../../Components/Modals/Admin/AddFoodItem";
-import AddCategory from "../../Components/Modals/Admin/AddCategory";
 import AddCustomFood from "../../Components/Modals/Admin/AddCustomFood";
 import CustomFoods from "../../Components/Admin/CustomFood/CustomFoods";
 
@@ -19,13 +16,15 @@ const CustomizeFood = () => {
     setOpenModal(false);
   };
 
-  const { data: customizeFood = [], refetch: foodRefetch } = useQuery(
-    ["customizeFood"],
-    async () => {
-      const res = await myAxios("/customize_food/");
-      return res.data;
-    }
-  );
+  const {
+    data: customizeFood = [],
+    refetch: foodRefetch,
+    isLoading,
+    isError,
+  } = useQuery(["customizeFood"], async () => {
+    const res = await myAxios("/customize_food/");
+    return res.data;
+  });
 
   const { data: foods = [] } = useQuery(["food"], async () => {
     const res = await myAxios("/food/");
@@ -58,6 +57,8 @@ const CustomizeFood = () => {
         customizeFood={customizeFood}
         categories={categories}
         foods={foods}
+        isLoading={isLoading}
+        isError={isError}
       />
     </Container>
   );

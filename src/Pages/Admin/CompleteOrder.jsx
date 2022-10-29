@@ -6,7 +6,11 @@ import PageTitle from "../../Components/PageTitle/PageTitle";
 import myAxios from "../../utils/myAxios";
 
 const CompleteOrder = () => {
-  const { data: completes = [] } = useQuery(["complete"], async () => {
+  const {
+    data: completes = [],
+    isError,
+    isLoading,
+  } = useQuery(["complete"], async () => {
     const res = await myAxios("/complete-orders/");
     return res.data;
   });
@@ -14,7 +18,11 @@ const CompleteOrder = () => {
   return (
     <Container>
       <PageTitle headingText="Complete Order" pageName="Completed" />
-      <CompleteOrderList completes={completes} />
+      <CompleteOrderList
+        completes={completes}
+        isLoading={isLoading}
+        isError={isError}
+      />
     </Container>
   );
 };

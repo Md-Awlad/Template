@@ -6,12 +6,14 @@ import { MdModeEdit } from "react-icons/md";
 import { Box, Tooltip, Typography } from "@mui/material";
 import EditApplyDiscount from "../../Modals/Admin/EditApplyDiscount";
 import DeleteApplyDiscount from "../../Modals/Admin/DeleteApplyDiscount";
+import LoaderSource from "../../Loaders/LoaderSource";
 
 const ApplyDiscountList = ({
   applyDiscount,
   applyRefetch,
   categories,
   foods,
+  isLoading,
 }) => {
   const { currentColor, currentMode } = useStateContext();
   const [editId, setEditId] = useState(null);
@@ -21,31 +23,31 @@ const ApplyDiscountList = ({
     {
       field: "id",
       headerName: "ID",
-      width: 130,
-      headerAlign: "center",
-      align: "center",
-    },
-    {
-      field: "category",
-      headerName: "Category",
       width: 200,
       headerAlign: "center",
       align: "center",
-      renderCell: ({ row }) => {
-        return (
-          <Box sx={{ height: 60, overflow: "scroll" }}>
-            {row?.category?.map((data) => {
-              console.log(data);
-              return <Typography key={data.id}>{data.name}</Typography>;
-            })}
-          </Box>
-        );
-      },
     },
+    // {
+    //   field: "category",
+    //   headerName: "Category",
+    //   width: 200,
+    //   headerAlign: "center",
+    //   align: "center",
+    //   renderCell: ({ row }) => {
+    //     return (
+    //       <Box sx={{ height: 60, overflow: "scroll" }}>
+    //         {row?.category?.map((data) => {
+    //           console.log(data);
+    //           return <Typography key={data.id}>{data.name}</Typography>;
+    //         })}
+    //       </Box>
+    //     );
+    //   },
+    // },
     {
       field: "food",
       headerName: "Food",
-      width: 230,
+      width: 350,
       headerAlign: "center",
       align: "center",
       renderCell: ({ row }) => {
@@ -68,7 +70,7 @@ const ApplyDiscountList = ({
     {
       field: "is_active",
       headerName: "Active",
-      width: 130,
+      width: 200,
       headerAlign: "center",
       align: "center",
       renderCell: (params) => {
@@ -88,7 +90,7 @@ const ApplyDiscountList = ({
     {
       field: "action",
       headerName: "Action",
-      width: 130,
+      width: 200,
       headerAlign: "center",
       align: "center",
       renderCell: ({ row }) => {
@@ -114,52 +116,56 @@ const ApplyDiscountList = ({
 
   return (
     <div style={{ height: 510, width: "100%" }}>
-      <DataGrid
-        sx={{
-          color: currentMode === "Dark" ? "#fff" : "#000",
-          "& .MuiIconButton-root": {
-            color: "unset !important",
-          },
-          "& .MuiTablePagination-toolbar": {
+      {isLoading ? (
+        <LoaderSource />
+      ) : (
+        <DataGrid
+          sx={{
             color: currentMode === "Dark" ? "#fff" : "#000",
-          },
-          "& .MuiDataGrid-row:hover": {
-            bgcolor: currentMode === "Dark" ? `${currentColor}10` : "",
-          },
-          "& .MuiDataGrid-selectedRowCount": {
-            visibility: "hidden",
-          },
-          "& .MuiDataGrid-cell:focus-within": {
-            outline: "none",
-          },
-          "& .MuiInput-root": {
-            color: currentMode === "Dark" ? "#fff" : "#000",
-          },
-        }}
-        rows={applyDiscount}
-        applyRefetch={applyRefetch}
-        columns={columns}
-        rowsPerPageOptions={[5]}
-        disableSelectionOnClick
-        disableColumnFilter
-        disableColumnSelector
-        disableDensitySelector
-        components={{ Toolbar: GridToolbar }}
-        componentsProps={{
-          toolbar: {
-            showQuickFilter: true,
-            quickFilterProps: { debounceMs: 500 },
-            printOptions: {
-              disableToolbarButton: true,
+            "& .MuiIconButton-root": {
+              color: "unset !important",
             },
-            csvOptions: {
-              disableToolbarButton: true,
+            "& .MuiTablePagination-toolbar": {
+              color: currentMode === "Dark" ? "#fff" : "#000",
             },
-          },
-        }}
-        // checkboxSelection
-        // disableSelectionOnClick
-      />
+            "& .MuiDataGrid-row:hover": {
+              bgcolor: currentMode === "Dark" ? `${currentColor}10` : "",
+            },
+            "& .MuiDataGrid-selectedRowCount": {
+              visibility: "hidden",
+            },
+            "& .MuiDataGrid-cell:focus-within": {
+              outline: "none",
+            },
+            "& .MuiInput-root": {
+              color: currentMode === "Dark" ? "#fff" : "#000",
+            },
+          }}
+          rows={applyDiscount}
+          applyRefetch={applyRefetch}
+          columns={columns}
+          rowsPerPageOptions={[5]}
+          disableSelectionOnClick
+          disableColumnFilter
+          disableColumnSelector
+          disableDensitySelector
+          components={{ Toolbar: GridToolbar }}
+          componentsProps={{
+            toolbar: {
+              showQuickFilter: true,
+              quickFilterProps: { debounceMs: 500 },
+              printOptions: {
+                disableToolbarButton: true,
+              },
+              csvOptions: {
+                disableToolbarButton: true,
+              },
+            },
+          }}
+          // checkboxSelection
+          // disableSelectionOnClick
+        />
+      )}
       {Boolean(editId) && (
         <EditApplyDiscount
           editId={editId}

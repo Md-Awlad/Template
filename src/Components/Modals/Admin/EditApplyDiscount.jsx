@@ -34,8 +34,7 @@ const style = {
 };
 
 const EditApplyDiscount = ({ editId, handleClose, categories, foods }) => {
-  console.log(categories?.map((a) => a.name));
-  const { currentColor, currentMode } = useStateContext();
+  const { currentColor } = useStateContext();
   const [date, setDate] = useState(moment());
   const [status, setStatus] = useState("");
   const [food, setFood] = useState("");
@@ -89,19 +88,14 @@ const EditApplyDiscount = ({ editId, handleClose, categories, foods }) => {
 
   return (
     <Modal open={Boolean(editId)} onClose={handleClose}>
-      <Box sx={{ ...style, width: 600 }}>
+      <Box sx={{ ...style, width: { sm: 700, xs: 400 } }}>
         <h2 className="text-3xl font-bold pb-3 text-center">
           Edit Apply Discount
         </h2>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
           {/* <div className="grid grid-cols-2 gap-4"> */}
           {/* --category-- */}
-          <Grid
-          
-            item
-            xs={12}
-            md={6}
-          >
+          <Grid item xs={12} md={6}>
             <Autocomplete
               multiple
               disablePortal
@@ -116,12 +110,7 @@ const EditApplyDiscount = ({ editId, handleClose, categories, foods }) => {
             />
           </Grid>
           {/* --food-- */}
-          <Grid
-        
-            item
-            xs={12}
-            md={6}
-          >
+          <Grid item xs={12} md={6}>
             <Autocomplete
               multiple
               disablePortal

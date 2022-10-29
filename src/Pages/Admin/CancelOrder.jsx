@@ -6,15 +6,22 @@ import PageTitle from "../../Components/PageTitle/PageTitle";
 import myAxios from "../../utils/myAxios";
 
 const CancelOrder = () => {
-  const { data: cancelOrder = [] } = useQuery(["cancel"], async () => {
+  const {
+    data: cancelOrder = [],
+    isLoading,
+    isError,
+  } = useQuery(["cancel"], async () => {
     const res = await myAxios("/cancel-orders/");
     return res.data;
   });
-  console.log(cancelOrder);
   return (
     <Container>
       <PageTitle headingText="Cancel Order" pageName="Cancel" />
-      <CancelOrderList cancelOrder={cancelOrder} />
+      <CancelOrderList
+        cancelOrder={cancelOrder}
+        isLoading={isLoading}
+        isError={isError}
+      />
     </Container>
   );
 };

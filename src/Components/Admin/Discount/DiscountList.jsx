@@ -8,11 +8,13 @@ import DeleteDiscount from "../../Modals/Admin/DeleteDiscount";
 import EditDiscount from "../../Modals/Admin/EditDiscount";
 import { Tooltip, Typography } from "@mui/material";
 import { Box } from "@mui/system";
+import LoaderSource from "../../Loaders/LoaderSource";
 
-const DiscountList = ({ discounts }) => {
+const DiscountList = ({ discounts, isLoading }) => {
   const { currentColor, currentMode } = useStateContext();
   const [editId, setEditId] = useState(null);
   const [deleteId, setDeleteId] = useState(null);
+
   const columns = [
     {
       field: "id",
@@ -120,51 +122,55 @@ const DiscountList = ({ discounts }) => {
 
   return (
     <div style={{ height: 510, width: "100%" }}>
-      <DataGrid
-        sx={{
-          color: currentMode === "Dark" ? "#fff" : "#000",
-          "& .MuiIconButton-root": {
-            color: "unset !important",
-          },
-          "& .MuiTablePagination-toolbar": {
+      {isLoading ? (
+        <LoaderSource />
+      ) : (
+        <DataGrid
+          sx={{
             color: currentMode === "Dark" ? "#fff" : "#000",
-          },
-          "& .MuiDataGrid-row:hover": {
-            bgcolor: currentMode === "Dark" ? `${currentColor}10` : "",
-          },
-          "& .MuiDataGrid-selectedRowCount": {
-            visibility: "hidden",
-          },
-          "& .MuiDataGrid-cell:focus-within": {
-            outline: "none",
-          },
-          "& .MuiInput-root": {
-            color: currentMode === "Dark" ? "#fff" : "#000",
-          },
-        }}
-        rows={discounts}
-        columns={columns}
-        rowsPerPageOptions={[5]}
-        disableSelectionOnClick
-        disableColumnFilter
-        disableColumnSelector
-        disableDensitySelector
-        components={{ Toolbar: GridToolbar }}
-        componentsProps={{
-          toolbar: {
-            showQuickFilter: true,
-            quickFilterProps: { debounceMs: 500 },
-            printOptions: {
-              disableToolbarButton: true,
+            "& .MuiIconButton-root": {
+              color: "unset !important",
             },
-            csvOptions: {
-              disableToolbarButton: true,
+            "& .MuiTablePagination-toolbar": {
+              color: currentMode === "Dark" ? "#fff" : "#000",
             },
-          },
-        }}
-        // checkboxSelection
-        // disableSelectionOnClick
-      />
+            "& .MuiDataGrid-row:hover": {
+              bgcolor: currentMode === "Dark" ? `${currentColor}10` : "",
+            },
+            "& .MuiDataGrid-selectedRowCount": {
+              visibility: "hidden",
+            },
+            "& .MuiDataGrid-cell:focus-within": {
+              outline: "none",
+            },
+            "& .MuiInput-root": {
+              color: currentMode === "Dark" ? "#fff" : "#000",
+            },
+          }}
+          rows={discounts}
+          columns={columns}
+          rowsPerPageOptions={[5]}
+          disableSelectionOnClick
+          disableColumnFilter
+          disableColumnSelector
+          disableDensitySelector
+          components={{ Toolbar: GridToolbar }}
+          componentsProps={{
+            toolbar: {
+              showQuickFilter: true,
+              quickFilterProps: { debounceMs: 500 },
+              printOptions: {
+                disableToolbarButton: true,
+              },
+              csvOptions: {
+                disableToolbarButton: true,
+              },
+            },
+          }}
+          // checkboxSelection
+          // disableSelectionOnClick
+        />
+      )}
       {Boolean(editId) && (
         <EditDiscount editId={editId} handleClose={() => setEditId(null)} />
       )}
