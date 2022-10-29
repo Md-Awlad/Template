@@ -18,7 +18,7 @@ import {
   RadioGroup,
   Stack,
   SwipeableDrawer,
-  Typography,
+  Typography
 } from "@mui/material";
 import Box from "@mui/material/Box";
 import { grey } from "@mui/material/colors";
@@ -26,9 +26,11 @@ import { styled } from "@mui/material/styles";
 import { useQuery } from "@tanstack/react-query";
 import PropTypes from "prop-types";
 import * as React from "react";
+import { useState } from "react";
 import { AiOutlineMinus } from "react-icons/ai";
 import { FaStar } from "react-icons/fa";
 import { GrAdd } from "react-icons/gr";
+import { useSearchParams } from "react-router-dom";
 import { useStateContext } from "../../../Contexts/ContextProvider";
 import { staticAxios } from "../../../utils/myAxios";
 import { CustomModal } from "../../Shared/SharedStyles";
@@ -88,7 +90,7 @@ function AddToCartModal(props) {
   const { window, open, setOpen, index, item } = props;
   // const [expanded, setExpanded] = React.useState("panel1");
   const [size, setSize] = React.useState({});
-
+  console.log(Boolean(Object.entries(size).length));
   const { activeMenu, setCart, cart, setIngredientId } = useStateContext();
   // This is used only for the example
   const container =
@@ -96,13 +98,16 @@ function AddToCartModal(props) {
   // const handleChange2 = (panel) => (event, newExpanded) => {
   //   setExpanded(newExpanded ? panel : false);
   // };
+
+  const [searchParams] = useSearchParams();
+
   const handleChange = (checkbox) => {
     setSize({
       ...size,
       [checkbox.index]: checkbox.key,
     });
   };
-
+  console.log(Boolean(Object.entries(size).length));
   const handleAddToCartSingleValue = (param, key) => {
     const item = { ...param, extra: {} };
     setIngredientId(item.category);
@@ -188,6 +193,14 @@ function AddToCartModal(props) {
       );
     }
   };
+ /**
+  * If the item is in the cart, add the extra to the item. If the extra is already in the item, remove
+  * it.
+  */
+
+  const [orderType, setOrderType] = useState(
+    searchParams.get("table") ? "dine_in" : "takeaway"
+  );
   const addExtra = (extraId, price = 0) => {
     setCart(
       cart.map((e) => {
@@ -218,6 +231,35 @@ function AddToCartModal(props) {
       })
     );
   };
+  const handleType = (e) => {
+    setOrderType(
+      e.target.innerText.toLowerCase() === "dine in"
+        ? "dine_in"
+        : e.target.innerText.toLowerCase()
+    );
+  };
+  const { data: cartCalculation } = useQuery(
+    ["viewcart", cart],
+    async () => {
+      const { data } = await staticAxios.post("/viewcart/", {
+        order_type: orderType,
+        order_items: cart?.map((item) => {
+          return {
+            id: item.id,
+            quantity: item.count,
+            price: item.size,
+            // extra: item?.extra ? Object.keys(item?.extra) : [],
+            extra: item.extra ? Object.keys(item?.extra) : [],
+          };
+        }),
+      });
+      return data;
+    },
+    {
+      enabled: Boolean(cart.length),
+    }
+  );
+
   if (Boolean(Object.entries(item?.discount_price || item?.price).length < 2)) {
     return (
       <Root>
@@ -899,6 +941,8 @@ function AddToCartModal(props) {
                   </Typography>
                 </Box>
               )}
+
+              {/* Add to Cart Section */}
               <Box
                 className="my-5"
                 sx={{
@@ -908,6 +952,7 @@ function AddToCartModal(props) {
                 }}
               >
                 {/* increment and decrement */}
+                {/* {Boolean(Object.entries(size).length) && ( */}
                 <Box
                   sx={{
                     display: "flex",
@@ -915,30 +960,46 @@ function AddToCartModal(props) {
                     gap: 2,
                   }}
                 >
-                  <AiOutlineMinus
+                  <Button
+                    disabled={!Boolean(Object.entries(size).length)}
+                    sx={{
+                      "&.MuiButton-root": {
+                        minWidth: 0,
+                        minHight: 0,
+                        padding: 0,
+                      },
+                    }}
                     onClick={() => handleDecrement(item)}
-                    className="inline text-xl  cursor-pointer"
-                  />
-                  <Typography className="text-2xl">{item?.count}</Typography>
-                  <GrAdd
+                  >
+                    <AiOutlineMinus className="inline text-xl  cursor-pointer" />
+                  </Button>
+                  <Typography className="text-xl text-gray-600">
+                    {item?.count}
+                  </Typography>
+                  <Button
+                    disabled={!Boolean(Object.entries(size).length)}
+                    sx={{
+                      "&.MuiButton-root": {
+                        minWidth: 0,
+                        minHight: 0,
+                        padding: 0,
+                      },
+                    }}
                     onClick={() => handleIncrement(item)}
-                    className="inline text-xl    cursor-pointer"
-                  />
+                  >
+                    <GrAdd className="inline text-xl    cursor-pointer" />
+                  </Button>
                 </Box>
-                {/* Add To Cart */}
-                {/* <Button
+                {/* )} */}
 
-                  variant="contained"
+                {/* Add To Cart Button */}
+                <Box
                   sx={{
                     width: "80%",
                   }}
-                  className=""
                 >
-                  Add to cart
-                </Button> */}
-                <Box>
                   {Boolean(item?.discount_price) ? (
-                    <Box>
+                    <Box sx={{ width: 1 }}>
                       {Object.values(item?.discount_price).length < 2 ? (
                         Object.entries(item?.discount_price).map((key, i) => {
                           console.log(item?.discount_price);
@@ -947,6 +1008,7 @@ function AddToCartModal(props) {
                               key={i}
                               variant="contained"
                               sx={{
+                                width: 1,
                                 cursor: "pointer",
                                 display:
                                   Object.values(item?.discount_price).length > 1
@@ -969,6 +1031,8 @@ function AddToCartModal(props) {
                         <Button
                           variant="contained"
                           sx={{
+                            width: 1,
+
                             cursor: "pointer",
                             display:
                               Object.values(item?.discount_price).length > 1
@@ -988,7 +1052,7 @@ function AddToCartModal(props) {
                       )}
                     </Box>
                   ) : (
-                    <Box>
+                    <Box sx={{ width: 1 }}>
                       {Object.values(item?.price).length < 2 ? (
                         Object.entries(item?.price).map((key, i) => {
                           console.log(item?.price);
@@ -997,6 +1061,7 @@ function AddToCartModal(props) {
                               key={i}
                               variant="contained"
                               sx={{
+                                width: 1,
                                 cursor: "pointer",
                                 display:
                                   Object.values(item?.price).length > 1
@@ -1020,6 +1085,8 @@ function AddToCartModal(props) {
                         <Button
                           variant="contained"
                           sx={{
+                            width: 1,
+
                             cursor: "pointer",
                             display:
                               Object.values(item?.price).length > 1
@@ -1041,50 +1108,7 @@ function AddToCartModal(props) {
                   )}
                 </Box>
               </Box>
-<<<<<<< HEAD
-            </Box>
-          </Box>
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              position: "relative",
-            }}
-            className="p-5"
-            // className="flex justify-between items-center relative"
-          >
-            <Box sx={{ display: "flex", alignItems: "center", gap: 2, mt: 2 }}>
-              <AiOutlineMinus
-                onClick={() => handleDecrement(item)}
-                className="inline text-xl  cursor-pointer"
-              />
-              <Typography className="text-2xl">{item?.count}</Typography>
-              <GrAdd
-                onClick={() => handleIncrement(item)}
-                style={{}}
-                className="inline text-xl    cursor-pointer"
-              />
-            </Box>
-            {/* <div>
-              <h3 className="lg:text-xl text-xl font-semibold">
-                {item?.price
-                  ? Number(item?.price * item?.count) +
-                    Number(
-                      item?.extra
-                        ? Object.values(item?.extra)?.reduce(
-                            (a, b) => a + b,
-                            0
-                          ) * item?.count
-                        : 0
-                    )
-                  : 0}
-                <span className="md:text-lg font-semibold pl-1">৳</span>
-              </h3>
-            </div> */}
-=======
             </Stack>
->>>>>>> 6a6dd35699c335c9bf908c4a16ed991c06be0164
           </Box>
         </Box>
       </CustomModal>
