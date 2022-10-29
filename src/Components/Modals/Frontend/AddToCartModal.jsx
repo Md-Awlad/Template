@@ -1,6 +1,7 @@
 import { Global } from "@emotion/react";
 // import ArrowForwardIosSharpIcon from "@mui/icons-material/ArrowForwardIos";
 import {
+  Button,
   FormControl,
   FormControlLabel,
   Radio,
@@ -21,7 +22,6 @@ import * as React from "react";
 import { AiOutlineMinus } from "react-icons/ai";
 import { FaStar } from "react-icons/fa";
 import { GrAdd } from "react-icons/gr";
-import { IoMdAdd } from "react-icons/io";
 import { useStateContext } from "../../../Contexts/ContextProvider";
 import { staticAxios } from "../../../utils/myAxios";
 
@@ -221,9 +221,9 @@ function AddToCartModal(props) {
           }}
         >
           <Puller />
-          <Typography sx={{ p: 2, color: "text.secondary" }}>
+          {/* <Typography sx={{ p: 2, color: "text.secondary" }}>
             51 results
-          </Typography>
+          </Typography> */}
 
           <Box className="p-5">
             <FormControl>
@@ -382,42 +382,48 @@ function AddToCartModal(props) {
                         Object.entries(item?.discount_price).map((key, i) => {
                           console.log(item?.discount_price);
                           return (
-                            <IoMdAdd
+                            <Button
                               key={i}
-                              style={{
+                              variant="contained"
+                              sx={{
                                 cursor: "pointer",
                                 display:
                                   Object.values(item?.discount_price).length > 1
                                     ? "none"
                                     : "block",
                               }}
-                              className={`border border-[#F0A70B] text-[#F0A70B]  inline-block  w-10 h-10 md:w-8 md:h-8 cursor-pointer rounded-md 
-                               
-                                `}
+                              // className={`border bg-yellow-600  inline-block px-2   cursor-pointer rounded-md
+
+                              //   `}
                               onClick={(e) => {
                                 console.log(e);
                                 handleAddToCartSingleValue(item, key);
                               }}
-                            />
+                            >
+                              Add To Cart
+                            </Button>
                           );
                         })
                       ) : (
-                        <IoMdAdd
-                          style={{
+                        <Button
+                          variant="contained"
+                          sx={{
                             cursor: "pointer",
                             display:
                               Object.values(item?.discount_price).length > 1
                                 ? "block"
                                 : "none",
                           }}
-                          className={`border border-[#F0A70B] text-[#F0A70B]  inline-block w-10 h-10 md:w-8 md:h-8 cursor-pointer rounded-md ${
-                            activeMenu ? "left-[500px]" : "left-[300px]"
-                          }`}
+                          // className={`bg-yellow-600   inline-block   cursor-pointer rounded-md ${
+                          //   activeMenu ? "left-[500px]" : "left-[300px]"
+                          // }`}
                           onClick={(e) => {
                             console.log(e);
                             handleAddToCart(item, index);
                           }}
-                        />
+                        >
+                          Add To cart
+                        </Button>
                       )}
                     </Box>
                   ) : (
@@ -426,86 +432,95 @@ function AddToCartModal(props) {
                         Object.entries(item?.price).map((key, i) => {
                           console.log(item?.price);
                           return (
-                            <IoMdAdd
+                            <Button
                               key={i}
-                              style={{
+                              variant="contained"
+                              sx={{
                                 cursor: "pointer",
                                 display:
                                   Object.values(item?.price).length > 1
                                     ? "none"
                                     : "block",
                               }}
-                              className={`border border-[#F0A70B] text-[#F0A70B]  inline-block w-10 h-10 md:w-8 md:h-8 cursor-pointer rounded-md ${
-                                activeMenu ? "left-[500px]" : "left-[300px]"
-                              }`}
+                              // className={`  inline-block cursor-pointer rounded-md ${
+                              //   activeMenu ? "left-[500px]" : "left-[300px]"
+                              // }`}
                               onClick={(e) => {
                                 console.log(e);
                                 handleAddToCartSingleValue(item, key);
                               }}
-                            />
+                            >
+                              {" "}
+                              Add To Cart
+                            </Button>
                           );
                         })
                       ) : (
-                        <IoMdAdd
-                          style={{
+                        <Button
+                          variant="contained"
+                          sx={{
                             cursor: "pointer",
                             display:
                               Object.values(item?.price).length > 1
                                 ? "block"
                                 : "none",
                           }}
-                          className={`border border-[#F0A70B] text-[#F0A70B]  inline-block w-10 h-10 md:w-8 md:h-8 cursor-pointer rounded-md ${
-                            activeMenu ? "left-[500px]" : "left-[300px]"
-                          }`}
+                          // className={`border border-[#F0A70B] text-[#F0A70B]  inline-block w-10 h-10 md:w-8 md:h-8 cursor-pointer rounded-md ${
+                          //   activeMenu ? "left-[500px]" : "left-[300px]"
+                          // }`}
                           onClick={(e) => {
                             console.log(e);
                             handleAddToCart(item, index);
                           }}
-                        />
+                        >
+                          Add To Cart{" "}
+                        </Button>
                       )}
                     </Box>
                   )}
                 </Box>
               </Box>
             </Box>
-          </Box>
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              position: "relative",
-            }}
-            // className="flex justify-between items-center relative"
-          >
-            <Box sx={{ display: "flex", alignItems: "center", gap: 2, mt: 2 }}>
-              <AiOutlineMinus
-                onClick={() => handleDecrement(item)}
-                className="inline text-xl  cursor-pointer"
-              />
-              <Typography className="text-2xl">{item?.count}</Typography>
-              <GrAdd
-                onClick={() => handleIncrement(item)}
-                style={{}}
-                className="inline text-xl    cursor-pointer"
-              />
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                position: "relative",
+              }}
+              // className="flex justify-between items-center relative"
+            >
+              <Box
+                sx={{ display: "flex", alignItems: "center", gap: 2, mt: 2 }}
+              >
+                <AiOutlineMinus
+                  onClick={() => handleDecrement(item)}
+                  className="inline text-xl  cursor-pointer"
+                />
+                <Typography className="text-2xl">{item?.count}</Typography>
+                <GrAdd
+                  onClick={() => handleIncrement(item)}
+                  style={{}}
+                  className="inline text-xl    cursor-pointer"
+                />
+              </Box>
+              <div>
+                <h3 className="lg:text-xl text-xl font-semibold">
+                  {item?.price
+                    ? Number(item?.price * item?.count) +
+                      Number(
+                        item?.extra
+                          ? Object.values(item?.extra)?.reduce(
+                              (a, b) => a + b,
+                              0
+                            ) * item?.count
+                          : 0
+                      )
+                    : 0}
+                  <span className="md:text-lg font-semibold pl-1">৳</span>
+                </h3>
+              </div>
             </Box>
-            <div>
-              <h3 className="lg:text-xl text-xl font-semibold">
-                {item?.price
-                  ? Number(item?.price * item?.count) +
-                    Number(
-                      item?.extra
-                        ? Object.values(item?.extra)?.reduce(
-                            (a, b) => a + b,
-                            0
-                          ) * item?.count
-                        : 0
-                    )
-                  : 0}
-                <span className="md:text-lg font-semibold pl-1">৳</span>
-              </h3>
-            </div>
           </Box>
         </StyledBox>
         {/* <StyledBox

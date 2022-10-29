@@ -62,6 +62,7 @@ const AddFoodItem = ({
         price[a] = item.price;
         console.log(price);
       } else {
+        console.log("regular");
         price["regular"] = item.price;
 
         // price[item.price] = item.price;
