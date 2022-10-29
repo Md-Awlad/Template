@@ -7,7 +7,6 @@ import { Alert, AlertTitle } from "@mui/material";
 import { Box } from "@mui/system";
 import EditCustomFood from "../../Modals/Admin/EditCustomFood";
 import DeleteCustomFood from "../../Modals/Admin/DeleteCustomFood";
-import QueryLoader from "../../Loaders/QueryLoader";
 import LoaderSource from "../../Loaders/LoaderSource";
 
 const CustomFoods = ({ customizeFood, isLoading, isError }) => {

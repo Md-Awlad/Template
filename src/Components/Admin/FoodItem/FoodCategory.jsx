@@ -15,7 +15,6 @@ import { useStateContext } from "../../../Contexts/ContextProvider";
 import Food from "./Food";
 import EditCategory from "../../Modals/Admin/EditCategory";
 import DeleteCategory from "../../Modals/Admin/DeleteCategory";
-import QueryLoader from "../../Loaders/QueryLoader";
 import LoaderSource from "../../Loaders/LoaderSource";
 
 const FoodCategory = ({ categories, isLoading, isError }) => {

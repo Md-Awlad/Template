@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 import { RiDeleteBin6Line } from "react-icons/ri";
-import { DataGrid, GridToolbar } from "@mui/x-data-grid";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
-import TaskAltIcon from "@mui/icons-material/TaskAlt";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import { useStateContext } from "../../../Contexts/ContextProvider";
 import myAxios from "../../../utils/myAxios";
@@ -14,7 +12,6 @@ import { Alert, AlertTitle, Box, Paper, Typography } from "@mui/material";
 import { MdEmail } from "react-icons/md";
 import { FaPhoneAlt } from "react-icons/fa";
 import { BsCheck2Circle } from "react-icons/bs";
-import QueryLoader from "../../Loaders/QueryLoader";
 import LoaderSource from "../../Loaders/LoaderSource";
 
 const OrderList = ({ orders, orderRefetch, isLoading, isError }) => {

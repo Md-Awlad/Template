@@ -33,7 +33,7 @@ const style = {
 };
 
 const EditDiscount = ({ editId, handleClose }) => {
-  const { currentColor, currentMode } = useStateContext();
+  const { currentColor } = useStateContext();
   const [date, setDate] = useState(moment());
   const [status, setStatus] = useState("");
 

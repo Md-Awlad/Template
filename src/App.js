@@ -1,12 +1,10 @@
-import { Navigate, useRoutes, useSearchParams } from "react-router-dom";
+import { Navigate, useRoutes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 import ChangePassword from "./Components/ChangePassword";
 import NavLayout from "./Components/Layouts/NavLayout";
 import ThemeLayout from "./Components/Layouts/ThemeLayout";
-import LoaderSource from "./Components/Loaders/LoaderSource";
-import MainLoader from "./Components/Loaders/MainLoader";
 import QueryLoader from "./Components/Loaders/QueryLoader";
 import NotFound from "./Components/NotFound/NotFound";
 import { useStateContext } from "./Contexts/ContextProvider";
@@ -29,9 +27,7 @@ import {
 import CartInfo from "./Pages/Frontend/CartInfo";
 
 const App = () => {
-  const [searchParams] = useSearchParams();
-  const { currentMode, currentUser, isLoading, orderId, activeMenu } =
-    useStateContext();
+  const { currentMode, currentUser, isLoading, orderId } = useStateContext();
 
   const routes = [
     {

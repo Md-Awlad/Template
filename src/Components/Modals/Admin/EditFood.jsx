@@ -25,8 +25,7 @@ const style = {
 };
 
 const EditFood = ({ editId, handleModalClose }) => {
-  console.log(editId);
-  const { currentColor, currentMode } = useStateContext();
+  const { currentColor } = useStateContext();
   const [variants, setVariants] = useState(1);
   const { register, handleSubmit, setValue } = useForm();
   const queryClient = useQueryClient();

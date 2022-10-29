@@ -25,7 +25,7 @@ const style = {
 };
 
 const EditCategory = ({ editId, handleClose }) => {
-  const { currentColor, currentMode } = useStateContext();
+  const { currentColor } = useStateContext();
   const { register, handleSubmit, setValue } = useForm();
   const queryClient = useQueryClient();
 

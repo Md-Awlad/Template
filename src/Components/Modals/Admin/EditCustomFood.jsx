@@ -2,11 +2,10 @@ import { Box } from "@mui/system";
 import React from "react";
 import TextField from "@mui/material/TextField";
 import { useForm } from "react-hook-form";
-import { Autocomplete, Grid, Tab, Tabs } from "@mui/material";
+import { Grid } from "@mui/material";
 import { toast } from "react-toastify";
 import { useStateContext } from "../../../Contexts/ContextProvider";
 import myAxios from "../../../utils/myAxios";
-import { useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 const style = {
@@ -60,7 +59,7 @@ const EditCustomFood = ({ handleClose, editId }) => {
   );
 
   return (
-    <Box sx={{ ...style,width: { sm: 700, xs: 400 } }}>
+    <Box sx={{ ...style, width: { sm: 700, xs: 400 } }}>
       <h2 className="text-xl font-bold pb-3">Edit Custom Food</h2>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
         {/* --Extra Name-- */}

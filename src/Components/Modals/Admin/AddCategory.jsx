@@ -24,7 +24,7 @@ const style = {
 };
 
 const AddCategory = ({ handleModalClose, categoryRefetch }) => {
-  const { currentColor, currentMode } = useStateContext();
+  const { currentColor } = useStateContext();
   const {
     register,
     handleSubmit,

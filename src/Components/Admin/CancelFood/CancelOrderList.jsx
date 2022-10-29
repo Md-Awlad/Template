@@ -5,7 +5,6 @@ import React, { useState } from "react";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { useStateContext } from "../../../Contexts/ContextProvider";
 import LoaderSource from "../../Loaders/LoaderSource";
-import QueryLoader from "../../Loaders/QueryLoader";
 import DeleteCancelOrder from "../../Modals/Admin/DeleteCancelOrder";
 
 const CancelOrderList = ({ cancelOrder, isLoading, isError }) => {

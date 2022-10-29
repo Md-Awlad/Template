@@ -1,6 +1,4 @@
 import {
-  Alert,
-  AlertTitle,
   Box,
   FormControl,
   InputLabel,
@@ -15,7 +13,6 @@ import { useState } from "react";
 import { Doughnut } from "react-chartjs-2";
 import { useStateContext } from "../../../../Contexts/ContextProvider";
 import myAxios from "../../../../utils/myAxios";
-import LoaderSource from "../../../Loaders/LoaderSource";
 
 const month = [
   {
@@ -77,8 +74,6 @@ const MonthlySell = () => {
 
   const {
     data: months = [],
-    isLoading,
-    isError,
   } = useQuery(["month", currentMonth], async () => {
     const res = await myAxios(`/month_performance/${currentMonth}/`);
     return res.data;

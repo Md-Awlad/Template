@@ -32,7 +32,7 @@ const ApplyDiscount = ({
   foods,
   handleDiscountModalClose,
 }) => {
-  const { currentColor, currentMode } = useStateContext();
+  const { currentColor } = useStateContext();
   const [discount, setDiscount] = useState();
   const [category, setCategory] = useState();
   const [food, setFood] = useState();

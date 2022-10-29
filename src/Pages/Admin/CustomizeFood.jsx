@@ -3,9 +3,6 @@ import { useState } from "react";
 import PageTitle from "../../Components/PageTitle/PageTitle";
 import { useQuery } from "@tanstack/react-query";
 import myAxios from "../../utils/myAxios";
-import FoodCategory from "../../Components/Admin/FoodItem/FoodCategory";
-import AddFoodItem from "../../Components/Modals/Admin/AddFoodItem";
-import AddCategory from "../../Components/Modals/Admin/AddCategory";
 import AddCustomFood from "../../Components/Modals/Admin/AddCustomFood";
 import CustomFoods from "../../Components/Admin/CustomFood/CustomFoods";
 
