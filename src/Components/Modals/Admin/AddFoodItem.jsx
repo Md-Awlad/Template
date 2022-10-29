@@ -43,8 +43,10 @@ const AddFoodItem = ({
   const { currentColor } = useStateContext();
   const [variants, setVariants] = useState(1);
   const [category, setCategory] = useState();
-  const [extra, setExtra] = useState(0);
+  const [extra, setExtra] = useState([]);
   const queryClient = useQueryClient();
+
+  console.log(extra?.map((a) => Number([a?.id])));
 
   const {
     register,
@@ -78,10 +80,10 @@ const AddFoodItem = ({
       taste: data?.taste,
       packaging: data?.package === null ? 0 : data?.package,
       category: category,
-      extra: extra?.map((a) => a.id),
+      customize_food: extra?.map((a) => Number([a?.id])),
     };
 
-    const response = await toast.promise(
+    toast.promise(
       myAxios.post("/food/", payloadForm, {
         headers: {
           "content-type": "multipart/form-data",
