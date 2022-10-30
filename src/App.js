@@ -21,6 +21,7 @@ import {
   MonthReport,
   Order,
   OrderSummary,
+  Settings,
   Survey,
   SurveyList,
 } from "./Pages";
@@ -106,7 +107,10 @@ const App = () => {
           path: "surveylist",
           element: <SurveyList />,
         },
-
+        {
+          path: "settings",
+          element: <Settings />,
+        },
         {
           path: "*",
           element: <NotFound />,

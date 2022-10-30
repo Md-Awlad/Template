@@ -80,7 +80,8 @@ const Drawer = styled(MuiDrawer, {
 
 const Navbar = () => {
   const [userProfile, setUserProfile] = React.useState(null);
-  const { activeMenu, setActiveMenu, setMode, currentMode } = useStateContext();
+  const { activeMenu, setActiveMenu, setMode, currentMode, restaurantData } =
+    useStateContext();
 
   const [isDarkMode, setIsDarkMode] = React.useState(
     Boolean(currentMode === "Dark")
@@ -135,13 +136,16 @@ const Navbar = () => {
                 ml: "8px",
               }}
             >
-              <Box
-                component="img"
-                src={MainLogo}
-                sx={{
-                  width: "50px",
-                }}
-              />
+              {restaurantData?.map((data, index) => (
+                <Box
+                  key={index}
+                  component="img"
+                  src={data?.logo || MainLogo}
+                  sx={{
+                    width: "50px",
+                  }}
+                />
+              ))}
             </IconButton>
           </Box>
           <div className="flex items-center justify-between space-x-1">
@@ -151,23 +155,27 @@ const Navbar = () => {
               checked={!isDarkMode}
               size={50}
             />
-            <div
-              className="flex items-center gap-2 cursor-pointer p-1 hover:bg-light-gray rounded-lg"
-              onClick={(event) => setUserProfile(event.currentTarget)}
-            >
-              <img
-                className="rounded-full w-8 h-8"
-                src={avatar}
-                alt="user-profile"
-              />
-              <p>
-                <span className="text-gray-400 text-14">Hi,</span>{" "}
-                <span className="text-gray-400 font-bold ml-1 text-14">
-                  {"User"}
-                </span>
-              </p>
-              <MdKeyboardArrowDown className="text-gray-400 text-14" />
-            </div>
+            {restaurantData?.map((data, index) => (
+              <div
+                key={index}
+                className="flex items-center gap-2 cursor-pointer p-1 hover:bg-light-gray rounded-lg"
+                onClick={(event) => setUserProfile(event.currentTarget)}
+              >
+                <img
+                  className="rounded-full w-8 h-8"
+                  src={data?.logo || avatar}
+                  alt="user-profile"
+                />
+
+                <p>
+                  <span className="text-gray-400 text-14">Hi,</span>{" "}
+                  <span className="text-gray-400 font-bold ml-1 text-14">
+                    {"User"}
+                  </span>
+                </p>
+                <MdKeyboardArrowDown className="text-gray-400 text-14" />
+              </div>
+            ))}
             <Menu
               sx={{ mt: "45px" }}
               id="menu-appbar"

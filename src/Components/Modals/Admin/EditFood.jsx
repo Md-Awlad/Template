@@ -49,8 +49,6 @@ const EditFood = ({ editId, handleModalClose }) => {
       packaging: data?.package,
     };
 
-    console.log(payloadForm);
-
     const response = await toast.promise(
       myAxios.patch(`/food/${editId}/`, payloadForm, {
         headers: {
