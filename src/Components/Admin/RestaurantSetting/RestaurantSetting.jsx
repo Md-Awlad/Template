@@ -88,7 +88,7 @@ const RestaurantSetting = () => {
                         fontWeight: 500,
                       }}
                     >
-                      {data?.name || "Not set"}
+                      {data?.name || "Nexis Menu"}
                     </Typography>
                   </Grid>
                 </Grid>
@@ -111,7 +111,8 @@ const RestaurantSetting = () => {
                         fontWeight: 500,
                       }}
                     >
-                      {data?.address || "Not set"}
+                      {data?.address ||
+                        "6th Floor, House#30, Sonargaon Janapath Road, Sector#12, Uttara, Dhaka-1230."}
                     </Typography>
                   </Grid>
                 </Grid>
@@ -134,7 +135,7 @@ const RestaurantSetting = () => {
                         fontWeight: 500,
                       }}
                     >
-                      {data?.phone_number || "Not set"}
+                      {data?.phone_number || "+880 1738-812828"}
                     </Typography>
                   </Grid>
                 </Grid>
@@ -157,7 +158,7 @@ const RestaurantSetting = () => {
                         fontWeight: 500,
                       }}
                     >
-                      {data?.restaurants_email || "Not set"}
+                      {data?.restaurants_email || "info@nexisltd.com"}
                     </Typography>
                   </Grid>
                 </Grid>

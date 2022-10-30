@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { createContext, useContext, useEffect, useState } from "react";
-import myAxios from "../utils/myAxios";
+import myAxios, { staticAxios } from "../utils/myAxios";
 
 const StateContext = createContext();
 
@@ -30,7 +30,6 @@ export const ContextProvider = ({ children }) => {
 
   const {
     isLoading,
-    isError,
     data: currentUser = {},
   } = useQuery(["currentUser"], async () => {
     const res = await myAxios("/user_info");
@@ -40,7 +39,7 @@ export const ContextProvider = ({ children }) => {
   const { data: restaurantData = [], refetch } = useQuery(
     ["restaurant"],
     async () => {
-      const res = await myAxios("/restaurant/");
+      const res = await staticAxios("/restaurant/");
       return res.data;
     }
   );

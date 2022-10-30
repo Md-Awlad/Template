@@ -2,11 +2,12 @@ import { Box } from "@mui/system";
 import React from "react";
 import TextField from "@mui/material/TextField";
 import { useForm } from "react-hook-form";
-import { Grid, InputAdornment } from "@mui/material";
+import { Avatar, Grid, InputAdornment } from "@mui/material";
 import { toast } from "react-toastify";
 import { FiUpload } from "react-icons/fi";
 import { useStateContext } from "../../../Contexts/ContextProvider";
-import myAxios from "../../../utils/myAxios";
+import myAxios, { staticAxios } from "../../../utils/myAxios";
+import { useState } from "react";
 
 const style = {
   position: "absolute",
@@ -24,8 +25,9 @@ const style = {
 };
 
 const EditRestaurantInfo = ({ handleModalClose, data, data: { id } }) => {
-  console.log(id);
   const { currentColor, refetch } = useStateContext();
+  const [restaurantLogo, setRestaurantLogo] = useState(null);
+  const [restaurantBanner, setRestaurantBanner] = useState(null);
   const { register, handleSubmit } = useForm();
 
   const onSubmit = async (data) => {
@@ -46,7 +48,7 @@ const EditRestaurantInfo = ({ handleModalClose, data, data: { id } }) => {
       console.log(value);
     }
     const response = await toast.promise(
-      myAxios.patch(`/restaurant/${id}/`, payloadForm, {
+      staticAxios.patch(`/restaurant/${id}/`, payloadForm, {
         headers: {
           "content-type": "multipart/form-data",
         },
@@ -145,15 +147,26 @@ const EditRestaurantInfo = ({ handleModalClose, data, data: { id } }) => {
             }}
             InputProps={{
               endAdornment: (
-                <InputAdornment position="end">
-                  <FiUpload size={25} />
+                <InputAdornment
+                  position="end"
+                  sx={{
+                    marginRight: "-10px",
+                  }}
+                >
+                  <Avatar
+                    src={restaurantLogo ?? data?.logo}
+                    variant="rounded"
+                  />
                 </InputAdornment>
               ),
             }}
             inputProps={{
               accept: "image/*",
             }}
-            {...register("logo")}
+            {...register("logo", {
+              onChange: (e) =>
+                setRestaurantLogo(URL.createObjectURL(e.target.files[0])),
+            })}
             sx={{
               width: 1,
               "& ::file-selector-button": {
@@ -174,15 +187,26 @@ const EditRestaurantInfo = ({ handleModalClose, data, data: { id } }) => {
             }}
             InputProps={{
               endAdornment: (
-                <InputAdornment position="end">
-                  <FiUpload size={25} />
+                <InputAdornment
+                  position="end"
+                  sx={{
+                    marginRight: "-10px",
+                  }}
+                >
+                  <Avatar
+                    src={restaurantBanner ?? data?.banner}
+                    variant="rounded"
+                  />
                 </InputAdornment>
               ),
             }}
             inputProps={{
               accept: "image/*",
             }}
-            {...register("banner")}
+            {...register("banner", {
+              onChange: (e) =>
+                setRestaurantBanner(URL.createObjectURL(e.target.files[0])),
+            })}
             sx={{
               width: 1,
               "& ::file-selector-button": {
