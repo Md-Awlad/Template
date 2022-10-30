@@ -16,6 +16,7 @@ const Food = ({ id }) => {
   const [foodItem, setFoodItem] = useState({});
   const [foodIndex, setFoodIndex] = useState(null);
   const [open, setOpen] = useState(false);
+  const [onClose, setOnClose] = useState(false);
   const toggleDrawer = (newOpen) => () => {
     console.log(newOpen);
     setOpen(newOpen);
@@ -64,40 +65,38 @@ const Food = ({ id }) => {
                 key={item.id}
                 onClick={() => handleItemAndToggle(item, index)}
               >
-                <div className="border-2 shadow-md  rounded-lg   cursor-pointer relative">
+                <Box
+                  sx={{
+                    minHeight: { xs: 280, sm: 300, md: "auto" },
+                  }}
+                  className="border-2 shadow-md  rounded-lg   cursor-pointer relative"
+                >
                   <div className="md:flex justify-between">
                     <div className=" md:flex gap-5 p-2">
-                      <div className="md:w-32 md:h-32  md:m-0 m-auto relative ">
+                      <div className=" md:m-0 md:w-32 md:h-32 w-full h-44  m-auto relative ">
                         <img
-                          className=" object-cover  w-full h-full rounded-md  "
+                          className=" object-cover w-full h-full  rounded-md  "
                           src={item?.image}
                           alt=""
                         />
                         <IoMdAdd className="absolute text-xl font-bold bottom-1 right-1 bg-white text-gray-900 rounded-md p-1" />
                       </div>
                       <div>
-                        <div className="flex justify-between">
+                        <div className="md:flex justify-between">
                           <Typography
-                            // variant="h6"
                             sx={{
-                              // my: { xs: 2 },
-                              fontSize: 18,
                               fontWeight: 500,
                             }}
-                            // onClick={() => handleModalOpen(item)}
                           >
                             {item.food_name.substr(0, 20) +
                               `${item.food_name.length > 20 ? ".." : ""}`}
                           </Typography>
                         </div>
                         <Typography
-                          // variant="h6"
                           sx={{
-                            // my: { xs: 2 },
                             fontSize: 12,
                             fontWeight: 500,
                           }}
-                          // onClick={() => handleModalOpen(item)}
                         >
                           {item.base_ingredient.substr(0, 100) +
                             `${item.base_ingredient.length > 100 ? ".." : ""}`}
@@ -105,23 +104,7 @@ const Food = ({ id }) => {
                         {/* --size-- */}
 
                         <div className="overflow-x-scroll">
-                          <div
-                          // className={` ${
-                          //   activeMenu
-                          //     ? "550px"
-                          //     : `${
-                          //         Object.entries(
-                          //           item?.discount_price || item.price
-                          //         ).length > 1 && "w-[550px]"
-                          //       }`
-                          // } `}
-                          >
-                            {/* <FormControl>
-                          <RadioGroup
-                            aria-labelledby="demo-radio-buttons-group-label"
-                            name="radio-buttons-group"
-                            row
-                          > */}
+                          <div>
                             {Boolean(item?.discount_price)
                               ? Object.entries(item?.discount_price).map(
                                   (key, index) => (
@@ -131,58 +114,17 @@ const Food = ({ id }) => {
                                         alignItems: "center",
                                       }}
                                     >
-                                      {/* <FormControlLabel
-                                        sx={{
-                                          "&.MuiFormControlLabel-root": {
-                                            mr: 0,
-                                            pl:
-                                              Object.values(
-                                                item?.discount_price
-                                              ).length < 2
-                                                ? 2
-                                                : 0,
-                                          },
-                                        }}
-                                        control={
-                                          <Radio
-                                            size={
-                                              activeMenu ? "small" : "medium"
-                                            }
-                                            style={{
-                                              color: "#F0A70B",
-                                              display:
-                                                Object.values(
-                                                  item?.discount_price
-                                                ).length < 2
-                                                  ? "none"
-                                                  : "block",
-                                            }}
-                                          />
-                                        }
-                                name="size" value={key[1]}
-                                onChange={(e) => handleChange({ index, key })}
-                                /> */}
                                       {index === 0 && (
-                                        <Box
-                                          // sx={{
-                                          //   display: "flex",
-                                          //   alignItems: "center",
-                                          //   gap: 1,
-                                          // }}
-                                          // variant="h6"
-                                          className="absolute flex  items-center bottom-3"
-                                        >
+                                        <Box className="absolute flex  items-center bottom-3">
                                           <Typography
                                             sx={{
                                               fontSize: {
-                                                // sm: "12px",
                                                 md: "16px",
                                               },
                                               pr: 1,
                                             }}
                                           >
                                             {`from TK `}
-                                            {/* {key[0] ? key[0] : "Price:"} : */}
                                           </Typography>
 
                                           <Typography
@@ -215,35 +157,6 @@ const Food = ({ id }) => {
                                   (key, index) => {
                                     return (
                                       <Box className="flex items-center">
-                                        {/* <FormControlLabel
-                                        sx={{
-                                          "&.MuiFormControlLabel-root": {
-                                            mr: 0,
-                                            pl:
-                                              Object.values(item?.price)
-                                                .length < 2
-                                                ? 2
-                                                : 0,
-                                          },
-                                        }}
-                                        control={
-                                          <Radio
-                                            style={{
-                                              color: "#FFC446",
-                                              display:
-                                                Object.values(item?.price)
-                                                  .length < 2
-                                                  ? "none"
-                                                  : "block",
-                                            }}
-                                          />
-                                        }
-                                        name="size"
-                                        value={key[1]}
-                                        onClick={(e) =>
-                                          handleChange({ index, key })
-                                        }
-                                      /> */}
                                         {Boolean(index === 0) && (
                                           <Box className=" absolute flex  items-center bottom-3">
                                             <Typography
@@ -254,7 +167,6 @@ const Food = ({ id }) => {
                                               }}
                                             >
                                               {`from TK `}
-                                              {/* {key[0] ? key[0] : "Price:"} : */}
                                             </Typography>
 
                                             <Typography
@@ -274,15 +186,13 @@ const Food = ({ id }) => {
                                     );
                                   }
                                 )}
-                            {/* </RadioGroup>
-                        </FormControl> */}
                           </div>
                         </div>
                         {/* --size End-- */}
                       </div>
                     </div>
                   </div>
-                </div>
+                </Box>
               </div>
             </Grid>
           ))}
@@ -296,6 +206,7 @@ const Food = ({ id }) => {
           open={open}
           index={foodIndex}
           item={foodItem}
+          onClose={onClose}
           setOpen={() => setOpen(false)}
         />
       )}
@@ -304,62 +215,3 @@ const Food = ({ id }) => {
 };
 
 export default Food;
-
-/*
- --review-- 
-                   <Box
-                    sx={{
-                      position: "absolute",
-                      right: { md: 0, xs: "-15px" },
-                      top: { md: 0, xs: "-15px" },
-                    }}
-                    // className="absolute lg:right-0 lg:top-0 md:right-0 md:top-0 -right-3 -top-3"
-                  >
-                    <Typography
-                      sx={{ fontSize: 10, fontWeight: "bold" }}
-                      // component="legend"
-                    >
-                      Review: {item.review}
-                    </Typography>
-                    <Rating
-                      name="read-only"
-                      defaultValue={item.review}
-                      precision={1}
-                      size="small"
-                      readOnly
-                    />
-                  </Box> 
-<Button
-                  variant="outlined"
-                  sx={{
-                    // ":hover": {
-                    //   backgroundColor: "#F0A70B",
-                    //   borderColor: "#F0A70B",
-                    // },
-                    // position: "absolute",
-                    // bottom: { md: 0 },
-                    // right: { md: 0 },
-                    // height: 35,
-                    // backgroundColor: "#F0A70B",
-                    // borderColor: "#F0A70B",
-                    // color: "#000",
-                    // borderRadius: "7px",
-                    "&.MuiButton-root": {
-                      minWidth: 0,
-                      minHight: 0,
-                      padding: 0,
-                    },
-                  }}
-                  // className="md:w-32 h-8 w-full text-sm font-bold rounded border border-gray-300 cursor-pointer bg-[#F0A70B] absolute md:right-0 md:bottom-0 -bottom-12"
-                >
-                </Button>
- <Typography
-                      sx={{
-                        width: { xs: 1, md: 500 },
-                      }}
-                      className="text-gray-500"
-                    >
-                      {item.food_detail.substr(0, 65) +
-                        `${item.food_detail.length > 65 ? "..." : ""}`}
-                    </Typography>
-*/
