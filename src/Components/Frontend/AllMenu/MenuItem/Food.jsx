@@ -67,7 +67,7 @@ const Food = ({ id }) => {
               >
                 <Box
                   sx={{
-                    minHeight: { xs: 280, sm: 300, md: "auto" },
+                    minHeight: { xs: 300, sm: "auto", md: "auto" },
                   }}
                   className="border-2 shadow-md  rounded-lg   cursor-pointer relative"
                 >
