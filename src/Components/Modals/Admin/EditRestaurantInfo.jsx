@@ -6,7 +6,7 @@ import { Avatar, Grid, InputAdornment } from "@mui/material";
 import { toast } from "react-toastify";
 import { FiUpload } from "react-icons/fi";
 import { useStateContext } from "../../../Contexts/ContextProvider";
-import myAxios from "../../../utils/myAxios";
+import myAxios, { staticAxios } from "../../../utils/myAxios";
 import { useState } from "react";
 
 const style = {
@@ -48,7 +48,7 @@ const EditRestaurantInfo = ({ handleModalClose, data, data: { id } }) => {
       console.log(value);
     }
     const response = await toast.promise(
-      myAxios.patch(`/restaurant/${id}/`, payloadForm, {
+      staticAxios.patch(`/restaurant/${id}/`, payloadForm, {
         headers: {
           "content-type": "multipart/form-data",
         },

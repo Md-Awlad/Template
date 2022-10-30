@@ -30,7 +30,6 @@ export const ContextProvider = ({ children }) => {
 
   const {
     isLoading,
-    isError,
     data: currentUser = {},
   } = useQuery(["currentUser"], async () => {
     const res = await myAxios("/user_info");
