@@ -9,7 +9,7 @@ import {
   Typography,
 } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
-import React from "react";
+import React, { useState } from "react";
 import { AiOutlineMinus } from "react-icons/ai";
 import { GrAdd } from "react-icons/gr";
 import { MdClose } from "react-icons/md";
@@ -20,6 +20,7 @@ import { staticAxios } from "../../../utils/myAxios";
 const CartItems = ({ cart, setCart, item }) => {
   const { activeMenu } = useStateContext();
   const [searchParams] = useSearchParams();
+  const [ingredients, setIngredient] = useState([]);
   // const addExtra = (extraId, price = 0) => {
   //   setCart(
   //     cart.map((e) => {
@@ -139,10 +140,20 @@ const CartItems = ({ cart, setCart, item }) => {
   // };
 
   // --extraIngredients--
-  const { data: { data: ingredients = [] } = {} } = useQuery(
-    [`/customize_food_category/${item.category}`],
-    () => staticAxios(`/customize_food_category/${item.category}`)
+  // const { data: { data: ingredients = [] } = {} } = useQuery(
+  //   [`/customize_food_category/${item.category}`],
+  //   () => staticAxios(`/customize_food_category/${item.category}`)
+  // );
+  const { data: { data: ingredientsData = [] } = {} } = useQuery(
+    [`food`],
+    () => staticAxios(`/food/${item.id}`),
+    {
+      onSuccess: (res) => {
+        res?.data.map((item) => setIngredient(item.customize_food));
+      },
+    }
   );
+  // console.log(ingredients);
 
   // --remove item--
   const removeItem = (sId) => {
@@ -279,7 +290,7 @@ const CartItems = ({ cart, setCart, item }) => {
                           }}
                         />
                       }
-                      label={extraPrice.ingredient_name}
+                      label={extraPrice.name}
                       name="size"
                       value={
                         item?.extra

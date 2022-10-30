@@ -35,11 +35,11 @@ const Food = ({ id }) => {
     setOpenModal(false);
   };
 
-  const { data: food = [] } = useQuery(["food"], async () => {
+  const { data: food = [] } = useQuery(["foodcategory"], async () => {
     const res = await staticAxios(`category/${id}`);
     return res.data;
   });
-
+  console.log(food);
   const handleItemAndToggle = (foodItem, index) => {
     console.log(foodItem);
     setOpen(true);
