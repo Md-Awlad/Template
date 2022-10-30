@@ -5,11 +5,10 @@ import { MdOutlineAddShoppingCart } from "react-icons/md";
 import cookImg from "../../image/Cook.svg";
 import { useStateContext } from "../../Contexts/ContextProvider";
 import CustomDrawer from "../Shared/CustomDrawer";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const PhoneHeader = () => {
   const { cart, activeMenu, restaurantData } = useStateContext();
-  const [searchParams] = useSearchParams();
   return (
     <>
       {restaurantData?.map((data) => (
@@ -18,25 +17,13 @@ const PhoneHeader = () => {
           className="px-10 md:py-6 py-3  flex justify-between items-center md:gap-0 gap-5 md:items-center fixed bottom-0 left-0 right-0 z-10 rounded-tr-xl rounded-tl-xl"
         >
           <Box className="flex justify-between items-center w-full">
-            {searchParams.get("table") ? (
-              <Badge
-                className="cursor-pointer"
-                badgeContent={cart.length}
-                color="primary"
-              >
-                <AiOutlineShoppingCart className="inline md:w-16 md:h-16 w-8 h-8 text-neutral " />
-              </Badge>
-            ) : (
-              <Link to="/viewcart">
-                <Badge
-                  className="cursor-pointer"
-                  badgeContent={cart.length}
-                  color="primary"
-                >
-                  <AiOutlineShoppingCart className="inline md:w-16 md:h-16 w-8 h-8 text-neutral " />
-                </Badge>
-              </Link>
-            )}
+            <Badge
+              className="lg:cursor-pointer"
+              badgeContent={cart.length}
+              color="primary"
+            >
+              <AiOutlineShoppingCart className="inline md:w-16 md:h-16 w-8 h-8 text-neutral " />
+            </Badge>
             {activeMenu ? null : cart?.length ? (
               <CustomDrawer />
             ) : (
@@ -53,9 +40,9 @@ const PhoneHeader = () => {
                   />
                   <Typography
                     sx={{
-                      fontSize: { sm: 14, xs: 8 },
+                      fontSize: { sm: 11, xs: 8 },
                       fontWeight: 500,
-                      pl: 0.9,
+                      pl: { sm: 1.1, xs: 1 },
                       color: "#F0A70B",
                     }}
                   >
