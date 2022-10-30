@@ -5,6 +5,7 @@ export { default as Order } from "./Admin/Order";
 export { default as CompleteOrder } from "./Admin/CompleteOrder";
 export { default as CancelOrder } from "./Admin/CancelOrder";
 export { default as Discount } from "./Admin/Discount";
+export { default as Settings } from "./Admin/Settings";
 export { default as SurveyList } from "./Admin/SurveyList";
 export { default as MonthReport } from "./Admin/MonthReport";
 export { default as Login } from "./Admin/Login";

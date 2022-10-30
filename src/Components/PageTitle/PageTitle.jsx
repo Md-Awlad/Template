@@ -1,4 +1,6 @@
 import React from "react";
+import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
+import ModeEditOutlineIcon from "@mui/icons-material/ModeEditOutline";
 import { useStateContext } from "../../Contexts/ContextProvider";
 const PageTitle = ({
   headingText = "",
@@ -7,6 +9,7 @@ const PageTitle = ({
   modalOpenTwo = "",
   buttonText = "",
   buttonTextTwo = "",
+  editIcon = false,
 }) => {
   const { currentColor } = useStateContext();
   return (
@@ -29,9 +32,9 @@ const PageTitle = ({
             className="px-3 py-2 text-sm rounded-md text-neutral flex items-center gap-1 font-medium hover:opacity-80 capitalize"
           >
             {/* {editIcon ? (
-              <BiEditAlt className="inline text-xs font-bold " />
+              <ModeEditOutlineIcon className="inline text-xs font-bold " />
             ) : (
-              <ImPlus className="inline text-xs font-bold " />
+              <AddCircleOutlineOutlinedIcon className="inline text-xs font-bold " />
             )} */}
             {buttonText}
           </button>

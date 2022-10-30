@@ -28,11 +28,20 @@ export const ContextProvider = ({ children }) => {
   const [confirmed, setConfirmed] = useState();
   const [customColor, setCustomColor] = useState();
 
-  const { isLoading, data: currentUser = {} } = useQuery(
-    ["currentUser"],
+  const {
+    isLoading,
+    isError,
+    data: currentUser = {},
+  } = useQuery(["currentUser"], async () => {
+    const res = await myAxios("/user_info");
+    return res?.data;
+  });
+
+  const { data: restaurantData = [], refetch } = useQuery(
+    ["restaurant"],
     async () => {
-      const res = await myAxios("/user_info");
-      return res?.data;
+      const res = await myAxios("/restaurant/");
+      return res.data;
     }
   );
 
@@ -79,6 +88,8 @@ export const ContextProvider = ({ children }) => {
     <StateContext.Provider
       value={{
         currentUser,
+        restaurantData,
+        refetch,
         currentPass,
         isLoading,
         confirmed,

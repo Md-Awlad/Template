@@ -3,16 +3,21 @@ import { Fragment } from "react";
 import { BsCartCheckFill } from "react-icons/bs";
 import { MdDashboard, MdFastfood, MdOutlineCancel } from "react-icons/md";
 import { TbShoppingCartDiscount } from "react-icons/tb";
-import { FiCheckCircle } from "react-icons/fi";
+import { FiCheckCircle, FiSettings } from "react-icons/fi";
 import { AiOutlineCloseCircle, AiOutlineFileProtect } from "react-icons/ai";
 import { Link, NavLink } from "react-router-dom";
-import logo from "../image/logo.png";
+import mainLogo from "../image/logo.png";
 import { useStateContext } from "../Contexts/ContextProvider";
 import { HiDocumentReport } from "react-icons/hi";
 
 const Sidebar = () => {
-  const { activeMenu, setActiveMenu, screenSize, currentColor } =
-    useStateContext();
+  const {
+    activeMenu,
+    setActiveMenu,
+    screenSize,
+    currentColor,
+    restaurantData,
+  } = useStateContext();
   // const [openSubMenu, setOpenSubmenu] = useState(false);
   const handleCloseSidebar = () => {
     if (activeMenu && screenSize <= 900) {
@@ -37,28 +42,32 @@ const Sidebar = () => {
       {activeMenu ? (
         <Fragment>
           <Box className="flex justify-between items-center">
-            <Box
-              to="/"
-              onClick={handleCloseSidebar}
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                gap: 2,
-                px: 1,
-                mt: 2,
-              }}
-            >
+            {restaurantData?.map((data, index) => (
               <Box
-                component="img"
-                src={logo}
+                key={index}
+                to="/"
+                onClick={handleCloseSidebar}
                 sx={{
-                  width: "40px",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 2,
+                  px: 1,
+                  mt: 2,
                 }}
-              />
-              <Typography variant="h6" className="dark:text-neutral">
-                Digital Menu_Card
-              </Typography>
-            </Box>
+              >
+                <Box
+                  component="img"
+                  src={data?.logo || mainLogo}
+                  sx={{
+                    width: "35px",
+                  }}
+                />
+
+                <Typography variant="h6" className="dark:text-neutral">
+                  {data?.name || "Nexis Menu"}
+                </Typography>
+              </Box>
+            ))}
             <button
               type="button"
               onClick={() => setActiveMenu(!activeMenu)}
@@ -168,6 +177,17 @@ const Sidebar = () => {
             >
               <AiOutlineFileProtect />
               <span className="capitalize ">survey</span>
+            </NavLink>
+            <NavLink
+              to="settings"
+              onClick={handleCloseSidebar}
+              style={({ isActive }) => ({
+                backgroundColor: isActive ? currentColor : "",
+              })}
+              className={({ isActive }) => (isActive ? activeLink : normalLink)}
+            >
+              <FiSettings />
+              <span className="capitalize ">settings</span>
             </NavLink>
           </div>
         </Fragment>
@@ -297,6 +317,18 @@ const Sidebar = () => {
               }
             >
               <AiOutlineFileProtect className="text-3xl" />
+            </NavLink>
+            <NavLink
+              to="settings"
+              onClick={handleCloseSidebar}
+              style={({ isActive }) => ({
+                backgroundColor: isActive ? currentColor : "",
+              })}
+              className={({ isActive }) =>
+                isActive ? smActiveLink : smNormalLink
+              }
+            >
+              <FiSettings className="text-3xl" />
             </NavLink>
           </div>
         </Fragment>
