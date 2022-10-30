@@ -31,7 +31,7 @@ function AddToCartModal(props) {
       [checkbox.index]: checkbox.key,
     });
   };
-  console.log(!Boolean(Object.entries(size).length));
+  // console.log(!Boolean(Object.entries(size).length));
   const handleAddToCartSingleValue = (param, key) => {
     const item = { ...param, extra: {} };
     setIngredientId(item.category);
@@ -147,7 +147,9 @@ function AddToCartModal(props) {
                         )}
                       </Stack>
                     ))
-                  : Object.entries(item?.price).map((key, index) => {
+                  : Boolean(item?.price) &&
+                    Object.entries(item?.price).map((key, index) => {
+                      console.log(item?.price);
                       return (
                         <Stack>
                           {index === 0 && (
@@ -229,94 +231,96 @@ function AddToCartModal(props) {
                   }}
                 >
                   {Boolean(item?.discount_price)
-                    ? Object.entries(item?.discount_price).map((key) => (
-                        <Box
-                          sx={{
-                            width: 1,
-                            display: "flex",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                          }}
-                        >
-                          {/* CHECK BUTTON */}
-                          <Box className="flex items-center">
-                            <FormControlLabel
-                              sx={{
-                                "&.MuiFormControlLabel-root": {
-                                  mr: 0,
-                                  pl:
-                                    Object.values(item?.discount_price).length <
-                                    2
-                                      ? 2
-                                      : 0,
-                                },
-                                display: "flex",
-                                justifyContent: "space-between",
-                              }}
-                              control={
-                                <Radio
-                                  size={activeMenu ? "small" : "medium"}
-                                  style={{
-                                    color: "#F0A70B",
-                                    display:
-                                      Object.values(item?.discount_price)
-                                        .length < 2
-                                        ? "none"
-                                        : "block",
-                                  }}
-                                />
-                              }
-                              name="size"
-                              value={key[1]}
-                              onChange={(e) => handleChange({ index, key })}
-                            />
-                            <Typography
-                              sx={{
-                                fontSize: {
-                                  sm: "12px",
-                                  md: "16px",
-                                },
-                                // pl: 2,
-                              }}
-                            >
-                              {key[0] ? key[0] : "Price:"}
-                            </Typography>
-                          </Box>
-                          {/* Price  */}
-
+                    ? Object.entries(item?.discount_price).map((key) => {
+                        return (
                           <Box
                             sx={{
+                              width: 1,
                               display: "flex",
+                              justifyContent: "space-between",
                               alignItems: "center",
-                              gap: 1,
                             }}
-                            variant="h6"
                           >
-                            <Typography
-                              className="text-gray-600"
+                            {/* CHECK BUTTON */}
+                            <Box className="flex items-center">
+                              <FormControlLabel
+                                sx={{
+                                  "&.MuiFormControlLabel-root": {
+                                    mr: 0,
+                                    pl:
+                                      Object.values(item?.discount_price)
+                                        .length < 2
+                                        ? 2
+                                        : 0,
+                                  },
+                                  display: "flex",
+                                  justifyContent: "space-between",
+                                }}
+                                control={
+                                  <Radio
+                                    size={activeMenu ? "small" : "medium"}
+                                    style={{
+                                      color: "#F0A70B",
+                                      display:
+                                        Object.values(item?.discount_price)
+                                          .length < 2
+                                          ? "none"
+                                          : "block",
+                                    }}
+                                  />
+                                }
+                                name="size"
+                                value={key[1]}
+                                onChange={(e) => handleChange({ index, key })}
+                              />
+                              <Typography
+                                sx={{
+                                  fontSize: {
+                                    sm: "12px",
+                                    md: "16px",
+                                  },
+                                  // pl: 2,
+                                }}
+                              >
+                                {key[0] ? key[0] : "Price:"}
+                              </Typography>
+                            </Box>
+                            {/* Price  */}
+
+                            <Box
                               sx={{
-                                fontSize: {
-                                  sm: "12px",
-                                },
-                                textDecoration: "line-through",
+                                display: "flex",
+                                alignItems: "center",
+                                gap: 1,
                               }}
+                              variant="h6"
                             >
-                              TK {item.price[key[0]]}
-                            </Typography>
-                            <Typography
-                              sx={{
-                                fontWeight: 300,
-                                fontSize: {
-                                  sm: "16px",
-                                },
-                                mr: 1,
-                              }}
-                            >
-                              TK {key[1]}
-                            </Typography>
+                              <Typography
+                                className="text-gray-600"
+                                sx={{
+                                  fontSize: {
+                                    sm: "12px",
+                                  },
+                                  textDecoration: "line-through",
+                                }}
+                              >
+                                TK {item.price[key[0]]}
+                              </Typography>
+                              <Typography
+                                sx={{
+                                  fontWeight: 300,
+                                  fontSize: {
+                                    sm: "16px",
+                                  },
+                                  mr: 1,
+                                }}
+                              >
+                                TK {key[1]}
+                              </Typography>
+                            </Box>
                           </Box>
-                        </Box>
-                      ))
+                        );
+                      })
                     : Object.entries(item?.price).map((key) => {
                         return (
                           <Box
