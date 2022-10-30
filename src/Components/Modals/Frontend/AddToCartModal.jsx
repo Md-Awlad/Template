@@ -35,7 +35,19 @@ function AddToCartModal(props) {
   const handleAddToCartSingleValue = (param, key) => {
     const item = { ...param, extra: {} };
     setIngredientId(item.category);
-    item.sId = Number(Math.round(Math.random() * 100).toFixed(2));
+    function broofa() {
+      return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(
+        /[xy]/g,
+        function (c) {
+          var r = (Math.random() * 16) | 0,
+            v = c === "x" ? r : r & 0x3 || 0x8;
+          return v.toString(16);
+        }
+      );
+    }
+
+    // item.sId = Number(Math.round(Math.random() * 100).toFixed(20));
+    item.sId = broofa();
 
     item.price = key[1];
     item.size = key[0];
