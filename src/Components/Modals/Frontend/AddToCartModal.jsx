@@ -33,6 +33,7 @@ function AddToCartModal(props) {
   };
   // console.log(!Boolean(Object.entries(size).length));
   const handleAddToCartSingleValue = (param, key) => {
+    setOpen(false);
     const item = { ...param, extra: {} };
     setIngredientId(item.category);
     function broofa() {
@@ -67,6 +68,7 @@ function AddToCartModal(props) {
     }
   };
   const handleAddToCart = (param, index, key) => {
+    setOpen(false);
     const item = { ...param, extra: {} };
     setIngredientId(item.category);
     item.price = size[index][1];
