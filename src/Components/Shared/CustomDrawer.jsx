@@ -3,11 +3,12 @@ import cookImg from "../../image/Cook.svg";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import Cart from "../Frontend/Cart/Cart";
-import { Badge, Typography } from "@mui/material";
-import { MdOutlineAddShoppingCart } from "react-icons/md";
+import { Typography } from "@mui/material";
 import { useStateContext } from "../../Contexts/ContextProvider";
 import { IoIosArrowForward } from "react-icons/io";
 import { useState } from "react";
+
+const drawerWidth = 600;
 
 const CustomDrawer = () => {
   const { cart } = useStateContext();
@@ -23,17 +24,6 @@ const CustomDrawer = () => {
 
   return (
     <Box>
-      {/* <Badge
-        className="cursor-pointer"
-        badgeContent={cart.length}
-        color="primary"
-      >
-        <MdOutlineAddShoppingCart
-          onClick={handleDrawerOpen}
-          className="inline md:w-20 md:h-20 w-10 h-10 text-neutral cursor-pointer"
-          color="action"
-        />
-      </Badge> */}
       <Box
         onClick={handleDrawerOpen}
         className="md:w-28 md:h-28 w-20 h-20 border-8 border-neutral rounded-full md:-mt-14 -mt-8 bg-neutral"
@@ -45,7 +35,6 @@ const CustomDrawer = () => {
         >
           <img
             className="md:w-16 md:h-16 w-10 h-10 mx-auto "
-            style={{ color: "blue" }}
             src={cookImg}
             alt=""
           />
@@ -62,10 +51,20 @@ const CustomDrawer = () => {
         </Box>
       </Box>
 
-      <Drawer variant="persistent" anchor="right" open={open}>
-        <Box className="flex justify-start mx-3 md:my-2 my-4">
+      <Drawer
+        sx={{
+          flexShrink: 0,
+          "& .MuiDrawer-paper": {
+            width: 1,
+          },
+        }}
+        variant="persistent"
+        anchor="right"
+        open={open}
+      >
+        <Box className="flex justify-start mx-3 my-4">
           <IoIosArrowForward
-            className="inline w-6 h-6"
+            className="inline w-6 h-6 lg:cursor-pointer"
             onClick={handleDrawerClose}
           />
         </Box>
