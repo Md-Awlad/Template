@@ -24,7 +24,7 @@ function AddToCartModal(props) {
   console.log(!Boolean(Object.entries(size).length));
   const { activeMenu, setCart, cart, setIngredientId } = useStateContext();
   // This is used only for the example
-
+  console.log(item);
   const handleChange = (checkbox) => {
     setSize({
       ...size,
@@ -187,11 +187,15 @@ function AddToCartModal(props) {
 
           <Stack>
             {/* ---variation--- */}
-            {Boolean(item?.discount_price) && (
+            {Boolean(item?.discount_price) ? (
               <Box>
                 <Box className="flex justify-between my-5 lowercase">
                   <Typography
                     sx={{
+                      display:
+                        Object.values(item?.discount_price).length < 2
+                          ? "none"
+                          : "block",
                       fontSize: 18,
                       fontWeight: 500,
                     }}
@@ -216,10 +220,12 @@ function AddToCartModal(props) {
                 </Box>
 
                 <FormControl
-                  // sx={{
-                  //   display:
-                  //     Object.values(item?.price).length < 2 ? "none" : "block",
-                  // }}
+                  sx={{
+                    display:
+                      Object.values(item?.discount_price).length < 2
+                        ? "none"
+                        : "block",
+                  }}
                   fullWidth
                 >
                   <RadioGroup
@@ -229,166 +235,238 @@ function AddToCartModal(props) {
                       width: 1,
                     }}
                   >
-                    {Boolean(item?.discount_price)
-                      ? Object.entries(item?.discount_price).map((key) => {
-                          return (
-                            <Box
+                    {Object.entries(item?.discount_price).map((key) => {
+                      return (
+                        <Box
+                          sx={{
+                            width: 1,
+                            display: "flex",
+                            justifyContent: "space-between",
+                            alignItems: "center",
+                          }}
+                        >
+                          {/* CHECK BUTTON */}
+                          <Box className="flex items-center">
+                            <FormControlLabel
                               sx={{
-                                width: 1,
+                                "&.MuiFormControlLabel-root": {
+                                  mr: 0,
+                                  pl:
+                                    Object.values(item?.discount_price).length <
+                                    2
+                                      ? 2
+                                      : 0,
+                                },
                                 display: "flex",
                                 justifyContent: "space-between",
-                                alignItems: "center",
                               }}
-                            >
-                              {/* CHECK BUTTON */}
-                              <Box className="flex items-center">
-                                <FormControlLabel
-                                  sx={{
-                                    "&.MuiFormControlLabel-root": {
-                                      mr: 0,
-                                      pl:
-                                        Object.values(item?.discount_price)
-                                          .length < 2
-                                          ? 2
-                                          : 0,
-                                    },
-                                    display: "flex",
-                                    justifyContent: "space-between",
+                              control={
+                                <Radio
+                                  size={activeMenu ? "small" : "medium"}
+                                  style={{
+                                    color: "#F0A70B",
+                                    display:
+                                      Object.values(item?.discount_price)
+                                        .length < 2
+                                        ? "none"
+                                        : "block",
                                   }}
-                                  control={
-                                    <Radio
-                                      size={activeMenu ? "small" : "medium"}
-                                      style={{
-                                        color: "#F0A70B",
-                                        display:
-                                          Object.values(item?.discount_price)
-                                            .length < 2
-                                            ? "none"
-                                            : "block",
-                                      }}
-                                    />
-                                  }
-                                  name="size"
-                                  value={key[1]}
-                                  onChange={(e) => handleChange({ index, key })}
                                 />
-                                <Typography
-                                  sx={{
-                                    fontSize: {
-                                      sm: "12px",
-                                      md: "16px",
-                                    },
-                                    // pl: 2,
-                                  }}
-                                >
-                                  {key[0] ? key[0] : "Price:"}
-                                </Typography>
-                              </Box>
-                              {/* Price  */}
-
-                              <Box
-                                sx={{
-                                  display: "flex",
-                                  alignItems: "center",
-                                  gap: 1,
-                                }}
-                                variant="h6"
-                              >
-                                <Typography
-                                  className="text-gray-600"
-                                  sx={{
-                                    fontSize: {
-                                      sm: "12px",
-                                    },
-                                    textDecoration: "line-through",
-                                  }}
-                                >
-                                  TK {item.price[key[0]]}
-                                </Typography>
-                                <Typography
-                                  sx={{
-                                    fontWeight: 300,
-                                    fontSize: {
-                                      sm: "16px",
-                                    },
-                                    mr: 1,
-                                  }}
-                                >
-                                  TK {key[1]}
-                                </Typography>
-                              </Box>
-                            </Box>
-                          );
-                        })
-                      : Boolean(item?.price)
-                      ? Object.entries(item?.price).map((key) => {
-                          return (
-                            <Box
+                              }
+                              name="size"
+                              value={key[1]}
+                              onChange={(e) => handleChange({ index, key })}
+                            />
+                            <Typography
                               sx={{
-                                display:
-                                  Object.values(item?.price).length < 2
-                                    ? "none"
-                                    : "block",
+                                fontSize: {
+                                  sm: "12px",
+                                  md: "16px",
+                                },
+                                // pl: 2,
                               }}
-                              className="flex items-center justify-between"
                             >
-                              <Box className="flex items-center">
-                                <FormControlLabel
-                                  sx={{
-                                    "&.MuiFormControlLabel-root": {
-                                      mr: 0,
-                                      pl:
-                                        Object.values(item?.price).length < 2
-                                          ? 2
-                                          : 0,
-                                    },
-                                  }}
-                                  control={
-                                    <Radio
-                                      style={{
-                                        color: "#FFC446",
-                                        display:
-                                          Object.values(item?.price).length < 2
-                                            ? "none"
-                                            : "block",
-                                      }}
-                                    />
-                                  }
-                                  name="size"
-                                  value={key[1]}
-                                  onClick={(e) => handleChange({ index, key })}
-                                />
-                                <Typography
-                                  sx={{
-                                    fontSize: {
-                                      sm: "12px",
-                                      md: "16px",
-                                    },
-                                  }}
-                                >{`${
-                                  key[0] ? key[0].replace("inch", '"') : "price"
-                                }`}</Typography>
-                              </Box>
-                              <Box className="flex  items-center">
-                                <Typography
-                                  sx={{
-                                    fontWeight: 300,
-                                    fontSize: {
-                                      sm: "16px",
-                                    },
-                                    mr: 1,
-                                  }}
-                                >
-                                  TK {key[1]}
-                                </Typography>
-                              </Box>
-                            </Box>
-                          );
-                        })
-                      : "sd"}
+                              {key[0] ? key[0] : "Price:"}
+                            </Typography>
+                          </Box>
+                          {/* Price  */}
+
+                          <Box
+                            sx={{
+                              display: "flex",
+                              alignItems: "center",
+                              gap: 1,
+                            }}
+                            variant="h6"
+                          >
+                            <Typography
+                              className="text-gray-600"
+                              sx={{
+                                fontSize: {
+                                  sm: "12px",
+                                },
+                                textDecoration: "line-through",
+                              }}
+                            >
+                              TK {item.discount_price[key[0]]}
+                            </Typography>
+                            <Typography
+                              sx={{
+                                fontWeight: 300,
+                                fontSize: {
+                                  sm: "16px",
+                                },
+                                mr: 1,
+                              }}
+                            >
+                              TK {key[1]}
+                            </Typography>
+                          </Box>
+                        </Box>
+                      );
+                    })}
                   </RadioGroup>
                 </FormControl>
               </Box>
+            ) : Boolean(item?.price) ? (
+              <Box>
+                <Box className="flex justify-between my-5 lowercase">
+                  <Typography
+                    sx={{
+                      display:
+                        Object.values(item?.price).length < 2
+                          ? "none"
+                          : "block",
+                      fontSize: 18,
+                      fontWeight: 500,
+                    }}
+                  >
+                    select variation
+                  </Typography>
+                  <Typography
+                    sx={{
+                      display:
+                        Object.values(item?.price).length < 2
+                          ? "none"
+                          : "block",
+                      textTransform: "uppercase",
+                      fontSize: 14,
+                      fontWeight: 500,
+                      px: 1,
+                    }}
+                    className="text-gray-400 bg-gray-100 rounded-md flex items-center"
+                  >
+                    1 required
+                  </Typography>
+                </Box>
+
+                <FormControl
+                  sx={{
+                    display:
+                      Object.values(item?.price).length < 2 ? "none" : "block",
+                  }}
+                  fullWidth
+                >
+                  <RadioGroup
+                    aria-labelledby="demo-radio-buttons-group-label"
+                    name="radio-buttons-group"
+                    sx={{
+                      width: 1,
+                    }}
+                  >
+                    {Object.entries(item?.price).map((key) => {
+                      return (
+                        <Box
+                          sx={{
+                            width: 1,
+                            display: "flex",
+                            justifyContent: "space-between",
+                            alignItems: "center",
+                          }}
+                        >
+                          {/* CHECK BUTTON */}
+                          <Box className="flex items-center">
+                            <FormControlLabel
+                              sx={{
+                                "&.MuiFormControlLabel-root": {
+                                  mr: 0,
+                                  pl:
+                                    Object.values(item?.price).length < 2
+                                      ? 2
+                                      : 0,
+                                },
+                                display: "flex",
+                                justifyContent: "space-between",
+                              }}
+                              control={
+                                <Radio
+                                  size={activeMenu ? "small" : "medium"}
+                                  style={{
+                                    color: "#F0A70B",
+                                    display:
+                                      Object.values(item?.price).length < 2
+                                        ? "none"
+                                        : "block",
+                                  }}
+                                />
+                              }
+                              name="size"
+                              value={key[1]}
+                              onChange={(e) => handleChange({ index, key })}
+                            />
+                            <Typography
+                              sx={{
+                                fontSize: {
+                                  sm: "12px",
+                                  md: "16px",
+                                },
+                                // pl: 2,
+                              }}
+                            >
+                              {key[0] ? key[0] : "Price:"}
+                            </Typography>
+                          </Box>
+                          {/* Price  */}
+
+                          <Box
+                            sx={{
+                              display: "flex",
+                              alignItems: "center",
+                              gap: 1,
+                            }}
+                            variant="h6"
+                          >
+                            <Typography
+                              className="text-gray-600"
+                              sx={{
+                                fontSize: {
+                                  sm: "12px",
+                                },
+                                textDecoration: "line-through",
+                              }}
+                            >
+                              TK {item.price[key[0]]}
+                            </Typography>
+                            <Typography
+                              sx={{
+                                fontWeight: 300,
+                                fontSize: {
+                                  sm: "16px",
+                                },
+                                mr: 1,
+                              }}
+                            >
+                              TK {key[1]}
+                            </Typography>
+                          </Box>
+                        </Box>
+                      );
+                    })}
+                  </RadioGroup>
+                </FormControl>
+              </Box>
+            ) : (
+              ""
             )}
             {/* Add to Cart Section */}
             <Box

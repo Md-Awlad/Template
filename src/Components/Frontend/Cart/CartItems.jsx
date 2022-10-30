@@ -227,7 +227,7 @@ const CartItems = ({ cart, setCart, item }) => {
         </div>
       </Box>
       {/* --extra-- */}
-      {Boolean(ingredients?.length > 0) && (
+      {Boolean(ingredients?.length) && (
         <Accordion
           sx={{
             bgcolor: "unset",
