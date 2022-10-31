@@ -141,6 +141,7 @@ const AddFoodItem = ({
               Add Size and Price
             </Button>
             {new Array(variants).fill(null)?.map((item, index) => {
+              console.log(index);
               return (
                 <Box
                   key={index}
@@ -154,6 +155,12 @@ const AddFoodItem = ({
                   <TextField
                     label="Food Size"
                     type="text"
+                    required={index > 0 ? true : false}
+                    // error={Boolean(`errors.item.${index + 1}.title`)}
+                    // helperText={
+                    //   `errors.item.${index + 1}.title` &&
+                    //   "Food size is required *"
+                    // }
                     {...register(`item.${index + 1}.title`)}
                     fullWidth
                   />
@@ -254,7 +261,7 @@ const AddFoodItem = ({
               </Select>
             </FormControl>
           </Grid>
-          {/* --extra-- */} 
+          {/* --extra-- */}
           <Grid item xs={12} md={6}>
             <Autocomplete
               multiple
