@@ -139,21 +139,11 @@ const CartItems = ({ cart, setCart, item }) => {
   //   }
   // };
 
-  // --extraIngredients--
-  // const { data: { data: ingredients = [] } = {} } = useQuery(
-  //   [`/customize_food_category/${item.category}`],
-  //   () => staticAxios(`/customize_food_category/${item.category}`)
-  // );
-  const { data: { data: ingredientsData = [] } = {} } = useQuery(
-    [`food`],
-    () => staticAxios(`/food/${item.id}`),
-    {
-      onSuccess: (res) => {
-        res?.data.map((item) => setIngredient(item.customize_food));
-      },
-    }
-  );
-  // console.log(ingredients);
+  useQuery([`food`], () => staticAxios(`/food/${item.id}`), {
+    onSuccess: (res) => {
+      res?.data.map((item) => setIngredient(item.customize_food));
+    },
+  });
 
   // --remove item--
   const removeItem = (sId) => {
@@ -197,7 +187,7 @@ const CartItems = ({ cart, setCart, item }) => {
 
         <MdClose
           onClick={() => removeItem(item.sId, item.index)}
-          className="absolute md:right-0 -right-2 top-0 text-red-600 text-xl border border-gray-700 rounded-full cursor-pointer"
+          className="absolute md:right-0 -right-2 top-0 text-red-600 text-2xl border border-gray-700 rounded-full cursor-pointer"
         />
       </Box>
       {/* --countBtn-- */}
@@ -210,20 +200,23 @@ const CartItems = ({ cart, setCart, item }) => {
         }}
         // className="flex justify-between items-center relative"
       >
-        <Box sx={{ display: "flex", alignItems: "center", gap: 2, mt: 2 }}>
+        <Box
+          className="space-x-3"
+          sx={{ display: "flex", alignItems: "center", gap: 2, mt: 2 }}
+        >
           <AiOutlineMinus
             onClick={() => handleDecrement(item)}
-            className="inline text-xl  cursor-pointer"
+            className="inline text-2xl lg:text-xl  cursor-pointer"
           />
           <Typography className="text-2xl">{item?.count}</Typography>
           <GrAdd
             onClick={() => handleIncrement(item)}
             style={{}}
-            className="inline text-xl    cursor-pointer"
+            className="inline  text-2xl lg:text-xl     cursor-pointer"
           />
         </Box>
         <div>
-          <h3 className="lg:text-xl text-xl font-semibold">
+          <h3 className=" text-xl font-semibold">
             {item?.price
               ? Number(item?.price * item?.count) +
                 Number(

@@ -450,7 +450,7 @@ function AddToCartModal(props) {
                             }}
                             variant="h6"
                           >
-                            <Typography
+                            {/* <Typography
                               className="text-gray-600"
                               sx={{
                                 fontSize: {
@@ -460,7 +460,7 @@ function AddToCartModal(props) {
                               }}
                             >
                               TK {item.price[key[0]]}
-                            </Typography>
+                            </Typography> */}
                             <Typography
                               sx={{
                                 fontWeight: 300,
@@ -505,9 +505,8 @@ function AddToCartModal(props) {
                         return (
                           <Button
                             disabled={
-                              !Boolean(Object.entries(size).length) &&
-                              Boolean(
-                                Object.entries(item?.discount_price).length > 2
+                              !Boolean(
+                                Object.entries(item?.discount_price).length < 2
                               )
                             }
                             key={i}
@@ -532,7 +531,7 @@ function AddToCartModal(props) {
                     ) : (
                       <Button
                         disabled={
-                          Boolean(Object.entries(size).length) &&
+                          !Boolean(Object.entries(size).length) &&
                           Boolean(
                             Object.entries(item?.discount_price).length > 2
                           )
@@ -564,8 +563,7 @@ function AddToCartModal(props) {
                         return (
                           <Button
                             disabled={
-                              !Boolean(Object.entries(size).length) &&
-                              Boolean(Object.entries(item?.price).length > 2)
+                              !Boolean(Object.entries(item?.price).length < 2)
                             }
                             key={i}
                             variant="contained"

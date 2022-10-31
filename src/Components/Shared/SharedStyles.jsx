@@ -44,7 +44,7 @@ export const CustomModal = ({ open, onClose, children }) => {
           borderRadius: "4px",
           boxShadow: 24,
           // padding: 2,
-          // overflowY: "auto",
+          overflowY: "auto",
         }}
       >
         <Box className="dark:text-neutral ">{children}</Box>
