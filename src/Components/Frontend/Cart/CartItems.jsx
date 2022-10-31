@@ -154,26 +154,25 @@ const CartItems = ({ cart, setCart, item }) => {
     <Box
       className="border-2"
       sx={{
-        // marginX: 1,
         marginY: 1,
         padding: 2,
-
         borderRadius: "5px",
         // boxShadow: "0px 0px 5px 0px rgb(0 0 0 / 20%)",
       }}
     >
       <Box
+        className="space-x-3"
         sx={{
           display: "flex",
           alignItems: "center",
-          gap: 2,
+
           position: "relative",
         }}
       >
         <img
           className="lg:w-16 lg:h-16 w-20 h-20 object-cover rounded-full border-2 border-gray-400"
           src={item.image}
-          alt=""
+          alt="food_image"
         />
         <Box>
           <Typography variant="h6" sx={{ fontWeight: 500 }}>
