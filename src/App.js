@@ -39,10 +39,10 @@ const App = () => {
       path: "cart",
       element: <CartInfo />,
     },
-    {
-      path: "viewcart",
-      element: <CartInfo />,
-    },
+    // {
+    //   path: "viewcart",
+    //   element: <CartInfo />,
+    // },
     {
       path: "ordersummary",
       element: orderId ? <OrderSummary /> : <Navigate to="/" />,
