@@ -450,7 +450,7 @@ function AddToCartModal(props) {
                             }}
                             variant="h6"
                           >
-                            <Typography
+                            {/* <Typography
                               className="text-gray-600"
                               sx={{
                                 fontSize: {
@@ -460,7 +460,7 @@ function AddToCartModal(props) {
                               }}
                             >
                               TK {item.price[key[0]]}
-                            </Typography>
+                            </Typography> */}
                             <Typography
                               sx={{
                                 fontWeight: 300,
