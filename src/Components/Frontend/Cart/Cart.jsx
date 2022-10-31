@@ -423,7 +423,7 @@ const Cart = () => {
                             <MuiTelInput
                               {...field}
                               fullWidth
-                              preferredCountries={["BD"]}
+                              // preferredCountries={["BD"]}
                               helperText={
                                 Boolean(fieldState.error)
                                   ? "Phone Number is Invalid"

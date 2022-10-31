@@ -1,25 +1,32 @@
+import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
 import { Box, Button, Typography } from "@mui/material";
+import { useQuery } from "@tanstack/react-query";
 import React, { useRef } from "react";
 import { BsCheckCircle } from "react-icons/bs";
-import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
 import { useReactToPrint } from "react-to-print";
-import { useQuery } from "@tanstack/react-query";
-import staticAxios from "../../utils/myAxios";
-import { useStateContext } from "../../Contexts/ContextProvider";
-import Header from "../../Components/Frontend/Header";
 import Footer from "../../Components/Frontend/Footer";
-import PhoneHeader from "../../Components/Frontend/PhoneHeader";
+import Header from "../../Components/Frontend/Header";
+import PhoneHeader from "../../Components/Frontend/ResponsiveBottomMenu";
+import { useStateContext } from "../../Contexts/ContextProvider";
+import { baseURL } from "../../utils/myAxios";
 
 const OrderSummary = () => {
   const { orderId, activeMenu } = useStateContext();
   const componentRef = useRef();
+  const [orderSummary, setOrderSummary] = React.useState([]);
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
   });
 
-  const { data: orderSummary = [] } = useQuery(["orderSummary"], async () => {
-    const res = await staticAxios(`/order_summery/${orderId}/`);
-    return res.data;
+  useQuery(["orderSummary"], async () => {
+    // const res = await staticAxios(`/order_summery/${orderId}/`);
+    fetch(`${baseURL}/order_summery/${orderId}/`)
+      .then((res) => res.json())
+      .then((data) => setOrderSummary(data));
+    /* Returning the data from the response. */
+    // console.log(res);
+    // console.log(res.data);
+    // return res.data;
   });
   console.log(orderSummary);
   return (
@@ -47,15 +54,14 @@ const OrderSummary = () => {
           size="small"
           variant="outlined"
           onClick={handlePrint}
-          className="space-x-2"
           sx={{
             display: "flex",
-            mt: 5,
+            gap: 1,
             color: "primary.main",
-            // my: 1,
-            // "@media print": {
-            //   display: "none",
-            // },
+            my: 1,
+            "@media print": {
+              display: "none",
+            },
             marginX: { md: 8, xs: 4 },
           }}
         >
@@ -64,7 +70,7 @@ const OrderSummary = () => {
               fontSize: 13,
             }}
           >
-            Print
+            Download
           </Typography>
           <CloudDownloadIcon />
         </Button>
@@ -170,36 +176,36 @@ const OrderSummary = () => {
           <Box sx={{ display: "flex", justifyContent: "flex-end", marginY: 5 }}>
             <Box>
               <Box className="grid grid-cols-3 gap-8">
-                <Typography variant="body1" sx={{ fontSize: { xs: 14 } }}>
+                <Typography variant="h6" sx={{ fontSize: { xs: 14 } }}>
                   Packaging
                 </Typography>
-                <Typography variant="body1" sx={{ fontSize: { xs: 14 } }}>
+                <Typography variant="h6" sx={{ fontSize: { xs: 14 } }}>
                   :
                 </Typography>
-                <Typography variant="body1" sx={{ fontSize: { xs: 14 } }}>
-                  Tk {orderSummary.packaging ? orderSummary.packaging : "00"}
+                <Typography variant="h6" sx={{ fontSize: { xs: 14 } }}>
+                  $ {orderSummary.packaging ? orderSummary.packaging : "00"}
                 </Typography>
               </Box>
               <Box className="grid grid-cols-3 gap-8 ">
-                <Typography variant="body1" sx={{ fontSize: { xs: 14 } }}>
+                <Typography variant="h6" sx={{ fontSize: { xs: 14 } }}>
                   Total
                 </Typography>
-                <Typography variant="body1" sx={{ fontSize: { xs: 14 } }}>
+                <Typography variant="h6" sx={{ fontSize: { xs: 14 } }}>
                   :
                 </Typography>
-                <Typography variant="body1" sx={{ fontSize: { xs: 14 } }}>
-                  Tk {orderSummary.sub_total ? orderSummary.sub_total : "00"}
+                <Typography variant="h6" sx={{ fontSize: { xs: 14 } }}>
+                  $ {orderSummary.sub_total ? orderSummary.sub_total : "00"}
                 </Typography>
               </Box>
               <Box className="grid grid-cols-3 gap-8">
-                <Typography variant="body1" sx={{ fontSize: { xs: 14 } }}>
+                <Typography variant="h6" sx={{ fontSize: { xs: 14 } }}>
                   Discount
                 </Typography>
-                <Typography variant="body1" sx={{ fontSize: { xs: 14 } }}>
+                <Typography variant="h6" sx={{ fontSize: { xs: 14 } }}>
                   :
                 </Typography>
-                <Typography variant="body1" sx={{ fontSize: { xs: 14 } }}>
-                  Tk {orderSummary.discount ? orderSummary.discount : "00"}
+                <Typography variant="h6" sx={{ fontSize: { xs: 14 } }}>
+                  $ {orderSummary.discount ? orderSummary.discount : "00"}
                 </Typography>
               </Box>
               <hr />
@@ -211,6 +217,7 @@ const OrderSummary = () => {
                   :
                 </Typography>
                 <Typography variant="h6" sx={{ fontSize: { xs: 14 } }}>
+                  ${" "}
                   {orderSummary.total_amount ? orderSummary.total_amount : "00"}
                 </Typography>
               </Box>

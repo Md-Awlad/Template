@@ -12,12 +12,13 @@ const Layout = ({ children }) => {
       <Box
         sx={{
           backgroundImage: `url(${BGIcon})`,
-
+          // height: "100%",
           // backgroundRepeat: "no-repeat",
           // backgroundSize: "cover",
-          // height: "100vh",
+          height: "100vh",
           // backgroundPosition: "center",
           // backgroundColor: "rgba(0, 0, 0, 0.9)",
+          overflowY: "scroll",
         }}
       >
         {activeMenu ? <Header /> : null}
