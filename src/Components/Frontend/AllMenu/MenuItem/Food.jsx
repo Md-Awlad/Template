@@ -55,7 +55,7 @@ const Food = ({ id }) => {
       <Box
         className=" "
         sx={{
-          height: { md: "129vh", overflowY: "scroll" },
+          height: { md: "100vh", overflowY: "scroll" },
         }}
       >
         <Grid container sx={{ padding: 0, m: 0 }}>

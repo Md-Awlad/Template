@@ -22,13 +22,7 @@ const Layout = ({ children }) => {
         }}
       >
         {activeMenu ? <Header /> : null}
-        <main
-          style={{
-            maskImage: " linear-gradient(black, transparent)",
-          }}
-        >
-          {children}
-        </main>
+        <main>{children}</main>
         {activeMenu ? <Footer /> : <ResponsiveMenu />}
       </Box>
     </>
