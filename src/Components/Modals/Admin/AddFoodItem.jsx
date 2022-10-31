@@ -254,7 +254,7 @@ const AddFoodItem = ({
               </Select>
             </FormControl>
           </Grid>
-          {/* --extra-- */}
+          {/* --extra-- */} 
           <Grid item xs={12} md={6}>
             <Autocomplete
               multiple
@@ -265,7 +265,7 @@ const AddFoodItem = ({
               filterSelectedOptions
               onChange={(_, newValue) => setExtra(newValue)}
               renderInput={(params) => (
-                <TextField {...params} label="Discount Name" fullWidth />
+                <TextField {...params} label="Customize Food" fullWidth />
               )}
             />
           </Grid>

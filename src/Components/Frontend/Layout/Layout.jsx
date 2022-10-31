@@ -4,7 +4,7 @@ import { useStateContext } from "../../../Contexts/ContextProvider";
 import BGIcon from "../../../image/restaurant_icons.webp";
 import Footer from "../Footer";
 import Header from "../Header";
-import PhoneHeader from "../PhoneHeader";
+import ResponsiveMenu from "../ResponsiveBottomMenu";
 const Layout = ({ children }) => {
   const { activeMenu } = useStateContext();
   return (
@@ -28,7 +28,7 @@ const Layout = ({ children }) => {
         >
           {children}
         </main>
-        {activeMenu ? <Footer /> : <PhoneHeader />}
+        {activeMenu ? <Footer /> : <ResponsiveMenu />}
       </Box>
     </>
   );

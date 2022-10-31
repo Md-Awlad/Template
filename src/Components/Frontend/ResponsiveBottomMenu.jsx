@@ -1,13 +1,12 @@
-import { Alert, Badge, Box, Typography } from "@mui/material";
+import { Badge, Box, Typography } from "@mui/material";
 import React from "react";
 import { AiOutlineHome, AiOutlineShoppingCart } from "react-icons/ai";
-import { MdOutlineAddShoppingCart } from "react-icons/md";
-import cookImg from "../../image/Cook.svg";
-import { useStateContext } from "../../Contexts/ContextProvider";
-import CustomDrawer from "../Shared/CustomDrawer";
 import { Link } from "react-router-dom";
+import { useStateContext } from "../../Contexts/ContextProvider";
+import cookImg from "../../image/Cook.svg";
+import CustomDrawer from "../Shared/CustomDrawer";
 
-const PhoneHeader = () => {
+const ResponsiveBottomMenu = () => {
   const { cart, activeMenu, restaurantData } = useStateContext();
   return (
     <>
@@ -62,4 +61,4 @@ const PhoneHeader = () => {
   );
 };
 
-export default PhoneHeader;
+export default ResponsiveBottomMenu;

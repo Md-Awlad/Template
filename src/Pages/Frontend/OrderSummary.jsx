@@ -1,14 +1,14 @@
+import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
 import { Box, Button, Typography } from "@mui/material";
+import { useQuery } from "@tanstack/react-query";
 import React, { useRef } from "react";
 import { BsCheckCircle } from "react-icons/bs";
-import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
 import { useReactToPrint } from "react-to-print";
-import { useQuery } from "@tanstack/react-query";
-import staticAxios from "../../utils/myAxios";
-import { useStateContext } from "../../Contexts/ContextProvider";
-import Header from "../../Components/Frontend/Header";
 import Footer from "../../Components/Frontend/Footer";
-import PhoneHeader from "../../Components/Frontend/PhoneHeader";
+import Header from "../../Components/Frontend/Header";
+import ResponsiveMenu from "../../Components/Frontend/ResponsiveBottomMenu";
+import { useStateContext } from "../../Contexts/ContextProvider";
+import staticAxios from "../../utils/myAxios";
 
 const OrderSummary = () => {
   const { orderId, activeMenu } = useStateContext();
@@ -35,7 +35,7 @@ const OrderSummary = () => {
         },
       }}
     >
-      {activeMenu ? <Header /> : <PhoneHeader />}
+      {activeMenu ? <Header /> : <ResponsiveMenu />}
       <Box
         sx={{
           display: "flex",
