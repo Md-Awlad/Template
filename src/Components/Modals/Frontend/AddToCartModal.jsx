@@ -505,9 +505,7 @@ function AddToCartModal(props) {
                         return (
                           <Button
                             disabled={
-                              !Boolean(
-                                Object.entries(item?.discount_price).length
-                              ) &&
+                              !Boolean(Object.entries(size).length) &&
                               Boolean(
                                 Object.entries(item?.discount_price).length > 2
                               )
