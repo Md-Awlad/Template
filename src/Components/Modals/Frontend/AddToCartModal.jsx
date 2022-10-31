@@ -565,7 +565,7 @@ function AddToCartModal(props) {
                           <Button
                             disabled={
                               !Boolean(Object.entries(size).length) &&
-                              Boolean(Object.entries(item?.price).length > 2)
+                              Boolean(Object.entries(item?.price).length < 2)
                             }
                             key={i}
                             variant="contained"
