@@ -15,7 +15,7 @@ const Layout = ({ children }) => {
 
           // backgroundRepeat: "no-repeat",
           // backgroundSize: "cover",
-          // // height: "100vh",
+          // height: "100vh",
           // backgroundPosition: "center",
           // backgroundColor: "rgba(0, 0, 0, 0.9)",
         }}

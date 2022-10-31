@@ -58,9 +58,9 @@ const Food = ({ id }) => {
           height: { md: "129vh", overflowY: "scroll" },
         }}
       >
-        <Grid container sx={{ padding: 0 }}>
+        <Grid container sx={{ padding: 0, m: 0 }}>
           {food[0]?.foodItems_category?.map((item, index) => (
-            <Grid item sm={6} md={6} sx={{ padding: 0 }}>
+            <Grid item sm={6} md={6}>
               <div
                 key={item.id}
                 onClick={() => handleItemAndToggle(item, index)}
@@ -69,12 +69,19 @@ const Food = ({ id }) => {
                   sx={{
                     minHeight: { xs: 300, sm: "auto", md: "auto" },
                   }}
-                  className="border-2 shadow-md  rounded-lg   cursor-pointer relative"
+                  className=" border-2 shadow-md  rounded-lg   cursor-pointer relative"
                 >
                   {/* <div className="md:flex justify-between"> */}
-                  <Grid container sx={{ p: 0 }}>
+                  <Grid
+                    container
+                    sx={{
+                      "&.MuiGrid-root": {
+                        padding: 0,
+                      },
+                    }}
+                  >
                     {/* image section */}
-                    <Grid item xs={6} sm={5} md={5} sx={{ p: 0, m: 0 }}>
+                    <Grid item xs={12} sm={5} md={5} sx={{ p: 0, m: 0 }}>
                       <div className=" sm:m-0 sm:w-32 sm:h-32 w-full h-44   relative p-0 m-0">
                         <img
                           className=" object-cover w-full h-full  rounded-md p-0 "
@@ -85,7 +92,7 @@ const Food = ({ id }) => {
                       </div>
                     </Grid>
                     {/* details section */}
-                    <Grid item xs={6} sm={7} md={7}>
+                    <Grid item xs={12} sm={7} md={7}>
                       <div className="">
                         <div className="md:flex justify-between">
                           <Typography

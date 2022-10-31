@@ -26,14 +26,14 @@ const ResponsiveBottomMenu = () => {
             {activeMenu ? null : cart?.length ? (
               <CustomDrawer />
             ) : (
-              <Box className="md:w-28 md:h-28 w-20 h-20 border-8 border-neutral rounded-full md:-mt-14 -mt-8 bg-neutral">
+              <Box className="md:w-28 md:h-28 w-20 h-20 border-8 border-neutral rounded-full md:-mt-20 -mt-8 bg-neutral flex items-center cursor-pointer hover:bg-gray-100">
                 <Box
                   className={`w-full h-full ${
                     cart.length ? "border-1 border-red-400" : "border-1"
-                  } rounded-full md:p-2 p-1`}
+                  } rounded-full md:p-2 p-1  cursor-pointer `}
                 >
                   <img
-                    className="md:w-16 md:h-16 w-10 h-10 mx-auto "
+                    className="md:w-14 md:h-14 w-10 h-10  mx-auto   cursor-pointer"
                     src={cookImg}
                     alt=""
                   />
@@ -41,7 +41,7 @@ const ResponsiveBottomMenu = () => {
                     sx={{
                       fontSize: { sm: 11, xs: 8 },
                       fontWeight: 500,
-                      pl: { sm: 1.1, xs: 1 },
+                      textAlign: "center",
                       color: "#F0A70B",
                     }}
                   >
