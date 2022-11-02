@@ -86,17 +86,17 @@ const OrderList = ({ orders, orderRefetch, isLoading, isError }) => {
                   position: "relative",
                 }}
               >
-                <Box sx={{ display: "flex", gap: 1 }}>
+                <Typography
+                  style={{ color: currentColor }}
+                  sx={{ fontSize: 15, fontWeight: 500, textAlign: "center" }}
+                  variant="h6"
+                >
+                  Order ID: {item?.id}
+                </Typography>
+                <Box sx={{ display: "flex", justifyContent: "space-between" }}>
                   <Typography
                     style={{ color: currentColor }}
-                    sx={{ fontSize: 13, fontWeight: 500 }}
-                    variant="h6"
-                  >
-                    Order ID: {item?.id}
-                  </Typography>
-                  <Typography
-                    style={{ color: currentColor }}
-                    sx={{ fontSize: 13, fontWeight: 500 }}
+                    sx={{ fontSize: 14, fontWeight: 500 }}
                     variant="h6"
                   >
                     Order Type:{" "}
@@ -108,12 +108,13 @@ const OrderList = ({ orders, orderRefetch, isLoading, isError }) => {
                   </Typography>
                   <Typography
                     style={{ color: currentColor }}
-                    sx={{ fontSize: 13, fontWeight: 500 }}
+                    sx={{ fontSize: 14, fontWeight: 500 }}
                     variant="h6"
                   >
                     Table No: {item?.table}
                   </Typography>
                 </Box>
+
                 <Box>
                   <Typography
                     sx={{ fontSize: 14, fontWeight: 500 }}
@@ -242,7 +243,7 @@ const OrderList = ({ orders, orderRefetch, isLoading, isError }) => {
                   </Typography>
                 </Box>
                 {/* --action button-- */}
-                <Box className="absolute bottom-3 w-72 flex justify-between items-center">
+                <Box className="absolute bottom-3 w-60 flex justify-between items-center">
                   <form onSubmit={handleSubmit(onSubmit)}>
                     <button>
                       <BsCheck2Circle

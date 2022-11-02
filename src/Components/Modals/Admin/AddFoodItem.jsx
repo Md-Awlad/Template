@@ -43,12 +43,11 @@ const AddFoodItem = ({
   const { currentColor } = useStateContext();
   const [variants, setVariants] = useState(1);
   const [category, setCategory] = useState();
-  const [extra, setExtra] = useState([]);
+  const [extra, setExtra] = useState();
 
   const queryClient = useQueryClient();
 
-  // console.log(extra?.map((a) => Array(a?.id)));
- 
+  console.log(extra?.map((a) => JSON.stringify(a?.id)));
   const {
     register,
     handleSubmit,
@@ -74,21 +73,37 @@ const AddFoodItem = ({
         // console.log(price[item.title]);
       }
     });
-    console.log(price);
-    const payloadForm = {
-      food_name: data?.foodName,
-      price: `'${JSON.stringify(price)}'`,
-      image: data?.image[0],
-      base_ingredient: data?.ingredient,
-      review: data?.review,
-      taste: data?.taste,
-      packaging: data?.package === null ? 0 : data?.package,
-      category: category,
-      customize_food: extra?.map((a) => a?.id),
-    };
+
+    // const payloadForm = {
+    //   food_name: data?.foodName,
+    //   price: `'${JSON.stringify(price)}'`,
+    //   image: data?.image[0],
+    //   base_ingredient: data?.ingredient,
+    //   review: data?.review,
+    //   taste: data?.taste,
+    //   packaging: data?.package === null ? 0 : data?.package,
+    //   category: category,
+    //   customize_food: JSON.stringify(extra?.map((a) => a?.id)),
+    // };
+    const payloadForm = new FormData();
+    payloadForm.append("food_name", data?.foodName);
+    payloadForm.append("price", `'${JSON.stringify(price)}'`);
+    payloadForm.append("image", data?.image[0]);
+    payloadForm.append("base_ingredient", data?.ingredient);
+    // payloadForm.append("review", data?.review);
+    // payloadForm.append("taste", data?.taste);
+    payloadForm.append("category", category);
+    payloadForm.append(
+      "customize_food",
+      extra?.map((a) => JSON.stringify(a?.id))
+    );
+
+    for (let value of payloadForm) {
+      console.log(value);
+    }
 
     toast.promise(
-      myAxios.post("/food/", payloadForm, {
+      myAxios.postForm("/food/", payloadForm, {
         headers: {
           "content-type": "multipart/form-data",
         },
@@ -142,7 +157,6 @@ const AddFoodItem = ({
               Add Size and Price
             </Button>
             {new Array(variants).fill(null)?.map((item, index) => {
-              console.log(variants);
               return (
                 <Box
                   key={index}
@@ -227,9 +241,9 @@ const AddFoodItem = ({
               type="text"
               // value={ingredient}
               // onChange={(value) => setIngredient(value)}
-              error={Boolean(errors.ingredient)}
-              helperText={errors.ingredient && "This ingredient is required *"}
-              {...register("ingredient", { required: true })}
+              // error={Boolean(errors.ingredient)}
+              // helperText={errors.ingredient && "This ingredient is required *"}
+              {...register("ingredient")}
               fullWidth
             />
           </Grid>

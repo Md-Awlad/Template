@@ -230,6 +230,7 @@ const Food = ({ category, foodRefetch }) => {
           }}
           rows={food}
           columns={columns}
+          foodRefetch={foodRefetch}
           rowsPerPageOptions={[5]}
           disableSelectionOnClick
           disableColumnFilter

@@ -4,7 +4,7 @@ import { Doughnut } from "react-chartjs-2";
 import { useStateContext } from "../../../../Contexts/ContextProvider";
 
 const TodaySell = ({ orders }) => {
-  const { currentColor } = useStateContext();
+  const { currentColor, restaurantData } = useStateContext();
 
   const data = {
     labels: [],
@@ -62,14 +62,17 @@ const TodaySell = ({ orders }) => {
           </Box>
         </Box>
         <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-          <Box
-            sx={{
-              backgroundColor: "#F0A70B",
-              width: 12,
-              height: 12,
-              marginTop: 0.5,
-            }}
-          ></Box>
+          {restaurantData?.map((data, index) => (
+            <Box
+              key={index}
+              sx={{
+                backgroundColor: data?.color || "#F0A70B",
+                width: 12,
+                height: 12,
+                marginTop: 0.5,
+              }}
+            ></Box>
+          ))}
           <Box>
             <Typography variant="h6" sx={{ fontSize: "14px" }}>
               Total Amount

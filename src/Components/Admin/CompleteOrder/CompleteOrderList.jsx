@@ -17,7 +17,6 @@ import DeleteConfirmOrder from "../../Modals/Admin/DeleteConfirmOrder";
 const CompleteOrderList = ({ completes, isLoading, isError }) => {
   const { currentColor } = useStateContext();
   const [deleteId, setDeleteId] = useState();
-  console.log(completes);
 
   return (
     <div>
@@ -64,17 +63,17 @@ const CompleteOrderList = ({ completes, isLoading, isError }) => {
                   position: "relative",
                 }}
               >
-                <Box sx={{ display: "flex", gap: 1 }}>
+                <Typography
+                  style={{ color: currentColor }}
+                  sx={{ fontSize: 15, fontWeight: 500, textAlign: "center" }}
+                  variant="h6"
+                >
+                  Order ID: {item?.id}
+                </Typography>
+                <Box sx={{ display: "flex", justifyContent: "space-between" }}>
                   <Typography
                     style={{ color: currentColor }}
-                    sx={{ fontSize: 13, fontWeight: 500 }}
-                    variant="h6"
-                  >
-                    Order ID: {item?.id}
-                  </Typography>
-                  <Typography
-                    style={{ color: currentColor }}
-                    sx={{ fontSize: 13, fontWeight: 500 }}
+                    sx={{ fontSize: 14, fontWeight: 500 }}
                     variant="h6"
                   >
                     Order Type:{" "}
@@ -86,7 +85,7 @@ const CompleteOrderList = ({ completes, isLoading, isError }) => {
                   </Typography>
                   <Typography
                     style={{ color: currentColor }}
-                    sx={{ fontSize: 13, fontWeight: 500 }}
+                    sx={{ fontSize: 14, fontWeight: 500 }}
                     variant="h6"
                   >
                     Table No: {item?.table}
@@ -219,7 +218,7 @@ const CompleteOrderList = ({ completes, isLoading, isError }) => {
                   </Typography>
                 </Box>
                 {/* <--action Button--> */}
-                <Box className="absolute bottom-3 w-72 mr-2">
+                <Box className="absolute bottom-3 w-60 mr-2">
                   <Button
                     sx={{ width: 1 }}
                     color="error"
