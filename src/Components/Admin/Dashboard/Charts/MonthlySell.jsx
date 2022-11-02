@@ -101,13 +101,11 @@ const MonthlySell = () => {
     >
       <Box sx={{ display: "flex", justifyContent: "space-between" }}>
         <Typography variant="h6">Monthly Report</Typography>
-        <FormControl sx={{ width: 90 }}>
+        <FormControl sx={{ width: 120 }}>
           <InputLabel id="demo-simple-select-label">Month</InputLabel>
           <Select
-            sx={{
-              "& .MuiPaper-root": {
-                maxHeight: 100,
-              },
+            MenuProps={{
+              PaperProps: { sx: { maxHeight: 200, maxWidth: 120 } },
             }}
             labelId="demo-simple-select-label"
             id="demo-simple-select"

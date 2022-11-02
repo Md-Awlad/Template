@@ -447,6 +447,7 @@ const Cart = () => {
                 sx={{
                   ":hover": {
                     borderColor: data?.color || "#F0A70B",
+                    color: data?.color || "#000",
                   },
                   width: "100%",
                   height: { md: 35, xs: 50 },

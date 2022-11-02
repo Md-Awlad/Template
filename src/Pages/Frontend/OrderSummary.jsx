@@ -7,7 +7,7 @@ import { useReactToPrint } from "react-to-print";
 import Footer from "../../Components/Frontend/Footer";
 import Header from "../../Components/Frontend/Header";
 import { useStateContext } from "../../Contexts/ContextProvider";
-import { baseURL } from "../../utils/myAxios";
+import baseURL  from "../../utils/myAxios";
 
 const OrderSummary = () => {
   const { orderId, activeMenu } = useStateContext();

@@ -69,6 +69,7 @@ const AddCategory = ({ handleModalClose, categoryRefetch }) => {
             {...register("category", { required: true })}
             fullWidth
           />
+          
         </Grid>
 
         {/* --img-- */}
