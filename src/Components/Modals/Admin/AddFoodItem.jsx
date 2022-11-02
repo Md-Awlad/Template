@@ -92,14 +92,11 @@ const AddFoodItem = ({
     // payloadForm.append("review", data?.review);
     // payloadForm.append("taste", data?.taste);
     payloadForm.append("category", category);
-    payloadForm.append(
-      "customize_food",
-      extra?.map((a) => JSON.stringify(a?.id))
-    );
+    payloadForm.append("custom_food", JSON.stringify(extra?.map((a) => a?.id)));
 
-    for (let value of payloadForm) {
-      console.log(value);
-    }
+    // for (let value of payloadForm) {
+    //   console.log(value);
+    // }
 
     toast.promise(
       myAxios.postForm("/food/", payloadForm, {

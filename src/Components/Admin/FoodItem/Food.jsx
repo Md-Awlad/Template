@@ -13,6 +13,7 @@ const Food = ({ category, foodRefetch }) => {
   const [deleteId, setDeleteId] = useState(null);
 
   const food = category?.foodItems_category?.map((a) => a);
+
   const columns = [
     {
       field: "id",
@@ -80,40 +81,39 @@ const Food = ({ category, foodRefetch }) => {
       },
     },
     {
-      field: "ingredient_name",
+      field: "customize_food",
       headerName: "Extra & Price",
       width: 250,
       headerAlign: "center",
       align: "center",
       renderCell: ({ row }) => {
-        // console.log(row);
+        return (
+          <Tooltip
+            title={row?.customize_food?.map((data) => {
+              console.log(data?.price);
+              return (
+                <div key={data?.id} className="flex gap-5">
+                  <h2>Name: {data?.name}</h2>
+                  <h2>Price: {data?.price}</h2>
+                </div>
+              );
+            })}
+            placement="top"
+          >
+            <div className="overflow-y-auto h-12 w-full mt-7">
+              {row?.customize_food?.map((data) => {
+                console.log(data?.price);
+                return (
+                  <div key={data?.id} className="flex gap-5">
+                    <h2>Name: {data?.name}</h2>
+                    <h2>Price: {data?.price}</h2>
+                  </div>
+                );
+              })}
+            </div>
+          </Tooltip>
+        );
       },
-      // renderCell: ({ value }) => {
-      //   return (
-      //     <Tooltip
-      //       title={Object.keys(value).map((key, index) => {
-      //         return (
-      //           <div key={index} className="flex justify-between w-32">
-      //             <h2>size: {key}</h2>
-      //             <h2>Price: {value[key]}</h2>
-      //           </div>
-      //         );
-      //       })}
-      //       placement="top"
-      //     >
-      //       <div className="overflow-y-auto h-12 w-full mt-7">
-      //         {Object.keys(value).map((key, index) => {
-      //           return (
-      //             <div key={index} className="flex gap-5">
-      //               <h2>size: {key}</h2>
-      //               <h2>Price: {value[key]}</h2>
-      //             </div>
-      //           );
-      //         })}
-      //       </div>
-      //     </Tooltip>
-      //   );
-      // },
     },
     {
       field: "discount_price",
@@ -203,6 +203,7 @@ const Food = ({ category, foodRefetch }) => {
       },
     },
   ];
+
   return (
     <>
       <div style={{ height: 510, width: "100%" }}>
