@@ -47,8 +47,8 @@ const AddFoodItem = ({
 
   const queryClient = useQueryClient();
 
-  console.log(extra?.map((a) => Array(a?.id)));
-
+  // console.log(extra?.map((a) => Array(a?.id)));
+ 
   const {
     register,
     handleSubmit,
@@ -56,6 +56,7 @@ const AddFoodItem = ({
   } = useForm();
 
   const onSubmit = async (data) => {
+    console.log(data);
     console.log(data.package);
     const price = {};
     data.item?.forEach((item) => {
@@ -66,9 +67,9 @@ const AddFoodItem = ({
         console.log(price);
       } else {
         console.log("regular");
-        price["regular"] = item.price;
+        // price["regular"] = item.price;
 
-        // price[item.price] = item.price;
+        price[item.title] = item.price;
         // price[item.title] = "regular";
         // console.log(price[item.title]);
       }
@@ -141,7 +142,7 @@ const AddFoodItem = ({
               Add Size and Price
             </Button>
             {new Array(variants).fill(null)?.map((item, index) => {
-              console.log(index);
+              console.log(variants);
               return (
                 <Box
                   key={index}
@@ -155,13 +156,14 @@ const AddFoodItem = ({
                   <TextField
                     label="Food Size"
                     type="text"
-                    required={index > 0 ? true : false}
+                    required={variants > 1 ? true : false}
                     // error={Boolean(`errors.item.${index + 1}.title`)}
                     // helperText={
                     //   `errors.item.${index + 1}.title` &&
                     //   "Food size is required *"
                     // }
-                    {...register(`item.${index + 1}.title`)}
+
+                    {...register(`${`item.${index + 1}.title`}`)}
                     fullWidth
                   />
                   <TextField
@@ -178,7 +180,9 @@ const AddFoodItem = ({
                   </Button> */}
                   <AiOutlineClose
                     onClick={() => setVariants((variants) => (variants -= 1))}
-                    className="text-5xl cursor-pointer text-red-700"
+                    className={`text-5xl cursor-pointer text-red-700 ${
+                      index === 0 && "hidden"
+                    }`}
                   />
                 </Box>
               );
@@ -235,9 +239,10 @@ const AddFoodItem = ({
               id="package"
               label="Packaging"
               type="number"
+              InputProps={{ inputProps: { min: 0 } }}
               // value={package2}
               // onChange={(value) => setPackage2(value)}
-              {...register("package")}
+              {...register("package", { min: 0 })}
               fullWidth
             />
           </Grid>

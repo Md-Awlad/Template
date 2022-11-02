@@ -34,7 +34,7 @@ const OrderSummary = () => {
       sx={{
         width: 1,
         "@media print": {
-          padding: 3,
+          padding: 4,
           "@page": {
             size: "A4",
           },
@@ -48,6 +48,9 @@ const OrderSummary = () => {
           display: "flex",
           justifyContent: "flex-end",
           marginTop: { md: 7 },
+          "@media print": {
+            p: 5,
+          },
         }}
       >
         <Button
@@ -59,10 +62,10 @@ const OrderSummary = () => {
             display: "flex",
             mt: 5,
             color: "primary.main",
-            // my: 1,
-            // "@media print": {
-            //   display: "none",
-            // },
+
+            "@media print": {
+              display: "none",
+            },
             marginX: { md: 8, xs: 4 },
           }}
         >
