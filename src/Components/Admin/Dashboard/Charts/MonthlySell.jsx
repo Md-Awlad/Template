@@ -65,16 +65,14 @@ const month = [
   },
 ];
 const MonthlySell = () => {
-  const { currentColor } = useStateContext();
+  const { currentColor, restaurantData } = useStateContext();
   const [currentMonth, setCurrentMonth] = useState(moment().format("MM"));
 
   const handleChange = (event) => {
     setCurrentMonth(event.target.value);
   };
 
-  const {
-    data: months = [],
-  } = useQuery(["month", currentMonth], async () => {
+  const { data: months = [] } = useQuery(["month", currentMonth], async () => {
     const res = await myAxios(`/month_performance/${currentMonth}/`);
     return res.data;
   });
@@ -83,9 +81,9 @@ const MonthlySell = () => {
     labels: [],
     datasets: [
       {
-        data: [months.order, months.complete_order, months.sell],
-        backgroundColor: ["#F0A70B", `${currentColor}`, `${currentColor}90`],
-        borderColor: ["#F0A70B", `${currentColor}`, `${currentColor}90`],
+        data: [months.order, months.complete_order],
+        backgroundColor: [`${currentColor}90`, `${currentColor}`],
+        borderColor: [`${currentColor}90`, `${currentColor}`],
         borderWidth: 1,
       },
     ],
@@ -133,7 +131,7 @@ const MonthlySell = () => {
         <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
           <Box
             sx={{ width: 12, height: 12, marginTop: 0.5 }}
-            style={{ backgroundColor: "#F0A70B" }}
+            style={{ backgroundColor: `${currentColor}90` }}
           ></Box>
           <Box>
             <Typography variant="h6" sx={{ fontSize: "14px" }}>
@@ -157,14 +155,17 @@ const MonthlySell = () => {
           </Box>
         </Box>
         <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-          <Box
-            sx={{
-              backgroundColor: `${currentColor}90`,
-              width: 12,
-              height: 12,
-              marginTop: 0.5,
-            }}
-          ></Box>
+          {restaurantData?.map((data, index) => (
+            <Box
+              key={index}
+              sx={{
+                backgroundColor: data?.color || "#F0A70B",
+                width: 12,
+                height: 12,
+                marginTop: 0.5,
+              }}
+            ></Box>
+          ))}
           <Box>
             <Typography variant="h6" sx={{ fontSize: "14px" }}>
               Total Amount
