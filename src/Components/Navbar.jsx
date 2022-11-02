@@ -160,11 +160,13 @@ const Navbar = () => {
                 className="flex items-center gap-2 cursor-pointer p-1 hover:bg-light-gray rounded-lg"
                 onClick={(event) => setUserProfile(event.currentTarget)}
               >
-                <img
-                  className="rounded-full w-8 h-8"
-                  src={data?.logo || avatar}
-                  alt="user-profile"
-                />
+                <div className="flex items-center">
+                  <img
+                    className="rounded-full w-8 h-8 "
+                    src={data?.logo || avatar}
+                    alt=""
+                  />
+                </div>
 
                 <p>
                   <span className="text-gray-400 text-14">Hi,</span>{" "}

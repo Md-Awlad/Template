@@ -89,6 +89,9 @@ const AddFoodItem = ({
     payloadForm.append("food_name", data?.foodName);
     payloadForm.append("price", `'${JSON.stringify(price)}'`);
     payloadForm.append("image", data?.image[0]);
+    if (data?.package) {
+      payloadForm.append("package", data?.package);
+    }
     payloadForm.append("base_ingredient", data?.ingredient);
     // payloadForm.append("review", data?.review);
     // payloadForm.append("taste", data?.taste);
