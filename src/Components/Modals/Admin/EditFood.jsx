@@ -33,11 +33,10 @@ const style = {
 const EditFood = ({ editId, handleModalClose, customizeFood }) => {
   console.log(customizeFood);
   const { currentColor } = useStateContext();
-  const [variants, setVariants] = useState(1);
   const { register, handleSubmit, setValue } = useForm();
   const [extra, setExtra] = useState();
   const queryClient = useQueryClient();
-
+  const [SizeAndPrice, setSizeAndPrice] = useState(1);
   const onSubmit = async (data) => {
     const price = {};
 
@@ -76,16 +75,28 @@ const EditFood = ({ editId, handleModalClose, customizeFood }) => {
 
   const { data } = useQuery([`food`], () => myAxios(`/food/${editId}`), {
     onSuccess: ({ data: foodData = [] }) => {
-      console.log(foodData);
-      foodData.map((data) => {
+      console.log(data?.packaging);
+      foodData.map((data, index) => {
         setValue("foodName", data?.food_name);
         setValue("ingredient", data?.base_ingredient);
+        setSizeAndPrice(Object.entries(data?.price).length);
+        setValue(
+          ` item.${index + 1}.title`,
+          Object.values(data.title).map((value) => console.log(value))
+        );
+        setValue(
+          ` item.${index + 1}.price`,
+          Object.values(data.price).map((value) => value)
+        );
         // setValue("detail", data?.food_detail);
         // setValue("taste", data?.taste);
         setValue("package", data?.packaging);
       });
     },
   });
+  const [variants, setVariants] = useState(SizeAndPrice);
+  // console.log(data.data.length);
+  console.log(data.data);
   return (
     <Modal open={Boolean(editId)} onClose={handleModalClose}>
       <Box

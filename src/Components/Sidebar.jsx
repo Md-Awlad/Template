@@ -1,14 +1,19 @@
 import { Box, Typography } from "@mui/material";
-import { Fragment } from "react";
-import { BsCartCheckFill } from "react-icons/bs";
-import { MdDashboard, MdFastfood, MdOutlineCancel } from "react-icons/md";
-import { TbShoppingCartDiscount } from "react-icons/tb";
-import { FiCheckCircle, FiSettings } from "react-icons/fi";
+import { Fragment, useState } from "react";
 import { AiOutlineCloseCircle, AiOutlineFileProtect } from "react-icons/ai";
-import { Link, NavLink } from "react-router-dom";
-import mainLogo from "../image/logo.png";
-import { useStateContext } from "../Contexts/ContextProvider";
+import { BsCartCheckFill } from "react-icons/bs";
+import { FiCheckCircle, FiSettings } from "react-icons/fi";
 import { HiDocumentReport } from "react-icons/hi";
+import {
+  MdDashboard,
+  MdFastfood,
+  MdOutlineCancel,
+  MdOutlineFoodBank,
+} from "react-icons/md";
+import { TbShoppingCartDiscount } from "react-icons/tb";
+import { Link, NavLink } from "react-router-dom";
+import { useStateContext } from "../Contexts/ContextProvider";
+import mainLogo from "../image/logo.png";
 
 const Sidebar = () => {
   const {
@@ -16,10 +21,17 @@ const Sidebar = () => {
     setActiveMenu,
     screenSize,
     currentColor,
+    currentMode,
     restaurantData,
   } = useStateContext();
   // const [openSubMenu, setOpenSubmenu] = useState(false);
-  const handleCloseSidebar = () => {
+  const [changeMe, setChangeMe] = useState(false);
+  const handleCloseSidebar = (value) => {
+    if (value === "i_am_not_dashboard") {
+      setChangeMe(true);
+    } else {
+      setChangeMe(false);
+    }
     if (activeMenu && screenSize <= 900) {
       setActiveMenu(false);
     }
@@ -80,9 +92,18 @@ const Sidebar = () => {
           <div className="mt-5">
             <NavLink
               to=""
-              onClick={handleCloseSidebar}
+              onClick={() => handleCloseSidebar("i_am_dashboard")}
+              // style={({ isActive }) => ({
+              //   backgroundColor: isActive ? `${currentColor}10` : "",
+              //   color: currentMode === "Dark" ? "#fff" : "#000",
+              // })}
               style={({ isActive }) => ({
-                backgroundColor: isActive ? currentColor : "",
+                backgroundColor: isActive && !changeMe ? currentColor : "",
+                color: !changeMe
+                  ? "#fff"
+                  : currentMode === "Light"
+                  ? "#000"
+                  : "#fff",
               })}
               className={({ isActive }) => (isActive ? activeLink : normalLink)}
             >
@@ -91,18 +112,18 @@ const Sidebar = () => {
             </NavLink>
             <NavLink
               to="customfood"
-              onClick={handleCloseSidebar}
+              onClick={() => handleCloseSidebar("i_am_not_dashboard")}
               style={({ isActive }) => ({
                 backgroundColor: isActive ? currentColor : "",
               })}
               className={({ isActive }) => (isActive ? activeLink : normalLink)}
             >
-              <MdFastfood />
+              <MdOutlineFoodBank className="text-xl" />
               <span className="capitalize ">custom food</span>
             </NavLink>
             <NavLink
               to="fooditem"
-              onClick={handleCloseSidebar}
+              onClick={() => handleCloseSidebar("i_am_not_dashboard")}
               style={({ isActive }) => ({
                 backgroundColor: isActive ? currentColor : "",
               })}
@@ -114,7 +135,7 @@ const Sidebar = () => {
 
             <NavLink
               to="order"
-              onClick={handleCloseSidebar}
+              onClick={() => handleCloseSidebar("i_am_not_dashboard")}
               style={({ isActive }) => ({
                 backgroundColor: isActive ? currentColor : "",
               })}
@@ -125,7 +146,7 @@ const Sidebar = () => {
             </NavLink>
             <NavLink
               to="completeOrder"
-              onClick={handleCloseSidebar}
+              onClick={() => handleCloseSidebar("i_am_not_dashboard")}
               style={({ isActive }) => ({
                 backgroundColor: isActive ? currentColor : "",
               })}
@@ -136,7 +157,7 @@ const Sidebar = () => {
             </NavLink>
             <NavLink
               to="cancelorder"
-              onClick={handleCloseSidebar}
+              onClick={() => handleCloseSidebar("i_am_not_dashboard")}
               style={({ isActive }) => ({
                 backgroundColor: isActive ? currentColor : "",
               })}
@@ -147,7 +168,7 @@ const Sidebar = () => {
             </NavLink>
             <NavLink
               to="discount"
-              onClick={handleCloseSidebar}
+              onClick={() => handleCloseSidebar("i_am_not_dashboard")}
               style={({ isActive }) => ({
                 backgroundColor: isActive ? currentColor : "",
               })}
@@ -158,7 +179,7 @@ const Sidebar = () => {
             </NavLink>
             <NavLink
               to="report"
-              onClick={handleCloseSidebar}
+              onClick={() => handleCloseSidebar("i_am_not_dashboard")}
               style={({ isActive }) => ({
                 backgroundColor: isActive ? currentColor : "",
               })}
@@ -169,7 +190,7 @@ const Sidebar = () => {
             </NavLink>
             <NavLink
               to="surveylist"
-              onClick={handleCloseSidebar}
+              onClick={() => handleCloseSidebar("i_am_not_dashboard")}
               style={({ isActive }) => ({
                 backgroundColor: isActive ? currentColor : "",
               })}
@@ -180,7 +201,7 @@ const Sidebar = () => {
             </NavLink>
             <NavLink
               to="settings"
-              onClick={handleCloseSidebar}
+              onClick={() => handleCloseSidebar("i_am_not_dashboard")}
               style={({ isActive }) => ({
                 backgroundColor: isActive ? currentColor : "",
               })}
@@ -210,20 +231,20 @@ const Sidebar = () => {
           </Box>
           <div className="mt-10 ">
             <NavLink
-              to="/dashboard"
+              to="dashboard"
               onClick={handleCloseSidebar}
               style={({ isActive }) => ({
                 backgroundColor: isActive ? currentColor : "",
               })}
               className={({ isActive }) =>
-                isActive ? smActiveLink : smNormalLink
+                isActive ? `${!changeMe && smActiveLink}` : smNormalLink
               }
             >
               <MdDashboard className="text-3xl" />
             </NavLink>
             <NavLink
               to="customfood"
-              onClick={handleCloseSidebar}
+              onClick={() => handleCloseSidebar("i_am_not_dashboard")}
               style={({ isActive }) => ({
                 backgroundColor: isActive ? currentColor : "",
               })}
@@ -235,7 +256,7 @@ const Sidebar = () => {
             </NavLink>
             <NavLink
               to="fooditem"
-              onClick={handleCloseSidebar}
+              onClick={() => handleCloseSidebar("i_am_not_dashboard")}
               style={({ isActive }) => ({
                 backgroundColor: isActive ? currentColor : "",
               })}
@@ -248,7 +269,7 @@ const Sidebar = () => {
 
             <NavLink
               to="order"
-              onClick={handleCloseSidebar}
+              onClick={() => handleCloseSidebar("i_am_not_dashboard")}
               style={({ isActive }) => ({
                 backgroundColor: isActive ? currentColor : "",
               })}
@@ -260,7 +281,7 @@ const Sidebar = () => {
             </NavLink>
             <NavLink
               to="completeOrder"
-              onClick={handleCloseSidebar}
+              onClick={() => handleCloseSidebar("i_am_not_dashboard")}
               style={({ isActive }) => ({
                 backgroundColor: isActive ? currentColor : "",
               })}
@@ -272,7 +293,7 @@ const Sidebar = () => {
             </NavLink>
             <NavLink
               to="cancelorder"
-              onClick={handleCloseSidebar}
+              onClick={() => handleCloseSidebar("i_am_not_dashboard")}
               style={({ isActive }) => ({
                 backgroundColor: isActive ? currentColor : "",
               })}
@@ -284,7 +305,7 @@ const Sidebar = () => {
             </NavLink>
             <NavLink
               to="discount"
-              onClick={handleCloseSidebar}
+              onClick={() => handleCloseSidebar("i_am_not_dashboard")}
               style={({ isActive }) => ({
                 backgroundColor: isActive ? currentColor : "",
               })}
@@ -296,7 +317,7 @@ const Sidebar = () => {
             </NavLink>
             <NavLink
               to="report"
-              onClick={handleCloseSidebar}
+              onClick={() => handleCloseSidebar("i_am_not_dashboard")}
               style={({ isActive }) => ({
                 backgroundColor: isActive ? currentColor : "",
               })}
@@ -308,7 +329,7 @@ const Sidebar = () => {
             </NavLink>
             <NavLink
               to="surveylist"
-              onClick={handleCloseSidebar}
+              onClick={() => handleCloseSidebar("i_am_not_dashboard")}
               style={({ isActive }) => ({
                 backgroundColor: isActive ? currentColor : "",
               })}
@@ -320,7 +341,7 @@ const Sidebar = () => {
             </NavLink>
             <NavLink
               to="settings"
-              onClick={handleCloseSidebar}
+              onClick={() => handleCloseSidebar("i_am_not_dashboard")}
               style={({ isActive }) => ({
                 backgroundColor: isActive ? currentColor : "",
               })}

@@ -148,6 +148,7 @@ const Cart = () => {
   return (
     <Box
       sx={{
+        bgcolor: "#FAFAEE",
         paddingX: 2,
         paddingY: 2,
         border: "1px solid #ccc",
@@ -158,7 +159,7 @@ const Cart = () => {
       {/* --cartInfo-- */}
 
       {activeMenu ? (
-        <Box className="flex justify-between">
+        <Box className="flex justify-between ">
           <Typography variant="h6" sx={{ textTransform: "uppercase" }}>
             your food
           </Typography>
