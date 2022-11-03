@@ -237,10 +237,6 @@ const Food = ({ category, customizeFood }) => {
           }}
           rows={food}
           columns={columns}
-<<<<<<< HEAD
-          // foodRefetch={foodRefetch}
-=======
->>>>>>> origin/awlad
           rowsPerPageOptions={[5]}
           disableSelectionOnClick
           disableColumnFilter

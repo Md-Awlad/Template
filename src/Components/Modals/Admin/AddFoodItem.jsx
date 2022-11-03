@@ -6,7 +6,7 @@ import {
   InputAdornment,
   InputLabel,
   MenuItem,
-  Select
+  Select,
 } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import { Box } from "@mui/system";
@@ -54,6 +54,10 @@ const AddFoodItem = ({
     formState: { errors },
   } = useForm();
 
+  /**
+   * I'm trying to get the price of the food from the form and store it in a variable called price.
+   * </code>
+   */
   const onSubmit = async (data) => {
     console.log(data);
     console.log(data.package);
@@ -94,8 +98,7 @@ const AddFoodItem = ({
       payloadForm.append("packaging", data?.package);
     }
     payloadForm.append("base_ingredient", data?.ingredient);
-    // payloadForm.append("review", data?.review);
-    // payloadForm.append("taste", data?.taste);
+
     payloadForm.append("category", category);
     payloadForm.append("custom_food", JSON.stringify(extra?.map((a) => a?.id)));
 
@@ -111,7 +114,7 @@ const AddFoodItem = ({
         error: "Error Adding Foods!",
       }
     );
-    queryClient.invalidateQueries("foods");
+    queryClient.invalidateQueries("food");
     handleModalCloseTwo();
     foodRefetch();
   };

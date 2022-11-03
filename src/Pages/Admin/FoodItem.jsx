@@ -34,13 +34,10 @@ const FoodItem = () => {
     return res.data;
   });
 
-  const { data: foods = [], refetch: foodRefetch } = useQuery(
-    ["food"],
-    async () => {
-      const res = await myAxios("/food/");
-      return res.data;
-    }
-  );
+  const { refetch: foodRefetch } = useQuery(["food"], async () => {
+    const res = await myAxios("/food/");
+    return res.data;
+  });
 
   const { data: customizeFood = [] } = useQuery(["customizeFood"], async () => {
     const res = await myAxios("/customize_food/");
