@@ -99,10 +99,6 @@ const AddFoodItem = ({
     payloadForm.append("category", category);
     payloadForm.append("custom_food", JSON.stringify(extra?.map((a) => a?.id)));
 
-    // for (let value of payloadForm) {
-    //   console.log(value);
-    // }
-
     toast.promise(
       myAxios.postForm("/food/", payloadForm, {
         headers: {

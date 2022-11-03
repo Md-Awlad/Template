@@ -1,4 +1,10 @@
-import { Button, Grid, InputAdornment, Modal } from "@mui/material";
+import {
+  Autocomplete,
+  Button,
+  Grid,
+  InputAdornment,
+  Modal,
+} from "@mui/material";
 import TextField from "@mui/material/TextField";
 import { Box } from "@mui/system";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
@@ -24,9 +30,11 @@ const style = {
   pb: 3,
 };
 
-const EditFood = ({ editId, handleModalClose }) => {
+const EditFood = ({ editId, handleModalClose, customizeFood }) => {
+  console.log(customizeFood);
   const { currentColor } = useStateContext();
   const { register, handleSubmit, setValue } = useForm();
+  const [extra, setExtra] = useState();
   const queryClient = useQueryClient();
   // const [SizeAndPrice, setSizeAndPrice] = useState(1);
   const onSubmit = async (data) => {
@@ -59,7 +67,8 @@ const EditFood = ({ editId, handleModalClose }) => {
       image: data?.image[0],
       base_ingredient: data?.ingredient,
       // taste: data?.taste,
-      packaging: data?.packaging,
+      packaging: data?.package,
+      custom_food: JSON.stringify(extra?.map((a) => a?.id)),
     };
 
     const response = await toast.promise(
@@ -212,6 +221,20 @@ const EditFood = ({ editId, handleModalClose }) => {
                 InputLabelProps={{ shrink: true }}
                 {...register("packaging")}
                 fullWidth
+              />
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <Autocomplete
+                multiple
+                disablePortal
+                id="combo-box-demo"
+                options={customizeFood?.map((custom) => custom)}
+                getOptionLabel={(option) => option?.ingredient_name}
+                filterSelectedOptions
+                onChange={(_, newValue) => setExtra(newValue)}
+                renderInput={(params) => (
+                  <TextField {...params} label="Customize Food" fullWidth />
+                )}
               />
             </Grid>
             <div className="flex justify-end">

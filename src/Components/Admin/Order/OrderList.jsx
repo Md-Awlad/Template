@@ -149,7 +149,7 @@ const OrderList = ({ orders, orderRefetch, isLoading, isError }) => {
                 </Box>
                 <hr className="border-[#F0A70B]" />
                 {/* <--- order Items ---> */}
-                <Box className="flex justify-between py-2">
+                <Box className="flex gap-8 py-2">
                   <Box>
                     <Typography
                       style={{ color: currentColor }}
@@ -243,7 +243,7 @@ const OrderList = ({ orders, orderRefetch, isLoading, isError }) => {
                   </Typography>
                 </Box>
                 {/* --action button-- */}
-                <Box className="absolute bottom-3 w-60 flex justify-between items-center">
+                <Box className="absolute bottom-3 w-[17.5rem] flex justify-between items-center">
                   <form onSubmit={handleSubmit(onSubmit)}>
                     <button>
                       <BsCheck2Circle

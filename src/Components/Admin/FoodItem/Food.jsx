@@ -7,7 +7,7 @@ import { useStateContext } from "../../../Contexts/ContextProvider";
 import DeleteFood from "../../Modals/Admin/DeleteFood";
 import EditFood from "../../Modals/Admin/EditFood";
 
-const Food = ({ category, foodRefetch }) => {
+const Food = ({ category, customizeFood }) => {
   const { currentColor, currentMode } = useStateContext();
   const [editId, setEditId] = useState(null);
   const [deleteId, setDeleteId] = useState(null);
@@ -18,14 +18,14 @@ const Food = ({ category, foodRefetch }) => {
     {
       field: "id",
       headerName: "Id",
-      width: 100,
+      width: 80,
       headerAlign: "center",
       align: "center",
     },
     {
       field: "image",
       headerName: "Image",
-      width: 200,
+      width: 100,
       headerAlign: "center",
       align: "center",
       renderCell: (params) => {
@@ -50,7 +50,7 @@ const Food = ({ category, foodRefetch }) => {
     {
       field: "price",
       headerName: "Size & Price",
-      width: 250,
+      width: 230,
       headerAlign: "center",
       align: "center",
       renderCell: ({ value }) => {
@@ -66,7 +66,7 @@ const Food = ({ category, foodRefetch }) => {
             })}
             placement="top"
           >
-            <div className="overflow-y-auto h-12 w-full mt-7">
+            <div className="overflow-y-auto h-12 w-full">
               {Object.keys(value).map((key, index) => {
                 return (
                   <div key={index} className="flex gap-5">
@@ -81,9 +81,9 @@ const Food = ({ category, foodRefetch }) => {
       },
     },
     {
-      field: "customize_food",
+      field: "custom_food",
       headerName: "Extra & Price",
-      width: 250,
+      width: 200,
       headerAlign: "center",
       align: "center",
       renderCell: ({ row }) => {
@@ -100,7 +100,7 @@ const Food = ({ category, foodRefetch }) => {
             })}
             placement="top"
           >
-            <div className="overflow-y-auto h-12 w-full mt-7">
+            <div className="overflow-y-auto h-12 w-full">
               {row?.customize_food?.map((data) => {
                 console.log(data?.price);
                 return (
@@ -118,7 +118,7 @@ const Food = ({ category, foodRefetch }) => {
     {
       field: "discount_price",
       headerName: "Discount Price",
-      width: 208,
+      width: 150,
       headerAlign: "center",
       align: "center",
       renderCell: ({ value }) => {
@@ -156,7 +156,13 @@ const Food = ({ category, foodRefetch }) => {
         }
       },
     },
-    { field: "review", headerName: "Review", width: 130, align: "center" },
+    {
+      field: "review",
+      headerName: "Review",
+      headerAlign: "center",
+      align: "center",
+      width: 80,
+    },
     {
       field: "is_recommended",
       headerName: "Recommended",
@@ -231,7 +237,10 @@ const Food = ({ category, foodRefetch }) => {
           }}
           rows={food}
           columns={columns}
+<<<<<<< HEAD
           // foodRefetch={foodRefetch}
+=======
+>>>>>>> origin/awlad
           rowsPerPageOptions={[5]}
           disableSelectionOnClick
           disableColumnFilter
@@ -257,7 +266,7 @@ const Food = ({ category, foodRefetch }) => {
           editId={editId}
           handleModalClose={() => setEditId(null)}
           categories={food}
-          foodRefetch={foodRefetch}
+          customizeFood={customizeFood}
         />
       )}
       {Boolean(deleteId) && (
