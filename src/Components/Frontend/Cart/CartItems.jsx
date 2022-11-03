@@ -8,19 +8,17 @@ import {
   FormControlLabel,
   Typography,
 } from "@mui/material";
-import { useQuery } from "@tanstack/react-query";
-import React, { useState } from "react";
+import React from "react";
 import { AiOutlineMinus } from "react-icons/ai";
 import { GrAdd } from "react-icons/gr";
 import { MdClose } from "react-icons/md";
 import { useSearchParams } from "react-router-dom";
 import { useStateContext } from "../../../Contexts/ContextProvider";
-import { staticAxios } from "../../../utils/myAxios";
 
 const CartItems = ({ cart, setCart, item }) => {
   const { activeMenu } = useStateContext();
   const [searchParams] = useSearchParams();
-  const [ingredients, setIngredient] = useState([]);
+
   // const addExtra = (extraId, price = 0) => {
   //   setCart(
   //     cart.map((e) => {
@@ -124,7 +122,7 @@ const CartItems = ({ cart, setCart, item }) => {
       );
     }
   };
-
+  console.log(item);
   // const handleDecrement = (item) => {
   //   if (cart.find((i) => i.id === item.id && i.size === item.size)) {
   //     setCart(
@@ -138,12 +136,6 @@ const CartItems = ({ cart, setCart, item }) => {
   //     );
   //   }
   // };
-
-  useQuery([`food`], () => staticAxios(`/food/${item.id}`), {
-    onSuccess: (res) => {
-      res?.data.map((item) => setIngredient(item.customize_food));
-    },
-  });
 
   // --remove item--
   const removeItem = (sId) => {
@@ -230,7 +222,7 @@ const CartItems = ({ cart, setCart, item }) => {
         </div>
       </Box>
       {/* --extra-- */}
-      {Boolean(ingredients?.length) && (
+      {Boolean(item?.customize_food.length) ? (
         <Accordion
           sx={{
             bgcolor: "unset",
@@ -262,7 +254,7 @@ const CartItems = ({ cart, setCart, item }) => {
           </AccordionSummary>
           <AccordionDetails>
             <Typography>
-              {ingredients?.map((extraPrice, index) => (
+              {item?.customize_food?.map((extraPrice, index) => (
                 <Box
                   key={index}
                   sx={{
@@ -300,7 +292,7 @@ const CartItems = ({ cart, setCart, item }) => {
             </Typography>
           </AccordionDetails>
         </Accordion>
-      )}
+      ) : null}
     </Box>
   );
 };

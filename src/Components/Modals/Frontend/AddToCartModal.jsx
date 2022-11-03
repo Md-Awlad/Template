@@ -514,10 +514,10 @@ function AddToCartModal(props) {
                             sx={{
                               width: 1,
                               cursor: "pointer",
-                              // display:
-                              //   Object.values(item?.discount_price).length > 1
-                              //     ? "none"
-                              //     : "block",
+                              display:
+                                Object.values(item?.discount_price).length > 1
+                                  ? "block"
+                                  : "none",
                             }}
                             onClick={(e) => {
                               console.log(e);
@@ -571,9 +571,9 @@ function AddToCartModal(props) {
                               width: 1,
                               cursor: "pointer",
                               display:
-                                Object.values(item?.price).length > 1
-                                  ? "none"
-                                  : "block",
+                                Object.values(item?.price).length > 0
+                                  ? "block"
+                                  : "none",
                             }}
                             onClick={(e) => {
                               console.log(e);
@@ -589,7 +589,7 @@ function AddToCartModal(props) {
                       <Button
                         disabled={
                           !Boolean(Object.entries(size).length) &&
-                          Boolean(Object.entries(item?.price).length > 2)
+                          Boolean(Object.entries(item?.price).length > 1)
                         }
                         variant="contained"
                         sx={{

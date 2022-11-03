@@ -3,7 +3,7 @@ import {
   Button,
   Grid,
   InputAdornment,
-  Modal,
+  Modal
 } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import { Box } from "@mui/system";
@@ -86,7 +86,6 @@ const EditFood = ({ editId, handleModalClose, customizeFood }) => {
     queryClient.invalidateQueries("foods");
     handleModalClose();
   };
-
   const { data } = useQuery([`food`], () => myAxios(`/food/${editId}`), {
     onSuccess: ({ data: foodData = [] }) => {
       console.log(data?.packaging);
@@ -108,6 +107,10 @@ const EditFood = ({ editId, handleModalClose, customizeFood }) => {
       });
     },
   });
+  console.log(data);
+  // Object.values(data?.title).map((value) => console.log(value));
+  data.map((item) => console.log(item));
+
   const [variants, setVariants] = useState(1);
   // console.log(data.data.length);
   console.log(data.data);
