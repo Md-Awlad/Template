@@ -11,35 +11,61 @@ const CancelOrderList = ({ cancelOrder, isLoading, isError }) => {
   console.log(cancelOrder);
   const { currentColor, currentMode } = useStateContext();
   const [deleteId, setDeleteId] = useState();
+  console.log(cancelOrder);
 
   const columns = [
+    // {
+    //   field: "id",
+    //   headerName: "ID",
+    //   width: 80,
+    //   headerAlign: "center",
+    //   align: "center",
+    // },
     {
       field: "id",
-      headerName: "ID",
-      width: 100,
+      headerName: "Order ID",
+      width: 80,
       headerAlign: "center",
       align: "center",
+      renderCell: ({ row }) => {
+        console.log(row);
+        console.log(row?.order_items?.map((data) => data));
+        return (
+          <>
+            {row?.order_items?.map((data, index) => (
+              <Typography>{index === 0 && data?.id}</Typography>
+            ))}
+          </>
+        );
+        // return (
+        //   <Typography>{`${
+        //     row?.order_type === "takeaway"
+        //       ? "Takeaway"
+        //       : row?.order_type === "dine_in" && "Dine In"
+        //   }`}</Typography>
+        // );
+      },
     },
     {
-      field: "name",
+      field: "customer_name",
       headerName: "Customer Name",
       width: 180,
       headerAlign: "center",
       align: "center",
     },
     {
-      field: "email",
+      field: "customer_mail",
       headerName: "Email",
-      width: 180,
+      width: 200,
       headerAlign: "center",
       align: "center",
-      renderCell: ({ row }) => {
-        return (
-          <Tooltip title={row?.email} placement="top">
-            <Typography>{row?.email}</Typography>
-          </Tooltip>
-        );
-      },
+      // renderCell: ({ row }) => {
+      //   return (
+      //     <Tooltip title={row?.customer_mail} placement="top">
+      //       <Typography>{row?.customer_mail}</Typography>
+      //     </Tooltip>
+      //   );
+      // },
     },
     {
       field: "table",
@@ -65,7 +91,7 @@ const CancelOrderList = ({ cancelOrder, isLoading, isError }) => {
       },
     },
     {
-      field: "phone",
+      field: "customer_phone",
       headerName: "Mobile",
       width: 150,
       headerAlign: "center",
@@ -91,22 +117,6 @@ const CancelOrderList = ({ cancelOrder, isLoading, isError }) => {
               })}
             </div>
           </Tooltip>
-        );
-      },
-    },
-    {
-      field: "quantity",
-      headerName: "Quantity",
-      width: 100,
-      headerAlign: "center",
-      align: "center",
-      renderCell: (value) => {
-        return (
-          <div className="w-full h-12 overflow-y-auto my-5 text-center">
-            {value?.row?.note?.order_items?.map((item, index) => {
-              return <h2 key={index}>{item.quantity}</h2>;
-            })}
-          </div>
         );
       },
     },

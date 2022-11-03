@@ -24,7 +24,6 @@ function AddToCartModal(props) {
   console.log(!Boolean(Object.entries(size).length));
   const { activeMenu, setCart, cart, setIngredientId } = useStateContext();
   // This is used only for the example
-  console.log(item);
   const handleChange = (checkbox) => {
     setSize({
       ...size,
@@ -89,7 +88,6 @@ function AddToCartModal(props) {
       setCart([...cart, { ...item, count: 1 }]);
     }
   };
-  console.log(item);
   /**
    * If the item is in the cart, increment the count. If not, add it to the cart with a count of 1.
    */
@@ -163,7 +161,6 @@ function AddToCartModal(props) {
                     ))
                   : Boolean(item?.price)
                   ? Object.entries(item?.price).map((key, index) => {
-                      console.log(item?.price);
                       return (
                         <Stack>
                           {index === 0 && (

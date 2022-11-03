@@ -10,7 +10,7 @@ import { useStateContext } from "../../Contexts/ContextProvider";
 import { baseURL } from "../../utils/myAxios";
 
 const OrderSummary = () => {
-  const { orderId, activeMenu } = useStateContext();
+  const { orderId } = useStateContext();
   const componentRef = useRef();
   const [orderSummary, setOrderSummary] = React.useState([]);
   const handlePrint = useReactToPrint({
@@ -41,8 +41,7 @@ const OrderSummary = () => {
         sx={{
           display: "flex",
           justifyContent: "flex-end",
-          marginTop: { md: 7 },
-          mb:12,
+          marginTop: 7,
           "@media print": {
             p: 5,
           },
@@ -97,7 +96,7 @@ const OrderSummary = () => {
             </Typography>
             <Box>
               <Typography variant="h6" sx={{ fontSize: { xs: 14 } }}>
-                Name: {orderSummary.name}
+                {orderSummary.name && `Name: ${orderSummary?.name}`}
               </Typography>
               <Typography variant="h6" sx={{ fontSize: { xs: 14 } }}>
                 Phone: {orderSummary.phone}
@@ -114,7 +113,7 @@ const OrderSummary = () => {
             </Typography>
             <Box>
               <Typography variant="h6" sx={{ fontSize: { xs: 14 } }}>
-                Name: {orderSummary.name}
+                {orderSummary.name && `Name: ${orderSummary?.name}`}
               </Typography>
               <Typography variant="h6" sx={{ fontSize: { xs: 14 } }}>
                 Phone: {orderSummary.phone}

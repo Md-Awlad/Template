@@ -90,7 +90,6 @@ const Food = ({ category, customizeFood }) => {
         return (
           <Tooltip
             title={row?.customize_food?.map((data) => {
-              console.log(data?.price);
               return (
                 <div key={data?.id} className="flex gap-5">
                   <h2>Name: {data?.name}</h2>
@@ -102,7 +101,6 @@ const Food = ({ category, customizeFood }) => {
           >
             <div className="overflow-y-auto h-12 w-full">
               {row?.customize_food?.map((data) => {
-                console.log(data?.price);
                 return (
                   <div key={data?.id} className="flex gap-5">
                     <h2>Name: {data?.name}</h2>

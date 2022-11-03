@@ -14,7 +14,6 @@ const CompleteOrder = () => {
     const res = await myAxios("/complete-orders/");
     return res.data;
   });
-  console.log(completes);
   return (
     <Container>
       <PageTitle headingText="Complete Order" pageName="Completed" />

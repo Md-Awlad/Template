@@ -39,7 +39,6 @@ const Food = ({ id }) => {
     const res = await staticAxios(`category/${id}`);
     return res.data;
   });
-  console.log(food);
   const handleItemAndToggle = (foodItem, index) => {
     console.log(foodItem);
     setOpen(true);
