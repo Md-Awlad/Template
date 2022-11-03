@@ -75,6 +75,7 @@ const FoodItem = () => {
         categories={categories}
         isLoading={isLoading}
         isError={isError}
+        customizeFood={customizeFood}
       />
     </Container>
   );

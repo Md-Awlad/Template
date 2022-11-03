@@ -60,7 +60,6 @@ const CompleteOrderList = ({ completes, isLoading, isError }) => {
                   py: 1,
                   boxShadow: "0px 0px 5px 0px rgb(0 0 0 / 20%)",
                   border: "1px solid #ccc",
-                  position: "relative",
                 }}
               >
                 <Typography
@@ -218,9 +217,13 @@ const CompleteOrderList = ({ completes, isLoading, isError }) => {
                   </Typography>
                 </Box>
                 {/* <--action Button--> */}
-                <Box className="absolute bottom-3 w-60 mr-2">
+                <Box className="text-center">
                   <Button
-                    sx={{ width: 1 }}
+                    sx={{
+                      width: 1,
+                      position: "relative",
+                      top: 54,
+                    }}
                     color="error"
                     variant="contained"
                     onClick={() => setDeleteId(item.id)}

@@ -7,7 +7,7 @@ import EditFood from "../../Modals/Admin/EditFood";
 import DeleteFood from "../../Modals/Admin/DeleteFood";
 import { Box, Tooltip } from "@mui/material";
 
-const Food = ({ category, foodRefetch }) => {
+const Food = ({ category, foodRefetch, customizeFood }) => {
   const { currentColor, currentMode } = useStateContext();
   const [editId, setEditId] = useState(null);
   const [deleteId, setDeleteId] = useState(null);
@@ -81,7 +81,7 @@ const Food = ({ category, foodRefetch }) => {
       },
     },
     {
-      field: "customize_food",
+      field: "custom_food",
       headerName: "Extra & Price",
       width: 250,
       headerAlign: "center",
@@ -100,7 +100,7 @@ const Food = ({ category, foodRefetch }) => {
             })}
             placement="top"
           >
-            <div className="overflow-y-auto h-12 w-full mt-7">
+            <div className="overflow-y-auto h-12 w-full">
               {row?.customize_food?.map((data) => {
                 console.log(data?.price);
                 return (
@@ -258,6 +258,7 @@ const Food = ({ category, foodRefetch }) => {
           handleModalClose={() => setEditId(null)}
           categories={food}
           foodRefetch={foodRefetch}
+          customizeFood={customizeFood}
         />
       )}
       {Boolean(deleteId) && (
