@@ -39,7 +39,6 @@ const Food = ({ id }) => {
     const res = await staticAxios(`category/${id}`);
     return res.data;
   });
-  console.log(food);
   const handleItemAndToggle = (foodItem, index) => {
     console.log(foodItem);
     setOpen(true);
@@ -68,7 +67,7 @@ const Food = ({ id }) => {
                 <Box
                   sx={{
                     minHeight: { xs: 300, sm: "auto", md: "auto" },
-                    bgcolor:"#FAFAEE"
+                    bgcolor: "#FAFAEE",
                   }}
                   className=" border-2 shadow-md  rounded-lg   cursor-pointer relative"
                 >

@@ -2,7 +2,13 @@ import { Box } from "@mui/system";
 import React from "react";
 import TextField from "@mui/material/TextField";
 import { useForm } from "react-hook-form";
-import { Button, Grid, TextareaAutosize, Typography } from "@mui/material";
+import {
+  Button,
+  Grid,
+  Modal,
+  TextareaAutosize,
+  Typography,
+} from "@mui/material";
 import { toast } from "react-toastify";
 import { useStateContext } from "../../../Contexts/ContextProvider";
 import myAxios from "../../../utils/myAxios";
@@ -24,7 +30,7 @@ const style = {
 };
 
 const RejectOrder = ({ reject, handleModalClose }) => {
-  const { currentColor, currentMode } = useStateContext();
+  const { currentColor } = useStateContext();
   const {
     register,
     handleSubmit,
@@ -60,84 +66,93 @@ const RejectOrder = ({ reject, handleModalClose }) => {
     onSuccess: ({ data: orderFood = [] }) => {
       console.log(orderFood?.id);
       setValue("orderId", orderFood?.id);
-      setValue("email", orderFood?.email);
+      setValue("email", orderFood?.customer_mail);
     },
   });
 
   return (
-    <Box sx={{ ...style }}>
-      <Typography variant="h6" sx={{ mb: 1 }}>
-        Cancel Food
-      </Typography>
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
-        <Grid item xs={12} md={6}>
-          <TextField
-            InputLabelProps={{ shrink: true }}
-            id="orderId"
-            label="Order ID"
-            type="text"
-            {...register("orderId")}
-            fullWidth
-          />
-        </Grid>
-        {/* --email-- */}
-        <Grid item xs={12} md={6}>
-          <TextField
-            InputLabelProps={{ shrink: true }}
-            id="email"
-            label="Email"
-            type="email"
-            {...register("email")}
-            fullWidth
-          />
-        </Grid>
-        {/* --subject-- */}
-        <Grid item xs={12} md={6}>
-          <TextField
-            id="subject"
-            label="Subject"
-            type="text"
-            error={Boolean(errors.subject)}
-            helperText={errors.subject && "This subject is required *"}
-            {...register("subject")}
-            fullWidth
-          />
-        </Grid>
-        {/* --message-- */}
-        <Grid item xs={12} md={6}>
-          <TextareaAutosize
-            aria-label="minimum height"
-            minRows={3}
-            placeholder="Write your opinion/suggestion"
-            style={{
-              width: "100%",
-              border: "1px solid #ccc",
-              borderRadius: "5px",
-              padding: "12px",
-            }}
-            error={Boolean(errors.message)}
-            helperText={errors.message && "This message is required *"}
-            {...register("message")}
-          />
-        </Grid>
-        <Box sx={{ display: "flex", justifyContent: "flex-end", gap: 2 }}>
-          <Button
-            type="submit"
-            style={{ backgroundColor: currentColor }}
-            variant="contained"
-          >
-            Rejected
-          </Button>
-          <Button
-            onClick={handleModalClose}
-            style={{ backgroundColor: currentColor }}
-            variant="contained"
-          >
-            Close
-          </Button>
-        </Box>
-      </form>
-    </Box>
+    <Modal open={Boolean(reject)} onClose={handleModalClose}>
+      <Box
+        sx={{
+          ...style,
+          width: { sm: 700, xs: 400 },
+          height: 500,
+          overflowY: "scroll",
+        }}
+      >
+        <Typography variant="h6" sx={{ mb: 1 }}>
+          Cancel Food
+        </Typography>
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+          <Grid item xs={12} md={6}>
+            <TextField
+              InputLabelProps={{ shrink: true }}
+              id="orderId"
+              label="Order ID"
+              type="text"
+              {...register("orderId")}
+              fullWidth
+            />
+          </Grid>
+          {/* --email-- */}
+          <Grid item xs={12} md={6}>
+            <TextField
+              InputLabelProps={{ shrink: true }}
+              id="email"
+              label="Email"
+              type="email"
+              {...register("email")}
+              fullWidth
+            />
+          </Grid>
+          {/* --subject-- */}
+          <Grid item xs={12} md={6}>
+            <TextField
+              id="subject"
+              label="Subject"
+              type="text"
+              error={Boolean(errors.subject)}
+              helperText={errors.subject && "This subject is required *"}
+              {...register("subject")}
+              fullWidth
+            />
+          </Grid>
+          {/* --message-- */}
+          <Grid item xs={12} md={6}>
+            <TextareaAutosize
+              aria-label="minimum height"
+              minRows={3}
+              placeholder="Write your opinion/suggestion"
+              style={{
+                width: "100%",
+                border: "1px solid #ccc",
+                borderRadius: "5px",
+                padding: "12px",
+              }}
+              error={Boolean(errors.message)}
+              helperText={errors.message && "This message is required *"}
+              {...register("message")}
+            />
+          </Grid>
+          <Box sx={{ display: "flex", justifyContent: "flex-end", gap: 2 }}>
+            <Button
+              type="submit"
+              style={{ backgroundColor: currentColor }}
+              variant="contained"
+            >
+              Rejected
+            </Button>
+            <Button
+              onClick={handleModalClose}
+              style={{ backgroundColor: currentColor }}
+              variant="contained"
+            >
+              Close
+            </Button>
+          </Box>
+        </form>
+      </Box>
+    </Modal>
   );
 };
 

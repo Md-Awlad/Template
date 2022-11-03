@@ -77,137 +77,104 @@ const OrderList = ({ orders, orderRefetch, isLoading, isError }) => {
                 key={item.id}
                 className="space-y-1 dark:bg-secondary-dark-bg dark:text-neutral"
                 sx={{
-                  height: 350,
-                  overflowY: "scroll",
-                  px: 2,
+                  px: 1,
                   py: 1,
                   boxShadow: "0px 0px 5px 0px rgb(0 0 0 / 20%)",
                   border: "1px solid #ccc",
-                  position: "relative",
                 }}
               >
-                <Typography
-                  style={{ color: currentColor }}
-                  sx={{ fontSize: 15, fontWeight: 500, textAlign: "center" }}
-                  variant="h6"
-                >
-                  Order ID: {item?.id}
-                </Typography>
-                <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+                <Box sx={{ height: 300, overflowY: "scroll", px: 1 }}>
                   <Typography
                     style={{ color: currentColor }}
-                    sx={{ fontSize: 14, fontWeight: 500 }}
+                    sx={{ fontSize: 15, fontWeight: 500, textAlign: "center" }}
                     variant="h6"
                   >
-                    Order Type:{" "}
-                    {`${
-                      item?.order_type === "takeaway"
-                        ? "Takeaway"
-                        : item?.order_type === "dine_in" && "Dine In"
-                    }`}
+                    Order ID: {item?.id}
                   </Typography>
-                  <Typography
-                    style={{ color: currentColor }}
-                    sx={{ fontSize: 14, fontWeight: 500 }}
-                    variant="h6"
+                  <Box
+                    sx={{ display: "flex", justifyContent: "space-between" }}
                   >
-                    Table No: {item?.table}
-                  </Typography>
-                </Box>
-
-                <Box>
-                  <Typography
-                    sx={{ fontSize: 14, fontWeight: 500 }}
-                    variant="h6"
-                  >
-                    Name: {item?.customer_name}
-                  </Typography>
-                  <Typography
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: 1,
-                      fontSize: 14,
-                      fontWeight: 500,
-                    }}
-                    variant="h6"
-                  >
-                    <FaPhoneAlt /> {item?.customer_phone}
-                  </Typography>
-                  <Typography
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: 1,
-                      fontSize: 14,
-                      fontWeight: 500,
-                    }}
-                    variant="h6"
-                  >
-                    <MdEmail /> {item?.customer_mail}
-                  </Typography>
-                </Box>
-                <hr className="border-[#F0A70B]" />
-                {/* <--- order Items ---> */}
-                <Box className="flex gap-8 py-2">
-                  <Box>
                     <Typography
                       style={{ color: currentColor }}
                       sx={{ fontSize: 14, fontWeight: 500 }}
                       variant="h6"
                     >
-                      Order Items
+                      {item?.order_type &&
+                        `Order Type: ${
+                          item?.order_type === "takeaway"
+                            ? "Takeaway"
+                            : item?.order_type === "dine_in" && "Dine In"
+                        }`}
                     </Typography>
-                    {item?.order_items?.map((data, index) => (
-                      <Typography
-                        key={index}
-                        sx={{ fontSize: 14, fontWeight: 500 }}
-                        variant="h6"
-                      >
-                        {data?.food_name}
-                      </Typography>
-                    ))}
-                  </Box>
-                  {/* --extra-- */}
-                  <Box>
                     <Typography
                       style={{ color: currentColor }}
                       sx={{ fontSize: 14, fontWeight: 500 }}
                       variant="h6"
                     >
-                      Extra Ingred..
+                      {item?.table && `Table: ${item?.table}`}
                     </Typography>
-
-                    {item?.order_items?.map((data, index) => (
-                      <Typography
-                        key={index}
-                        sx={{ fontSize: 14, fontWeight: 500 }}
-                        variant="h6"
-                      >
-                        {data?.extra?.map(
-                          (extra, index) =>
-                            `${extra?.name}
-                        ${data?.extra?.length - 1 === index ? "" : ","}
-                        `
-                        )}
-                      </Typography>
-                    ))}
                   </Box>
-                  {/* --quantity-- */}
+
                   <Box>
                     <Typography
-                      style={{ color: currentColor }}
+                      sx={{ fontSize: 14, fontWeight: 500 }}
+                      variant="h6"
+                    >
+                      {item?.customer_name && `Name: ${item?.customer_name}`}
+                    </Typography>
+                    <Typography
                       sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 1,
                         fontSize: 14,
                         fontWeight: 500,
                       }}
                       variant="h6"
                     >
-                      Quantity
+                      <FaPhoneAlt /> {item?.customer_phone}
                     </Typography>
-                    {item?.order_items?.map((data, index) => (
+                    <Typography
+                      sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 1,
+                        fontSize: 14,
+                        fontWeight: 500,
+                      }}
+                      variant="h6"
+                    >
+                      <MdEmail /> {item?.customer_mail}
+                    </Typography>
+                  </Box>
+                  <hr className="border-[#F0A70B]" />
+                  {/* <--- order Items ---> */}
+                  <Box className="flex gap-8 py-2">
+                    <Box>
                       <Typography
-                        key={index}
+                        style={{ color: currentColor }}
+                        sx={{ fontSize: 14, fontWeight: 500 }}
+                        variant="h6"
+                      >
+                        Order Items
+                      </Typography>
+                      {item?.order_items?.map((data, index) => (
+                        <Typography
+                          key={index}
+                          sx={{
+                            fontSize: 14,
+                            fontWeight: 500,
+                          }}
+                          variant="h6"
+                        >
+                          {data?.food_name}
+                        </Typography>
+                      ))}
+                    </Box>
+                    {/* --extra-- */}
+                    <Box>
+                      <Typography
+                        style={{ color: currentColor }}
                         sx={{
                           fontSize: 14,
                           fontWeight: 500,
@@ -215,35 +182,76 @@ const OrderList = ({ orders, orderRefetch, isLoading, isError }) => {
                         }}
                         variant="h6"
                       >
-                        {data?.quantity}
+                        Extra
                       </Typography>
-                    ))}
+
+                      {item?.order_items?.map((data, index) => (
+                        <Typography
+                          key={index}
+                          sx={{ fontSize: 14, fontWeight: 500 }}
+                          variant="h6"
+                        >
+                          {data?.extra?.map(
+                            (extra, index) =>
+                              `${extra?.name}
+                        ${data?.extra?.length - 1 === index ? "" : ","}
+                        `
+                          )}
+                        </Typography>
+                      ))}
+                    </Box>
+                    {/* --quantity-- */}
+                    <Box>
+                      <Typography
+                        style={{ color: currentColor }}
+                        sx={{
+                          fontSize: 14,
+                          fontWeight: 500,
+                        }}
+                        variant="h6"
+                      >
+                        Quantity
+                      </Typography>
+                      {item?.order_items?.map((data, index) => (
+                        <Typography
+                          key={index}
+                          sx={{
+                            fontSize: 14,
+                            fontWeight: 500,
+                            textAlign: "center",
+                          }}
+                          variant="h6"
+                        >
+                          {data?.quantity}
+                        </Typography>
+                      ))}
+                    </Box>
+                  </Box>
+                  <hr className="border-[#F0A70B]" />
+                  {/* <---- amount ----> */}
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Typography
+                      sx={{ fontSize: 18, fontWeight: 500 }}
+                      variant="h6"
+                    >
+                      Total Amount:
+                    </Typography>
+                    <Typography
+                      sx={{ fontSize: 18, fontWeight: 500 }}
+                      variant="h6"
+                    >
+                      {item?.price} ৳
+                    </Typography>
                   </Box>
                 </Box>
-                <hr className="border-[#F0A70B]" />
-                {/* <---- amount ----> */}
-                <Box
-                  sx={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                  }}
-                >
-                  <Typography
-                    sx={{ fontSize: 18, fontWeight: 500 }}
-                    variant="h6"
-                  >
-                    Total Amount:
-                  </Typography>
-                  <Typography
-                    sx={{ fontSize: 18, fontWeight: 500 }}
-                    variant="h6"
-                  >
-                    {item?.price} ৳
-                  </Typography>
-                </Box>
                 {/* --action button-- */}
-                <Box className="absolute bottom-3 w-[17.5rem] flex justify-between items-center">
+                <Box className="flex justify-between items-center mt-2">
                   <form onSubmit={handleSubmit(onSubmit)}>
                     <button>
                       <BsCheck2Circle

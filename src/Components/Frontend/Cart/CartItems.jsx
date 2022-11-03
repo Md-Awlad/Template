@@ -13,14 +13,11 @@ import React, { useState } from "react";
 import { AiOutlineMinus } from "react-icons/ai";
 import { GrAdd } from "react-icons/gr";
 import { MdClose } from "react-icons/md";
-import { useSearchParams } from "react-router-dom";
-import { useStateContext } from "../../../Contexts/ContextProvider";
 import { staticAxios } from "../../../utils/myAxios";
 
 const CartItems = ({ cart, setCart, item }) => {
-  const { activeMenu } = useStateContext();
-  const [searchParams] = useSearchParams();
   const [ingredients, setIngredient] = useState([]);
+
   // const addExtra = (extraId, price = 0) => {
   //   setCart(
   //     cart.map((e) => {
@@ -40,35 +37,29 @@ const CartItems = ({ cart, setCart, item }) => {
   //   );
   // };
   const addExtra = (extraId, price = 0) => {
-    setCart(
-      cart.map((e) => {
-        //e.id === item.id && e.size === item.size
-        if (e === item) {
-          const existing = e?.extra && Boolean(e.extra[extraId]);
-
-          if (Object.keys(e.extra).length) {
-            Object.keys(e.extra).map((ex) => {
-              if (parseInt(ex) === extraId) {
-                delete e.extra[extraId];
-              } else {
-                e["extra"] = {
-                  ...e?.extra,
-                  [extraId]: price,
-                };
-              }
-            });
+    const items = cart.map((e) => {
+      if (Object.keys(e.extra).length) {
+        for (const key in e.extra) {
+          if (parseInt(key) === extraId) {
+            delete e.extra[extraId];
+            break;
           } else {
             e["extra"] = {
+              ...e?.extra,
               [extraId]: price,
             };
           }
-          return e;
-        } else {
-          return e;
         }
-      })
-    );
+      } else {
+        e["extra"] = {
+          [extraId]: price,
+        };
+      }
+      return e;
+    });
+    setCart(items);
   };
+  // console.log(cart);
 
   const handleIncrement = (item) => {
     if (cart.find((i) => i === item && Object.keys(item?.extra))) {

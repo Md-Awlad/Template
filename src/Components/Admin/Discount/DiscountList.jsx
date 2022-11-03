@@ -11,6 +11,7 @@ import { Box } from "@mui/system";
 import LoaderSource from "../../Loaders/LoaderSource";
 
 const DiscountList = ({ discounts, isLoading }) => {
+  console.log(discounts);
   const { currentColor, currentMode } = useStateContext();
   const [editId, setEditId] = useState(null);
   const [deleteId, setDeleteId] = useState(null);
@@ -37,6 +38,7 @@ const DiscountList = ({ discounts, isLoading }) => {
       headerAlign: "center",
       align: "center",
       renderCell: ({ row }) => {
+        console.log(row);
         return (
           <Tooltip
             title={row?.notice.length >= 15 ? row?.notice : ""}

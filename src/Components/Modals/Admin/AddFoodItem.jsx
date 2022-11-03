@@ -110,7 +110,7 @@ const AddFoodItem = ({
         error: "Error Adding Foods!",
       }
     );
-    queryClient.invalidateQueries("foods");
+    queryClient.invalidateQueries("food");
     handleModalCloseTwo();
     foodRefetch();
   };

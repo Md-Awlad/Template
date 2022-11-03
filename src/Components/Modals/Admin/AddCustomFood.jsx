@@ -37,7 +37,6 @@ const AddCustomFood = ({ handleModalClose, categories, foods }) => {
       ingredient_name: data?.extraName,
       price: data?.extraPrice,
     };
-    console.log(payload);
 
     const response = await toast.promise(
       myAxios.post("/customize_food/", payload),
