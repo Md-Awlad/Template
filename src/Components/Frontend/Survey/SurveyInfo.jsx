@@ -23,10 +23,10 @@ import {
   getOrderInfo,
   getPhoneInfo,
 } from "../../../utils/localStorages";
-import myAxios, { staticAxios } from "../../../utils/myAxios";
+import { staticAxios } from "../../../utils/myAxios";
 
 const SurveyInfo = () => {
-  const { orderId } = useStateContext();
+  const { restaurantData } = useStateContext();
   const [taste, setTaste] = useState(null);
   const [review, setReview] = useState(null);
   const [environment, setEnvironment] = useState(null);
@@ -50,7 +50,6 @@ const SurveyInfo = () => {
     register,
     handleSubmit,
     reset,
-    setValue,
     formState: { errors },
   } = useForm();
 
@@ -92,7 +91,6 @@ const SurveyInfo = () => {
       setSource(null);
     }
   };
-
 
   return (
     <Box>
@@ -792,24 +790,28 @@ const SurveyInfo = () => {
               {...register("message")}
             />
           </Grid>
-          <Button
-            type="submit"
-            variant="outlined"
-            sx={{
-              ":hover": {
-                borderColor: "#F0A70B",
-              },
-              width: "100%",
-              height: { md: 35, xs: 50 },
-              backgroundColor: "#F0A70B",
-              borderColor: "#F0A70B",
-              color: "#000",
-              borderRadius: "20px",
-              fontSize: { xs: 17, md: 14 },
-            }}
-          >
-            submit
-          </Button>
+          {restaurantData?.map((data, index) => (
+            <Button
+              key={index}
+              type="submit"
+              variant="outlined"
+              sx={{
+                ":hover": {
+                  borderColor: data?.color || "#F0A70B",
+                  color: data?.color ? "#000" : "#fff",
+                },
+                width: "100%",
+                height: { md: 35, xs: 50 },
+                backgroundColor: data?.color || "#F0A70B",
+                borderColor: data?.color || "#F0A70B",
+                color: data?.color ? "#fff" : "#000",
+                borderRadius: "20px",
+                fontSize: { xs: 17, md: 14 },
+              }}
+            >
+              submit
+            </Button>
+          ))}
         </Box>
       </form>
     </Box>

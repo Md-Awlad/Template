@@ -69,7 +69,7 @@ const CompleteOrderList = ({ completes, isLoading, isError }) => {
                 >
                   Order ID: {item?.id}
                 </Typography>
-                <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+                <Box sx={{ display: "flex", gap: 8 }}>
                   <Typography
                     style={{ color: currentColor }}
                     sx={{ fontSize: 14, fontWeight: 500 }}
@@ -221,8 +221,6 @@ const CompleteOrderList = ({ completes, isLoading, isError }) => {
                   <Button
                     sx={{
                       width: 1,
-                      position: "relative",
-                      top: 54,
                     }}
                     color="error"
                     variant="contained"
