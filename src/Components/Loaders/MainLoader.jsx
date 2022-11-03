@@ -1,4 +1,4 @@
-import { ThreeCircles } from "react-loader-spinner";
+import LoaderSource from "./LoaderSource";
 
 const MainLoader = () => {
   const loaderStyle = {
@@ -10,18 +10,14 @@ const MainLoader = () => {
   };
   return (
     <div style={loaderStyle}>
-      <ThreeCircles
-        height="50"
-        width="50"
-        color="#F0A70B"
-        wrapperStyle={{}}
-        wrapperClass=""
-        visible={true}
-        ariaLabel="three-circles-rotating"
-        outerCircleColor=""
-        innerCircleColor=""
-        middleCircleColor=""
-      />
+      {/* <img className="w-20" src={Infinity} alt="Loading..." /> */}
+      <LoaderSource />
+      {/* <CircularProgress
+        sx={{
+          color: "#000",
+        }}
+        size={100}
+      /> */}
     </div>
   );
 };

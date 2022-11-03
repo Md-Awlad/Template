@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Navigate, useRoutes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -5,8 +6,9 @@ import "./App.css";
 import ChangePassword from "./Components/ChangePassword";
 import NavLayout from "./Components/Layouts/NavLayout";
 import ThemeLayout from "./Components/Layouts/ThemeLayout";
-import QueryLoader from "./Components/Loaders/QueryLoader";
+import MainLoader from "./Components/Loaders/MainLoader";
 import NotFound from "./Components/NotFound/NotFound";
+import { SuspenseLoader } from "./Components/Shared/SharedStyles";
 import { useStateContext } from "./Contexts/ContextProvider";
 import {
   CancelOrder,
@@ -29,7 +31,21 @@ import CartInfo from "./Pages/Frontend/CartInfo";
 
 const App = () => {
   const { currentMode, currentUser, isLoading, orderId } = useStateContext();
-
+  useEffect(() => {
+    if (
+      process.env.NODE_ENV === "production" ||
+      process.env.REACT_APP_ENV === "STAGING"
+    ) {
+      // supress the default console functionality
+      // eslint-disable-next-line no-global-assign
+      console = {};
+      // supress all type of consoles
+      console.log = function () {};
+      console.info = function () {};
+      console.warn = function () {};
+      console.error = function () {};
+    }
+  }, []);
   const routes = [
     {
       path: "",
@@ -125,8 +141,9 @@ const App = () => {
     <ThemeLayout>
       <div className={currentMode === "Dark" ? "dark" : ""}>
         <div className="overflow-hidden">
-          {isLoading ? <QueryLoader /> : allRoutes}
-          {/* {allRoutes} */}
+          <SuspenseLoader>
+            {isLoading ? <MainLoader /> : allRoutes}
+          </SuspenseLoader>
         </div>
         <ToastContainer
           position="top-right"

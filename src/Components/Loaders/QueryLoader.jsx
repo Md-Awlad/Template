@@ -1,9 +1,9 @@
-import gif from "../../image/loader/loader.gif";
 import LoaderSource from "./LoaderSource";
 
 const QueryLoader = () => {
   const loaderStyle = {
-    height: "100vh",
+    width: "100%",
+    height: "100%",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
@@ -11,8 +11,9 @@ const QueryLoader = () => {
   };
   return (
     <div style={loaderStyle}>
-      <img className="w-20" src={gif} alt="Loading..." />
-      {/* <LoaderSource /> */}
+      {/* <img className="w-20" src={gif} alt="Loading..." /> */}
+
+      <LoaderSource />
       {/* <CircularProgress
         sx={{
           color: "#000",

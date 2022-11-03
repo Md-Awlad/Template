@@ -1,11 +1,11 @@
 import { Box, Tooltip } from "@mui/material";
-import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import React, { useState } from "react";
 import { MdModeEdit } from "react-icons/md";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { useStateContext } from "../../../Contexts/ContextProvider";
 import DeleteFood from "../../Modals/Admin/DeleteFood";
 import EditFood from "../../Modals/Admin/EditFood";
+import CustomDataGrid from "../../Shared/CustomDataGrid";
 
 const Food = ({ category, customizeFood }) => {
   const { currentColor, currentMode } = useStateContext();
@@ -213,7 +213,7 @@ const Food = ({ category, customizeFood }) => {
   return (
     <>
       <div style={{ height: 510, width: "100%" }}>
-        <DataGrid
+        {/* <DataGrid
           sx={{
             color: currentMode === "Dark" ? "#fff" : "#000",
             "& .MuiIconButton-root": {
@@ -237,9 +237,11 @@ const Food = ({ category, customizeFood }) => {
           }}
           rows={food}
           columns={columns}
-          rowsPerPageOptions={[5]}
+          onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
+          rowsPerPageOptions={[5, 7, 10, 20, 35, 50, 70, 100, 200]}
           disableSelectionOnClick
           disableColumnFilter
+          pageSize={10}
           disableColumnSelector
           disableDensitySelector
           components={{ Toolbar: GridToolbar }}
@@ -255,7 +257,8 @@ const Food = ({ category, customizeFood }) => {
               },
             },
           }}
-        />
+        /> */}
+        <CustomDataGrid rows={food} columns={columns} />
       </div>
       {Boolean(editId) && (
         <EditFood

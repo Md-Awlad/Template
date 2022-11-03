@@ -3,13 +3,14 @@ import {
   Button,
   Grid,
   InputAdornment,
-  Modal
+  Modal,
 } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import { Box } from "@mui/system";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import { AiOutlineClose } from "react-icons/ai";
 import { FiUpload } from "react-icons/fi";
 import { toast } from "react-toastify";
 import { useStateContext } from "../../../Contexts/ContextProvider";
@@ -39,7 +40,7 @@ const EditFood = ({ editId, handleModalClose, customizeFood }) => {
   // const [SizeAndPrice, setSizeAndPrice] = useState(1);
   const onSubmit = async (data) => {
     const price = {};
-
+    console.log(data);
     // data.item?.forEach((item) => {
     //   price[item.title] = item.price;
     // });
@@ -49,10 +50,12 @@ const EditFood = ({ editId, handleModalClose, customizeFood }) => {
         const a = item?.title?.replace(/"/g, " inch");
         price[a] = item.price;
         console.log(price);
+      } else if (variants > 1) {
+        price[item.title] = item.price;
       } else {
         console.log("regular");
-        // price["regular"] = item.price;
-        price[item.title] = item.price;
+        price["regular"] = item.price;
+        // price[item.title] = item.price;
         // price[item.title] = "regular";
         // console.log(price[item.title]);
       }
@@ -60,18 +63,28 @@ const EditFood = ({ editId, handleModalClose, customizeFood }) => {
 
     console.log(price);
 
-    const payloadForm = {
-      food_name: data?.foodName,
-      // food_detail: data?.detail,
-      price: JSON.stringify(price),
-      image: data?.image[0],
-      base_ingredient: data?.ingredient,
-      // taste: data?.taste,
-      packaging: data?.package,
-      custom_food: JSON.stringify(extra?.map((a) => a?.id)),
-    };
+    // const payloadForm = {
+    //   food_name: data?.foodName,
+    //   // food_detail: data?.detail,
+    //   price: JSON.stringify(price),
+    //   image: data?.image[0],
+    //   base_ingredient: data?.ingredient,
+    //   // taste: data?.taste,
 
-    const response = await toast.promise(
+    //   custom_food: JSON.stringify(extra?.map((a) => a?.id)),
+    // };
+    const payloadForm = new FormData();
+    payloadForm.append("food_name", data?.foodName);
+    payloadForm.append("price", `'${JSON.stringify(price)}'`);
+    payloadForm.append("image", data?.image[0]);
+    if (data?.package) {
+      payloadForm.append("packaging", data?.package);
+    }
+    payloadForm.append("base_ingredient", data?.ingredient);
+
+    payloadForm.append("custom_food", JSON.stringify(extra?.map((a) => a?.id)));
+
+    await toast.promise(
       myAxios.patch(`/food/${editId}/`, payloadForm, {
         headers: {
           "content-type": "multipart/form-data",
@@ -83,37 +96,41 @@ const EditFood = ({ editId, handleModalClose, customizeFood }) => {
         error: "Error Adding Foods!",
       }
     );
-    queryClient.invalidateQueries("foods");
+    queryClient.invalidateQueries("food");
     handleModalClose();
   };
   const { data } = useQuery([`food`], () => myAxios(`/food/${editId}`), {
     onSuccess: ({ data: foodData = [] }) => {
-      console.log(data?.packaging);
       foodData.map((data, index) => {
         setValue("foodName", data?.food_name);
         setValue("ingredient", data?.base_ingredient);
         // setSizeAndPrice(Object.entries(data?.price).length);
         setValue(
           ` item.${index + 1}.title`,
-          Object.values(data.title).map((value) => console.log(value))
+          data?.title && Object.entries(data?.title).map((key) => key[0])
         );
         setValue(
           ` item.${index + 1}.price`,
-          Object.values(data.price).map((value) => value)
+          data?.price && Object.entries(data?.price).map((key) => key[1])
         );
+
         // setValue("detail", data?.food_detail);
         // setValue("taste", data?.taste);
-        setValue("package", data?.packaging);
+        setValue("packaging", data?.packaging);
       });
     },
   });
-  console.log(data);
+  // data.map((item) => {
+  //   if (item.price) {
+  //     Object.entries(item.price).map((key) => console.log(key[0], key[1]));
+  //   }
+  // });
   // Object.values(data?.title).map((value) => console.log(value));
-  data.map((item) => console.log(item));
+  // data.map((item) => console.log(item));
 
   const [variants, setVariants] = useState(1);
   // console.log(data.data.length);
-  console.log(data.data);
+  console.log(data);
   return (
     <Modal open={Boolean(editId)} onClose={handleModalClose}>
       <Box
@@ -166,10 +183,18 @@ const EditFood = ({ editId, handleModalClose, customizeFood }) => {
                       fullWidth
                     />
                     <TextField
+                      required
                       label="Food Price"
                       type="number"
+                      InputProps={{ inputProps: { min: 0 } }}
                       {...register(`item.${index + 1}.price`)}
                       fullWidth
+                    />
+                    <AiOutlineClose
+                      onClick={() => setVariants((variants) => (variants -= 1))}
+                      className={`text-5xl cursor-pointer text-red-700 ${
+                        index === 0 && "hidden"
+                      }`}
                     />
                   </Box>
                 );
@@ -221,6 +246,7 @@ const EditFood = ({ editId, handleModalClose, customizeFood }) => {
                 id="package"
                 label="Packaging"
                 type="number"
+                InputProps={{ inputProps: { min: 0 } }}
                 InputLabelProps={{ shrink: true }}
                 {...register("packaging")}
                 fullWidth

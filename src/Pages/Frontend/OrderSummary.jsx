@@ -18,16 +18,10 @@ const OrderSummary = () => {
   });
 
   useQuery(["orderSummary"], async () => {
-    // const res = await staticAxios(`/order_summery/${orderId}/`);
     fetch(`${baseURL}/order_summery/${orderId}/`)
       .then((res) => res.json())
       .then((data) => setOrderSummary(data));
-    /* Returning the data from the response. */
-    // console.log(res);
-    // console.log(res.data);
-    // return res.data;
   });
-  console.log(orderSummary);
   return (
     <Box
       ref={componentRef}
@@ -48,6 +42,7 @@ const OrderSummary = () => {
           display: "flex",
           justifyContent: "flex-end",
           marginTop: { md: 7 },
+          mb:12,
           "@media print": {
             p: 5,
           },

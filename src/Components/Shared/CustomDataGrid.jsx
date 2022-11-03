@@ -6,6 +6,8 @@ import { LoadingSkeleton } from "./SharedStyles";
 const CustomDataGrid = ({
   rows = [],
   columns = [],
+  columnVisibilityModel = {},
+  setColumnVisibilityModel,
   loading = false,
   rowModesModel = {},
   newEditingApi = false,
@@ -14,10 +16,17 @@ const CustomDataGrid = ({
   handleRowEditStop,
   processRowUpdate,
   allowExport = false,
+  print = true,
+  csv = true,
+  setHight = null,
+  setPagination = true,
+  component = true,
+  showQuickFilter = true,
+  hideFooter = false,
 }) => {
   const [pageSize, setPageSize] = useState(7);
   const [density, setDensity] = useState("standard");
-  const [containerHeight, setContainerHeight] = useState(100);
+  const [containerHeight, setContainerHeight] = useState(350);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -61,13 +70,21 @@ const CustomDataGrid = ({
   return (
     <Box
       className="dark:text-neutral"
-      sx={{ height: containerHeight, width: "100%" }}
+      sx={{
+        height: setHight || containerHeight,
+        width: 1,
+      }}
     >
       <DataGridPro
         rows={rows}
         columns={columns}
+        columnVisibilityModel={columnVisibilityModel}
+        onColumnVisibilityModelChange={(newModel) => {
+          console.log(columnVisibilityModel);
+          return setColumnVisibilityModel(newModel);
+        }}
         loading={loading}
-        pagination={true}
+        pagination={setPagination}
         pageSize={pageSize}
         onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
         rowsPerPageOptions={[5, 7, 10, 20, 35, 50, 70, 100, 200]}
@@ -81,16 +98,20 @@ const CustomDataGrid = ({
         onProcessRowUpdateError={() => null}
         onStateChange={handleStateChange}
         disableSelectionOnClick
-        // hideFooter={rows?.length < pageSize + 1}
-        components={{ Toolbar: GridToolbar, LoadingOverlay: LoadingSkeleton }}
+        disableColumnFilter
+        hideFooter={hideFooter}
+        components={{
+          Toolbar: component && GridToolbar,
+          LoadingOverlay: LoadingSkeleton,
+        }}
         componentsProps={{
           toolbar: {
-            showQuickFilter: true,
+            showQuickFilter: showQuickFilter,
             printOptions: {
-              disableToolbarButton: allowExport ? false : true,
+              disableToolbarButton: allowExport && print ? false : true,
             },
             csvOptions: {
-              disableToolbarButton: allowExport ? false : true,
+              disableToolbarButton: allowExport && csv ? false : true,
             },
           },
         }}
