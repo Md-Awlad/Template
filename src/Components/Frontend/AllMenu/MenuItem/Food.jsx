@@ -1,11 +1,9 @@
 import { Grid, Modal, Typography } from "@mui/material";
-
 import Box from "@mui/material/Box";
 import { useQuery } from "@tanstack/react-query";
 import React, { useState } from "react";
 import { IoMdAdd } from "react-icons/io";
 import { useStateContext } from "../../../../Contexts/ContextProvider";
-import defaultFoodImg from "../../../../Data/defaultfood.png";
 import { staticAxios } from "../../../../utils/myAxios";
 import AddToCartModal from "../../../Modals/Frontend/AddToCartModal";
 import ItemDetails from "../../../Modals/Frontend/ItemDetails";
@@ -87,7 +85,12 @@ const Food = ({ id }) => {
                         <div className=" sm:m-0 sm:w-32 sm:h-32 w-full h-44   relative p-0 m-0">
                           <img
                             className=" object-cover w-full h-full  rounded-md p-0 "
-                            src={item?.image || defaultFoodImg}
+                            src={item?.image}
+                            onError={({ currentTarget }) => {
+                              currentTarget.onerror = null; // prevents looping
+                              currentTarget.src =
+                                "https://i.ibb.co/XbJNdft/defaultfood.png";
+                            }}
                             alt=""
                           />
                           <IoMdAdd className="absolute text-xl font-bold bottom-1 right-1 bg-white text-gray-900 rounded-md p-1" />
