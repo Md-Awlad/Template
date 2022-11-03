@@ -1,11 +1,11 @@
 import { Container, Modal } from "@mui/material";
-import { useState } from "react";
-import PageTitle from "../../Components/PageTitle/PageTitle";
 import { useQuery } from "@tanstack/react-query";
-import myAxios from "../../utils/myAxios";
+import { useState } from "react";
 import FoodCategory from "../../Components/Admin/FoodItem/FoodCategory";
-import AddFoodItem from "../../Components/Modals/Admin/AddFoodItem";
 import AddCategory from "../../Components/Modals/Admin/AddCategory";
+import AddFoodItem from "../../Components/Modals/Admin/AddFoodItem";
+import PageTitle from "../../Components/PageTitle/PageTitle";
+import myAxios from "../../utils/myAxios";
 
 const FoodItem = () => {
   const [openModal, setOpenModal] = useState(false);

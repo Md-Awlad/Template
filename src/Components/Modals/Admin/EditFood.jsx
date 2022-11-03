@@ -28,12 +28,26 @@ const EditFood = ({ editId, handleModalClose }) => {
   const { currentColor } = useStateContext();
   const { register, handleSubmit, setValue } = useForm();
   const queryClient = useQueryClient();
-  const [SizeAndPrice, setSizeAndPrice] = useState(1);
+  // const [SizeAndPrice, setSizeAndPrice] = useState(1);
   const onSubmit = async (data) => {
     const price = {};
 
+    // data.item?.forEach((item) => {
+    //   price[item.title] = item.price;
+    // });
     data.item?.forEach((item) => {
-      price[item.title] = item.price;
+      if (item.title.endsWith('"')) {
+        console.log(item.title, item.price);
+        const a = item?.title?.replace(/"/g, " inch");
+        price[a] = item.price;
+        console.log(price);
+      } else {
+        console.log("regular");
+        // price["regular"] = item.price;
+        price[item.title] = item.price;
+        // price[item.title] = "regular";
+        // console.log(price[item.title]);
+      }
     });
 
     console.log(price);
@@ -45,7 +59,7 @@ const EditFood = ({ editId, handleModalClose }) => {
       image: data?.image[0],
       base_ingredient: data?.ingredient,
       // taste: data?.taste,
-      packaging: data?.package,
+      packaging: data?.packaging,
     };
 
     const response = await toast.promise(
@@ -70,7 +84,7 @@ const EditFood = ({ editId, handleModalClose }) => {
       foodData.map((data, index) => {
         setValue("foodName", data?.food_name);
         setValue("ingredient", data?.base_ingredient);
-        setSizeAndPrice(Object.entries(data?.price).length);
+        // setSizeAndPrice(Object.entries(data?.price).length);
         setValue(
           ` item.${index + 1}.title`,
           Object.values(data.title).map((value) => console.log(value))
@@ -85,7 +99,7 @@ const EditFood = ({ editId, handleModalClose }) => {
       });
     },
   });
-  const [variants, setVariants] = useState(SizeAndPrice);
+  const [variants, setVariants] = useState(1);
   // console.log(data.data.length);
   console.log(data.data);
   return (
@@ -135,6 +149,7 @@ const EditFood = ({ editId, handleModalClose }) => {
                     <TextField
                       label="Food Size"
                       type="text"
+                      required={variants > 1 ? true : false}
                       {...register(`item.${index + 1}.title`)}
                       fullWidth
                     />
@@ -187,59 +202,7 @@ const EditFood = ({ editId, handleModalClose }) => {
                 fullWidth
               />
             </Grid>
-            {/* --detail-- */}
-            {/* <Grid
-             
-              item
-              xs={12}
-              md={6}
-            >
-              <TextField
-                id="detail"
-                label="Details"
-                type="text"
-                InputLabelProps={{ shrink: true }}
-                {...register("detail")}
-                fullWidth
-              />
-            </Grid> */}
-            {/* --test-- */}
-            {/* <Grid
-            
-              item
-              xs={12}
-              md={6}
-            >
-              <TextField
-                id="taste"
-                label="Taste"
-                type="text"
-                InputLabelProps={{ shrink: true }}
-                {...register("taste")}
-                fullWidth
-              />
-            </Grid> */}
-            {/* --review-- */}
-            {/* <Grid
-              sx={{
-                "& .MuiInputBase-root": {
-                  color: `${currentMode === "Light" ? "#000" : "#fff"}`,
-                  borderColor: `${currentMode === "Light" ? "#000" : "#fff"}`,
-                },
-              }}
-              item
-              xs={12}
-              md={6}
-            >
-              <TextField
-                id="review"
-                label="review"
-                type="number"
-                InputLabelProps={{ shrink: true }}
-                {...register("review")}
-                fullWidth
-              />
-            </Grid> */}
+
             {/* --package-- */}
             <Grid item xs={12} md={6}>
               <TextField
@@ -247,7 +210,7 @@ const EditFood = ({ editId, handleModalClose }) => {
                 label="Packaging"
                 type="number"
                 InputLabelProps={{ shrink: true }}
-                {...register("package")}
+                {...register("packaging")}
                 fullWidth
               />
             </Grid>

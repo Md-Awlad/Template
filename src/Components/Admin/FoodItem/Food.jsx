@@ -1,11 +1,11 @@
+import { Box, Tooltip } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import React, { useState } from "react";
+import { MdModeEdit } from "react-icons/md";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { useStateContext } from "../../../Contexts/ContextProvider";
-import { MdModeEdit } from "react-icons/md";
-import EditFood from "../../Modals/Admin/EditFood";
 import DeleteFood from "../../Modals/Admin/DeleteFood";
-import { Box, Tooltip } from "@mui/material";
+import EditFood from "../../Modals/Admin/EditFood";
 
 const Food = ({ category, foodRefetch }) => {
   const { currentColor, currentMode } = useStateContext();
@@ -231,7 +231,7 @@ const Food = ({ category, foodRefetch }) => {
           }}
           rows={food}
           columns={columns}
-          foodRefetch={foodRefetch}
+          // foodRefetch={foodRefetch}
           rowsPerPageOptions={[5]}
           disableSelectionOnClick
           disableColumnFilter

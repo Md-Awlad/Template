@@ -6,7 +6,7 @@ import {
   InputAdornment,
   InputLabel,
   MenuItem,
-  Select,
+  Select
 } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import { Box } from "@mui/system";
@@ -64,11 +64,12 @@ const AddFoodItem = ({
         const a = item?.title?.replace(/"/g, " inch");
         price[a] = item.price;
         console.log(price);
+      } else if (variants > 1) {
+        price[item.title] = item.price;
       } else {
         console.log("regular");
-        // price["regular"] = item.price;
-
-        price[item.title] = item.price;
+        price["regular"] = item.price;
+        // price[item.title] = item.price;
         // price[item.title] = "regular";
         // console.log(price[item.title]);
       }
@@ -90,7 +91,7 @@ const AddFoodItem = ({
     payloadForm.append("price", `'${JSON.stringify(price)}'`);
     payloadForm.append("image", data?.image[0]);
     if (data?.package) {
-      payloadForm.append("package", data?.package);
+      payloadForm.append("packaging", data?.package);
     }
     payloadForm.append("base_ingredient", data?.ingredient);
     // payloadForm.append("review", data?.review);
