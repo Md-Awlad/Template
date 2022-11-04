@@ -99,18 +99,22 @@ const EditFood = ({ editId, handleModalClose, customizeFood }) => {
     queryClient.invalidateQueries("food");
     handleModalClose();
   };
+  const [variants, setVariants] = useState(1);
+
   const { data } = useQuery([`food`], () => myAxios(`/food/${editId}`), {
     onSuccess: ({ data: foodData = [] }) => {
       foodData.map((data, index) => {
+        console.log(data);
+        setVariants(data?.price ? Object.entries(data.price).length : null);
         setValue("foodName", data?.food_name);
         setValue("ingredient", data?.base_ingredient);
         // setSizeAndPrice(Object.entries(data?.price).length);
         setValue(
-          ` item.${index + 1}.title`,
+          ` item.title`,
           data?.title && Object.entries(data?.title).map((key) => key[0])
         );
         setValue(
-          ` item.${index + 1}.price`,
+          ` item.price`,
           data?.price && Object.entries(data?.price).map((key) => key[1])
         );
 
@@ -120,6 +124,8 @@ const EditFood = ({ editId, handleModalClose, customizeFood }) => {
       });
     },
   });
+
+  // console.log(data.data.length ? data.data.length : 0);
   // data.map((item) => {
   //   if (item.price) {
   //     Object.entries(item.price).map((key) => console.log(key[0], key[1]));
@@ -128,7 +134,6 @@ const EditFood = ({ editId, handleModalClose, customizeFood }) => {
   // Object.values(data?.title).map((value) => console.log(value));
   // data.map((item) => console.log(item));
 
-  const [variants, setVariants] = useState(1);
   // console.log(data.data.length);
   console.log(data);
   return (

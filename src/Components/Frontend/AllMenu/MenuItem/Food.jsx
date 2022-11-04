@@ -43,6 +43,7 @@ const Food = ({ id }) => {
     setFoodIndex(index);
     setFoodItem(foodItem);
   };
+  console.log(food);
   return (
     <Box sx={{ mb: 10 }}>
       <Modal open={openModal} onClose={handleModalClose}>

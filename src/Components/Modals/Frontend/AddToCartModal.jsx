@@ -512,7 +512,7 @@ function AddToCartModal(props) {
                               width: 1,
                               cursor: "pointer",
                               display:
-                                Object.values(item?.discount_price).length > 1
+                                Object.values(item?.discount_price).length < 2
                                   ? "block"
                                   : "none",
                             }}

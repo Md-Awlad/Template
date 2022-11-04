@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import { Box } from "@mui/system";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useQueryClient } from "@tanstack/react-query";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { AiOutlineClose } from "react-icons/ai";
@@ -183,6 +183,7 @@ const AddFoodItem = ({
                   <TextField
                     label="Food Price"
                     type="number"
+                    InputProps={{ inputProps: { min: 0 } }}
                     required
                     {...register(`item.${index + 1}.price`)}
                     fullWidth
