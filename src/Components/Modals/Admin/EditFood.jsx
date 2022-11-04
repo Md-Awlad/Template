@@ -1,4 +1,6 @@
 import {
+  Alert,
+  AlertTitle,
   Autocomplete,
   Button,
   Grid,
@@ -15,6 +17,7 @@ import { FiUpload } from "react-icons/fi";
 import { toast } from "react-toastify";
 import { useStateContext } from "../../../Contexts/ContextProvider";
 import myAxios from "../../../utils/myAxios";
+import QueryLoader from "../../Loaders/QueryLoader";
 
 const style = {
   position: "absolute",
@@ -32,59 +35,51 @@ const style = {
 };
 
 const EditFood = ({ editId, handleModalClose, customizeFood }) => {
-  console.log(customizeFood);
   const { currentColor } = useStateContext();
   const { register, handleSubmit, setValue } = useForm();
   const [extra, setExtra] = useState();
+  const [image, setImage] = useState(null);
+  const [variants, setVariants] = useState(1);
+
   const queryClient = useQueryClient();
-  // const [SizeAndPrice, setSizeAndPrice] = useState(1);
   const onSubmit = async (data) => {
     const price = {};
-    console.log(data);
-    // data.item?.forEach((item) => {
-    //   price[item.title] = item.price;
-    // });
+
+    /* This is a function that is called when the form is submitted. It is used to update the data in
+       the database. */
     data.item?.forEach((item) => {
       if (item.title.endsWith('"')) {
-        console.log(item.title, item.price);
         const a = item?.title?.replace(/"/g, " inch");
         price[a] = item.price;
-        console.log(price);
       } else if (variants > 1) {
         price[item.title] = item.price;
       } else {
-        console.log("regular");
         price["regular"] = item.price;
-        // price[item.title] = item.price;
-        // price[item.title] = "regular";
-        // console.log(price[item.title]);
       }
     });
 
-    console.log(price);
-
-    // const payloadForm = {
-    //   food_name: data?.foodName,
-    //   // food_detail: data?.detail,
-    //   price: JSON.stringify(price),
-    //   image: data?.image[0],
-    //   base_ingredient: data?.ingredient,
-    //   // taste: data?.taste,
-
-    //   custom_food: JSON.stringify(extra?.map((a) => a?.id)),
-    // };
+    /* This is a function that is called when the form is submitted. It is used to update the data in
+           the database. */
     const payloadForm = new FormData();
     payloadForm.append("food_name", data?.foodName);
-    // payloadForm.append("price", `'${JSON.stringify(price)}'`);
     payloadForm.append("price", `'${JSON.stringify(price)}'`);
-    payloadForm.append("image", data?.image[0]);
+    if (data?.image[0]) {
+      payloadForm.append("image", data?.image[0]);
+    }
+
     if (data?.package) {
       payloadForm.append("packaging", data?.package);
     }
     payloadForm.append("base_ingredient", data?.ingredient);
+    if (extra) {
+      payloadForm.append(
+        "custom_food",
+        JSON.stringify(extra?.map((a) => a?.id))
+      );
+    }
 
-    payloadForm.append("custom_food", JSON.stringify(extra?.map((a) => a?.id)));
-
+    /* This is a function that is called when the form is submitted. It is used to update the data in
+   the database. */
     await toast.promise(
       myAxios.patch(`/food/${editId}/`, payloadForm, {
         headers: {
@@ -92,7 +87,7 @@ const EditFood = ({ editId, handleModalClose, customizeFood }) => {
         },
       }),
       {
-        pending: "Adding Foods...",
+        pending: "updating Foods...",
         success: "Food Added",
         error: "Error Adding Foods!",
       }
@@ -100,196 +95,210 @@ const EditFood = ({ editId, handleModalClose, customizeFood }) => {
     queryClient.invalidateQueries("food");
     handleModalClose();
   };
-  const [variants, setVariants] = useState(1);
 
-  const { data } = useQuery([`food`], () => myAxios(`/food/${editId}`), {
+  /* Fetching data from the backend and setting the value of the form. */
+  const {
+    data: allFoodData,
+    isLoading,
+    isError,
+  } = useQuery([`food`], () => myAxios(`/food/${editId}`), {
     onSuccess: ({ data: foodData = [] }) => {
       foodData.map((data, index) => {
-        console.log(data);
         setVariants(data?.price ? Object.entries(data.price).length : null);
         setValue("foodName", data?.food_name);
         setValue("ingredient", data?.base_ingredient);
-        // setSizeAndPrice(Object.entries(data?.price).length);
-        setValue(
-          ` item.title`,
-          data?.title && Object.entries(data?.title).map((key) => key[0])
-        );
-        setValue(
-          ` item.price`,
-          data?.price && Object.entries(data?.price).map((key) => key[1])
-        );
-
-        // setValue("detail", data?.food_detail);
-        // setValue("taste", data?.taste);
+        setImage(data?.image);
+        // setValue(
+        //   ` item.${index + 1}.title`,
+        //   data?.title && Object.entries(data?.title).map((key) => key[0])
+        // );
+        // setValue(
+        //   ` item.${index + 1}.price`,
+        //   data?.price && Object.entries(data?.price).map((key) => key[1])
+        // );
         setValue("packaging", data?.packaging);
       });
     },
   });
 
-  // console.log(data.data.length ? data.data.length : 0);
-  // data.map((item) => {
-  //   if (item.price) {
-  //     Object.entries(item.price).map((key) => console.log(key[0], key[1]));
-  //   }
-  // });
-  // Object.values(data?.title).map((value) => console.log(value));
-  // data.map((item) => console.log(item));
-
-  // console.log(data.data.length);
-  console.log(data);
   return (
     <Modal open={Boolean(editId)} onClose={handleModalClose}>
-      <Box
-        sx={{
-          ...style,
-          width: { sm: 700, xs: 400 },
-          height: 500,
-          overflowY: "scroll",
-        }}
-      >
-        <h2 className="text-3xl font-bold pb-3 text-center">Edit Food Item</h2>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="space-y-5">
-            {/* --FoodName-- */}
-            <Grid item xs={12} md={6}>
-              <TextField
-                id="foodName"
-                label="Food Name"
-                type="text"
-                InputLabelProps={{ shrink: true }}
-                {...register("foodName")}
-                fullWidth
-              />
-            </Grid>
-            {/* --size&price--*/}
-            <Grid item xs={12}>
-              <Button
-                sx={{ width: "100%", backgroundColor: `${currentColor}` }}
-                variant="contained"
-                onClick={() => setVariants((variants) => (variants += 1))}
-              >
-                Add Size and Price
-              </Button>
-              {new Array(variants).fill(null)?.map((item, index) => {
-                return (
-                  <Box
-                    key={index}
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      columnGap: 2,
-                      marginTop: 2,
-                    }}
-                  >
-                    <TextField
-                      label="Food Size"
-                      type="text"
-                      required={variants > 1 ? true : false}
-                      {...register(`item.${index + 1}.title`)}
-                      fullWidth
-                    />
-                    <TextField
-                      required
-                      label="Food Price"
-                      type="number"
-                      InputProps={{ inputProps: { min: 0 } }}
-                      {...register(`item.${index + 1}.price`)}
-                      fullWidth
-                    />
-                    <AiOutlineClose
-                      onClick={() => setVariants((variants) => (variants -= 1))}
-                      className={`text-5xl cursor-pointer text-red-700 ${
-                        index === 0 && "hidden"
-                      }`}
-                    />
-                  </Box>
-                );
-              })}
-            </Grid>
-            {/* --img-- */}
-            <Grid item xs={12} md={6}>
-              <TextField
-                id="image"
-                type="file"
-                label="Food Image"
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <FiUpload size={25} />
-                    </InputAdornment>
-                  ),
-                }}
-                inputProps={{
-                  accept: "image/*",
-                }}
-                {...register("image")}
-                sx={{
-                  width: 1,
-                  "& ::file-selector-button": {
-                    display: "none",
-                  },
-                }}
-              />
-            </Grid>
-            {/* --ingredient-- */}
-            <Grid item xs={12} md={6}>
-              <TextField
-                id="ingredient"
-                label="Base Ingredient"
-                type="text"
-                InputLabelProps={{ shrink: true }}
-                {...register("ingredient")}
-                fullWidth
-              />
-            </Grid>
+      {isLoading ? (
+        <QueryLoader />
+      ) : isError ? (
+        <Alert>
+          <AlertTitle>Error !</AlertTitle>
+        </Alert>
+      ) : allFoodData ? (
+        <Box
+          sx={{
+            ...style,
+            width: { sm: 700, xs: 400 },
+            height: 500,
+            overflowY: "scroll",
+          }}
+        >
+          <h2 className="text-3xl font-bold pb-3 text-center">
+            Edit Food Item
+          </h2>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <div className="space-y-5">
+              {/* --FoodName-- */}
+              <Grid item xs={12} md={6}>
+                <TextField
+                  id="foodName"
+                  label="Food Name"
+                  type="text"
+                  InputLabelProps={{ shrink: true }}
+                  {...register("foodName")}
+                  fullWidth
+                />
+              </Grid>
+              {/* --size&price--*/}
+              <Grid item xs={12}>
+                <Button
+                  sx={{ width: "100%", backgroundColor: `${currentColor}` }}
+                  variant="contained"
+                  onClick={() => setVariants((variants) => (variants += 1))}
+                >
+                  Add Size and Price
+                </Button>
+                {new Array(variants).fill(null)?.map((item, index) => {
+                  return (
+                    <Box
+                      key={index}
+                      sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        columnGap: 2,
+                        marginTop: 2,
+                      }}
+                    >
+                      <TextField
+                        label="Food Size"
+                        type="text"
+                        required={variants > 1 ? true : false}
+                        {...register(`item.${index + 1}.title`)}
+                        fullWidth
+                      />
+                      <TextField
+                        required
+                        label="Food Price"
+                        type="number"
+                        InputProps={{ inputProps: { min: 0 } }}
+                        {...register(`item.${index + 1}.price`)}
+                        fullWidth
+                      />
+                      <AiOutlineClose
+                        onClick={() =>
+                          setVariants((variants) => (variants -= 1))
+                        }
+                        className={`text-5xl cursor-pointer text-red-700 ${
+                          index === 0 && "hidden"
+                        }`}
+                      />
+                    </Box>
+                  );
+                })}
+              </Grid>
+              {/* --img-- */}
+              <Grid item xs={12} md={6}>
+                <TextField
+                  id="image"
+                  type="file"
+                  label="Food Image"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        {!Boolean(image) ? (
+                          <FiUpload size={25} />
+                        ) : (
+                          <img
+                            className="w-10 h-10 object-cover"
+                            src={image}
+                            alt=""
+                          />
+                        )}
+                      </InputAdornment>
+                    ),
+                  }}
+                  inputProps={{
+                    accept: "image/*",
+                  }}
+                  {...register("image")}
+                  sx={{
+                    width: 1,
+                    "& ::file-selector-button": {
+                      display: "none",
+                    },
+                  }}
+                />
+              </Grid>
+              {/* --ingredient-- */}
+              <Grid item xs={12} md={6}>
+                <TextField
+                  id="ingredient"
+                  label="Base Ingredient"
+                  type="text"
+                  InputLabelProps={{ shrink: true }}
+                  {...register("ingredient")}
+                  fullWidth
+                />
+              </Grid>
 
-            {/* --package-- */}
-            <Grid item xs={12} md={6}>
-              <TextField
-                id="package"
-                label="Packaging"
-                type="number"
-                InputProps={{ inputProps: { min: 0 } }}
-                InputLabelProps={{ shrink: true }}
-                {...register("packaging")}
-                fullWidth
-              />
-            </Grid>
-            <Grid item xs={12} md={6}>
-              <Autocomplete
-                multiple
-                disablePortal
-                id="combo-box-demo"
-                options={customizeFood?.map((custom) => custom)}
-                getOptionLabel={(option) => option?.ingredient_name}
-                filterSelectedOptions
-                onChange={(_, newValue) => setExtra(newValue)}
-                renderInput={(params) => (
-                  <TextField {...params} label="Customize Food" fullWidth />
-                )}
-              />
-            </Grid>
-            <div className="flex justify-end">
-              <button
-                type="submit"
-                style={{ backgroundColor: currentColor }}
-                className="rounded drop-shadow-sm bg-primary mx-3 w-24 p-2 text-base font-semibold text-white outline-none"
-              >
-                Update
-              </button>
-              <button
-                onClick={handleModalClose}
-                className="w-24 p-2 rounded-md font-semibold text-white bg-red-500"
-              >
-                Cancel
-              </button>
+              {/* --package-- */}
+              <Grid item xs={12} md={6}>
+                <TextField
+                  id="package"
+                  label="Packaging"
+                  type="number"
+                  InputProps={{ inputProps: { min: 0 } }}
+                  InputLabelProps={{ shrink: true }}
+                  {...register("packaging")}
+                  fullWidth
+                />
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <Autocomplete
+                  multiple
+                  disablePortal
+                  id="combo-box-demo"
+                  options={customizeFood?.map((custom) => custom)}
+                  getOptionLabel={(option) => option?.ingredient_name}
+                  filterSelectedOptions
+                  onChange={(_, newValue) => setExtra(newValue)}
+                  renderInput={(params) => (
+                    <TextField
+                      // value={}
+                      {...params}
+                      label="Customize Food"
+                      fullWidth
+                    />
+                  )}
+                />
+              </Grid>
+              <div className="flex justify-end">
+                <button
+                  type="submit"
+                  style={{ backgroundColor: currentColor }}
+                  className="rounded drop-shadow-sm bg-primary mx-3 w-24 p-2 text-base font-semibold text-white outline-none"
+                >
+                  Update
+                </button>
+                <button
+                  onClick={handleModalClose}
+                  className="w-24 p-2 rounded-md font-semibold text-white bg-red-500"
+                >
+                  Cancel
+                </button>
+              </div>
             </div>
-          </div>
-        </form>
-      </Box>
+          </form>
+        </Box>
+      ) : null}
     </Modal>
   );
 };

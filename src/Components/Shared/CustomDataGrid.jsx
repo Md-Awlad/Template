@@ -1,6 +1,7 @@
 import { Box } from "@mui/material";
 import { DataGridPro, GridToolbar } from "@mui/x-data-grid-pro";
 import React, { useEffect, useState } from "react";
+import { useStateContext } from "../../Contexts/ContextProvider";
 import { LoadingSkeleton } from "./SharedStyles";
 
 const CustomDataGrid = ({
@@ -27,7 +28,7 @@ const CustomDataGrid = ({
   const [pageSize, setPageSize] = useState(7);
   const [density, setDensity] = useState("standard");
   const [containerHeight, setContainerHeight] = useState(350);
-
+  const { currentMode, currentColor } = useStateContext();
   useEffect(() => {
     const interval = setInterval(() => {
       const hideNode = document.evaluate(
@@ -43,7 +44,7 @@ const CustomDataGrid = ({
         clearInterval(interval);
       }
     }, 10);
-  }, []);
+  }, [rows]);
 
   const handleStateChange = (event) => {
     if (density !== event.density) {
@@ -76,6 +77,27 @@ const CustomDataGrid = ({
       }}
     >
       <DataGridPro
+        sx={{
+          color: currentMode === "Dark" ? "#fff" : "#000",
+          "& .MuiIconButton-root": {
+            color: "unset !important",
+          },
+          "& .MuiTablePagination-toolbar": {
+            color: currentMode === "Dark" ? "#fff" : "#000",
+          },
+          "& .MuiDataGrid-row:hover": {
+            bgcolor: currentMode === "Dark" ? `${currentColor}10` : "",
+          },
+          "& .MuiDataGrid-selectedRowCount": {
+            visibility: "hidden",
+          },
+          "& .MuiDataGrid-cell:focus-within": {
+            outline: "none",
+          },
+          "& .MuiInput-root": {
+            color: currentMode === "Dark" ? "#fff" : "#000",
+          },
+        }}
         rows={rows}
         columns={columns}
         columnVisibilityModel={columnVisibilityModel}

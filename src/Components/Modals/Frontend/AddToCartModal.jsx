@@ -22,7 +22,8 @@ function AddToCartModal(props) {
   // const [expanded, setExpanded] = React.useState("panel1");
   const [size, setSize] = React.useState({});
   console.log(!Boolean(Object.entries(size).length));
-  const { activeMenu, setCart, cart, setIngredientId } = useStateContext();
+  const { activeMenu, setCart, cart, setIngredientId, currentMode } =
+    useStateContext();
   // This is used only for the example
   const handleChange = (checkbox) => {
     setSize({
@@ -94,7 +95,13 @@ function AddToCartModal(props) {
 
   return (
     <CustomModal open={open} onClose={setOpen}>
-      <Box className="relative">
+      <Box
+        sx={{
+          bgcolor: `${currentMode === "light" ? "#000" : "#fff"}`,
+          color: `${currentMode === "Light" ? "#000" : "#000"}`,
+        }}
+        className="relative"
+      >
         <IconButton
           sx={{
             position: "absolute",
@@ -105,7 +112,7 @@ function AddToCartModal(props) {
           }}
           onClick={setOpen}
         >
-          <MdOutlineCancel className="text-gray-800 hover:text-white" />
+          <MdOutlineCancel className="text-gray-800 hover:text-red-600" />
         </IconButton>
         <Box>
           <img
@@ -189,7 +196,7 @@ function AddToCartModal(props) {
               sx={{
                 mb: 2,
               }}
-              className="text-gray-600 "
+              className="text-gray-600"
             >
               {item?.base_ingredient}
             </Typography>

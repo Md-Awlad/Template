@@ -6,8 +6,7 @@ import {
   Paper,
   Typography,
 } from "@mui/material";
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 import { FaPhoneAlt } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import { useStateContext } from "../../../Contexts/ContextProvider";
@@ -74,19 +73,19 @@ const CompleteOrderList = ({ completes, isLoading, isError }) => {
                       sx={{ fontSize: 14, fontWeight: 500 }}
                       variant="h6"
                     >
-                      Order Type:{" "}
-                      {`${
-                        item?.order_type === "takeaway"
-                          ? "Takeaway"
-                          : item?.order_type === "dine_in" && "Dine In"
-                      }`}
+                      {item?.order_type &&
+                        `Order Type: ${
+                          item?.order_type === "takeaway"
+                            ? "Takeaway"
+                            : item?.order_type === "dine_in" && "Dine In"
+                        }`}
                     </Typography>
                     <Typography
                       style={{ color: currentColor }}
                       sx={{ fontSize: 14, fontWeight: 500 }}
                       variant="h6"
                     >
-                      Table No: {item?.table}
+                      {item?.table && `Table No: ${item?.table}`}
                     </Typography>
                   </Box>
                   <Box>

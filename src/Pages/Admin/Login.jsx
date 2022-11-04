@@ -2,11 +2,11 @@ import { Grid, InputAdornment, TextField } from "@mui/material";
 import { useQueryClient } from "@tanstack/react-query";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { toast } from "react-toastify";
 import { FaUserAlt } from "react-icons/fa";
-import { setAccessToken, setRefreshToken } from "../../utils/localStorages";
 import { FiLogIn } from "react-icons/fi";
+import { toast } from "react-toastify";
 import { useStateContext } from "../../Contexts/ContextProvider";
+import { setAccessToken, setRefreshToken } from "../../utils/localStorages";
 import myAxios from "../../utils/myAxios";
 
 const Login = () => {
@@ -54,16 +54,7 @@ const Login = () => {
       />
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
         {/* --user-- */}
-        <Grid
-          sx={{
-            "& .MuiInputBase-root": {
-              color: `${currentMode === "Light" ? "#000" : "#fff"}`,
-              borderColor: `${currentMode === "Light" ? "#000" : "#fff"}`,
-            },
-          }}
-          item
-          xs={12}
-        >
+        <Grid item xs={12}>
           <TextField
             fullWidth
             size="small"
