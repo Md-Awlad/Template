@@ -75,6 +75,7 @@ const EditFood = ({ editId, handleModalClose, customizeFood }) => {
     // };
     const payloadForm = new FormData();
     payloadForm.append("food_name", data?.foodName);
+    // payloadForm.append("price", `'${JSON.stringify(price)}'`);
     payloadForm.append("price", `'${JSON.stringify(price)}'`);
     payloadForm.append("image", data?.image[0]);
     if (data?.package) {

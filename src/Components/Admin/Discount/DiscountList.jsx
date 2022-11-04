@@ -9,9 +9,10 @@ import EditDiscount from "../../Modals/Admin/EditDiscount";
 import { Tooltip, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import LoaderSource from "../../Loaders/LoaderSource";
+import CustomDataGrid from "../../Shared/CustomDataGrid";
 
 const DiscountList = ({ discounts, isLoading }) => {
-  console.log(discounts);
+  console.log(discounts?.map((a) => a?.notice));
   const { currentColor, currentMode } = useStateContext();
   const [editId, setEditId] = useState(null);
   const [deleteId, setDeleteId] = useState(null);
@@ -127,51 +128,7 @@ const DiscountList = ({ discounts, isLoading }) => {
       {isLoading ? (
         <LoaderSource />
       ) : (
-        <DataGrid
-          sx={{
-            color: currentMode === "Dark" ? "#fff" : "#000",
-            "& .MuiIconButton-root": {
-              color: "unset !important",
-            },
-            "& .MuiTablePagination-toolbar": {
-              color: currentMode === "Dark" ? "#fff" : "#000",
-            },
-            "& .MuiDataGrid-row:hover": {
-              bgcolor: currentMode === "Dark" ? `${currentColor}10` : "",
-            },
-            "& .MuiDataGrid-selectedRowCount": {
-              visibility: "hidden",
-            },
-            "& .MuiDataGrid-cell:focus-within": {
-              outline: "none",
-            },
-            "& .MuiInput-root": {
-              color: currentMode === "Dark" ? "#fff" : "#000",
-            },
-          }}
-          rows={discounts}
-          columns={columns}
-          rowsPerPageOptions={[5]}
-          disableSelectionOnClick
-          disableColumnFilter
-          disableColumnSelector
-          disableDensitySelector
-          components={{ Toolbar: GridToolbar }}
-          componentsProps={{
-            toolbar: {
-              showQuickFilter: true,
-              quickFilterProps: { debounceMs: 500 },
-              printOptions: {
-                disableToolbarButton: true,
-              },
-              csvOptions: {
-                disableToolbarButton: true,
-              },
-            },
-          }}
-          // checkboxSelection
-          // disableSelectionOnClick
-        />
+        <CustomDataGrid rows={discounts} columns={columns} />
       )}
       {Boolean(editId) && (
         <EditDiscount editId={editId} handleClose={() => setEditId(null)} />
@@ -187,3 +144,50 @@ const DiscountList = ({ discounts, isLoading }) => {
 };
 
 export default DiscountList;
+
+/*
+  <DataGrid
+    sx={{
+      color: currentMode === "Dark" ? "#fff" : "#000",
+      "& .MuiIconButton-root": {
+        color: "unset !important",
+      },
+      "& .MuiTablePagination-toolbar": {
+        color: currentMode === "Dark" ? "#fff" : "#000",
+      },
+      "& .MuiDataGrid-row:hover": {
+        bgcolor: currentMode === "Dark" ? `${currentColor}10` : "",
+      },
+      "& .MuiDataGrid-selectedRowCount": {
+        visibility: "hidden",
+      },
+      "& .MuiDataGrid-cell:focus-within": {
+        outline: "none",
+      },
+      "& .MuiInput-root": {
+        color: currentMode === "Dark" ? "#fff" : "#000",
+      },
+    }}
+    rows={discounts}
+    isLoading={isLoading}
+    columns={columns}
+    rowsPerPageOptions={[5]}
+    disableSelectionOnClick
+    disableColumnFilter
+    disableColumnSelector
+    disableDensitySelector
+    components={{ Toolbar: GridToolbar }}
+    componentsProps={{
+      toolbar: {
+        showQuickFilter: true,
+        quickFilterProps: { debounceMs: 500 },
+        printOptions: {
+          disableToolbarButton: true,
+        },
+        csvOptions: {
+          disableToolbarButton: true,
+        },
+      },
+    }}
+  /> 
+*/
