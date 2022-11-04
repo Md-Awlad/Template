@@ -1,16 +1,12 @@
 import { Alert, AlertTitle, Container } from "@mui/material";
-import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import LoaderSource from "../../Components/Loaders/LoaderSource";
 import PageTitle from "../../Components/PageTitle/PageTitle";
 import CustomDataGrid from "../../Components/Shared/CustomDataGrid";
-import { useStateContext } from "../../Contexts/ContextProvider";
 import myAxios from "../../utils/myAxios";
 
 const SurveyList = () => {
-  const { currentColor, currentMode } = useStateContext();
-
   const columns = [
     {
       field: "order_id",

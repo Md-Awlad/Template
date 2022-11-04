@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import { RiDeleteBin6Line } from "react-icons/ri";
-import { DataGrid, GridToolbar } from "@mui/x-data-grid";
-import { useStateContext } from "../../../Contexts/ContextProvider";
 import { MdModeEdit } from "react-icons/md";
 import moment from "moment";
 import DeleteDiscount from "../../Modals/Admin/DeleteDiscount";
@@ -13,7 +11,6 @@ import CustomDataGrid from "../../Shared/CustomDataGrid";
 
 const DiscountList = ({ discounts, isLoading }) => {
   console.log(discounts?.map((a) => a?.notice));
-  const { currentColor, currentMode } = useStateContext();
   const [editId, setEditId] = useState(null);
   const [deleteId, setDeleteId] = useState(null);
 

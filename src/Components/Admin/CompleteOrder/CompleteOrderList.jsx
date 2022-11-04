@@ -14,7 +14,7 @@ import LoaderSource from "../../Loaders/LoaderSource";
 import DeleteConfirmOrder from "../../Modals/Admin/DeleteConfirmOrder";
 
 const CompleteOrderList = ({ completes, isLoading, isError }) => {
-  const { currentColor } = useStateContext();
+  const { currentColor, restaurantData } = useStateContext();
   const [deleteId, setDeleteId] = useState();
 
   return (
@@ -60,40 +60,75 @@ const CompleteOrderList = ({ completes, isLoading, isError }) => {
                 }}
               >
                 <Box sx={{ height: 300, overflowY: "scroll", px: 1 }}>
-                  <Typography
-                    style={{ color: currentColor }}
-                    sx={{ fontSize: 15, fontWeight: 500, textAlign: "center" }}
-                    variant="h6"
-                  >
-                    Order ID: {item?.id}
-                  </Typography>
-                  <Box sx={{ display: "flex", gap: 8 }}>
+                  <Box className="flex justify-between items-center">
                     <Typography
-                      style={{ color: currentColor }}
                       sx={{ fontSize: 14, fontWeight: 500 }}
                       variant="h6"
                     >
-                      {item?.order_type &&
-                        `Order Type: ${
+                      Order ID :{" "}
+                      <Typography
+                        component={"span"}
+                        sx={{ fontSize: 14, fontWeight: 600 }}
+                        variant="h6"
+                      >
+                        {item?.id}
+                      </Typography>
+                    </Typography>
+                    <Typography sx={{ fontSize: 14 }} variant="h6">
+                      Table No:{" "}
+                      <Typography
+                        component={"span"}
+                        sx={{ fontSize: 15, fontWeight: 600 }}
+                        variant="h6"
+                      >
+                        {item?.table}
+                      </Typography>
+                    </Typography>
+                  </Box>
+
+                  <Box>
+                    <Typography sx={{ fontSize: 14 }} variant="h6">
+                      Order Type :{" "}
+                      <Typography
+                        component={"span"}
+                        sx={{ fontSize: 15, fontWeight: 600 }}
+                        variant="h6"
+                      >
+                        {`${
                           item?.order_type === "takeaway"
                             ? "Takeaway"
                             : item?.order_type === "dine_in" && "Dine In"
                         }`}
+                      </Typography>
+                    </Typography>
+                    <Typography sx={{ fontSize: 14 }} variant="h6">
+                      Name :{" "}
+                      <Typography
+                        component={"span"}
+                        sx={{ fontSize: 15, fontWeight: 600 }}
+                        variant="h6"
+                      >
+                        {item?.customer_name}
+                      </Typography>
                     </Typography>
                     <Typography
-                      style={{ color: currentColor }}
-                      sx={{ fontSize: 14, fontWeight: 500 }}
+                      sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 1,
+                        fontSize: 14,
+                      }}
                       variant="h6"
                     >
-                      {item?.table && `Table No: ${item?.table}`}
-                    </Typography>
-                  </Box>
-                  <Box>
-                    <Typography
-                      sx={{ fontSize: 14, fontWeight: 500 }}
-                      variant="h6"
-                    >
-                      Name: {item?.customer_name}
+                      <FaPhoneAlt />
+
+                      <Typography
+                        component={"span"}
+                        sx={{ fontSize: 14, fontWeight: 600 }}
+                        variant="h6"
+                      >
+                        {item?.customer_phone}
+                      </Typography>
                     </Typography>
                     <Typography
                       sx={{
@@ -105,19 +140,14 @@ const CompleteOrderList = ({ completes, isLoading, isError }) => {
                       }}
                       variant="h6"
                     >
-                      <FaPhoneAlt /> {item?.customer_phone}
-                    </Typography>
-                    <Typography
-                      sx={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: 1,
-                        fontSize: 14,
-                        fontWeight: 500,
-                      }}
-                      variant="h6"
-                    >
-                      <MdEmail /> {item?.customer_mail}
+                      <MdEmail />
+                      <Typography
+                        component={"span"}
+                        sx={{ fontSize: 14, fontWeight: 600 }}
+                        variant="h6"
+                      >
+                        {item?.customer_mail}
+                      </Typography>
                     </Typography>
                   </Box>
                   <hr className="border-[#F0A70B]" />
@@ -125,7 +155,6 @@ const CompleteOrderList = ({ completes, isLoading, isError }) => {
                   <Box className="flex justify-between py-2">
                     <Box>
                       <Typography
-                        style={{ color: currentColor }}
                         sx={{ fontSize: 14, fontWeight: 500 }}
                         variant="h6"
                       >
@@ -144,7 +173,6 @@ const CompleteOrderList = ({ completes, isLoading, isError }) => {
                     {/* --extra-- */}
                     <Box>
                       <Typography
-                        style={{ color: currentColor }}
                         sx={{ fontSize: 14, fontWeight: 500 }}
                         variant="h6"
                       >
@@ -168,7 +196,6 @@ const CompleteOrderList = ({ completes, isLoading, isError }) => {
                     {/* --quantity-- */}
                     <Box>
                       <Typography
-                        style={{ color: currentColor }}
                         sx={{
                           fontSize: 14,
                           fontWeight: 500,
