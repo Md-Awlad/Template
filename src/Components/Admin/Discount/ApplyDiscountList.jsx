@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import { RiDeleteBin6Line } from "react-icons/ri";
-import { DataGrid, GridToolbar } from "@mui/x-data-grid";
-import { useStateContext } from "../../../Contexts/ContextProvider";
 import { MdModeEdit } from "react-icons/md";
 import { Box, Tooltip, Typography } from "@mui/material";
 import EditApplyDiscount from "../../Modals/Admin/EditApplyDiscount";
@@ -17,7 +15,6 @@ const ApplyDiscountList = ({
   isLoading,
 }) => {
   console.log(applyDiscount);
-  const { currentColor, currentMode } = useStateContext();
   const [editId, setEditId] = useState(null);
   const [deleteId, setDeleteId] = useState(null);
 
