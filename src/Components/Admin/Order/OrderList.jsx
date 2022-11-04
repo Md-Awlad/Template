@@ -8,14 +8,26 @@ import { useStateContext } from "../../../Contexts/ContextProvider";
 import myAxios from "../../../utils/myAxios";
 import DeleteOrder from "../../Modals/Admin/DeleteOrder";
 import RejectOrder from "../../Modals/Admin/RejectOrder";
-import { Alert, AlertTitle, Box, Paper, Typography } from "@mui/material";
+import {
+  Alert,
+  AlertTitle,
+  Box,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Typography,
+} from "@mui/material";
 import { MdEmail } from "react-icons/md";
 import { FaPhoneAlt } from "react-icons/fa";
 import { BsCheck2Circle } from "react-icons/bs";
 import LoaderSource from "../../Loaders/LoaderSource";
 
 const OrderList = ({ orders, orderRefetch, isLoading, isError }) => {
-  const { currentColor } = useStateContext();
+  const { currentColor, restaurantData } = useStateContext();
   const { handleSubmit } = useForm();
   const [deleteId, setDeleteId] = useState(null);
   const [complete, setComplete] = useState();
@@ -84,43 +96,75 @@ const OrderList = ({ orders, orderRefetch, isLoading, isError }) => {
                 }}
               >
                 <Box sx={{ height: 300, overflowY: "scroll", px: 1 }}>
-                  <Typography
-                    style={{ color: currentColor }}
-                    sx={{ fontSize: 15, fontWeight: 500, textAlign: "center" }}
-                    variant="h6"
-                  >
-                    Order ID: {item?.id}
-                  </Typography>
-                  <Box
-                    sx={{ display: "flex", justifyContent: "space-between" }}
-                  >
+                  <Box className="flex justify-between items-center">
                     <Typography
-                      style={{ color: currentColor }}
                       sx={{ fontSize: 14, fontWeight: 500 }}
                       variant="h6"
                     >
-                      {item?.order_type &&
-                        `Order Type: ${
-                          item?.order_type === "takeaway"
-                            ? "Takeaway"
-                            : item?.order_type === "dine_in" && "Dine In"
-                        }`}
+                      Order ID :{" "}
+                      <Typography
+                        component={"span"}
+                        sx={{ fontSize: 14, fontWeight: 600 }}
+                        variant="h6"
+                      >
+                        {item?.id}
+                      </Typography>
                     </Typography>
-                    <Typography
-                      style={{ color: currentColor }}
-                      sx={{ fontSize: 14, fontWeight: 500 }}
-                      variant="h6"
-                    >
-                      {item?.table && `Table: ${item?.table}`}
+                    <Typography sx={{ fontSize: 14 }} variant="h6">
+                      Table No:{" "}
+                      <Typography
+                        component={"span"}
+                        sx={{ fontSize: 15, fontWeight: 600 }}
+                        variant="h6"
+                      >
+                        {item?.table}
+                      </Typography>
                     </Typography>
                   </Box>
 
                   <Box>
+                    <Typography sx={{ fontSize: 14 }} variant="h6">
+                      Order Type :{" "}
+                      <Typography
+                        component={"span"}
+                        sx={{ fontSize: 15, fontWeight: 600 }}
+                        variant="h6"
+                      >
+                        {`${
+                          item?.order_type === "takeaway"
+                            ? "Takeaway"
+                            : item?.order_type === "dine_in" && "Dine In"
+                        }`}
+                      </Typography>
+                    </Typography>
+                    <Typography sx={{ fontSize: 14 }} variant="h6">
+                      Name :{" "}
+                      <Typography
+                        component={"span"}
+                        sx={{ fontSize: 15, fontWeight: 600 }}
+                        variant="h6"
+                      >
+                        {item?.customer_name}
+                      </Typography>
+                    </Typography>
                     <Typography
-                      sx={{ fontSize: 14, fontWeight: 500 }}
+                      sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 1,
+                        fontSize: 14,
+                      }}
                       variant="h6"
                     >
-                      {item?.customer_name && `Name: ${item?.customer_name}`}
+                      <FaPhoneAlt />
+
+                      <Typography
+                        component={"span"}
+                        sx={{ fontSize: 14, fontWeight: 600 }}
+                        variant="h6"
+                      >
+                        {item?.customer_phone}
+                      </Typography>
                     </Typography>
                     <Typography
                       sx={{
@@ -132,101 +176,85 @@ const OrderList = ({ orders, orderRefetch, isLoading, isError }) => {
                       }}
                       variant="h6"
                     >
-                      <FaPhoneAlt /> {item?.customer_phone}
-                    </Typography>
-                    <Typography
-                      sx={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: 1,
-                        fontSize: 14,
-                        fontWeight: 500,
-                      }}
-                      variant="h6"
-                    >
-                      <MdEmail /> {item?.customer_mail}
+                      <MdEmail />
+                      <Typography
+                        component={"span"}
+                        sx={{ fontSize: 14, fontWeight: 600 }}
+                        variant="h6"
+                      >
+                        {item?.customer_mail}
+                      </Typography>
                     </Typography>
                   </Box>
                   <hr className="border-[#F0A70B]" />
                   {/* <--- order Items ---> */}
-                  <Box className="flex gap-8 py-2">
-                    <Box>
-                      <Typography
-                        style={{ color: currentColor }}
-                        sx={{ fontSize: 14, fontWeight: 500 }}
-                        variant="h6"
-                      >
-                        Order Items
-                      </Typography>
-                      {item?.order_items?.map((data, index) => (
-                        <Typography
-                          key={index}
-                          sx={{
-                            fontSize: 14,
-                            fontWeight: 500,
-                          }}
-                          variant="h6"
-                        >
-                          {data?.food_name}
-                        </Typography>
-                      ))}
-                    </Box>
-                    {/* --extra-- */}
-                    <Box>
-                      <Typography
-                        style={{ color: currentColor }}
-                        sx={{
-                          fontSize: 14,
-                          fontWeight: 500,
-                          textAlign: "center",
-                        }}
-                        variant="h6"
-                      >
-                        Extra
-                      </Typography>
-
-                      {item?.order_items?.map((data, index) => (
-                        <Typography
-                          key={index}
-                          sx={{ fontSize: 14, fontWeight: 500 }}
-                          variant="h6"
-                        >
-                          {data?.extra?.map(
-                            (extra, index) =>
-                              `${extra?.name}
-                        ${data?.extra?.length - 1 === index ? "" : ","}
-                        `
-                          )}
-                        </Typography>
-                      ))}
-                    </Box>
-                    {/* --quantity-- */}
-                    <Box>
-                      <Typography
-                        style={{ color: currentColor }}
-                        sx={{
-                          fontSize: 14,
-                          fontWeight: 500,
-                        }}
-                        variant="h6"
-                      >
-                        Quantity
-                      </Typography>
-                      {item?.order_items?.map((data, index) => (
-                        <Typography
-                          key={index}
-                          sx={{
-                            fontSize: 14,
-                            fontWeight: 500,
-                            textAlign: "center",
-                          }}
-                          variant="h6"
-                        >
-                          {data?.quantity}
-                        </Typography>
-                      ))}
-                    </Box>
-                  </Box>
+                  <TableContainer component={Paper}>
+                    <Table aria-label="simple table">
+                      <TableHead>
+                        <TableRow>
+                          <TableCell>Items</TableCell>
+                          <TableCell>Extra</TableCell>
+                          <TableCell>Quantity</TableCell>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        {item.order_items?.map((data, index) => (
+                          <TableRow
+                            key={index}
+                            sx={{
+                              "&:last-child td, &:last-child th": { border: 0 },
+                            }}
+                          >
+                            <TableCell component="th" scope="row">
+                              {data.food_name}
+                            </TableCell>
+                            {item?.order_items?.map((data, index) => (
+                              <TableCell key={index} align="right">
+                                {data?.extra?.map(
+                                  (extra, index) => extra?.name
+                                )}
+                              </TableCell>
+                            ))}
+                            <TableCell align="right">{data.calories}</TableCell>
+                            <TableCell align="right">{data.quantity}</TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </TableContainer>
+                  {/* <div class="bg-gray-100">
+                    <div class="bg-white shadow-sm overflow-auto">
+                      <table class="w-full overflow-scroll">
+                        <thead>
+                          <tr class="uppercase text-sm">
+                            <th class="px-2 py-3 text-left">Item</th>
+                            <th class="px-2 py-3 text-left">Extra</th>
+                            <th class="px-2 py-3 text-left">Quantity</th>
+                          </tr>
+                        </thead>
+                        <tbody class="text-gray-600 text-sm">
+                          {item.order_items?.map((data) => (
+                            <tr
+                              key={data.id}
+                              class="border-b border-gray-200 hover:bg-gray-100"
+                            >
+                              <td class="py-3 text-center flex-wrap">
+                                {data.food_name}
+                              </td>
+                              {item?.order_items?.map((data, index) => (
+                                <td key={index} class="py-3 text-center">
+                                  {data?.extra?.map(
+                                    (extra, index) => extra?.name
+                                  )}
+                                </td>
+                              ))}
+                              <td class="py-3 text-center">{data.quantity}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div> */}
                   <hr className="border-[#F0A70B]" />
                   {/* <---- amount ----> */}
                   <Box
