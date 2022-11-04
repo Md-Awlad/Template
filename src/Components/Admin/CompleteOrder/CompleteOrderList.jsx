@@ -4,6 +4,12 @@ import {
   Box,
   Button,
   Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
   Typography,
 } from "@mui/material";
 import React from "react";
@@ -151,9 +157,8 @@ const CompleteOrderList = ({ completes, isLoading, isError }) => {
                       </Typography>
                     </Typography>
                   </Box>
-                  <hr className="border-[#F0A70B]" />
                   {/* <--- order Items ---> */}
-                  <Box className="flex justify-between py-2">
+                  <Box className="flex gap-4 py-2">
                     <Box>
                       <Typography
                         sx={{ fontSize: 14, fontWeight: 500 }}
@@ -171,7 +176,7 @@ const CompleteOrderList = ({ completes, isLoading, isError }) => {
                         </Typography>
                       ))}
                     </Box>
-                    {/* --extra-- */}
+                    {/* --extra--  */}
                     <Box>
                       <Typography
                         sx={{ fontSize: 14, fontWeight: 500 }}
@@ -194,7 +199,7 @@ const CompleteOrderList = ({ completes, isLoading, isError }) => {
                         </Typography>
                       ))}
                     </Box>
-                    {/* --quantity-- */}
+                    {/* --quantity--  */}
                     <Box>
                       <Typography
                         sx={{
@@ -220,7 +225,6 @@ const CompleteOrderList = ({ completes, isLoading, isError }) => {
                       ))}
                     </Box>
                   </Box>
-                  <hr className="border-[#F0A70B]" />
                   {/* <---- amount ----> */}
                   <Box
                     sx={{
