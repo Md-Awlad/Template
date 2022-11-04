@@ -57,7 +57,6 @@ const Food = ({ id }) => {
       >
         <Grid container sx={{ padding: 0, m: 0 }}>
           {food[0]?.foodItems_category?.map((item, index) => {
-            console.log(item.image);
             return (
               <Grid item sm={6} md={6}>
                 <div

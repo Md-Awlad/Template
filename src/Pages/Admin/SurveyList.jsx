@@ -1,9 +1,10 @@
-import { Container } from "@mui/material";
+import { Alert, AlertTitle, Container } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import LoaderSource from "../../Components/Loaders/LoaderSource";
 import PageTitle from "../../Components/PageTitle/PageTitle";
+import CustomDataGrid from "../../Components/Shared/CustomDataGrid";
 import { useStateContext } from "../../Contexts/ContextProvider";
 import myAxios from "../../utils/myAxios";
 
@@ -114,6 +115,7 @@ const SurveyList = () => {
     data: surveyList = [],
     refetch: orderRefetch,
     isLoading,
+    isError,
   } = useQuery(["surveyList"], async () => {
     const res = await myAxios("/survey/");
     return res.data;
@@ -126,50 +128,16 @@ const SurveyList = () => {
       <div style={{ height: 510, width: "100%" }}>
         {isLoading ? (
           <LoaderSource />
+        ) : isError ? (
+          <Alert severity="error">
+            <AlertTitle>Error</AlertTitle>
+            Could not get Survey
+          </Alert>
         ) : (
-          <DataGrid
-            sx={{
-              color: currentMode === "Dark" ? "#fff" : "#000",
-              "& .MuiIconButton-root": {
-                color: "unset !important",
-              },
-              "& .MuiTablePagination-toolbar": {
-                color: currentMode === "Dark" ? "#fff" : "#000",
-              },
-              "& .MuiDataGrid-row:hover": {
-                bgcolor: currentMode === "Dark" ? `${currentColor}10` : "",
-              },
-              "& .MuiDataGrid-selectedRowCount": {
-                visibility: "hidden",
-              },
-              "& .MuiDataGrid-cell:focus-within": {
-                outline: "none",
-              },
-              "& .MuiInput-root": {
-                color: currentMode === "Dark" ? "#fff" : "#000",
-              },
-            }}
+          <CustomDataGrid
             rows={surveyList}
             columns={columns}
             orderRefetch={orderRefetch}
-            rowsPerPageOptions={[5]}
-            disableSelectionOnClick
-            disableColumnFilter
-            disableColumnSelector
-            disableDensitySelector
-            components={{ Toolbar: GridToolbar }}
-            componentsProps={{
-              toolbar: {
-                showQuickFilter: true,
-                quickFilterProps: { debounceMs: 500 },
-                printOptions: {
-                  disableToolbarButton: true,
-                },
-                csvOptions: {
-                  disableToolbarButton: true,
-                },
-              },
-            }}
           />
         )}
       </div>
@@ -178,3 +146,51 @@ const SurveyList = () => {
 };
 
 export default SurveyList;
+
+/*
+<DataGrid
+  sx={{
+    color: currentMode === "Dark" ? "#fff" : "#000",
+    "& .MuiIconButton-root": {
+      color: "unset !important",
+    },
+    "& .MuiTablePagination-toolbar": {
+      color: currentMode === "Dark" ? "#fff" : "#000",
+    },
+    "& .MuiDataGrid-row:hover": {
+      bgcolor: currentMode === "Dark" ? `${currentColor}10` : "",
+    },
+    "& .MuiDataGrid-selectedRowCount": {
+      visibility: "hidden",
+    },
+    "& .MuiDataGrid-cell:focus-within": {
+      outline: "none",
+    },
+    "& .MuiInput-root": {
+      color: currentMode === "Dark" ? "#fff" : "#000",
+    },
+  }}
+  rows={surveyList}
+  columns={columns}
+  orderRefetch={orderRefetch}
+  rowsPerPageOptions={[5]}
+  disableSelectionOnClick
+  disableColumnFilter
+  disableColumnSelector
+  disableDensitySelector
+  components={{ Toolbar: GridToolbar }}
+  componentsProps={{
+    toolbar: {
+      showQuickFilter: true,
+      quickFilterProps: { debounceMs: 500 },
+      printOptions: {
+        disableToolbarButton: true,
+      },
+      csvOptions: {
+        disableToolbarButton: true,
+      },
+    },
+  }}
+/>
+
+*/

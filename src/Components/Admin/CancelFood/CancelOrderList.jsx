@@ -1,26 +1,15 @@
 import { Alert, AlertTitle, Tooltip, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import React, { useState } from "react";
 import { RiDeleteBin6Line } from "react-icons/ri";
-import { useStateContext } from "../../../Contexts/ContextProvider";
 import LoaderSource from "../../Loaders/LoaderSource";
 import DeleteCancelOrder from "../../Modals/Admin/DeleteCancelOrder";
+import CustomDataGrid from "../../Shared/CustomDataGrid";
 
 const CancelOrderList = ({ cancelOrder, isLoading, isError }) => {
-  console.log(cancelOrder);
-  const { currentColor, currentMode } = useStateContext();
   const [deleteId, setDeleteId] = useState();
-  console.log(cancelOrder);
 
   const columns = [
-    // {
-    //   field: "id",
-    //   headerName: "ID",
-    //   width: 80,
-    //   headerAlign: "center",
-    //   align: "center",
-    // },
     {
       field: "id",
       headerName: "Order ID",
@@ -37,13 +26,6 @@ const CancelOrderList = ({ cancelOrder, isLoading, isError }) => {
             ))}
           </>
         );
-        // return (
-        //   <Typography>{`${
-        //     row?.order_type === "takeaway"
-        //       ? "Takeaway"
-        //       : row?.order_type === "dine_in" && "Dine In"
-        //   }`}</Typography>
-        // );
       },
     },
     {
@@ -158,51 +140,7 @@ const CancelOrderList = ({ cancelOrder, isLoading, isError }) => {
             Could not get Cancel Orders
           </Alert>
         ) : (
-          <DataGrid
-            sx={{
-              color: currentMode === "Dark" ? "#fff" : "#000",
-              "& .MuiIconButton-root": {
-                color: "unset !important",
-              },
-              "& .MuiTablePagination-toolbar": {
-                color: currentMode === "Dark" ? "#fff" : "#000",
-              },
-              "& .MuiDataGrid-row:hover": {
-                bgcolor: currentMode === "Dark" ? `${currentColor}10` : "",
-              },
-              "& .MuiDataGrid-selectedRowCount": {
-                visibility: "hidden",
-              },
-              "& .MuiDataGrid-cell:focus-within": {
-                outline: "none",
-              },
-              "& .MuiInput-root": {
-                color: currentMode === "Dark" ? "#fff" : "#000",
-              },
-            }}
-            rows={cancelOrder}
-            columns={columns}
-            rowsPerPageOptions={[5]}
-            disableSelectionOnClick
-            disableColumnFilter
-            disableColumnSelector
-            disableDensitySelector
-            components={{ Toolbar: GridToolbar }}
-            componentsProps={{
-              toolbar: {
-                showQuickFilter: true,
-                quickFilterProps: { debounceMs: 500 },
-                printOptions: {
-                  disableToolbarButton: true,
-                },
-                csvOptions: {
-                  disableToolbarButton: true,
-                },
-              },
-            }}
-            // checkboxSelection
-            // disableSelectionOnClick
-          />
+          <CustomDataGrid rows={cancelOrder} columns={columns} />
         )}
       </div>
       {Boolean(deleteId) && (
@@ -216,3 +154,51 @@ const CancelOrderList = ({ cancelOrder, isLoading, isError }) => {
 };
 
 export default CancelOrderList;
+
+/*
+<DataGrid
+  sx={{
+    color: currentMode === "Dark" ? "#fff" : "#000",
+    "& .MuiIconButton-root": {
+      color: "unset !important",
+    },
+    "& .MuiTablePagination-toolbar": {
+      color: currentMode === "Dark" ? "#fff" : "#000",
+    },
+    "& .MuiDataGrid-row:hover": {
+      bgcolor: currentMode === "Dark" ? `${currentColor}10` : "",
+    },
+    "& .MuiDataGrid-selectedRowCount": {
+      visibility: "hidden",
+    },
+    "& .MuiDataGrid-cell:focus-within": {
+      outline: "none",
+    },
+    "& .MuiInput-root": {
+      color: currentMode === "Dark" ? "#fff" : "#000",
+    },
+  }}
+  rows={cancelOrder}
+  columns={columns}
+  rowsPerPageOptions={[5]}
+  disableSelectionOnClick
+  disableColumnFilter
+  disableColumnSelector
+  disableDensitySelector
+  components={{ Toolbar: GridToolbar }}
+  componentsProps={{
+    toolbar: {
+      showQuickFilter: true,
+      quickFilterProps: { debounceMs: 500 },
+      printOptions: {
+        disableToolbarButton: true,
+      },
+      csvOptions: {
+        disableToolbarButton: true,
+      },
+    },
+  }}
+  // checkboxSelection
+  // disableSelectionOnClick
+/>
+*/
