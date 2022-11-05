@@ -34,7 +34,12 @@ const style = {
 const EditFood = ({ editId, handleModalClose, customizeFood }) => {
   console.log(customizeFood);
   const { currentColor } = useStateContext();
-  const { register, handleSubmit, setValue } = useForm();
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm();
   const [extra, setExtra] = useState();
   const queryClient = useQueryClient();
   // const [SizeAndPrice, setSizeAndPrice] = useState(1);
@@ -83,7 +88,12 @@ const EditFood = ({ editId, handleModalClose, customizeFood }) => {
     }
     payloadForm.append("base_ingredient", data?.ingredient);
 
-    payloadForm.append("custom_food", JSON.stringify(extra?.map((a) => a?.id)));
+    if (extra) {
+      payloadForm.append(
+        "custom_food",
+        JSON.stringify(extra?.map((a) => a?.id))
+      );
+    }
 
     await toast.promise(
       myAxios.patch(`/food/${editId}/`, payloadForm, {
@@ -207,9 +217,12 @@ const EditFood = ({ editId, handleModalClose, customizeFood }) => {
                 id="image"
                 type="file"
                 label="Food Image"
+                required
                 InputLabelProps={{
                   shrink: true,
                 }}
+                error={Boolean(errors.image)}
+                helperText={errors.image && "Food image is required *"}
                 InputProps={{
                   endAdornment: (
                     <InputAdornment position="end">
@@ -220,7 +233,7 @@ const EditFood = ({ editId, handleModalClose, customizeFood }) => {
                 inputProps={{
                   accept: "image/*",
                 }}
-                {...register("image")}
+                {...register("image", { required: true })}
                 sx={{
                   width: 1,
                   "& ::file-selector-button": {

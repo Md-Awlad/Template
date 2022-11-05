@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { RiDeleteBin6Line } from "react-icons/ri";
+import GppBadIcon from "@mui/icons-material/GppBad";
+import DeleteIcon from "@mui/icons-material/Delete";
 import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
-import HighlightOffIcon from "@mui/icons-material/HighlightOff";
+import DisabledByDefaultIcon from "@mui/icons-material/DisabledByDefault";
 import myAxios from "../../../utils/myAxios";
 import DeleteOrder from "../../Modals/Admin/DeleteOrder";
 import RejectOrder from "../../Modals/Admin/RejectOrder";
@@ -11,6 +12,7 @@ import {
   Alert,
   AlertTitle,
   Box,
+  IconButton,
   Paper,
   styled,
   Table,
@@ -20,9 +22,11 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Tooltip,
   Typography,
 } from "@mui/material";
 import { MdEmail } from "react-icons/md";
+import { RiDeleteBin6Line } from "react-icons/ri";
 import { FaPhoneAlt } from "react-icons/fa";
 import { BsCheck2Circle } from "react-icons/bs";
 import LoaderSource from "../../Loaders/LoaderSource";
@@ -119,7 +123,7 @@ const OrderList = ({ orders, orderRefetch, isLoading, isError }) => {
                   sx={{ height: 300, overflowY: "scroll", px: 1 }}
                   className="space-y-2"
                 >
-                  <Box className="flex justify-between items-center">
+                  <Box className="flex justify-between flex-wrap items-center">
                     <Typography
                       sx={{ fontSize: 14, fontWeight: 500 }}
                       variant="h6"
@@ -215,7 +219,8 @@ const OrderList = ({ orders, orderRefetch, isLoading, isError }) => {
                       <TableHead
                         sx={{
                           "& .MuiTableCell-head": {
-                            bgcolor: "#696969 !important",
+                            bgcolor: "#C0C0C0 !important",
+                            color: "#000 !important",
                           },
                         }}
                       >
@@ -240,7 +245,11 @@ const OrderList = ({ orders, orderRefetch, isLoading, isError }) => {
                                   } `
                               )}
                             </StyledTableCell>
-                            <StyledTableCell component="th" scope="row">
+                            <StyledTableCell
+                              component="th"
+                              scope="row"
+                              align="center"
+                            >
                               {row.quantity}
                             </StyledTableCell>
                           </StyledTableRow>
@@ -273,23 +282,31 @@ const OrderList = ({ orders, orderRefetch, isLoading, isError }) => {
                 {/* --action button-- */}
                 <Box className="flex justify-between items-center mt-2">
                   <form onSubmit={handleSubmit(onSubmit)}>
-                    <button>
-                      <BsCheck2Circle
-                        onClick={() => setComplete(item.id)}
-                        className="text-success dark:text-success text-2xl cursor-pointer mt-1"
-                      />
-                    </button>
+                    <Tooltip title="Confirmed Order" placement="top">
+                      <IconButton aria-label="delete" size="large">
+                        <button onClick={() => setComplete(item.id)}>
+                          <BsCheck2Circle className="text-success dark:text-success text-2xl cursor-pointer" />
+                        </button>
+                      </IconButton>
+                    </Tooltip>
                   </form>
+                  <Tooltip title="Rejected Order" placement="top">
+                    <IconButton aria-label="delete" size="large">
+                      <DisabledByDefaultIcon
+                        onClick={() => setReject(item.id)}
+                        className="text-error dark:text-error text-2xl cursor-pointer"
+                      />
+                    </IconButton>
+                  </Tooltip>
 
-                  <HighlightOffIcon
-                    onClick={() => setReject(item.id)}
-                    className="text-error dark:text-error text-2xl cursor-pointer"
-                  />
-
-                  <RiDeleteBin6Line
-                    onClick={() => setDeleteId(item.id)}
-                    className="text-blue-900 dark:text-blue-600 text-2xl cursor-pointer"
-                  />
+                  <Tooltip title="Deleted Order" placement="top">
+                    <IconButton aria-label="delete" size="large">
+                      <DeleteIcon
+                        onClick={() => setDeleteId(item.id)}
+                        className="text-blue-900 dark:text-blue-600 text-2xl cursor-pointer"
+                      />
+                    </IconButton>
+                  </Tooltip>
                 </Box>
               </Paper>
             ))}

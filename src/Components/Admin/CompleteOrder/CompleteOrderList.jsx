@@ -12,12 +12,14 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Tooltip,
   Typography,
 } from "@mui/material";
 import React from "react";
 import { useState } from "react";
 import { FaPhoneAlt } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
+import DeleteIcon from "@mui/icons-material/Delete";
 import LoaderSource from "../../Loaders/LoaderSource";
 import DeleteConfirmOrder from "../../Modals/Admin/DeleteConfirmOrder";
 
@@ -43,9 +45,16 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 const CompleteOrderList = ({ completes, isLoading, isError }) => {
   const [deleteId, setDeleteId] = useState();
+  const [query, setQuery] = useState("");
 
   return (
     <div>
+      {/* <input
+        type="search"
+        placeholder="Enter item Title"
+        onChange={(event) => setQuery(event.target.value)}
+        className="border-2 border-fuchsia-600"
+      /> */}
       {isLoading ? (
         <LoaderSource />
       ) : isError ? (
@@ -75,7 +84,7 @@ const CompleteOrderList = ({ completes, isLoading, isError }) => {
               // position: "relative",
             }}
           >
-            {completes?.map((item) => (
+            {completes.map((item) => (
               <Paper
                 key={item.id}
                 className="space-y-1 dark:bg-secondary-dark-bg dark:text-neutral"
@@ -90,7 +99,7 @@ const CompleteOrderList = ({ completes, isLoading, isError }) => {
                   sx={{ height: 300, overflowY: "scroll", px: 1 }}
                   className="space-y-2"
                 >
-                  <Box className="flex justify-between items-center">
+                  <Box className="flex justify-between flex-wrap items-center">
                     <Typography
                       sx={{ fontSize: 14, fontWeight: 500 }}
                       variant="h6"
@@ -186,7 +195,8 @@ const CompleteOrderList = ({ completes, isLoading, isError }) => {
                       <TableHead
                         sx={{
                           "& .MuiTableCell-head": {
-                            bgcolor: "#696969 !important",
+                            bgcolor: "#C0C0C0 !important",
+                            color: "#000 !important",
                           },
                         }}
                       >
@@ -211,7 +221,11 @@ const CompleteOrderList = ({ completes, isLoading, isError }) => {
                                   } `
                               )}
                             </StyledTableCell>
-                            <StyledTableCell component="th" scope="row">
+                            <StyledTableCell
+                              component="th"
+                              scope="row"
+                              align="center"
+                            >
                               {row.quantity}
                             </StyledTableCell>
                           </StyledTableRow>
@@ -242,19 +256,19 @@ const CompleteOrderList = ({ completes, isLoading, isError }) => {
                   </Box>
                 </Box>
                 {/* <--action Button--> */}
-                <Box>
-                  <Button
-                    sx={{
-                      width: 1,
-                      mt: 2,
-                    }}
-                    color="error"
-                    variant="contained"
-                    onClick={() => setDeleteId(item.id)}
-                  >
-                    Remove
-                  </Button>
-                </Box>
+
+                <Button
+                  sx={{
+                    width: 1,
+                    mt: 2,
+                  }}
+                  color="error"
+                  onClick={() => setDeleteId(item.id)}
+                  variant="contained"
+                  startIcon={<DeleteIcon />}
+                >
+                  Delete
+                </Button>
               </Paper>
             ))}
           </Box>
@@ -271,3 +285,7 @@ const CompleteOrderList = ({ completes, isLoading, isError }) => {
 };
 
 export default CompleteOrderList;
+const data = [
+  { id: 1, title: "hello" },
+  { id: 1, title: "gello" },
+];

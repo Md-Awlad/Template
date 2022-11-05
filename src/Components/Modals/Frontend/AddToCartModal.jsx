@@ -105,7 +105,7 @@ function AddToCartModal(props) {
           }}
           onClick={setOpen}
         >
-          <MdOutlineCancel className="text-gray-800 hover:text-white" />
+          <MdOutlineCancel className="text-gray-800 hover:text-red-600" />
         </IconButton>
         <Box>
           <img
@@ -496,7 +496,8 @@ function AddToCartModal(props) {
               >
                 {Boolean(item?.discount_price) ? (
                   <Box sx={{ width: 1 }}>
-                    {Object.values(item?.discount_price).length < 2 ? (
+                    {Object.values(item?.discount_price).length < 2 &&
+                    !Object.values(item?.discount_price).length < 1 ? (
                       Object.entries(item?.discount_price).map((key, i) => {
                         console.log(item?.discount_price);
                         return (
@@ -512,7 +513,7 @@ function AddToCartModal(props) {
                               width: 1,
                               cursor: "pointer",
                               display:
-                                Object.values(item?.discount_price).length > 1
+                                Object.values(item?.discount_price).length < 2
                                   ? "block"
                                   : "none",
                             }}

@@ -86,7 +86,6 @@ const EditCategory = ({ editId, handleClose }) => {
                 id="image"
                 type="file"
                 label="Image"
-                required
                 InputLabelProps={{
                   shrink: true,
                 }}
@@ -100,7 +99,7 @@ const EditCategory = ({ editId, handleClose }) => {
                 inputProps={{
                   accept: "image/*",
                 }}
-                {...register("image", { required: true })}
+                {...register("image")}
                 sx={{
                   width: 1,
                   "& ::file-selector-button": {
