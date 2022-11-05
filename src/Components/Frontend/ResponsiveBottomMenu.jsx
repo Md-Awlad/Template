@@ -3,7 +3,7 @@ import React from "react";
 import { AiOutlineHome, AiOutlineShoppingCart } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import { useStateContext } from "../../Contexts/ContextProvider";
-import cookImg from "../../image/Cook.svg";
+import SvgImage from "../Loaders/SvgImage";
 import CustomDrawer from "../Shared/CustomDrawer";
 
 const ResponsiveBottomMenu = () => {
@@ -12,7 +12,12 @@ const ResponsiveBottomMenu = () => {
     <>
       {restaurantData?.map((data) => (
         <Box
-          style={{ backgroundColor: data?.color || "#F0A70B" }}
+          sx={{
+            backgroundColor: data?.color || "#F0A70B",
+            "@media print": {
+              display: "none",
+            },
+          }}
           className="px-10 md:py-6 py-3  flex justify-between items-center md:gap-0 gap-5 md:items-center fixed bottom-0 left-0 right-0 z-10 rounded-tr-xl rounded-tl-xl"
         >
           <Box className="flex justify-between items-center w-full">
@@ -32,17 +37,15 @@ const ResponsiveBottomMenu = () => {
                     cart.length ? "border-1 border-red-400" : "border-1"
                   } rounded-full md:p-2 p-1  cursor-pointer `}
                 >
-                  <img
-                    className="md:w-14 md:h-14 w-10 h-10  mx-auto   cursor-pointer"
-                    src={cookImg}
-                    alt=""
-                  />
+                  <SvgImage />
                   <Typography
                     sx={{
                       fontSize: { sm: 11, xs: 8 },
                       fontWeight: 500,
                       textAlign: "center",
-                      color: "#F0A70B",
+                      color: restaurantData?.map(
+                        (data) => data?.color || "#F0A70B"
+                      ),
                     }}
                   >
                     Order Now

@@ -14,11 +14,6 @@ const Banner = () => {
     return res.data;
   });
 
-  // const { data: discounts = [] } = useQuery(["discount"], async () => {
-  //   const res = await staticAxios("/apply_discount/");
-  //   return res.data;
-  // });
-
   return (
     <>
       {restaurantData?.map((data, index) => (
@@ -54,7 +49,8 @@ const Banner = () => {
                   a.discount?.map((data, index) => (
                     <Typography
                       key={index}
-                      sx={{ mx: 2, fontSize: 22, fontWeight: 600 }}
+                      variant="h6"
+                      sx={{ mx: 2, fontSize: 22, fontWeight: 500 }}
                     >
                       {data.notice}
                     </Typography>

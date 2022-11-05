@@ -15,7 +15,6 @@ import { MdClose } from "react-icons/md";
 import { staticAxios } from "../../../utils/myAxios";
 
 const CartItems = ({ cart, setCart, item }) => {
-
   // const addExtra = (extraId, price = 0) => {
   //   setCart(
   //     cart.map((e) => {
@@ -34,30 +33,61 @@ const CartItems = ({ cart, setCart, item }) => {
   //     })
   //   );
   // };
+
   const addExtra = (extraId, price = 0) => {
-    const items = cart.map((e) => {
-      if (Object.keys(e.extra).length) {
-        for (const key in e.extra) {
-          if (parseInt(key) === extraId) {
-            delete e.extra[extraId];
-            break;
+    setCart(
+      cart.map((e) => {
+        //e.id === item.id && e.size === item.size
+        if (e === item) {
+          const existing = e?.extra && Boolean(e.extra[extraId]);
+
+          if (Object.keys(e.extra).length) {
+            for (const key in e.extra) {
+              if (parseInt(key) === extraId) {
+                delete e.extra[extraId];
+                break;
+              } else {
+                e["extra"] = {
+                  ...e?.extra,
+                  [extraId]: price,
+                };
+              }
+            }
           } else {
             e["extra"] = {
-              ...e?.extra,
               [extraId]: price,
             };
           }
+          return e;
+        } else {
+          return e;
         }
-      } else {
-        e["extra"] = {
-          [extraId]: price,
-        };
-      }
-      return e;
-    });
-    setCart(items);
+      })
+    );
   };
-  // console.log(cart);
+  // const addExtra = (extraId, price = 0) => {
+  //   const items = cart.map((e) => {
+  //     if (Object.keys(e.extra).length) {
+  //       for (const key in e.extra) {
+  //         if (parseInt(key) === extraId) {
+  //           delete e.extra[extraId];
+  //           break;
+  //         } else {
+  //           e["extra"] = {
+  //             ...e?.extra,
+  //             [extraId]: price,
+  //           };
+  //         }
+  //       }
+  //     } else {
+  //       e["extra"] = {
+  //         [extraId]: price,
+  //       };
+  //     }
+  //     return e;
+  //   });
+  //   setCart(items);
+  // };
 
   const handleIncrement = (item) => {
     if (cart.find((i) => i === item && Object.keys(item?.extra))) {

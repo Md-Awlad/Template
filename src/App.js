@@ -61,7 +61,8 @@ const App = () => {
     // },
     {
       path: "ordersummary",
-      element: orderId ? <OrderSummary /> : <Navigate to="/" />,
+      // element: orderId ? <OrderSummary /> : <Navigate to="/" />,
+      element: <OrderSummary />,
     },
     {
       path: "survey",
