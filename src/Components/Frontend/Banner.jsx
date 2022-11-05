@@ -4,13 +4,13 @@ import React from "react";
 import Marquee from "react-fast-marquee";
 import { useStateContext } from "../../Contexts/ContextProvider";
 import mainBanner from "../../image/Cover-Banner-17.jpg";
-import myAxios, { staticAxios } from "../../utils/myAxios";
+import { staticAxios } from "../../utils/myAxios";
 
 const Banner = () => {
   const { activeMenu, restaurantData } = useStateContext();
 
   const { data: discounts = [] } = useQuery(["discount"], async () => {
-    const res = await myAxios("/apply_discount/");
+    const res = await staticAxios("/apply_discount/");
     return res.data;
   });
 
