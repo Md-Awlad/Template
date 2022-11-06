@@ -60,10 +60,6 @@ const OrderList = ({ orders, orderRefetch, isLoading, isError }) => {
   const [reject, setReject] = useState(null);
   const [search, setNewSearch] = useState("");
 
-  const handleSearchChange = (e) => {
-    setNewSearch(e.target.value);
-  };
-
   // <---search--->
   const filtered = !search
     ? orders
@@ -119,12 +115,12 @@ const OrderList = ({ orders, orderRefetch, isLoading, isError }) => {
                 display: "flex",
                 alignItems: "center",
                 width: 250,
-                border: "1px solid #707070",
+                border: "1px solid #ccc",
                 borderRadius: 2,
               }}
               type="search"
               value={search}
-              onChange={handleSearchChange}
+              onChange={(e) => setNewSearch(e.target.value)}
             >
               <IconButton
                 type="button"
@@ -281,8 +277,12 @@ const OrderList = ({ orders, orderRefetch, isLoading, isError }) => {
                         }}
                       >
                         <TableRow>
-                          <StyledTableCell>Items</StyledTableCell>
-                          <StyledTableCell>Extra</StyledTableCell>
+                          <StyledTableCell sx={{ width: 300 }}>
+                            Items
+                          </StyledTableCell>
+                          <StyledTableCell sx={{ width: 150 }}>
+                            Extra
+                          </StyledTableCell>
                           <StyledTableCell>Quantity</StyledTableCell>
                         </TableRow>
                       </TableHead>
@@ -299,11 +299,19 @@ const OrderList = ({ orders, orderRefetch, isLoading, isError }) => {
                               },
                             }}
                           >
-                            <StyledTableCell component="th" scope="row">
+                            <StyledTableCell
+                              component="th"
+                              scope="row"
+                              sx={{ width: 300 }}
+                            >
                               {row.food_name}
                             </StyledTableCell>
 
-                            <StyledTableCell component="th" scope="row">
+                            <StyledTableCell
+                              component="th"
+                              scope="row"
+                              sx={{ width: 150 }}
+                            >
                               {row?.extra?.map(
                                 (extra, index) =>
                                   `${extra?.name}  ${
