@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import GppBadIcon from "@mui/icons-material/GppBad";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
@@ -13,6 +12,7 @@ import {
   AlertTitle,
   Box,
   IconButton,
+  InputBase,
   Paper,
   styled,
   Table,
@@ -26,10 +26,11 @@ import {
   Typography,
 } from "@mui/material";
 import { MdEmail } from "react-icons/md";
-import { RiDeleteBin6Line } from "react-icons/ri";
+import SearchIcon from "@mui/icons-material/Search";
 import { FaPhoneAlt } from "react-icons/fa";
 import { BsCheck2Circle } from "react-icons/bs";
 import LoaderSource from "../../Loaders/LoaderSource";
+import { useStateContext } from "../../../Contexts/ContextProvider";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -52,10 +53,23 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 const OrderList = ({ orders, orderRefetch, isLoading, isError }) => {
+  const { currentMode } = useStateContext();
   const { handleSubmit } = useForm();
   const [deleteId, setDeleteId] = useState(null);
   const [complete, setComplete] = useState();
   const [reject, setReject] = useState(null);
+  const [search, setNewSearch] = useState("");
+
+  const handleSearchChange = (e) => {
+    setNewSearch(e.target.value);
+  };
+
+  // <---search--->
+  const filtered = !search
+    ? orders
+    : orders.filter((item) =>
+        item.customer_name?.toLowerCase()?.includes(search?.toLowerCase())
+      );
 
   const orderConfirmMutation = useMutation(
     (payloadForm) =>
@@ -89,13 +103,55 @@ const OrderList = ({ orders, orderRefetch, isLoading, isError }) => {
         </Alert>
       ) : (
         <>
-          <Typography
-            className="dark:text-neutral"
-            sx={{ display: "flex", justifyContent: "flex-end", my: 2 }}
-            variant="h6"
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              flexWrap: "wrap",
+              alignItems: "center",
+              my: 2,
+            }}
           >
-            Now Orders: {orders.length ? orders.length : "00"}
-          </Typography>
+            <Box
+              component="form"
+              sx={{
+                px: "2px",
+                display: "flex",
+                alignItems: "center",
+                width: 250,
+                border: "1px solid #707070",
+                borderRadius: 2,
+              }}
+              type="search"
+              value={search}
+              onChange={handleSearchChange}
+            >
+              <IconButton
+                type="button"
+                aria-label="search"
+                sx={{ color: currentMode === "Light" ? "#000" : "#fff" }}
+              >
+                <SearchIcon />
+              </IconButton>
+              <InputBase
+                sx={{
+                  ml: 1,
+                  flex: 1,
+                  color: currentMode === "Light" ? "#000" : "#fff",
+                }}
+                placeholder="Search Name"
+                // inputProps={{ "aria-label": "search google maps" }}
+              />
+            </Box>
+            <Typography
+              className="dark:text-neutral"
+              sx={{ display: "flex", justifyContent: "flex-end", my: 2 }}
+              variant="h6"
+            >
+              Now Orders: {orders.length ? orders.length : "00"}
+            </Typography>
+          </Box>
+
           <Box
             sx={{
               display: "grid",
@@ -108,7 +164,7 @@ const OrderList = ({ orders, orderRefetch, isLoading, isError }) => {
               gap: 2,
             }}
           >
-            {orders?.map((item) => (
+            {filtered?.map((item) => (
               <Paper
                 key={item.id}
                 className="space-y-1 dark:bg-secondary-dark-bg dark:text-neutral"
@@ -232,7 +288,17 @@ const OrderList = ({ orders, orderRefetch, isLoading, isError }) => {
                       </TableHead>
                       <TableBody>
                         {item?.order_items.map((row) => (
-                          <StyledTableRow key={row.name}>
+                          <StyledTableRow
+                            key={row.name}
+                            sx={{
+                              "& .MuiTableCell-root": {
+                                bgcolor:
+                                  currentMode === "light"
+                                    ? "#000 !important"
+                                    : "#fff !important",
+                              },
+                            }}
+                          >
                             <StyledTableCell component="th" scope="row">
                               {row.food_name}
                             </StyledTableCell>

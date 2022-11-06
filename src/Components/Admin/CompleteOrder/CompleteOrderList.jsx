@@ -3,6 +3,8 @@ import {
   AlertTitle,
   Box,
   Button,
+  IconButton,
+  InputBase,
   Paper,
   styled,
   Table,
@@ -19,8 +21,10 @@ import { useState } from "react";
 import { FaPhoneAlt } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import DeleteIcon from "@mui/icons-material/Delete";
+import SearchIcon from "@mui/icons-material/Search";
 import LoaderSource from "../../Loaders/LoaderSource";
 import DeleteConfirmOrder from "../../Modals/Admin/DeleteConfirmOrder";
+import { useStateContext } from "../../../Contexts/ContextProvider";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -43,8 +47,21 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 const CompleteOrderList = ({ completes, isLoading, isError }) => {
+  const { currentMode } = useStateContext();
   const [deleteId, setDeleteId] = useState();
   const ordersDescending = [...completes].sort((a, b) => b.id - a.id);
+  const [search, setNewSearch] = useState("");
+
+  const handleSearchChange = (e) => {
+    setNewSearch(e.target.value);
+  };
+
+  // <---search--->
+  const filtered = !search
+    ? ordersDescending
+    : ordersDescending.filter((item) =>
+        item.customer_name?.toLowerCase()?.includes(search?.toLowerCase())
+      );
 
   return (
     <div>
@@ -57,13 +74,50 @@ const CompleteOrderList = ({ completes, isLoading, isError }) => {
         </Alert>
       ) : (
         <>
-          <Typography
-            className="dark:text-neutral"
-            sx={{ display: "flex", justifyContent: "flex-end", my: 2 }}
-            variant="h6"
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              flexWrap: "wrap",
+              alignItems: "center",
+              my: 2,
+            }}
           >
-            Orders Complete : {completes.length ? completes.length : "00"}
-          </Typography>
+            <Box
+              component="form"
+              sx={{
+                px: "2px",
+                display: "flex",
+                alignItems: "center",
+                width: 250,
+                border: "1px solid #707070",
+                borderRadius: 2,
+              }}
+              type="search"
+              value={search}
+              onChange={handleSearchChange}
+            >
+              <IconButton
+                type="button"
+                aria-label="search"
+                sx={{ color: currentMode === "Light" ? "#000" : "#fff" }}
+              >
+                <SearchIcon />
+              </IconButton>
+              <InputBase
+                sx={{
+                  ml: 1,
+                  flex: 1,
+                  color: currentMode === "Light" ? "#000" : "#fff",
+                }}
+                placeholder="Search Name"
+                // inputProps={{ "aria-label": "search google maps" }}
+              />
+            </Box>
+            <Typography className="dark:text-neutral" variant="h6">
+              Orders Complete : {completes.length ? completes.length : "00"}
+            </Typography>
+          </Box>
           <Box
             sx={{
               display: "grid",
@@ -77,193 +131,207 @@ const CompleteOrderList = ({ completes, isLoading, isError }) => {
               // position: "relative",
             }}
           >
-            {ordersDescending.map((item) => (
-              <Paper
-                key={item.id}
-                className="space-y-1 dark:bg-secondary-dark-bg dark:text-neutral"
-                sx={{
-                  px: 1,
-                  py: 1,
-                  boxShadow: "0px 0px 5px 0px rgb(0 0 0 / 20%)",
-                  border: "1px solid #ccc",
-                }}
-              >
-                <Box
-                  sx={{ height: 300, overflowY: "scroll", px: 1 }}
-                  className="space-y-2"
-                >
-                  <Box className="flex justify-between flex-wrap items-center">
-                    <Typography
-                      sx={{ fontSize: 14, fontWeight: 500 }}
-                      variant="h6"
-                    >
-                      Order ID :{" "}
-                      <Typography
-                        component={"span"}
-                        sx={{ fontSize: 14, fontWeight: 600 }}
-                        variant="h6"
-                      >
-                        {item?.id}
-                      </Typography>
-                    </Typography>
-                    <Typography sx={{ fontSize: 14 }} variant="h6">
-                      Table No:{" "}
-                      <Typography
-                        component={"span"}
-                        sx={{ fontSize: 15, fontWeight: 600 }}
-                        variant="h6"
-                      >
-                        {item?.table}
-                      </Typography>
-                    </Typography>
-                  </Box>
-
-                  <Box>
-                    <Typography sx={{ fontSize: 14 }} variant="h6">
-                      Order Type :{" "}
-                      <Typography
-                        component={"span"}
-                        sx={{ fontSize: 15, fontWeight: 600 }}
-                        variant="h6"
-                      >
-                        {`${
-                          item?.order_type === "takeaway"
-                            ? "Takeaway"
-                            : item?.order_type === "dine_in" && "Dine In"
-                        }`}
-                      </Typography>
-                    </Typography>
-                    <Typography sx={{ fontSize: 14 }} variant="h6">
-                      Name :{" "}
-                      <Typography
-                        component={"span"}
-                        sx={{ fontSize: 15, fontWeight: 600 }}
-                        variant="h6"
-                      >
-                        {item?.customer_name}
-                      </Typography>
-                    </Typography>
-                    <Typography
-                      sx={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: 1,
-                        fontSize: 14,
-                      }}
-                      variant="h6"
-                    >
-                      <FaPhoneAlt />
-
-                      <Typography
-                        component={"span"}
-                        sx={{ fontSize: 14, fontWeight: 600 }}
-                        variant="h6"
-                      >
-                        {item?.customer_phone}
-                      </Typography>
-                    </Typography>
-                    <Typography
-                      sx={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: 1,
-                        fontSize: 14,
-                        fontWeight: 500,
-                      }}
-                      variant="h6"
-                    >
-                      <MdEmail />
-                      <Typography
-                        component={"span"}
-                        sx={{ fontSize: 14, fontWeight: 600 }}
-                        variant="h6"
-                      >
-                        {item?.customer_mail}
-                      </Typography>
-                    </Typography>
-                  </Box>
-                  {/* <--- order Items ---> */}
-                  <TableContainer>
-                    <Table aria-label="customized table">
-                      <TableHead
-                        sx={{
-                          "& .MuiTableCell-head": {
-                            bgcolor: "#C0C0C0 !important",
-                            color: "#000 !important",
-                          },
-                        }}
-                      >
-                        <TableRow>
-                          <StyledTableCell>Items</StyledTableCell>
-                          <StyledTableCell>Extra</StyledTableCell>
-                          <StyledTableCell>Quantity</StyledTableCell>
-                        </TableRow>
-                      </TableHead>
-                      <TableBody>
-                        {item?.order_items.map((row, index) => (
-                          <StyledTableRow key={index}>
-                            <StyledTableCell component="th" scope="row">
-                              {row.food_name}
-                            </StyledTableCell>
-
-                            <StyledTableCell component="th" scope="row">
-                              {row?.extra?.map(
-                                (extra, index) =>
-                                  `${extra?.name}  ${
-                                    row?.extra?.length - 1 === index ? "" : ","
-                                  } `
-                              )}
-                            </StyledTableCell>
-                            <StyledTableCell
-                              component="th"
-                              scope="row"
-                              align="center"
-                            >
-                              {row.quantity}
-                            </StyledTableCell>
-                          </StyledTableRow>
-                        ))}
-                      </TableBody>
-                    </Table>
-                  </TableContainer>
-                  {/* <---- amount ----> */}
-                </Box>
-                <Box
+            {filtered?.map((item) => {
+              return (
+                <Paper
+                  key={item.id}
+                  className="space-y-1 dark:bg-secondary-dark-bg dark:text-neutral"
                   sx={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
                     px: 1,
+                    py: 1,
+                    boxShadow: "0px 0px 5px 0px rgb(0 0 0 / 20%)",
+                    border: "1px solid #ccc",
                   }}
                 >
-                  <Typography
-                    sx={{ fontSize: 18, fontWeight: 500 }}
-                    variant="h6"
+                  <Box
+                    sx={{ height: 300, overflowY: "scroll", px: 1 }}
+                    className="space-y-2"
                   >
-                    Total Amount:
-                  </Typography>
-                  <Typography
-                    sx={{ fontSize: 18, fontWeight: 500 }}
-                    variant="h6"
+                    <Box className="flex justify-between flex-wrap items-center">
+                      <Typography
+                        sx={{ fontSize: 14, fontWeight: 500 }}
+                        variant="h6"
+                      >
+                        Order ID :{" "}
+                        <Typography
+                          component={"span"}
+                          sx={{ fontSize: 14, fontWeight: 600 }}
+                          variant="h6"
+                        >
+                          {item?.id}
+                        </Typography>
+                      </Typography>
+                      <Typography sx={{ fontSize: 14 }} variant="h6">
+                        Table No:{" "}
+                        <Typography
+                          component={"span"}
+                          sx={{ fontSize: 15, fontWeight: 600 }}
+                          variant="h6"
+                        >
+                          {item?.table}
+                        </Typography>
+                      </Typography>
+                    </Box>
+
+                    <Box>
+                      <Typography sx={{ fontSize: 14 }} variant="h6">
+                        Order Type :{" "}
+                        <Typography
+                          component={"span"}
+                          sx={{ fontSize: 15, fontWeight: 600 }}
+                          variant="h6"
+                        >
+                          {`${
+                            item?.order_type === "takeaway"
+                              ? "Takeaway"
+                              : item?.order_type === "dine_in" && "Dine In"
+                          }`}
+                        </Typography>
+                      </Typography>
+                      <Typography sx={{ fontSize: 14 }} variant="h6">
+                        Name :{" "}
+                        <Typography
+                          component={"span"}
+                          sx={{ fontSize: 15, fontWeight: 600 }}
+                          variant="h6"
+                        >
+                          {item?.customer_name}
+                        </Typography>
+                      </Typography>
+                      <Typography
+                        sx={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: 1,
+                          fontSize: 14,
+                        }}
+                        variant="h6"
+                      >
+                        <FaPhoneAlt />
+
+                        <Typography
+                          component={"span"}
+                          sx={{ fontSize: 14, fontWeight: 600 }}
+                          variant="h6"
+                        >
+                          {item?.customer_phone}
+                        </Typography>
+                      </Typography>
+                      <Typography
+                        sx={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: 1,
+                          fontSize: 14,
+                          fontWeight: 500,
+                        }}
+                        variant="h6"
+                      >
+                        <MdEmail />
+                        <Typography
+                          component={"span"}
+                          sx={{ fontSize: 14, fontWeight: 600 }}
+                          variant="h6"
+                        >
+                          {item?.customer_mail}
+                        </Typography>
+                      </Typography>
+                    </Box>
+                    {/* <--- order Items ---> */}
+                    <TableContainer>
+                      <Table aria-label="customized table">
+                        <TableHead
+                          sx={{
+                            "& .MuiTableCell-head": {
+                              bgcolor: "#C0C0C0 !important",
+                              color: "#000 !important",
+                            },
+                          }}
+                        >
+                          <TableRow>
+                            <StyledTableCell>Items</StyledTableCell>
+                            <StyledTableCell>Extra</StyledTableCell>
+                            <StyledTableCell>Quantity</StyledTableCell>
+                          </TableRow>
+                        </TableHead>
+                        <TableBody>
+                          {item?.order_items.map((row, index) => (
+                            <StyledTableRow
+                              key={index}
+                              sx={{
+                                "& .MuiTableCell-root": {
+                                  bgcolor:
+                                    currentMode === "light"
+                                      ? "#000 !important"
+                                      : "#fff !important",
+                                },
+                              }}
+                            >
+                              <StyledTableCell component="th" scope="row">
+                                {row.food_name}
+                              </StyledTableCell>
+
+                              <StyledTableCell component="th" scope="row">
+                                {row?.extra?.map(
+                                  (extra, index) =>
+                                    `${extra?.name}  ${
+                                      row?.extra?.length - 1 === index
+                                        ? ""
+                                        : ","
+                                    } `
+                                )}
+                              </StyledTableCell>
+                              <StyledTableCell
+                                component="th"
+                                scope="row"
+                                align="center"
+                              >
+                                {row.quantity}
+                              </StyledTableCell>
+                            </StyledTableRow>
+                          ))}
+                        </TableBody>
+                      </Table>
+                    </TableContainer>
+                    {/* <---- amount ----> */}
+                  </Box>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                      px: 1,
+                    }}
                   >
-                    {item?.price} ৳
-                  </Typography>
-                </Box>
-                {/* <--action Button--> */}
-                <Button
-                  sx={{
-                    width: 1,
-                    mt: 2,
-                  }}
-                  color="error"
-                  onClick={() => setDeleteId(item.id)}
-                  variant="contained"
-                  startIcon={<DeleteIcon />}
-                >
-                  Delete
-                </Button>
-              </Paper>
-            ))}
+                    <Typography
+                      sx={{ fontSize: 18, fontWeight: 500 }}
+                      variant="h6"
+                    >
+                      Total Amount:
+                    </Typography>
+                    <Typography
+                      sx={{ fontSize: 18, fontWeight: 500 }}
+                      variant="h6"
+                    >
+                      {item?.price} ৳
+                    </Typography>
+                  </Box>
+                  {/* <--action Button--> */}
+                  <Button
+                    sx={{
+                      width: 1,
+                      mt: 2,
+                    }}
+                    color="error"
+                    onClick={() => setDeleteId(item.id)}
+                    variant="contained"
+                    startIcon={<DeleteIcon />}
+                  >
+                    Delete
+                  </Button>
+                </Paper>
+              );
+            })}
           </Box>
         </>
       )}
