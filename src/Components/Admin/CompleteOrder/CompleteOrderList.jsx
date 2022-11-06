@@ -45,16 +45,10 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 const CompleteOrderList = ({ completes, isLoading, isError }) => {
   const [deleteId, setDeleteId] = useState();
-  const [query, setQuery] = useState("");
+  const ordersDescending = [...completes].sort((a, b) => b.id - a.id);
 
   return (
     <div>
-      {/* <input
-        type="search"
-        placeholder="Enter item Title"
-        onChange={(event) => setQuery(event.target.value)}
-        className="border-2 border-fuchsia-600"
-      /> */}
       {isLoading ? (
         <LoaderSource />
       ) : isError ? (
@@ -84,7 +78,7 @@ const CompleteOrderList = ({ completes, isLoading, isError }) => {
               // position: "relative",
             }}
           >
-            {completes.map((item) => (
+            {ordersDescending.map((item) => (
               <Paper
                 key={item.id}
                 className="space-y-1 dark:bg-secondary-dark-bg dark:text-neutral"
