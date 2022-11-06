@@ -17,8 +17,6 @@ const CancelOrderList = ({ cancelOrder, isLoading, isError }) => {
       headerAlign: "center",
       align: "center",
       renderCell: ({ row }) => {
-        console.log(row);
-        console.log(row?.order_items?.map((data) => data));
         return (
           <>
             {row?.order_items?.map((data, index) => (

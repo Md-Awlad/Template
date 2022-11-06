@@ -4,9 +4,8 @@ import TextField from "@mui/material/TextField";
 import { useForm } from "react-hook-form";
 import { Avatar, Grid, InputAdornment } from "@mui/material";
 import { toast } from "react-toastify";
-import { FiUpload } from "react-icons/fi";
 import { useStateContext } from "../../../Contexts/ContextProvider";
-import myAxios, { staticAxios } from "../../../utils/myAxios";
+import { staticAxios } from "../../../utils/myAxios";
 import { useState } from "react";
 
 const style = {
@@ -31,7 +30,6 @@ const EditRestaurantInfo = ({ handleModalClose, data, data: { id } }) => {
   const { register, handleSubmit } = useForm();
 
   const onSubmit = async (data) => {
-    console.log(data);
     const payloadForm = new FormData();
     payloadForm.append("name", data?.name);
     payloadForm.append("restaurants_email", data?.email);
@@ -44,10 +42,7 @@ const EditRestaurantInfo = ({ handleModalClose, data, data: { id } }) => {
     if (data?.banner[0]) {
       payloadForm.append("banner", data?.banner[0]);
     }
-    for (let value of payloadForm) {
-      console.log(value);
-    }
-    const response = await toast.promise(
+    await toast.promise(
       staticAxios.patch(`/restaurant/${id}/`, payloadForm, {
         headers: {
           "content-type": "multipart/form-data",

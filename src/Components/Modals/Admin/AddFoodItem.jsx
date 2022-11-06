@@ -46,8 +46,6 @@ const AddFoodItem = ({
   const [extra, setExtra] = useState();
 
   const queryClient = useQueryClient();
-
-  console.log(extra?.map((a) => JSON.stringify(a?.id)));
   const {
     register,
     handleSubmit,

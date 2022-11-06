@@ -4,9 +4,9 @@ import { useQuery } from "@tanstack/react-query";
 import React, { useRef } from "react";
 import { BsCheckCircle } from "react-icons/bs";
 import { useReactToPrint } from "react-to-print";
-import Footer from "../../Components/Frontend/Footer";
-import Header from "../../Components/Frontend/Header";
-import ResponsiveBottomMenu from "../../Components/Frontend/ResponsiveBottomMenu";
+import Footer from "./Footer";
+import Header from "./Header";
+import ResponsiveBottomMenu from "./ResponsiveBottomMenu";
 import { useStateContext } from "../../Contexts/ContextProvider";
 import { baseURL } from "../../utils/myAxios";
 
@@ -137,9 +137,33 @@ const ResponsiveOrderSummery = () => {
               </Typography>
               {orderSummary.order_items?.map((data, index) => (
                 <Box key={index} className="flex justify-between">
-                  <Typography>{data?.extra?.map((ex) => ex?.name)}</Typography>
-                  <Typography sx={{ fontWeight: 600 }}>
-                    {data?.extra?.map((ex) => ex?.price)}
+                  <Typography
+                    sx={{
+                      width: 135,
+                      borderBottom: `1px dashed #707070`,
+                    }}
+                  >
+                    {data?.extra?.map(
+                      (ex, index) =>
+                        `${ex?.name} ${
+                          data?.extra.length - 1 === index ? "" : ","
+                        }`
+                    )}
+                  </Typography>
+                  <Typography
+                    sx={{
+                      fontWeight: 600,
+                      borderBottom: `1px dashed #707070`,
+                      width: 70,
+                      textAlign: "right",
+                    }}
+                  >
+                    {data?.extra?.map(
+                      (ex, index) =>
+                        `${ex?.price} ${
+                          data?.extra.length - 1 === index ? "" : ","
+                        }`
+                    )}
                   </Typography>
                 </Box>
               ))}

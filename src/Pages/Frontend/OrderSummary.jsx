@@ -8,7 +8,7 @@ import Footer from "../../Components/Frontend/Footer";
 import Header from "../../Components/Frontend/Header";
 import { useStateContext } from "../../Contexts/ContextProvider";
 import { baseURL } from "../../utils/myAxios";
-import ResponsiveOrderSummary from "./ResponsiveOrderSummary";
+import ResponsiveOrderSummery from "../../Components/Frontend/ResponsiveOrderSummary";
 
 const OrderSummary = () => {
   const { orderId, activeMenu } = useStateContext();
@@ -230,7 +230,7 @@ const OrderSummary = () => {
           <Footer />
         </Box>
       ) : (
-        <ResponsiveOrderSummary />
+        <ResponsiveOrderSummery />
       )}
     </>
   );

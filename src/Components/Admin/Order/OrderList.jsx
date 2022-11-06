@@ -257,27 +257,28 @@ const OrderList = ({ orders, orderRefetch, isLoading, isError }) => {
                       </TableBody>
                     </Table>
                   </TableContainer>
-                  {/* <---- amount ----> */}
-                  <Box
-                    sx={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                    }}
+                </Box>
+                {/* <---- amount ----> */}
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    px: 1,
+                  }}
+                >
+                  <Typography
+                    sx={{ fontSize: 18, fontWeight: 500 }}
+                    variant="h6"
                   >
-                    <Typography
-                      sx={{ fontSize: 18, fontWeight: 500 }}
-                      variant="h6"
-                    >
-                      Total Amount:
-                    </Typography>
-                    <Typography
-                      sx={{ fontSize: 18, fontWeight: 500 }}
-                      variant="h6"
-                    >
-                      {item?.price} ৳
-                    </Typography>
-                  </Box>
+                    Total Amount:
+                  </Typography>
+                  <Typography
+                    sx={{ fontSize: 18, fontWeight: 500 }}
+                    variant="h6"
+                  >
+                    {item?.price} ৳
+                  </Typography>
                 </Box>
                 {/* --action button-- */}
                 <Box className="flex justify-between items-center mt-2">

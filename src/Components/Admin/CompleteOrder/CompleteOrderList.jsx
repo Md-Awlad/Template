@@ -200,8 +200,8 @@ const CompleteOrderList = ({ completes, isLoading, isError }) => {
                         </TableRow>
                       </TableHead>
                       <TableBody>
-                        {item?.order_items.map((row) => (
-                          <StyledTableRow key={row.name}>
+                        {item?.order_items.map((row, index) => (
+                          <StyledTableRow key={index}>
                             <StyledTableCell component="th" scope="row">
                               {row.food_name}
                             </StyledTableCell>
@@ -227,29 +227,29 @@ const CompleteOrderList = ({ completes, isLoading, isError }) => {
                     </Table>
                   </TableContainer>
                   {/* <---- amount ----> */}
-                  <Box
-                    sx={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                    }}
+                </Box>
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    px: 1,
+                  }}
+                >
+                  <Typography
+                    sx={{ fontSize: 18, fontWeight: 500 }}
+                    variant="h6"
                   >
-                    <Typography
-                      sx={{ fontSize: 18, fontWeight: 500 }}
-                      variant="h6"
-                    >
-                      Total Amount:
-                    </Typography>
-                    <Typography
-                      sx={{ fontSize: 18, fontWeight: 500 }}
-                      variant="h6"
-                    >
-                      {item?.price} ৳
-                    </Typography>
-                  </Box>
+                    Total Amount:
+                  </Typography>
+                  <Typography
+                    sx={{ fontSize: 18, fontWeight: 500 }}
+                    variant="h6"
+                  >
+                    {item?.price} ৳
+                  </Typography>
                 </Box>
                 {/* <--action Button--> */}
-
                 <Button
                   sx={{
                     width: 1,
