@@ -12,7 +12,6 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Tooltip,
   Typography,
 } from "@mui/material";
 import React from "react";
@@ -279,7 +278,3 @@ const CompleteOrderList = ({ completes, isLoading, isError }) => {
 };
 
 export default CompleteOrderList;
-const data = [
-  { id: 1, title: "hello" },
-  { id: 1, title: "gello" },
-];
