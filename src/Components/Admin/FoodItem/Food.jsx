@@ -1,8 +1,10 @@
 import { Box, Tooltip } from "@mui/material";
+import { useQuery } from "@tanstack/react-query";
 import React, { useState } from "react";
 import { MdModeEdit } from "react-icons/md";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { useStateContext } from "../../../Contexts/ContextProvider";
+import myAxios from "../../../utils/myAxios";
 import DeleteFood from "../../Modals/Admin/DeleteFood";
 import EditFood from "../../Modals/Admin/EditFood";
 import CustomDataGrid from "../../Shared/CustomDataGrid";
@@ -13,6 +15,13 @@ const Food = ({ category, customizeFood }) => {
   const [deleteId, setDeleteId] = useState(null);
 
   const food = category?.foodItems_category?.map((a) => a);
+
+  /* Fetching data from the backend and setting the value of the form. */
+  const {
+    data: allFoodData,
+    isLoading,
+    isError,
+  } = useQuery([`food`, editId], async () => await myAxios(`/food/${editId}`));
 
   const columns = [
     {
@@ -103,7 +112,7 @@ const Food = ({ category, customizeFood }) => {
               {row?.customize_food?.map((data) => {
                 return (
                   <div key={data?.id} className="flex gap-5">
-                    <h2>Name: {data?.name}</h2>
+                    <h2>Name: {data?.ingredient_name}</h2>
                     <h2>Price: {data?.price}</h2>
                   </div>
                 );
@@ -211,61 +220,19 @@ const Food = ({ category, customizeFood }) => {
   return (
     <>
       <div style={{ height: 510, width: "100%" }}>
-        {/* <DataGrid
-          sx={{
-            color: currentMode === "Dark" ? "#fff" : "#000",
-            "& .MuiIconButton-root": {
-              color: "unset !important",
-            },
-            "& .MuiTablePagination-toolbar": {
-              color: currentMode === "Dark" ? "#fff" : "#000",
-            },
-            "& .MuiDataGrid-row:hover": {
-              bgcolor: currentMode === "Dark" ? `${currentColor}10` : "",
-            },
-            "& .MuiDataGrid-selectedRowCount": {
-              visibility: "hidden",
-            },
-            "& .MuiDataGrid-cell:focus-within": {
-              outline: "none",
-            },
-            "& .MuiInput-root": {
-              color: currentMode === "Dark" ? "#fff" : "#000",
-            },
-          }}
-          rows={food}
-          columns={columns}
-          onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
-          rowsPerPageOptions={[5, 7, 10, 20, 35, 50, 70, 100, 200]}
-          disableSelectionOnClick
-          disableColumnFilter
-          pageSize={10}
-          disableColumnSelector
-          disableDensitySelector
-          components={{ Toolbar: GridToolbar }}
-          componentsProps={{
-            toolbar: {
-              showQuickFilter: true,
-              quickFilterProps: { debounceMs: 500 },
-              printOptions: {
-                disableToolbarButton: true,
-              },
-              csvOptions: {
-                disableToolbarButton: true,
-              },
-            },
-          }}
-        /> */}
         <CustomDataGrid rows={food} columns={columns} />
       </div>
-      {Boolean(editId) && (
+      {Boolean(allFoodData && editId) ? (
         <EditFood
+          allFoodData={allFoodData}
           editId={editId}
+          isLoading={isLoading}
+          isError={isError}
           handleModalClose={() => setEditId(null)}
           categories={food}
           customizeFood={customizeFood}
         />
-      )}
+      ) : null}
       {Boolean(deleteId) && (
         <DeleteFood deleteId={deleteId} handleClose={() => setDeleteId(null)} />
       )}

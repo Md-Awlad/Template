@@ -181,6 +181,7 @@ const AddFoodItem = ({
                   <TextField
                     label="Food Price"
                     type="number"
+                    InputProps={{ inputProps: { min: 0 } }}
                     required
                     {...register(`item.${index + 1}.price`)}
                     fullWidth

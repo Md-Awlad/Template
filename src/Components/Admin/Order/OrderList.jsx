@@ -2,10 +2,8 @@ import React, { useState } from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
-import { toast } from "react-toastify";
 import DisabledByDefaultIcon from "@mui/icons-material/DisabledByDefault";
 import myAxios from "../../../utils/myAxios";
-import DeleteOrder from "../../Modals/Admin/DeleteOrder";
 import RejectOrder from "../../Modals/Admin/RejectOrder";
 import {
   Alert,
@@ -29,8 +27,11 @@ import { MdEmail } from "react-icons/md";
 import SearchIcon from "@mui/icons-material/Search";
 import { FaPhoneAlt } from "react-icons/fa";
 import { BsCheck2Circle } from "react-icons/bs";
-import LoaderSource from "../../Loaders/LoaderSource";
+import { RiDeleteBin6Line } from "react-icons/ri";
+import { toast } from "react-toastify";
 import { useStateContext } from "../../../Contexts/ContextProvider";
+import LoaderSource from "../../Loaders/LoaderSource";
+import DeleteOrder from "../../Modals/Admin/DeleteOrder";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -183,7 +184,7 @@ const OrderList = ({ orders, orderRefetch, isLoading, isError }) => {
                       Order ID :{" "}
                       <Typography
                         component={"span"}
-                        sx={{ fontSize: 14, fontWeight: 600 }}
+                        sx={{ fontSize: 14, fontWeight: 500 }}
                         variant="h6"
                       >
                         {item?.id}
@@ -193,7 +194,7 @@ const OrderList = ({ orders, orderRefetch, isLoading, isError }) => {
                       Table No:{" "}
                       <Typography
                         component={"span"}
-                        sx={{ fontSize: 15, fontWeight: 600 }}
+                        sx={{ fontSize: 15, fontWeight: 500 }}
                         variant="h6"
                       >
                         {item?.table}
@@ -206,7 +207,7 @@ const OrderList = ({ orders, orderRefetch, isLoading, isError }) => {
                       Order Type :{" "}
                       <Typography
                         component={"span"}
-                        sx={{ fontSize: 15, fontWeight: 600 }}
+                        sx={{ fontSize: 15, fontWeight: 500 }}
                         variant="h6"
                       >
                         {`${
@@ -220,7 +221,7 @@ const OrderList = ({ orders, orderRefetch, isLoading, isError }) => {
                       Name :{" "}
                       <Typography
                         component={"span"}
-                        sx={{ fontSize: 15, fontWeight: 600 }}
+                        sx={{ fontSize: 15, fontWeight: 500 }}
                         variant="h6"
                       >
                         {item?.customer_name}
@@ -239,7 +240,7 @@ const OrderList = ({ orders, orderRefetch, isLoading, isError }) => {
 
                       <Typography
                         component={"span"}
-                        sx={{ fontSize: 14, fontWeight: 600 }}
+                        sx={{ fontSize: 14, fontWeight: 500 }}
                         variant="h6"
                       >
                         {item?.customer_phone}
@@ -403,74 +404,3 @@ const OrderList = ({ orders, orderRefetch, isLoading, isError }) => {
 };
 
 export default OrderList;
-
-/*
-<Box className="flex gap-4 py-2">
-  <Box>
-    <Typography
-      sx={{ fontSize: 14, fontWeight: 500 }}
-      variant="h6"
-    >
-      Order Items
-    </Typography>
-    {item?.order_items?.map((data, index) => (
-      <Typography
-        key={index}
-        sx={{ fontSize: 14, fontWeight: 500 }}
-        variant="h6"
-      >
-        {data?.food_name}
-      </Typography>
-    ))}
-  </Box>
-    --extra--  
-  <Box>
-    <Typography
-      sx={{ fontSize: 14, fontWeight: 500 }}
-      variant="h6"
-    >
-      Extra Ingred..
-    </Typography>
-
-    {item?.order_items?.map((data, index) => (
-      <Typography
-        key={index}
-        sx={{ fontSize: 14, fontWeight: 500 }}
-        variant="h6"
-      >
-        {data?.extra?.map(
-          (extra, index) =>
-            `${extra?.name} 
-      ${data?.extra?.length - 1 === index ? "" : ","} `
-        )}
-      </Typography>
-    ))}
-  </Box>
-    --quantity--  
-  <Box>
-    <Typography
-      sx={{
-        fontSize: 14,
-        fontWeight: 500,
-      }}
-      variant="h6"
-    >
-      Quantity
-    </Typography>
-    {item?.order_items?.map((data, index) => (
-      <Typography
-        key={index}
-        sx={{
-          fontSize: 14,
-          fontWeight: 500,
-          textAlign: "center",
-        }}
-        variant="h6"
-      >
-        {data?.quantity}
-      </Typography>
-    ))}
-  </Box>
-</Box>
-
-*/

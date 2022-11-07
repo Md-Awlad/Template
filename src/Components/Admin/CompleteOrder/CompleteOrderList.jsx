@@ -16,8 +16,7 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 import { FaPhoneAlt } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import DeleteIcon from "@mui/icons-material/Delete";

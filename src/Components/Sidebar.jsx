@@ -231,13 +231,18 @@ const Sidebar = () => {
           </Box>
           <div className="mt-10 ">
             <NavLink
-              to="dashboard"
-              onClick={handleCloseSidebar}
+              to=""
+              onClick={() => handleCloseSidebar("i_am_dashboard")}
               style={({ isActive }) => ({
-                backgroundColor: isActive ? currentColor : "",
+                backgroundColor: isActive && !changeMe ? currentColor : "",
+                color: !changeMe
+                  ? "#fff"
+                  : currentMode === "Light"
+                  ? "#000"
+                  : "#fff",
               })}
               className={({ isActive }) =>
-                isActive ? `${!changeMe && smActiveLink}` : smNormalLink
+                isActive ? smActiveLink : smNormalLink
               }
             >
               <MdDashboard className="text-3xl" />

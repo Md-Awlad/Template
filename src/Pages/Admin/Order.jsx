@@ -14,7 +14,7 @@ const Order = () => {
     const res = await myAxios("/order/");
     return res.data;
   });
-
+  console.log(orders);
   return (
     <Container>
       <PageTitle headingText="order" pageName="order" />
