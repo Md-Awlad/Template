@@ -1,12 +1,16 @@
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
+import myAxios from "../../../utils/myAxios";
+import RejectOrder from "../../Modals/Admin/RejectOrder";
 import {
   Alert,
   AlertTitle,
   Box,
   Paper,
+  styled,
   Table,
   TableBody,
   TableCell,
+  tableCellClasses,
   TableContainer,
   TableHead,
   TableRow,
@@ -21,13 +25,30 @@ import { MdEmail } from "react-icons/md";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { toast } from "react-toastify";
 import { useStateContext } from "../../../Contexts/ContextProvider";
-import myAxios from "../../../utils/myAxios";
 import LoaderSource from "../../Loaders/LoaderSource";
 import DeleteOrder from "../../Modals/Admin/DeleteOrder";
-import RejectOrder from "../../Modals/Admin/RejectOrder";
+
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+  [`&.${tableCellClasses.head}`]: {
+    backgroundColor: theme.palette.common.black,
+    color: theme.palette.common.white,
+  },
+  [`&.${tableCellClasses.body}`]: {
+    fontSize: 14,
+  },
+}));
+
+const StyledTableRow = styled(TableRow)(({ theme }) => ({
+  "&:nth-of-type(odd)": {
+    backgroundColor: theme.palette.action.hover,
+  },
+  // hide last border
+  "&:last-child td, &:last-child th": {
+    border: 0,
+  },
+}));
 
 const OrderList = ({ orders, orderRefetch, isLoading, isError }) => {
-  const { currentColor, restaurantData } = useStateContext();
   const { handleSubmit } = useForm();
   const [deleteId, setDeleteId] = useState(null);
   const [complete, setComplete] = useState();
@@ -95,7 +116,10 @@ const OrderList = ({ orders, orderRefetch, isLoading, isError }) => {
                   border: "1px solid #ccc",
                 }}
               >
-                <Box sx={{ height: 300, overflowY: "scroll", px: 1 }}>
+                <Box
+                  sx={{ height: 300, overflowY: "scroll", px: 1 }}
+                  className="space-y-2"
+                >
                   <Box className="flex justify-between items-center">
                     <Typography
                       sx={{ fontSize: 14, fontWeight: 500 }}
@@ -186,76 +210,45 @@ const OrderList = ({ orders, orderRefetch, isLoading, isError }) => {
                       </Typography>
                     </Typography>
                   </Box>
-                  <hr className="border-[#F0A70B]" />
                   {/* <--- order Items ---> */}
-                  <TableContainer component={Paper}>
-                    <Table aria-label="simple table">
-                      <TableHead>
+                  <TableContainer>
+                    <Table aria-label="customized table">
+                      <TableHead
+                        sx={{
+                          "& .MuiTableCell-head": {
+                            bgcolor: "#696969 !important",
+                          },
+                        }}
+                      >
                         <TableRow>
-                          <TableCell>Items</TableCell>
-                          <TableCell>Extra</TableCell>
-                          <TableCell>Quantity</TableCell>
+                          <StyledTableCell>Items</StyledTableCell>
+                          <StyledTableCell>Extra</StyledTableCell>
+                          <StyledTableCell>Quantity</StyledTableCell>
                         </TableRow>
                       </TableHead>
                       <TableBody>
-                        {item.order_items?.map((data, index) => (
-                          <TableRow
-                            key={index}
-                            sx={{
-                              "&:last-child td, &:last-child th": { border: 0 },
-                            }}
-                          >
-                            <TableCell component="th" scope="row">
-                              {data.food_name}
-                            </TableCell>
-                            {item?.order_items?.map((data, index) => (
-                              <TableCell key={index} align="right">
-                                {data?.extra?.map(
-                                  (extra, index) => extra?.name
-                                )}
-                              </TableCell>
-                            ))}
-                            <TableCell align="right">{data.calories}</TableCell>
-                            <TableCell align="right">{data.quantity}</TableCell>
-                          </TableRow>
+                        {item?.order_items.map((row) => (
+                          <StyledTableRow key={row.name}>
+                            <StyledTableCell component="th" scope="row">
+                              {row.food_name}
+                            </StyledTableCell>
+
+                            <StyledTableCell component="th" scope="row">
+                              {row?.extra?.map(
+                                (extra, index) =>
+                                  `${extra?.name}  ${
+                                    row?.extra?.length - 1 === index ? "" : ","
+                                  } `
+                              )}
+                            </StyledTableCell>
+                            <StyledTableCell component="th" scope="row">
+                              {row.quantity}
+                            </StyledTableCell>
+                          </StyledTableRow>
                         ))}
                       </TableBody>
                     </Table>
                   </TableContainer>
-                  {/* <div class="bg-gray-100">
-                    <div class="bg-white shadow-sm overflow-auto">
-                      <table class="w-full overflow-scroll">
-                        <thead>
-                          <tr class="uppercase text-sm">
-                            <th class="px-2 py-3 text-left">Item</th>
-                            <th class="px-2 py-3 text-left">Extra</th>
-                            <th class="px-2 py-3 text-left">Quantity</th>
-                          </tr>
-                        </thead>
-                        <tbody class="text-gray-600 text-sm">
-                          {item.order_items?.map((data) => (
-                            <tr
-                              key={data.id}
-                              class="border-b border-gray-200 hover:bg-gray-100"
-                            >
-                              <td class="py-3 text-center flex-wrap">
-                                {data.food_name}
-                              </td>
-                              {item?.order_items?.map((data, index) => (
-                                <td key={index} class="py-3 text-center">
-                                  {data?.extra?.map(
-                                    (extra, index) => extra?.name
-                                  )}
-                                </td>
-                              ))}
-                              <td class="py-3 text-center">{data.quantity}</td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                    </div>
-                  </div> */}
-                  <hr className="border-[#F0A70B]" />
                   {/* <---- amount ----> */}
                   <Box
                     sx={{
@@ -319,3 +312,74 @@ const OrderList = ({ orders, orderRefetch, isLoading, isError }) => {
 };
 
 export default OrderList;
+
+/*
+<Box className="flex gap-4 py-2">
+  <Box>
+    <Typography
+      sx={{ fontSize: 14, fontWeight: 500 }}
+      variant="h6"
+    >
+      Order Items
+    </Typography>
+    {item?.order_items?.map((data, index) => (
+      <Typography
+        key={index}
+        sx={{ fontSize: 14, fontWeight: 500 }}
+        variant="h6"
+      >
+        {data?.food_name}
+      </Typography>
+    ))}
+  </Box>
+    --extra--  
+  <Box>
+    <Typography
+      sx={{ fontSize: 14, fontWeight: 500 }}
+      variant="h6"
+    >
+      Extra Ingred..
+    </Typography>
+
+    {item?.order_items?.map((data, index) => (
+      <Typography
+        key={index}
+        sx={{ fontSize: 14, fontWeight: 500 }}
+        variant="h6"
+      >
+        {data?.extra?.map(
+          (extra, index) =>
+            `${extra?.name} 
+      ${data?.extra?.length - 1 === index ? "" : ","} `
+        )}
+      </Typography>
+    ))}
+  </Box>
+    --quantity--  
+  <Box>
+    <Typography
+      sx={{
+        fontSize: 14,
+        fontWeight: 500,
+      }}
+      variant="h6"
+    >
+      Quantity
+    </Typography>
+    {item?.order_items?.map((data, index) => (
+      <Typography
+        key={index}
+        sx={{
+          fontSize: 14,
+          fontWeight: 500,
+          textAlign: "center",
+        }}
+        variant="h6"
+      >
+        {data?.quantity}
+      </Typography>
+    ))}
+  </Box>
+</Box>
+
+*/

@@ -1,11 +1,6 @@
-import { Box } from "@mui/system";
-import React, { useState } from "react";
-import TextField from "@mui/material/TextField";
-import { useForm } from "react-hook-form";
-import { useStateContext } from "../../../Contexts/ContextProvider";
-import { toast } from "react-toastify";
 import {
   Autocomplete,
+  Chip,
   FormControl,
   Grid,
   InputLabel,
@@ -13,10 +8,16 @@ import {
   Modal,
   Select,
 } from "@mui/material";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
-import myAxios from "../../../utils/myAxios";
-import moment from "moment";
+import TextField from "@mui/material/TextField";
+import { Box } from "@mui/system";
 import { DatePicker } from "@mui/x-date-pickers";
+import { useQueryClient } from "@tanstack/react-query";
+import moment from "moment";
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
+import { useStateContext } from "../../../Contexts/ContextProvider";
+import myAxios from "../../../utils/myAxios";
 
 const style = {
   position: "absolute",
@@ -33,58 +34,54 @@ const style = {
   pb: 3,
 };
 
-const EditApplyDiscount = ({ editId, handleClose, categories, foods }) => {
+const EditApplyDiscount = ({
+  allData,
+  discounts,
+  applyDiscount,
+  editId,
+  handleClose,
+  categories,
+  foods,
+  dataIsLoading,
+}) => {
   const { currentColor } = useStateContext();
   const [date, setDate] = useState(moment());
   const [status, setStatus] = useState("");
-  const [food, setFood] = useState("");
-  const [category, setCategory] = useState();
+
+  const [discountName, setDiscountName] = useState([...allData?.discount]);
+  const [category, setCategory] = useState([...allData?.category]);
+  const [food, setFood] = useState([...allData.food]);
 
   const queryClient = useQueryClient();
   const { handleSubmit, setValue } = useForm();
-
   const onSubmit = async (data) => {
     const payload = {
-      //   discount: discount?.map((a) => a.id),
+      discount: discountName?.map((a) => a.id),
       name: category?.map((a) => a.id),
       food_name: food?.map((a) => a.id),
       expired_at: date,
       is_active: status,
     };
 
-    console.log(payload);
-
-    const response = await toast.promise(
-      myAxios.patch(`/apply_discount/${editId}/`, payload),
-      {
-        pending: "Editing Discount....",
-        success: "Discount Added",
-        error: "Error Editing Discount!",
-      }
-    );
-    queryClient.invalidateQueries("discounts");
+    await toast.promise(myAxios.patch(`/apply_discount/${editId}/`, payload), {
+      pending: "Editing Discount....",
+      success: "Discount Added",
+      error: "Error Editing Discount!",
+    });
+    queryClient.invalidateQueries("apply_discount");
     handleClose();
   };
-
-  const { data } = useQuery(
-    ["discount"],
-    () => myAxios(`/apply_discount/${editId}`),
-    {
-      onSuccess: ({ data: discounts = [] }) => {
-        console.log(discounts);
-        discounts?.food?.map((food) => {
-          setValue("food", food?.food_name);
-        });
-        discounts?.discount?.map((food) => {
-          setValue("amount", food?.amount);
-        });
-        setStatus(discounts?.is_active);
-        setDate(discounts?.expired_at);
-      },
-    }
-  );
-
-  //   const data = discount?.category?.map((categories) => categories);
+  React.useEffect(() => {
+    // allData?.food?.map((food) => {
+    //   setValue("food", food?.food_name);
+    // });
+    // allData?.discount?.map((food) => {
+    //   setValue("amount", food?.amount);
+    // });
+    setStatus(allData?.is_active);
+    setDate(allData?.expired_at);
+  }, [editId]);
+  console.log(discountName);
 
   return (
     <Modal open={Boolean(editId)} onClose={handleClose}>
@@ -93,10 +90,40 @@ const EditApplyDiscount = ({ editId, handleClose, categories, foods }) => {
           Edit Apply Discount
         </h2>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
-          {/* <div className="grid grid-cols-2 gap-4"> */}
-          {/* --category-- */}
+          {/* ---discount name--- */}
           <Grid item xs={12} md={6}>
             <Autocomplete
+              fullWidth
+              disablePortal
+              multiple
+              loading={dataIsLoading}
+              id="fixed-tags-demo"
+              value={discountName}
+              onChange={(event, newValue) => {
+                setDiscountName([...newValue]);
+              }}
+              options={discounts?.map((discount) => discount)}
+              getOptionLabel={(option) => option?.name}
+              filterSelectedOptions
+              renderTags={(tagValue, getTagProps) =>
+                tagValue.map((option, index) => (
+                  <Chip label={option.name} {...getTagProps({ index })} />
+                ))
+              }
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label="Discount Name"
+                  variant="outlined"
+                  placeholder="Favorites"
+                  fullWidth
+                />
+              )}
+            />
+          </Grid>
+          {/* --category-- */}
+          <Grid item xs={12} md={6}>
+            {/* <Autocomplete
               multiple
               disablePortal
               id="combo-box-demo"
@@ -107,20 +134,85 @@ const EditApplyDiscount = ({ editId, handleClose, categories, foods }) => {
               renderInput={(params) => (
                 <TextField {...params} label="Categories" fullWidth />
               )}
+            /> */}
+            <Autocomplete
+              fullWidth
+              disablePortal
+              multiple
+              loading={dataIsLoading}
+              id="fixed-tags-demo"
+              value={category}
+              onChange={(event, newValue) => {
+                setCategory([
+                  // ...fixedOptions,
+                  ...newValue,
+                  // .filter(
+                  //   (option) => fixedOptions.indexOf(option) === -1
+                  // ),
+                ]);
+              }}
+              options={categories?.map((category) => category)}
+              getOptionLabel={(option) => option?.name}
+              filterSelectedOptions
+              // options={allData.category ? allData.category : null}
+              // getOptionLabel={(option) => option.name}
+              renderTags={(tagValue, getTagProps) =>
+                tagValue.map((option, index) => (
+                  <Chip
+                    label={option.name}
+                    {...getTagProps({ index })}
+                    // disabled={fixedOptions.indexOf(option) !== -1}
+                  />
+                ))
+              }
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label="Category"
+                  variant="outlined"
+                  placeholder="Favorites"
+                  fullWidth
+                />
+              )}
             />
           </Grid>
           {/* --food-- */}
           <Grid item xs={12} md={6}>
             <Autocomplete
-              multiple
+              fullWidth
               disablePortal
-              id="combo-box-demo"
-              options={foods?.map((food) => food)}
-              getOptionLabel={(option) => option?.food_name}
-              filterSelectedOptions
-              onChange={(_, newValue) => setFood(newValue)}
+              multiple
+              loading={dataIsLoading}
+              id="fixed-tags-demo"
+              value={food}
+              onChange={(event, newValue) => {
+                setFood([
+                  // ...fixedOptions,
+                  ...newValue,
+                  // .filter(
+                  //   (option) => fixedOptions.indexOf(option) === -1
+                  // ),
+                ]);
+              }}
+              options={foods ? foods : null}
+              getOptionLabel={(option) => option.food_name}
+              renderTags={(tagValue, getTagProps) =>
+                tagValue.map((option, index) => (
+                  <Chip
+                    label={option.food_name}
+                    {...getTagProps({ index })}
+                    // disabled={fixedOptions.indexOf(option) !== -1}
+                  />
+                ))
+              }
               renderInput={(params) => (
-                <TextField {...params} label="Food" fullWidth />
+                <TextField
+                  {...params}
+                  label="Food"
+                  variant="outlined"
+                  placeholder="Favorites"
+                  fullWidth
+                />
               )}
             />
           </Grid>
@@ -150,7 +242,7 @@ const EditApplyDiscount = ({ editId, handleClose, categories, foods }) => {
                 size="small"
                 value={status}
                 // {...register("status")}
-                label="Fixed"
+                label="Active"
                 onChange={(e) => setStatus(e.target.value)}
               >
                 <MenuItem value={true}>True</MenuItem>

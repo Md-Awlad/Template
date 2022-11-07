@@ -1,13 +1,13 @@
 import { Box, Container, Modal, Tab, Tabs, Typography } from "@mui/material";
-import React, { useState } from "react";
-import PageTitle from "../../Components/PageTitle/PageTitle";
 import { useQuery } from "@tanstack/react-query";
-import myAxios from "../../utils/myAxios";
+import React, { useState } from "react";
+import ApplyDiscountList from "../../Components/Admin/Discount/ApplyDiscountList";
+import DiscountList from "../../Components/Admin/Discount/DiscountList";
 import AddDiscount from "../../Components/Modals/Admin/AddDiscount";
 import ApplyDiscount from "../../Components/Modals/Admin/ApplyDiscount";
-import DiscountList from "../../Components/Admin/Discount/DiscountList";
-import ApplyDiscountList from "../../Components/Admin/Discount/ApplyDiscountList";
+import PageTitle from "../../Components/PageTitle/PageTitle";
 import { useStateContext } from "../../Contexts/ContextProvider";
+import myAxios from "../../utils/myAxios";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -157,6 +157,7 @@ const Discount = () => {
         <TabPanel value={value} index={1}>
           <ApplyDiscountList
             applyDiscount={applyDiscount}
+            discounts={discounts}
             applyRefetch={applyRefetch}
             categories={categories}
             foods={foods}

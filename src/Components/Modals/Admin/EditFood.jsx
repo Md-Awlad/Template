@@ -3,13 +3,14 @@ import {
   AlertTitle,
   Autocomplete,
   Button,
+  Chip,
   Grid,
   InputAdornment,
   Modal,
 } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import { Box } from "@mui/system";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQueryClient } from "@tanstack/react-query";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { AiOutlineClose } from "react-icons/ai";
@@ -34,13 +35,26 @@ const style = {
   pb: 3,
 };
 
-const EditFood = ({ editId, handleModalClose, customizeFood }) => {
+const EditFood = ({
+  allFoodData,
+  editId,
+  handleModalClose,
+  isLoading,
+  isError,
+  customizeFood,
+}) => {
   const { currentColor } = useStateContext();
   const { register, handleSubmit, setValue } = useForm();
   const [extra, setExtra] = useState();
   const [image, setImage] = useState(null);
-  const [variants, setVariants] = useState(1);
+  const [price, setPrice] = useState({});
+  // const [newprice, setNewPrice] = useState(0);
+  const [Index, setIndex] = useState(0);
 
+  const [customFood, setCustomFood] = useState([
+    ...allFoodData?.data[0]?.customize_food,
+  ]);
+  const [variants, setVariants] = useState(0);
   const queryClient = useQueryClient();
   const onSubmit = async (data) => {
     const price = {};
@@ -95,32 +109,27 @@ const EditFood = ({ editId, handleModalClose, customizeFood }) => {
     queryClient.invalidateQueries("food");
     handleModalClose();
   };
+  React.useEffect(() => {
+    allFoodData?.data.map((data, index) => {
+      console.log();
+      // setVariants(data?.price ? Object.entries(data.price).length : null);
+      setValue("foodName", data?.food_name);
+      setValue("ingredient", data?.base_ingredient);
+      setImage(data?.image);
+      // setValue(
+      //   "size",
+      //   Object.entries(data?.price).map((key) => key[0])
+      // );
+      setPrice(data?.price);
 
-  /* Fetching data from the backend and setting the value of the form. */
-  const {
-    data: allFoodData,
-    isLoading,
-    isError,
-  } = useQuery([`food`], () => myAxios(`/food/${editId}`), {
-    onSuccess: ({ data: foodData = [] }) => {
-      foodData.map((data, index) => {
-        setVariants(data?.price ? Object.entries(data.price).length : null);
-        setValue("foodName", data?.food_name);
-        setValue("ingredient", data?.base_ingredient);
-        setImage(data?.image);
-        // setValue(
-        //   ` item.${index + 1}.title`,
-        //   data?.title && Object.entries(data?.title).map((key) => key[0])
-        // );
-        // setValue(
-        //   ` item.${index + 1}.price`,
-        //   data?.price && Object.entries(data?.price).map((key) => key[1])
-        // );
-        setValue("packaging", data?.packaging);
-      });
-    },
-  });
+      // setValue(
+      //   ` item.${index + 1}.price`,
+      //   data?.price && Object.entries(data?.price).map((key) => key[1])
+      // );
 
+      setValue("packaging", data?.packaging);
+    });
+  }, [editId]);
   return (
     <Modal open={Boolean(editId)} onClose={handleModalClose}>
       {isLoading ? (
@@ -163,6 +172,62 @@ const EditFood = ({ editId, handleModalClose, customizeFood }) => {
                 >
                   Add Size and Price
                 </Button>
+                {Object.entries(price).map((p, i) => {
+                  return (
+                    <Box
+                      key={i}
+                      sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        columnGap: 2,
+                        marginTop: 2,
+                      }}
+                    >
+                      <TextField
+                        label="Food Size"
+                        type="text"
+                        value={p[0]}
+                        // required={variants > 1 ? true : false}
+                        // {...register(`item.${index + 1}.title`)}
+                        fullWidth
+                      />
+                      <TextField
+                        // required
+                        label="Food Price"
+                        type="number"
+                        // value={p[1]}
+                        InputProps={{ inputProps: { min: 0 } }}
+                        // {...register(`item.${index + 1}.price`)}
+                        fullWidth
+                      />
+                      <AiOutlineClose
+                        onClick={
+                          () => {
+                            if (Object.keys(price).length) {
+                              for (const key in price) {
+                                console.log(key);
+                                if (key === p[0]) {
+                                  console.log(key);
+                                  delete price[key];
+                                  break;
+                                }
+                              }
+                            }
+                          }
+                          // Object.keys(price).map(
+                          //   (key, index) => {
+                          //     console.log(key);
+
+                          //   }
+                          //   // setPrice(key[0] === p[0] ? (p[0] = " ") : null)
+                          // )
+                        }
+                        className={`text-5xl cursor-pointer text-red-700 `}
+                      />
+                    </Box>
+                  );
+                })}
+
                 {new Array(variants).fill(null)?.map((item, index) => {
                   return (
                     <Box
@@ -177,30 +242,33 @@ const EditFood = ({ editId, handleModalClose, customizeFood }) => {
                       <TextField
                         label="Food Size"
                         type="text"
-                        required={variants > 1 ? true : false}
-                        {...register(`item.${index + 1}.title`)}
+                        // value={p[0]}
+                        // required={variants > 1 ? true : false}
+                        // {...register(`item.${index + 1}.title`)}
                         fullWidth
                       />
                       <TextField
-                        required
+                        // required
                         label="Food Price"
                         type="number"
+                        // value={p[1]}
                         InputProps={{ inputProps: { min: 0 } }}
-                        {...register(`item.${index + 1}.price`)}
+                        // {...register(`item.${index + 1}.price`)}
                         fullWidth
                       />
                       <AiOutlineClose
                         onClick={() =>
                           setVariants((variants) => (variants -= 1))
                         }
-                        className={`text-5xl cursor-pointer text-red-700 ${
-                          index === 0 && "hidden"
-                        }`}
+                        className={`text-5xl cursor-pointer text-red-700`}
                       />
                     </Box>
                   );
                 })}
+                {/* );
+                })} */}
               </Grid>
+
               {/* --img-- */}
               <Grid item xs={12} md={6}>
                 <TextField
@@ -263,18 +331,28 @@ const EditFood = ({ editId, handleModalClose, customizeFood }) => {
               </Grid>
               <Grid item xs={12} md={6}>
                 <Autocomplete
+                  fullWidth
                   multiple
-                  disablePortal
-                  id="combo-box-demo"
+                  // loading={dataIsLoading}
+                  id="fixed-tags-demo"
+                  value={customFood}
                   options={customizeFood?.map((custom) => custom)}
-                  getOptionLabel={(option) => option?.ingredient_name}
-                  filterSelectedOptions
-                  onChange={(_, newValue) => setExtra(newValue)}
+                  getOptionLabel={(option) => option.ingredient_name}
+                  onChange={(event, newValue) => setCustomFood(newValue)}
+                  renderTags={(tagValue, getTagProps) =>
+                    tagValue.map((option, index) => (
+                      <Chip
+                        label={option.ingredient_name}
+                        {...getTagProps({ index })}
+                      />
+                    ))
+                  }
                   renderInput={(params) => (
                     <TextField
-                      // value={}
                       {...params}
-                      label="Customize Food"
+                      label="Extra Ingredients"
+                      variant="outlined"
+                      placeholder="Favorites"
                       fullWidth
                     />
                   )}

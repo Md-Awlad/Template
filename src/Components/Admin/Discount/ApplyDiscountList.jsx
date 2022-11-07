@@ -1,13 +1,16 @@
-import React, { useState } from "react";
-import { RiDeleteBin6Line } from "react-icons/ri";
-import { MdModeEdit } from "react-icons/md";
 import { Box, Tooltip, Typography } from "@mui/material";
-import EditApplyDiscount from "../../Modals/Admin/EditApplyDiscount";
-import DeleteApplyDiscount from "../../Modals/Admin/DeleteApplyDiscount";
+import { useQuery } from "@tanstack/react-query";
+import React, { useState } from "react";
+import { MdModeEdit } from "react-icons/md";
+import { RiDeleteBin6Line } from "react-icons/ri";
+import myAxios from "../../../utils/myAxios";
 import LoaderSource from "../../Loaders/LoaderSource";
+import DeleteApplyDiscount from "../../Modals/Admin/DeleteApplyDiscount";
+import EditApplyDiscount from "../../Modals/Admin/EditApplyDiscount";
 import CustomDataGrid from "../../Shared/CustomDataGrid";
 
 const ApplyDiscountList = ({
+  discounts,
   applyDiscount,
   applyRefetch,
   categories,
@@ -17,6 +20,16 @@ const ApplyDiscountList = ({
   console.log(applyDiscount);
   const [editId, setEditId] = useState(null);
   const [deleteId, setDeleteId] = useState(null);
+
+  const { data: allData, isLoading: dataIsLoading } = useQuery(
+    [`apply_discount`, editId],
+    async () => {
+      const res = await myAxios(`/apply_discount/${editId}`);
+      console.log(res);
+      return res.data;
+    }
+  );
+  console.log(allData);
 
   const columns = [
     {
@@ -124,14 +137,17 @@ const ApplyDiscountList = ({
           columns={columns}
         />
       )}
-      {Boolean(editId) && (
+      {Boolean(allData && editId) ? (
         <EditApplyDiscount
           editId={editId}
+          discounts={discounts}
+          dataIsLoading={dataIsLoading}
+          allData={allData}
           handleClose={() => setEditId(null)}
           categories={categories}
           foods={foods}
         />
-      )}
+      ) : null}
       {Boolean(deleteId) && (
         <DeleteApplyDiscount
           deleteId={deleteId}
