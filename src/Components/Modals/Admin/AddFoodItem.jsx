@@ -12,7 +12,7 @@ import TextField from "@mui/material/TextField";
 import { Box } from "@mui/system";
 import { useQueryClient } from "@tanstack/react-query";
 import React, { useState } from "react";
-import { useForm } from "react-hook-form";
+import { useFieldArray, useForm } from "react-hook-form";
 import { AiOutlineClose } from "react-icons/ai";
 import { FiUpload } from "react-icons/fi";
 import { toast } from "react-toastify";
@@ -41,55 +41,48 @@ const AddFoodItem = ({
   customizeFood,
 }) => {
   const { currentColor } = useStateContext();
-  const [variants, setVariants] = useState(1);
   const [category, setCategory] = useState();
   const [extra, setExtra] = useState();
-
   const queryClient = useQueryClient();
-
-  console.log(extra?.map((a) => JSON.stringify(a?.id)));
   const {
+    control,
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    defaultValues: {
+      item: [{ title: "" }],
+    },
+  });
+  const { fields, append, remove } = useFieldArray({
+    name: "item",
+    control,
+    rules: {
+      required: "Please append at least 1 item",
+    },
+  });
 
   /**
    * I'm trying to get the price of the food from the form and store it in a variable called price.
    * </code>
    */
   const onSubmit = async (data) => {
-    console.log(data);
-    console.log(data.package);
     const price = {};
     data.item?.forEach((item) => {
+      console.log(item.price);
       if (item.title.endsWith('"')) {
         console.log(item.title, item.price);
         const a = item?.title?.replace(/"/g, " inch");
         price[a] = item.price;
-        console.log(price);
-      } else if (variants > 1) {
+      } else if (fields.length > 1) {
         price[item.title] = item.price;
-      } else {
-        console.log("regular");
+      } else if (item.title && item.price) {
+        price[item.title] = item.price;
+      } else if (!item.title) {
         price["regular"] = item.price;
-        // price[item.title] = item.price;
-        // price[item.title] = "regular";
-        // console.log(price[item.title]);
       }
     });
 
-    // const payloadForm = {
-    //   food_name: data?.foodName,
-    //   price: `'${JSON.stringify(price)}'`,
-    //   image: data?.image[0],
-    //   base_ingredient: data?.ingredient,
-    //   review: data?.review,
-    //   taste: data?.taste,
-    //   packaging: data?.package === null ? 0 : data?.package,
-    //   category: category,
-    //   customize_food: JSON.stringify(extra?.map((a) => a?.id)),
-    // };
     const payloadForm = new FormData();
     payloadForm.append("food_name", data?.foodName);
     payloadForm.append("price", `'${JSON.stringify(price)}'`);
@@ -137,12 +130,7 @@ const AddFoodItem = ({
               id="foodName"
               label="Food Name"
               type="text"
-              // value={foodName}
-              // onChange={(newValue) => {
-              //   setFoodName(newValue);
-              // }}
               error={Boolean(errors.foodName)}
-              // helperText={errors.foodName && "This food name is required *"}
               {...register("foodName", { required: true })}
               fullWidth
             />
@@ -152,14 +140,16 @@ const AddFoodItem = ({
             <Button
               sx={{ width: "100%", backgroundColor: `${currentColor}` }}
               variant="contained"
-              onClick={() => setVariants((variants) => (variants += 1))}
+              onClick={() => {
+                append();
+              }}
             >
               Add Size and Price
             </Button>
-            {new Array(variants).fill(null)?.map((item, index) => {
+            {fields?.map((field, index) => {
               return (
                 <Box
-                  key={index}
+                  key={field.id}
                   sx={{
                     display: "flex",
                     alignItems: "center",
@@ -170,14 +160,8 @@ const AddFoodItem = ({
                   <TextField
                     label="Food Size"
                     type="text"
-                    required={variants > 1 ? true : false}
-                    // error={Boolean(`errors.item.${index + 1}.title`)}
-                    // helperText={
-                    //   `errors.item.${index + 1}.title` &&
-                    //   "Food size is required *"
-                    // }
-
-                    {...register(`${`item.${index + 1}.title`}`)}
+                    required={fields.length > 1 ? true : false}
+                    {...register(`${`item.${index}.title`}`)}
                     fullWidth
                   />
                   <TextField
@@ -185,16 +169,13 @@ const AddFoodItem = ({
                     type="number"
                     InputProps={{ inputProps: { min: 0 } }}
                     required
-                    {...register(`item.${index + 1}.price`)}
+                    {...register(`item.${index}.price`, {
+                      valueAsNumber: true,
+                    })}
                     fullWidth
                   />
-                  {/* <Button
-                    variant="contained"
-                    sx={{ height: 52, color: "#fff" }}
-                  >
-                  </Button> */}
                   <AiOutlineClose
-                    onClick={() => setVariants((variants) => (variants -= 1))}
+                    onClick={() => remove(index)}
                     className={`text-5xl cursor-pointer text-red-700 ${
                       index === 0 && "hidden"
                     }`}

@@ -6,13 +6,13 @@ import {
   Chip,
   Grid,
   InputAdornment,
-  Modal,
+  Modal
 } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import { Box } from "@mui/system";
 import { useQueryClient } from "@tanstack/react-query";
 import React, { useState } from "react";
-import { useForm } from "react-hook-form";
+import { useFieldArray, useForm } from "react-hook-form";
 import { AiOutlineClose } from "react-icons/ai";
 import { FiUpload } from "react-icons/fi";
 import { toast } from "react-toastify";
@@ -36,6 +36,7 @@ const style = {
 };
 
 const EditFood = ({
+  editPrice,
   allFoodData,
   editId,
   handleModalClose,
@@ -44,18 +45,20 @@ const EditFood = ({
   customizeFood,
 }) => {
   const { currentColor } = useStateContext();
-  const { register, handleSubmit, setValue } = useForm();
+
   const [extra, setExtra] = useState();
   const [image, setImage] = useState(null);
-  const [price, setPrice] = useState({});
   // const [newprice, setNewPrice] = useState(0);
-  const [Index, setIndex] = useState(0);
+  // const [Index, setIndex] = useState(0);
 
   const [customFood, setCustomFood] = useState([
     ...allFoodData?.data[0]?.customize_food,
   ]);
-  const [variants, setVariants] = useState(0);
+  // const [variants, setVariants] = useState(0);
   const queryClient = useQueryClient();
+
+  console.log(editPrice);
+
   const onSubmit = async (data) => {
     const price = {};
 
@@ -65,7 +68,7 @@ const EditFood = ({
       if (item.title.endsWith('"')) {
         const a = item?.title?.replace(/"/g, " inch");
         price[a] = item.price;
-      } else if (variants > 1) {
+      } else if (fields.length > 1) {
         price[item.title] = item.price;
       } else {
         price["regular"] = item.price;
@@ -109,6 +112,18 @@ const EditFood = ({
     queryClient.invalidateQueries("food");
     handleModalClose();
   };
+  const { register, control, handleSubmit, setValue, reset } = useForm({
+    defaultValues: {
+      item: editPrice ? editPrice : [{ title: "6 inch", price: "454" }],
+    },
+  });
+  const { fields, append, remove } = useFieldArray({
+    name: "item",
+    control,
+    rules: {
+      required: "Please append at least 1 item",
+    },
+  });
   React.useEffect(() => {
     allFoodData?.data.map((data, index) => {
       console.log();
@@ -116,29 +131,19 @@ const EditFood = ({
       setValue("foodName", data?.food_name);
       setValue("ingredient", data?.base_ingredient);
       setImage(data?.image);
-      // setValue(
-      //   "size",
-      //   Object.entries(data?.price).map((key) => key[0])
-      // );
-      setPrice(data?.price);
-
-      // setValue(
-      //   ` item.${index + 1}.price`,
-      //   data?.price && Object.entries(data?.price).map((key) => key[1])
-      // );
 
       setValue("packaging", data?.packaging);
     });
   }, [editId]);
   return (
     <Modal open={Boolean(editId)} onClose={handleModalClose}>
-      {isLoading ? (
+      {isLoading  || !editPrice ? (
         <QueryLoader />
       ) : isError ? (
         <Alert>
           <AlertTitle>Error !</AlertTitle>
         </Alert>
-      ) : allFoodData ? (
+      ) : allFoodData   ? (
         <Box
           sx={{
             ...style,
@@ -168,11 +173,50 @@ const EditFood = ({
                 <Button
                   sx={{ width: "100%", backgroundColor: `${currentColor}` }}
                   variant="contained"
-                  onClick={() => setVariants((variants) => (variants += 1))}
+                  onClick={() => append()}
                 >
                   Add Size and Price
                 </Button>
-                {Object.entries(price).map((p, i) => {
+                {fields?.map((field, index) => {
+                  console.log(fields.length);
+                  return (
+                    <Box
+                      key={field.id}
+                      sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        columnGap: 2,
+                        marginTop: 2,
+                      }}
+                    >
+                      <TextField
+                        label="Food Size"
+                        type="text"
+                        required={fields.length > 1 ? true : false}
+                        {...register(`${`item.${index}.title`}`)}
+                        fullWidth
+                      />
+                      <TextField
+                        label="Food Price"
+                        type="number"
+                        InputProps={{ inputProps: { min: 0 } }}
+                        required
+                        {...register(`item.${index}.price`, {
+                          valueAsNumber: true,
+                        })}
+                        fullWidth
+                      />
+                      <AiOutlineClose
+                        onClick={() => remove(index)}
+                        className={`text-5xl cursor-pointer text-red-700 ${
+                          index === 0 && "hidden"
+                        }`}
+                      />
+                    </Box>
+                  );
+                })}
+
+                {/* {Object.entries(price).map((p, i) => {
                   return (
                     <Box
                       key={i}
@@ -264,7 +308,7 @@ const EditFood = ({
                       />
                     </Box>
                   );
-                })}
+                })} */}
                 {/* );
                 })} */}
               </Grid>

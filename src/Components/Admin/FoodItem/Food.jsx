@@ -13,6 +13,7 @@ const Food = ({ category, customizeFood }) => {
   const { currentColor, currentMode } = useStateContext();
   const [editId, setEditId] = useState(null);
   const [deleteId, setDeleteId] = useState(null);
+  const [editPrice, setEditPrice] = useState([]);
 
   const food = category?.foodItems_category?.map((a) => a);
 
@@ -21,7 +22,22 @@ const Food = ({ category, customizeFood }) => {
     data: allFoodData,
     isLoading,
     isError,
-  } = useQuery([`food`, editId], async () => await myAxios(`/food/${editId}`));
+  } = useQuery([`food`, editId], async () => await myAxios(`/food/${editId}`), {
+    onSuccess: (foodData) => {
+      console.log(foodData);
+      foodData?.data.map((data, index) => {
+        console.log(data?.price);
+        setEditPrice(
+          Object.entries(data?.price).map((key, i) => {
+            return {
+              title: key[0],
+              price: key[1],
+            };
+          })
+        );
+      });
+    },
+  });
 
   const columns = [
     {
@@ -216,14 +232,16 @@ const Food = ({ category, customizeFood }) => {
       },
     },
   ];
-
+  console.log(editPrice);
   return (
     <>
       <div style={{ height: 510, width: "100%" }}>
         <CustomDataGrid rows={food} columns={columns} />
       </div>
-      {Boolean(allFoodData && editId) ? (
+
+      {Boolean(allFoodData && editId && editPrice.length > 0) ? (
         <EditFood
+          editPrice={editPrice}
           allFoodData={allFoodData}
           editId={editId}
           isLoading={isLoading}
