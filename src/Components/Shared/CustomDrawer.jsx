@@ -1,5 +1,4 @@
 import { React } from "react";
-import cookImg from "../../image/Cook.svg";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import Cart from "../Frontend/Cart/Cart";
@@ -7,11 +6,10 @@ import { Typography } from "@mui/material";
 import { useStateContext } from "../../Contexts/ContextProvider";
 import { IoIosArrowForward } from "react-icons/io";
 import { useState } from "react";
-
-const drawerWidth = 600;
+import SvgImage from "../Loaders/SvgImage";
 
 const CustomDrawer = () => {
-  const { cart } = useStateContext();
+  const { cart, restaurantData } = useStateContext();
   const [open, setOpen] = useState(false);
 
   const handleDrawerOpen = () => {
@@ -54,17 +52,13 @@ const CustomDrawer = () => {
             cart.length ? "border-1 border-red-400" : "border-1"
           } rounded-full md:p-2 p-1  cursor-pointer `}
         >
-          <img
-            className="md:w-14 md:h-14 w-10 h-10  mx-auto   cursor-pointer"
-            src={cookImg}
-            alt=""
-          />
+          <SvgImage />
           <Typography
             sx={{
               fontSize: { sm: 11, xs: 8 },
               fontWeight: 500,
               textAlign: "center",
-              color: "#F0A70B",
+              color: restaurantData?.map((data) => data?.color || "#F0A70B"),
             }}
           >
             Order Now

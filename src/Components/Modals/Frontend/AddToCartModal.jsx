@@ -503,7 +503,8 @@ function AddToCartModal(props) {
               >
                 {Boolean(item?.discount_price) ? (
                   <Box sx={{ width: 1 }}>
-                    {Object.values(item?.discount_price).length < 2 ? (
+                    {Object.values(item?.discount_price).length < 2 &&
+                    !Object.values(item?.discount_price).length < 1 ? (
                       Object.entries(item?.discount_price).map((key, i) => {
                         console.log(item?.discount_price);
                         return (

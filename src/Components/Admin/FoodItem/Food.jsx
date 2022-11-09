@@ -235,9 +235,7 @@ const Food = ({ category, customizeFood }) => {
   console.log(editPrice);
   return (
     <>
-      <div style={{ height: 510, width: "100%" }}>
-        <CustomDataGrid rows={food} columns={columns} />
-      </div>
+      <CustomDataGrid rows={food} columns={columns} />
 
       {Boolean(allFoodData && editId && editPrice.length > 0) ? (
         <EditFood

@@ -1,27 +1,9 @@
-import {
-  Badge,
-  Box,
-  Button,
-  Divider,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
-  SwipeableDrawer,
-  Typography,
-} from "@mui/material";
+import { Box } from "@mui/material";
 import React from "react";
 import { MdOutlineAddShoppingCart } from "react-icons/md";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useStateContext } from "../../Contexts/ContextProvider";
 import mainLogo from "../../image/logo.png";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
-import { AiOutlineArrowLeft } from "react-icons/ai";
-import { GrClose } from "react-icons/gr";
-import Cart from "./Cart/Cart";
-import { IoMdCart } from "react-icons/io";
 import CustomDrawer from "../Shared/CustomDrawer";
 
 const Header = () => {

@@ -1,13 +1,11 @@
-import { Box, Button, Grid, Paper, Typography } from "@mui/material";
+import { Box, Grid, Paper, Typography } from "@mui/material";
 import React from "react";
-import EditIcon from "@mui/icons-material/Edit";
 import { useStateContext } from "../../../Contexts/ContextProvider";
-import { useState } from "react";
+import mainBanner from "../../../image/Cover-Banner-17.jpg";
+import mainLogo from "../../../image/logo.png";
 
 const RestaurantSetting = () => {
   const { restaurantData } = useStateContext();
-  const [openEdit, setOpenEdit] = useState(false);
-  console.log(restaurantData);
   return (
     <Paper
       className="space-y-1 dark:bg-secondary-dark-bg dark:text-neutral"
@@ -21,44 +19,18 @@ const RestaurantSetting = () => {
         <Box key={index}>
           <img
             className="w-full object-cover h-44 rounded-tr-md rounded-tl-md"
-            src={data?.banner}
+            src={data?.banner || mainBanner}
             alt=""
           />
           <Box className="flex lg:flex-nowrap flex-wrap gap-10 my-10 mx-8">
             <Box className="border border-gray-600 py-10 w-full rounded-md">
               <img
                 className="md:w-52 md:h-52 w-40 h-40 object-cover rounded-full m-auto"
-                src={data?.logo}
+                src={data?.logo || mainLogo}
                 alt=""
               />
             </Box>
             <Box className="border border-gray-600 py-3 px-5 w-full rounded-md ">
-              {/* <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "flex-end",
-                  alignItems: "center",
-                }}
-              >
-                <Typography variant="h5"></Typography>
-                <Button
-                  variant="contained"
-                  size="small"
-                  sx={{
-                    minWidth: 120,
-                  }}
-                  onClick={() => setOpenEdit(true)}
-                >
-                  <EditIcon
-                    sx={{
-                      fontSize: "15px",
-                      mr: 1,
-                    }}
-                  />
-                  Edit
-                </Button>
-              </Box> */}
-
               <Box>
                 <Typography
                   sx={{
@@ -163,16 +135,6 @@ const RestaurantSetting = () => {
                   </Grid>
                 </Grid>
               </Box>
-
-              {/* {openEdit && (
-                  <EditEmployeeEmergencyInfo
-                    open={openEdit}
-                    employeeRefetch={employeeRefetch}
-                    employeeId={employeeId}
-                    emergencyContacts={emergencyContacts}
-                    handleClose={() => setOpenEdit(false)}
-                  />
-                )} */}
             </Box>
           </Box>
         </Box>

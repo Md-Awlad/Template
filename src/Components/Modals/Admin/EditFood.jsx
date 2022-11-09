@@ -6,7 +6,7 @@ import {
   Chip,
   Grid,
   InputAdornment,
-  Modal
+  Modal,
 } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import { Box } from "@mui/system";
@@ -45,7 +45,6 @@ const EditFood = ({
   customizeFood,
 }) => {
   const { currentColor } = useStateContext();
-
   const [extra, setExtra] = useState();
   const [image, setImage] = useState(null);
   // const [newprice, setNewPrice] = useState(0);
@@ -137,13 +136,13 @@ const EditFood = ({
   }, [editId]);
   return (
     <Modal open={Boolean(editId)} onClose={handleModalClose}>
-      {isLoading  || !editPrice ? (
+      {isLoading || !editPrice ? (
         <QueryLoader />
       ) : isError ? (
         <Alert>
           <AlertTitle>Error !</AlertTitle>
         </Alert>
-      ) : allFoodData   ? (
+      ) : allFoodData ? (
         <Box
           sx={{
             ...style,
