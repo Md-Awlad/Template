@@ -538,7 +538,7 @@ function AddToCartModal(props) {
                         disabled={
                           !Boolean(Object.entries(size).length) &&
                           Boolean(
-                            Object.entries(item?.discount_price).length > 2
+                            Object.entries(item?.discount_price).length > 1
                           )
                         }
                         variant="contained"
@@ -564,7 +564,6 @@ function AddToCartModal(props) {
                   <Box sx={{ width: 1 }}>
                     {Object.values(item?.price).length < 2 ? (
                       Object.entries(item?.price).map((key, i) => {
-                        console.log(item?.price);
                         return (
                           <Button
                             disabled={
@@ -585,7 +584,6 @@ function AddToCartModal(props) {
                               handleAddToCartSingleValue(item, key);
                             }}
                           >
-                            {" "}
                             Add To Cart
                           </Button>
                         );
@@ -606,12 +604,9 @@ function AddToCartModal(props) {
                               ? "block"
                               : "none",
                         }}
-                        onClick={(e) => {
-                          console.log(e);
-                          handleAddToCart(item, index);
-                        }}
+                        onClick={(e) => handleAddToCart(item, index)}
                       >
-                        Add To Cart{" "}
+                        Add To Cart
                       </Button>
                     )}
                   </Box>

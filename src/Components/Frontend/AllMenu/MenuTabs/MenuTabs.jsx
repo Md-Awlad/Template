@@ -1,4 +1,4 @@
-import { Container, Tab, Tabs, Typography } from "@mui/material";
+import { Tab, Tabs, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { useQuery } from "@tanstack/react-query";
 import React, { useState } from "react";
@@ -40,7 +40,7 @@ const MenuTabs = ({ setCart, cart }) => {
   });
 
   return (
-    <Container>
+    <Box>
       {restaurantData?.map((data, index) => (
         <Tabs
           key={index}
@@ -57,6 +57,7 @@ const MenuTabs = ({ setCart, cart }) => {
             "& button": {
               color: "#000",
               borderRadius: "5px 5px 0 0 ",
+              marginLeft: { md: 2 },
               paddingX: 3,
             },
             "& button.Mui-selected": {
@@ -75,7 +76,7 @@ const MenuTabs = ({ setCart, cart }) => {
           <Food setCart={setCart} id={category.id} cart={cart} />
         </TabPanel>
       ))}
-    </Container>
+    </Box>
   );
 };
 
