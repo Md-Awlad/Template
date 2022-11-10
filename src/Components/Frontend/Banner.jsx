@@ -34,7 +34,7 @@ const Banner = () => {
                 "https://i.ibb.co/L1v4dJD/resturant-Defalut-Banner.jpg";
             }}
           />
-          {!Boolean(discounts.length) ? (
+          {Boolean(discounts.length) ? (
             <Marquee
               direction="left"
               gradientColor
