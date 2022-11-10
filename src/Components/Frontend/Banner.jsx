@@ -3,7 +3,6 @@ import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import Marquee from "react-fast-marquee";
 import { useStateContext } from "../../Contexts/ContextProvider";
-import mainBanner from "../../image/Cover-Banner-17.jpg";
 import { staticAxios } from "../../utils/myAxios";
 
 const Banner = () => {
@@ -27,10 +26,15 @@ const Banner = () => {
               backgroundSize: "auto",
               backgroundOrigin: "content-box",
             }}
-            src={data?.banner || mainBanner}
+            src={data?.banner}
             alt="banner"
+            onError={({ currentTarget }) => {
+              currentTarget.onerror = null; // prevents looping
+              currentTarget.src =
+                "https://i.ibb.co/L1v4dJD/resturant-Defalut-Banner.jpg";
+            }}
           />
-          {Boolean(discounts.length) ? (
+          {!Boolean(discounts.length) ? (
             <Marquee
               direction="left"
               gradientColor

@@ -12,7 +12,6 @@ import DarkModeToggle from "react-dark-mode-toggle";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { useStateContext } from "../Contexts/ContextProvider";
-import { default as avatar, default as MainLogo } from "../image/logo.png";
 import Sidebar from "./Sidebar";
 import UserProfile from "./UserProfile";
 
@@ -139,7 +138,11 @@ const Navbar = () => {
                 <Box
                   key={index}
                   component="img"
-                  src={data?.logo || MainLogo}
+                  src={data?.logo}
+                  onError={({ currentTarget }) => {
+                    currentTarget.onerror = null; // prevents looping
+                    currentTarget.src = "https://i.ibb.co/0q5B8VP/MainLogo.png";
+                  }}
                   sx={{
                     width: "50px",
                   }}
@@ -163,7 +166,12 @@ const Navbar = () => {
                 <div className="flex items-center">
                   <img
                     className="rounded-full w-8 h-8 "
-                    src={data?.logo || avatar}
+                    src={data?.logo}
+                    onError={({ currentTarget }) => {
+                      currentTarget.onerror = null; // prevents looping
+                      currentTarget.src =
+                        "https://i.ibb.co/0q5B8VP/MainLogo.png";
+                    }}
                     alt=""
                   />
                 </div>

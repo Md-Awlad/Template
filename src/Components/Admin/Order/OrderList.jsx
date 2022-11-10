@@ -112,7 +112,7 @@ const OrderList = ({ orders, orderRefetch, isLoading, isError }) => {
                 px: "2px",
                 display: "flex",
                 alignItems: "center",
-                width: 250,
+                width: { md: 500, xs: 200 },
                 border: "1px solid #ccc",
                 borderRadius: 2,
               }}
@@ -133,13 +133,13 @@ const OrderList = ({ orders, orderRefetch, isLoading, isError }) => {
                   flex: 1,
                   color: currentMode === "Light" ? "#000" : "#fff",
                 }}
-                placeholder="Search Name"
+                placeholder="Search by Item Name"
                 // inputProps={{ "aria-label": "search google maps" }}
               />
             </Box>
             <Typography
               className="dark:text-neutral"
-              sx={{ display: "flex", justifyContent: "flex-end", my: 2 }}
+              sx={{ display: "flex", justifyContent: "flex-end" }}
               variant="h6"
             >
               Now Orders: {orders.length ? orders.length : "00"}
@@ -177,26 +177,21 @@ const OrderList = ({ orders, orderRefetch, isLoading, isError }) => {
                     className="space-y-2"
                   >
                     <Box className="flex justify-between flex-wrap items-center">
-                      <Typography
-                        sx={{ fontSize: 14, fontWeight: 500 }}
-                        variant="h6"
-                      >
+                      <Typography sx={{ fontSize: 14 }}>
                         Order ID :{" "}
                         <Typography
                           component={"span"}
                           sx={{ fontSize: 14, fontWeight: 500 }}
-                          variant="h6"
                         >
                           {item?.id}
                         </Typography>
                       </Typography>
                       {item?.table && (
-                        <Typography sx={{ fontSize: 14 }} variant="h6">
+                        <Typography sx={{ fontSize: 14 }}>
                           Table No:{" "}
                           <Typography
                             component={"span"}
                             sx={{ fontSize: 15, fontWeight: 500 }}
-                            variant="h6"
                           >
                             {item?.table}
                           </Typography>
@@ -252,7 +247,6 @@ const OrderList = ({ orders, orderRefetch, isLoading, isError }) => {
                           alignItems: "center",
                           gap: 1,
                           fontSize: 14,
-                          fontWeight: 400,
                         }}
                       >
                         {/* <MdEmail /> */}
@@ -267,13 +261,16 @@ const OrderList = ({ orders, orderRefetch, isLoading, isError }) => {
                       </Typography>
                     </Box>
                     {/* <--- order Items ---> */}
-                    <TableContainer>
+                    <TableContainer
+                      sx={{
+                        borderTopLeftRadius: "4px",
+                        borderTopRightRadius: "4px",
+                      }}
+                    >
                       <Table aria-label="customized table">
                         <TableHead
                           sx={{
                             "& .MuiTableCell-head": {
-                              borderTopLeftRadius: "4px",
-                              borderTopRightRadius: "4px",
                               bgcolor:
                                 currentMode === "Dark"
                                   ? " #4b5563 !important "
@@ -297,8 +294,6 @@ const OrderList = ({ orders, orderRefetch, isLoading, isError }) => {
                         </TableHead>
                         <TableBody>
                           {item?.order_items?.map((row, index) => {
-                            console.log(row);
-                            console.log(item);
                             return (
                               <StyledTableRow
                                 key={index}
@@ -317,7 +312,7 @@ const OrderList = ({ orders, orderRefetch, isLoading, isError }) => {
                                   component="th"
                                   scope="row"
                                   sx={{
-                                    width: 50,
+                                    width: 150,
                                     color:
                                       currentMode === "Dark"
                                         ? "#fff !important"

@@ -23,21 +23,14 @@ const Header = () => {
             <img
               className="w-12 h-12 object-cover rounded-full"
               src={data?.logo || mainLogo}
+              onError={({ currentTarget }) => {
+                currentTarget.onerror = null; // prevents looping
+                currentTarget.src = "https://i.ibb.co/0q5B8VP/MainLogo.png";
+              }}
               alt=""
             />
           </Link>
 
-          {/* <Typography
-      variant="h6"
-      sx={{
-        color: "#F0A70B",
-        letterSpacing: { md: "2rem", xs: "1rem" },
-        textTransform: "uppercase",
-        fontWeight: 500,
-      }}
-    >
-      digital menu card
-    </Typography> */}
           {activeMenu ? null : cart?.length ? (
             <CustomDrawer />
           ) : (

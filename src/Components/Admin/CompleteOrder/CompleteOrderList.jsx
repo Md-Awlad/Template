@@ -1,3 +1,5 @@
+import DeleteIcon from "@mui/icons-material/Delete";
+import SearchIcon from "@mui/icons-material/Search";
 import {
   Alert,
   AlertTitle,
@@ -16,14 +18,10 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
-import React, { useState } from "react";
-import { FaPhoneAlt } from "react-icons/fa";
-import { MdEmail } from "react-icons/md";
-import DeleteIcon from "@mui/icons-material/Delete";
-import SearchIcon from "@mui/icons-material/Search";
+import React, { Fragment, useState } from "react";
+import { useStateContext } from "../../../Contexts/ContextProvider";
 import LoaderSource from "../../Loaders/LoaderSource";
 import DeleteConfirmOrder from "../../Modals/Admin/DeleteConfirmOrder";
-import { useStateContext } from "../../../Contexts/ContextProvider";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -59,7 +57,7 @@ const CompleteOrderList = ({ completes, isLoading, isError }) => {
       );
 
   return (
-    <div>
+    <Fragment>
       {isLoading ? (
         <LoaderSource />
       ) : isError ? (
@@ -84,7 +82,7 @@ const CompleteOrderList = ({ completes, isLoading, isError }) => {
                 px: "2px",
                 display: "flex",
                 alignItems: "center",
-                width: 250,
+                width: { md: 500, xs: 200 },
                 border: "1px solid #ccc",
                 borderRadius: 2,
               }}
@@ -105,7 +103,8 @@ const CompleteOrderList = ({ completes, isLoading, isError }) => {
                   flex: 1,
                   color: currentMode === "Light" ? "#000" : "#fff",
                 }}
-                placeholder="Search Name"
+                placeholder="Search by Item Name
+                "
                 // inputProps={{ "aria-label": "search google maps" }}
               />
             </Box>
@@ -122,8 +121,8 @@ const CompleteOrderList = ({ completes, isLoading, isError }) => {
                 sm: "repeat(2,1fr)",
                 xs: "repeat(1,1fr)",
               },
+              width: "100%",
               gap: 2,
-              // position: "relative",
             }}
           >
             {filtered?.map((item) => {
@@ -132,6 +131,7 @@ const CompleteOrderList = ({ completes, isLoading, isError }) => {
                   key={item.id}
                   className="space-y-1 dark:bg-secondary-dark-bg dark:text-neutral"
                   sx={{
+                    width: 1,
                     px: 1,
                     py: 1,
                     boxShadow: "0px 0px 5px 0px rgb(0 0 0 / 20%)",
@@ -143,37 +143,35 @@ const CompleteOrderList = ({ completes, isLoading, isError }) => {
                     className="space-y-2"
                   >
                     <Box className="flex justify-between flex-wrap items-center">
-                      <Typography
-                        sx={{ fontSize: 14, fontWeight: 500 }}
-                        variant="h6"
-                      >
+                      <Typography sx={{ fontSize: 14 }}>
                         Order ID :{" "}
                         <Typography
                           component={"span"}
-                          sx={{ fontSize: 14, fontWeight: 600 }}
+                          sx={{ fontSize: 14, fontWeight: 500 }}
                           variant="h6"
                         >
                           {item?.id}
                         </Typography>
                       </Typography>
-                      <Typography sx={{ fontSize: 14 }} variant="h6">
-                        Table No:{" "}
-                        <Typography
-                          component={"span"}
-                          sx={{ fontSize: 15, fontWeight: 600 }}
-                          variant="h6"
-                        >
-                          {item?.table}
+                      {item?.table && (
+                        <Typography sx={{ fontSize: 14 }}>
+                          Table No:{" "}
+                          <Typography
+                            component={"span"}
+                            sx={{ fontSize: 15, fontWeight: 500 }}
+                          >
+                            {item?.table}
+                          </Typography>
                         </Typography>
-                      </Typography>
+                      )}
                     </Box>
 
                     <Box>
-                      <Typography sx={{ fontSize: 14 }} variant="h6">
+                      <Typography sx={{ fontSize: 14 }}>
                         Order Type :{" "}
                         <Typography
                           component={"span"}
-                          sx={{ fontSize: 15, fontWeight: 600 }}
+                          sx={{ fontSize: 14, fontWeight: 500 }}
                           variant="h6"
                         >
                           {`${
@@ -183,12 +181,11 @@ const CompleteOrderList = ({ completes, isLoading, isError }) => {
                           }`}
                         </Typography>
                       </Typography>
-                      <Typography sx={{ fontSize: 14 }} variant="h6">
+                      <Typography sx={{ fontSize: 14 }}>
                         Name :{" "}
                         <Typography
                           component={"span"}
-                          sx={{ fontSize: 15, fontWeight: 600 }}
-                          variant="h6"
+                          sx={{ fontSize: 14, fontWeight: 500 }}
                         >
                           {item?.customer_name}
                         </Typography>
@@ -200,14 +197,12 @@ const CompleteOrderList = ({ completes, isLoading, isError }) => {
                           gap: 1,
                           fontSize: 14,
                         }}
-                        variant="h6"
                       >
-                        <FaPhoneAlt />
-
+                        {/* <FaPhoneAlt /> */}
+                        Phone :
                         <Typography
                           component={"span"}
-                          sx={{ fontSize: 14, fontWeight: 600 }}
-                          variant="h6"
+                          sx={{ fontSize: 14, fontWeight: 500 }}
                         >
                           {item?.customer_phone}
                         </Typography>
@@ -218,34 +213,42 @@ const CompleteOrderList = ({ completes, isLoading, isError }) => {
                           alignItems: "center",
                           gap: 1,
                           fontSize: 14,
-                          fontWeight: 500,
                         }}
-                        variant="h6"
                       >
-                        <MdEmail />
+                        Email :
                         <Typography
                           component={"span"}
-                          sx={{ fontSize: 14, fontWeight: 600 }}
-                          variant="h6"
+                          sx={{ fontSize: 14, fontWeight: 500 }}
                         >
                           {item?.customer_mail}
                         </Typography>
                       </Typography>
                     </Box>
                     {/* <--- order Items ---> */}
-                    <TableContainer>
+                    <TableContainer
+                      sx={{
+                        borderTopLeftRadius: "4px",
+                        borderTopRightRadius: "4px",
+                      }}
+                    >
                       <Table aria-label="customized table">
                         <TableHead
                           sx={{
                             "& .MuiTableCell-head": {
-                              bgcolor: "#C0C0C0 !important",
-                              color: "#000 !important",
+                              bgcolor:
+                                currentMode === "Dark"
+                                  ? " #4b5563 !important "
+                                  : "#e5e7eb !important",
+                              color:
+                                currentMode === "Dark"
+                                  ? "#fff !important"
+                                  : "#000 !important",
                             },
                           }}
                         >
                           <TableRow>
-                            <StyledTableCell sx={{ width: 300 }}>
-                              Items
+                            <StyledTableCell sx={{ width: 150 }}>
+                              Items&Size
                             </StyledTableCell>
                             <StyledTableCell sx={{ width: 150 }}>
                               Extra
@@ -258,26 +261,41 @@ const CompleteOrderList = ({ completes, isLoading, isError }) => {
                             <StyledTableRow
                               key={index}
                               sx={{
-                                "& .MuiTableCell-root": {
-                                  bgcolor:
-                                    currentMode === "light"
-                                      ? "#000 !important"
-                                      : "#fff !important",
-                                },
+                                bgcolor:
+                                  currentMode === "Dark"
+                                    ? " #33373E !important "
+                                    : "#e5e7eb !important",
+                                color:
+                                  currentMode === "Dark"
+                                    ? "#fff !important"
+                                    : "#000 !important",
                               }}
                             >
                               <StyledTableCell
                                 component="th"
                                 scope="row"
-                                sx={{ width: 300 }}
+                                sx={{
+                                  width: 150,
+                                  color:
+                                    currentMode === "Dark"
+                                      ? "#fff !important"
+                                      : "#000 !important",
+                                }}
                               >
-                                {row.food_name}
+                                {row?.food_name}
+                                {`(${row?.price})`}
                               </StyledTableCell>
 
                               <StyledTableCell
                                 component="th"
                                 scope="row"
-                                sx={{ width: 150 }}
+                                sx={{
+                                  maxWidth: 150,
+                                  color:
+                                    currentMode === "Dark"
+                                      ? "#fff !important"
+                                      : "#000 !important",
+                                }}
                               >
                                 {row?.extra?.map(
                                   (extra, index) =>
@@ -292,6 +310,12 @@ const CompleteOrderList = ({ completes, isLoading, isError }) => {
                                 component="th"
                                 scope="row"
                                 align="center"
+                                sx={{
+                                  color:
+                                    currentMode === "Dark"
+                                      ? "#fff !important"
+                                      : "#000 !important",
+                                }}
                               >
                                 {row.quantity}
                               </StyledTableCell>
@@ -348,7 +372,7 @@ const CompleteOrderList = ({ completes, isLoading, isError }) => {
           handleClose={() => setDeleteId(null)}
         />
       )}
-    </div>
+    </Fragment>
   );
 };
 

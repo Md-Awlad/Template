@@ -70,6 +70,10 @@ const Sidebar = () => {
                 <Box
                   component="img"
                   src={data?.logo || mainLogo}
+                  onError={({ currentTarget }) => {
+                    currentTarget.onerror = null; // prevents looping
+                    currentTarget.src = "https://i.ibb.co/0q5B8VP/MainLogo.png";
+                  }}
                   sx={{
                     width: "35px",
                   }}
