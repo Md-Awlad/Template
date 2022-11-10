@@ -28,22 +28,33 @@ export const ContextProvider = ({ children }) => {
   const [confirmed, setConfirmed] = useState();
   const [customColor, setCustomColor] = useState();
 
-  const {
-    isLoading,
-    data: currentUser = {},
-  } = useQuery(["currentUser"], async () => {
-    const res = await myAxios("/user_info");
-    return res?.data;
-  });
-
-  const { data: restaurantData = [], refetch } = useQuery(
-    ["restaurant"],
+  const { isLoading, data: currentUser = {} } = useQuery(
+    ["currentUser"],
     async () => {
-      const res = await staticAxios("/restaurant/");
-      return res.data;
+      const res = await myAxios("/user_info");
+      return res?.data;
     }
   );
 
+  const {
+    data: restaurantData = [],
+    isLoading: restaurantIsLoading,
+    isError: restaurantIsError,
+    refetch,
+  } = useQuery(["restaurant"], async () => {
+    const res = await staticAxios("/restaurant/");
+    return res.data;
+  });
+
+  const {
+    data: categories = [],
+    isLoading: categoryIsLoading,
+    isError: categoryIsError,
+    refetch: categoryRefetch,
+  } = useQuery(["category"], async () => {
+    const res = await myAxios("/category/");
+    return res.data;
+  });
   // const { data: create_menu = {} } = useQuery(["create_menu"], async () => {
   //   const res = await myAxios("/create_menu");
   //   return res?.data;
@@ -87,8 +98,14 @@ export const ContextProvider = ({ children }) => {
     <StateContext.Provider
       value={{
         currentUser,
+        restaurantIsLoading,
+        restaurantIsError,
         restaurantData,
         refetch,
+        categories,
+        categoryIsLoading,
+        categoryIsError,
+        categoryRefetch,
         currentPass,
         isLoading,
         confirmed,

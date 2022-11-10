@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { lazy, useEffect } from "react";
 import { Navigate, useRoutes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -10,27 +10,26 @@ import MainLoader from "./Components/Loaders/MainLoader";
 import NotFound from "./Components/NotFound/NotFound";
 import { SuspenseLoader } from "./Components/Shared/SharedStyles";
 import { useStateContext } from "./Contexts/ContextProvider";
-import {
-  CancelOrder,
-  CompleteOrder,
-  ConfirmedOrder,
-  CustomizeFood,
-  DashBoard,
-  Discount,
-  FoodItem,
-  LandingPage,
-  Login,
-  MonthReport,
-  Order,
-  OrderSummary,
-  Settings,
-  Survey,
-  SurveyList,
-} from "./Pages";
-import CartInfo from "./Pages/Frontend/CartInfo";
+const CancelOrder = lazy(() => import("./Pages/Admin/CancelOrder"));
+const CompleteOrder = lazy(() => import("./Pages/Admin/CompleteOrder"));
+const CustomizeFood = lazy(() => import("./Pages/Admin/CustomizeFood"));
+const DashBoard = lazy(() => import("./Pages/Admin/Dashboard"));
+const Discount = lazy(() => import("./Pages/Admin/Discount"));
+const FoodItem = lazy(() => import("./Pages/Admin/FoodItem"));
+const Login = lazy(() => import("./Pages/Admin/Login"));
+const MonthReport = lazy(() => import("./Pages/Admin/MonthReport"));
+const Order = lazy(() => import("./Pages/Admin/Order"));
+const Settings = lazy(() => import("./Pages/Admin/Settings"));
+const SurveyList = lazy(() => import("./Pages/Admin/SurveyList"));
+const CartInfo = lazy(() => import("./Pages/Frontend/CartInfo"));
+const ConfirmedOrder = lazy(() => import("./Pages/Frontend/ConfirmedOrder"));
+const LandingPage = lazy(() => import("./Pages/Frontend/LandingPage"));
+const OrderSummary = lazy(() => import("./Pages/Frontend/OrderSummary"));
+const Survey = lazy(() => import("./Pages/Frontend/Survey"));
 
 const App = () => {
-  const { currentMode, currentUser, isLoading, orderId } = useStateContext();
+  const { currentMode, currentUser, restaurantIsLoading, orderId, isLoading } =
+    useStateContext();
   useEffect(() => {
     if (
       process.env.NODE_ENV === "production" ||
@@ -55,10 +54,7 @@ const App = () => {
       path: "cart",
       element: <CartInfo />,
     },
-    // {
-    //   path: "viewcart",
-    //   element: <CartInfo />,
-    // },
+
     {
       path: "ordersummary",
       element: orderId ? <OrderSummary /> : <Navigate to="/" />,
@@ -142,7 +138,7 @@ const App = () => {
       <div className={currentMode === "Dark" ? "dark" : ""}>
         <div className="overflow-hidden">
           <SuspenseLoader>
-            {isLoading ? <MainLoader /> : allRoutes}
+            {restaurantIsLoading ? <MainLoader /> : allRoutes}
           </SuspenseLoader>
         </div>
         <ToastContainer

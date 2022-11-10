@@ -12,7 +12,7 @@ export const baseURL =
     ? "https://api.nexismenu.live"
     : "https://api.nexismenu.live";
 // const baseURL = "https://api.nexismenu.live";
-// export const baseURL = "http://10.27.27.32:8000";
+//export const baseURL = "http://10.27.27.32:8000";
 
 const myAxios = axios.create({ baseURL });
 export const staticAxios = axios.create({ baseURL });

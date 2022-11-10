@@ -5,12 +5,13 @@ import FoodCategory from "../../Components/Admin/FoodItem/FoodCategory";
 import AddCategory from "../../Components/Modals/Admin/AddCategory";
 import AddFoodItem from "../../Components/Modals/Admin/AddFoodItem";
 import PageTitle from "../../Components/PageTitle/PageTitle";
+import { useStateContext } from "../../Contexts/ContextProvider";
 import myAxios from "../../utils/myAxios";
 
 const FoodItem = () => {
   const [openModal, setOpenModal] = useState(false);
   const [openModalTwo, setOpenModalTwo] = useState(false);
-
+const {categories,categoryIsLoading, categoryIsError,categoryRefetch}=useStateContext()
   const handleModalOpen = (e) => {
     setOpenModal(true);
   };
@@ -24,15 +25,15 @@ const FoodItem = () => {
     setOpenModalTwo(false);
   };
 
-  const {
-    data: categories = [],
-    isLoading,
-    isError,
-    refetch: categoryRefetch,
-  } = useQuery(["category"], async () => {
-    const res = await myAxios("/category/");
-    return res.data;
-  });
+  // const {
+  //   data: categories = [],
+  //   isLoading,
+  //   isError,
+  //   refetch: categoryRefetch,
+  // } = useQuery(["category"], async () => {
+  //   const res = await myAxios("/category/");
+  //   return res.data;
+  // });
 
   const { refetch: foodRefetch } = useQuery(["food"], async () => {
     const res = await myAxios("/food/");
@@ -70,8 +71,8 @@ const FoodItem = () => {
       />
       <FoodCategory
         categories={categories}
-        isLoading={isLoading}
-        isError={isError}
+        isLoading={categoryIsLoading}
+        isError={categoryIsError}
         customizeFood={customizeFood}
       />
     </Container>

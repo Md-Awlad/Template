@@ -1,9 +1,7 @@
-import { Tab, Tabs, Typography } from "@mui/material";
+import { Container, Tab, Tabs, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import { useQuery } from "@tanstack/react-query";
 import React, { useState } from "react";
 import { useStateContext } from "../../../../Contexts/ContextProvider";
-import { staticAxios } from "../../../../utils/myAxios";
 import Food from "../MenuItem/Food";
 
 function TabPanel(props) {
@@ -27,20 +25,20 @@ function TabPanel(props) {
 }
 
 const MenuTabs = ({ setCart, cart }) => {
-  const { restaurantData } = useStateContext();
+  const { restaurantData, categories } = useStateContext();
   const [value, setValue] = useState(0);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
-  const { data: categories = [] } = useQuery(["category"], async () => {
-    const res = await staticAxios("/category/");
-    return res.data;
-  });
+  // const { data: categories = [] } = useQuery(["category"], async () => {
+  //   const res = await staticAxios("/category/");
+  //   return res.data;
+  // });
 
   return (
-    <Box>
+    <Container>
       {restaurantData?.map((data, index) => (
         <Tabs
           key={index}
@@ -57,7 +55,6 @@ const MenuTabs = ({ setCart, cart }) => {
             "& button": {
               color: "#000",
               borderRadius: "5px 5px 0 0 ",
-              marginLeft: { md: 2 },
               paddingX: 3,
             },
             "& button.Mui-selected": {
@@ -76,7 +73,7 @@ const MenuTabs = ({ setCart, cart }) => {
           <Food setCart={setCart} id={category.id} cart={cart} />
         </TabPanel>
       ))}
-    </Box>
+    </Container>
   );
 };
 

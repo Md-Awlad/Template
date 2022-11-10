@@ -1,10 +1,10 @@
 import Grid from "@mui/material/Grid";
 import { Box } from "@mui/system";
-import React from "react";
+import React, { lazy } from "react";
 import { useStateContext } from "../../../../Contexts/ContextProvider";
-import Cart from "../../Cart/Cart";
-import MenuTabs from "../MenuTabs/MenuTabs";
 
+const Cart = lazy(() => import("../../Cart/Cart"));
+const MenuTabs = lazy(() => import("../MenuTabs/MenuTabs"));
 const Menu = () => {
   const { activeMenu } = useStateContext();
   return (
