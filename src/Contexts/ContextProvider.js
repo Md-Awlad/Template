@@ -46,15 +46,6 @@ export const ContextProvider = ({ children }) => {
     return res.data;
   });
 
-  const {
-    data: categories = [],
-    isLoading: categoryIsLoading,
-    isError: categoryIsError,
-    refetch: categoryRefetch,
-  } = useQuery(["category"], async () => {
-    const res = await myAxios("/category/");
-    return res.data;
-  });
   // const { data: create_menu = {} } = useQuery(["create_menu"], async () => {
   //   const res = await myAxios("/create_menu");
   //   return res?.data;
@@ -102,10 +93,7 @@ export const ContextProvider = ({ children }) => {
         restaurantIsError,
         restaurantData,
         refetch,
-        categories,
-        categoryIsLoading,
-        categoryIsError,
-        categoryRefetch,
+
         currentPass,
         isLoading,
         confirmed,

@@ -1,7 +1,9 @@
 import { Container, Tab, Tabs, Typography } from "@mui/material";
 import { Box } from "@mui/system";
+import { useQuery } from "@tanstack/react-query";
 import React, { useState } from "react";
 import { useStateContext } from "../../../../Contexts/ContextProvider";
+import { staticAxios } from "../../../../utils/myAxios";
 import Food from "../MenuItem/Food";
 
 function TabPanel(props) {
@@ -25,17 +27,17 @@ function TabPanel(props) {
 }
 
 const MenuTabs = ({ setCart, cart }) => {
-  const { restaurantData, categories } = useStateContext();
+  const { restaurantData } = useStateContext();
   const [value, setValue] = useState(0);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
-  // const { data: categories = [] } = useQuery(["category"], async () => {
-  //   const res = await staticAxios("/category/");
-  //   return res.data;
-  // });
+  const { data: categories = [] } = useQuery(["category"], async () => {
+    const res = await staticAxios("/category/");
+    return res.data;
+  });
 
   return (
     <Container>

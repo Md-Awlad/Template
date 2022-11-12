@@ -10,7 +10,6 @@ import EditFood from "../../Modals/Admin/EditFood";
 import CustomDataGrid from "../../Shared/CustomDataGrid";
 
 const Food = ({ category, customizeFood }) => {
-  const { currentColor, currentMode } = useStateContext();
   const [editId, setEditId] = useState(null);
   const [deleteId, setDeleteId] = useState(null);
   const [editPrice, setEditPrice] = useState([]);
