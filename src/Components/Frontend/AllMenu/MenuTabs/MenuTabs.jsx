@@ -1,7 +1,7 @@
-import { Container, Tab, Tabs, Typography } from "@mui/material";
+import { Tab, Tabs, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { useQuery } from "@tanstack/react-query";
-import React, { useState } from "react";
+import React, { Fragment, useState } from "react";
 import { useStateContext } from "../../../../Contexts/ContextProvider";
 import { staticAxios } from "../../../../utils/myAxios";
 import Food from "../MenuItem/Food";
@@ -40,7 +40,7 @@ const MenuTabs = ({ setCart, cart }) => {
   });
 
   return (
-    <Container>
+    <Fragment>
       {restaurantData?.map((data, index) => (
         <Tabs
           key={index}
@@ -57,7 +57,6 @@ const MenuTabs = ({ setCart, cart }) => {
             "& button": {
               color: "#000",
               borderRadius: "5px 5px 0 0 ",
-              paddingX: 3,
             },
             "& button.Mui-selected": {
               backgroundColor: data?.color || "#F0A70B",
@@ -75,7 +74,7 @@ const MenuTabs = ({ setCart, cart }) => {
           <Food setCart={setCart} id={category.id} cart={cart} />
         </TabPanel>
       ))}
-    </Container>
+    </Fragment>
   );
 };
 
