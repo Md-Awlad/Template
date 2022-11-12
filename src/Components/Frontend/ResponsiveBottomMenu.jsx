@@ -35,7 +35,7 @@ const ResponsiveBottomMenu = () => {
                 <Box
                   className={`w-full h-full ${
                     cart.length ? "border-1 border-red-400" : "border-1"
-                  } rounded-full md:p-2 p-1  cursor-pointer `}
+                  } rounded-full  p-1  cursor-pointer `}
                 >
                   <SvgImage />
                   <Typography

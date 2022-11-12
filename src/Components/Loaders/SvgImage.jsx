@@ -5,10 +5,11 @@ import { useStateContext } from "../../Contexts/ContextProvider";
 const SvgImage = () => {
   const { restaurantData } = useStateContext();
   return (
-    <Box className="md:w-14 md:h-14 w-10 h-10  mx-auto cursor-pointer">
+    <Box>
       <svg
-        width="37"
-        height="33"
+        // width="37"
+        // height="33"
+        className="md:w-14 md:h-14 w-10 h-10  mx-auto cursor-pointer"
         viewBox="0 0 37 33"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
