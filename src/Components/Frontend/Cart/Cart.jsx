@@ -179,7 +179,6 @@ const Cart = () => {
       <Box
         sx={{
           maxHeight: Boolean(cart?.length) ? "60vh" : "10vh",
-          overflow: "scroll",
         }}
       >
         {cart?.map((item, index) => (

@@ -53,7 +53,7 @@ const Food = ({ id }) => {
       <Box
         className=" "
         sx={{
-          height: { md: "100vh", overflowY: "scroll" },
+          height: { md: "100vh" },
         }}
       >
         <Grid container sx={{ padding: 0, m: 0 }}>
@@ -122,40 +122,71 @@ const Food = ({ id }) => {
                           </Typography>
                           {/* --size-- */}
 
-                          <div className="overflow-x-scroll">
-                            <div>
-                              {Boolean(item?.discount_price)
-                                ? Object.entries(item?.discount_price).map(
-                                    (key, index) => (
-                                      <Box
-                                        sx={{
-                                          display: "flex",
-                                          alignItems: "center",
-                                        }}
-                                      >
-                                        {index === 0 && (
-                                          <Box className="absolute flex  items-center bottom-3">
+                          <div>
+                            {Boolean(item?.discount_price)
+                              ? Object.entries(item?.discount_price).map(
+                                  (key, index) => (
+                                    <Box
+                                      sx={{
+                                        display: "flex",
+                                        alignItems: "center",
+                                      }}
+                                    >
+                                      {index === 0 && (
+                                        <Box className="absolute flex  items-center bottom-3">
+                                          <Typography
+                                            sx={{
+                                              fontSize: {
+                                                md: "16px",
+                                              },
+                                              pr: 1,
+                                            }}
+                                          >
+                                            {`from TK `}
+                                          </Typography>
+
+                                          <Typography
+                                            sx={{
+                                              fontSize: {
+                                                sm: "13px",
+                                              },
+                                              textDecoration: "line-through",
+                                            }}
+                                          >
+                                            {item.price[key[0]]}
+                                          </Typography>
+                                          <Typography
+                                            sx={{
+                                              fontWeight: 500,
+                                              fontSize: {
+                                                sm: "18px",
+                                              },
+                                              mr: 1,
+                                            }}
+                                          >
+                                            {key[1]} ৳
+                                          </Typography>
+                                        </Box>
+                                      )}
+                                    </Box>
+                                  )
+                                )
+                              : Object.entries(item?.price).map(
+                                  (key, index) => {
+                                    return (
+                                      <Box className="flex items-center">
+                                        {Boolean(index === 0) && (
+                                          <Box className=" absolute flex  items-center bottom-3">
                                             <Typography
                                               sx={{
-                                                fontSize: {
-                                                  md: "16px",
-                                                },
+                                                fontSize: "16px",
+
                                                 pr: 1,
                                               }}
                                             >
                                               {`from TK `}
                                             </Typography>
 
-                                            <Typography
-                                              sx={{
-                                                fontSize: {
-                                                  sm: "13px",
-                                                },
-                                                textDecoration: "line-through",
-                                              }}
-                                            >
-                                              {item.price[key[0]]}
-                                            </Typography>
                                             <Typography
                                               sx={{
                                                 fontWeight: 500,
@@ -170,42 +201,9 @@ const Food = ({ id }) => {
                                           </Box>
                                         )}
                                       </Box>
-                                    )
-                                  )
-                                : Object.entries(item?.price).map(
-                                    (key, index) => {
-                                      return (
-                                        <Box className="flex items-center">
-                                          {Boolean(index === 0) && (
-                                            <Box className=" absolute flex  items-center bottom-3">
-                                              <Typography
-                                                sx={{
-                                                  fontSize: "16px",
-
-                                                  pr: 1,
-                                                }}
-                                              >
-                                                {`from TK `}
-                                              </Typography>
-
-                                              <Typography
-                                                sx={{
-                                                  fontWeight: 500,
-                                                  fontSize: {
-                                                    sm: "18px",
-                                                  },
-                                                  mr: 1,
-                                                }}
-                                              >
-                                                {key[1]} ৳
-                                              </Typography>
-                                            </Box>
-                                          )}
-                                        </Box>
-                                      );
-                                    }
-                                  )}
-                            </div>
+                                    );
+                                  }
+                                )}
                           </div>
                           {/* --size End-- */}
                         </div>
