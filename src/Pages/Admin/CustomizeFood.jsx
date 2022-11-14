@@ -1,4 +1,4 @@
-import { Container, Modal } from "@mui/material";
+import { Container } from "@mui/material";
 import { Box } from "@mui/system";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
@@ -9,6 +9,7 @@ import DeleteCustomFood from "../../Components/Modals/Admin/DeleteCustomFood";
 import EditCustomFood from "../../Components/Modals/Admin/EditCustomFood";
 import PageTitle from "../../Components/PageTitle/PageTitle";
 import CustomDataGrid from "../../Components/Shared/CustomDataGrid";
+import { CustomModal } from "../../Components/Shared/SharedStyles";
 import myAxios from "../../utils/myAxios";
 
 const CustomizeFood = () => {
@@ -88,7 +89,7 @@ const CustomizeFood = () => {
 
   return (
     <Container>
-      <Modal open={openModal} onClose={handleModalClose}>
+      <CustomModal open={openModal} onClose={handleModalClose}>
         <AddCustomFood
           customizeFood={customizeFood}
           categories={categories}
@@ -96,7 +97,7 @@ const CustomizeFood = () => {
           foodRefetch={foodRefetch}
           handleModalClose={handleModalClose}
         />
-      </Modal>
+      </CustomModal>
       <PageTitle
         headingText="Customize Food"
         pageName="Custom Foods"

@@ -1,13 +1,12 @@
 import { LinearProgress, Typography } from "@mui/material";
 import { Box } from "@mui/system";
+import { ArcElement, Chart as ChartJS, Legend, Tooltip } from "chart.js";
+import PropTypes from "prop-types";
 import React from "react";
 import { useStateContext } from "../../../Contexts/ContextProvider";
-import PropTypes from "prop-types";
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
-import TodaySell from "./Charts/TodaySell";
 import MonthlySell from "./Charts/MonthlySell";
+import TodaySell from "./Charts/TodaySell";
 import YearPerformance from "./Charts/YearPerformance";
-import ProgressBar from "@ramonak/react-progress-bar";
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 function LinearProgressWithLabel(props) {
@@ -37,35 +36,7 @@ const OrderSummary = ({ orders }) => {
       <Typography variant="h5" sx={{ fontWeight: 500 }}>
         Orders Summary
       </Typography>
-      {/* <Box
-        style={{ backgroundColor: `${currentColor}20` }}
-        sx={{
-          padding: 2,
-          borderRadius: 2,
-          boxShadow: "0px 0px 3px 3px #eee",
-          border: "1px solid #ccc",
-        }}
-      >
-        <Typography
-          variant="h6"
-          sx={{ fontSize: "16px", fontWeight: 500, paddingY: 1 }}
-        >
-          Today Selling Performance
-        </Typography>
-        <LinearProgressWithLabel value={orders.percentage} />
-        <ProgressBar style={{ height: "1rem" }} completed={orders.today_sell} />
-        <Typography
-          variant="h6"
-          sx={{ fontSize: "16px", fontWeight: 500, paddingY: 1 }}
-        >
-          Yesterday Selling Performance
-        </Typography>
-        <LinearProgressWithLabel value={orders.percentage} />
-        <ProgressBar
-          style={{ height: "1rem" }}
-          completed={orders.yesterday_sell}
-        />
-      </Box> */}
+
       <Box
         sx={{
           display: "grid",

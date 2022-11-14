@@ -1,7 +1,3 @@
-import { Box } from "@mui/system";
-import React from "react";
-import TextField from "@mui/material/TextField";
-import { useForm } from "react-hook-form";
 import {
   FormControl,
   Grid,
@@ -11,10 +7,13 @@ import {
   Tab,
   Tabs,
 } from "@mui/material";
-import { toast } from "react-toastify";
-import moment from "moment";
+import TextField from "@mui/material/TextField";
+import { Box } from "@mui/system";
 import { DatePicker } from "@mui/x-date-pickers";
-import { useState } from "react";
+import moment from "moment";
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 import { useStateContext } from "../../../Contexts/ContextProvider";
 import myAxios from "../../../utils/myAxios";
 
@@ -80,7 +79,11 @@ const AddDiscount = ({ handleModalClose, discountRefetch }) => {
   };
 
   return (
-    <Box sx={{ ...style, width: { sm: 700, xs: 400 } }}>
+    <Box
+      sx={{
+        p: 5,
+      }}
+    >
       <h2 className="text-xl font-bold pb-3">Add Discount</h2>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
         {/* --name-- */}

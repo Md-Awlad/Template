@@ -1,27 +1,12 @@
+import { Grid, InputAdornment } from "@mui/material";
+import TextField from "@mui/material/TextField";
 import { Box } from "@mui/system";
 import React from "react";
-import TextField from "@mui/material/TextField";
 import { useForm } from "react-hook-form";
-import { Grid, InputAdornment } from "@mui/material";
-import { toast } from "react-toastify";
 import { FiUpload } from "react-icons/fi";
+import { toast } from "react-toastify";
 import { useStateContext } from "../../../Contexts/ContextProvider";
 import myAxios from "../../../utils/myAxios";
-
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "#fff",
-  border: "2px solid #fff",
-  borderRadius: "5px",
-  boxShadow: 24,
-  pt: 2,
-  px: 4,
-  pb: 3,
-};
 
 const AddCategory = ({ handleModalClose, categoryRefetch }) => {
   const { currentColor } = useStateContext();
@@ -56,7 +41,7 @@ const AddCategory = ({ handleModalClose, categoryRefetch }) => {
   };
 
   return (
-    <Box sx={{ ...style ,width: { sm: 700, xs: 400 }}}>
+    <Box className="p-5">
       <h2 className="text-xl font-bold pb-3">Add Category</h2>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
         <Grid item xs={12} md={6}>
@@ -69,7 +54,6 @@ const AddCategory = ({ handleModalClose, categoryRefetch }) => {
             {...register("category", { required: true })}
             fullWidth
           />
-          
         </Grid>
 
         {/* --img-- */}

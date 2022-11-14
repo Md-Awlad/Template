@@ -39,7 +39,7 @@ const FoodCategory = ({ categories, isLoading, isError, customizeFood }) => {
             }}
           >
             <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
+              expandIcon={<ExpandMoreIcon className="dark:text-white" />}
               aria-controls="panel1a-content"
               id="panel1a-header"
             >

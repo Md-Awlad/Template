@@ -28,8 +28,13 @@ const OrderSummary = lazy(() => import("./Pages/Frontend/OrderSummary"));
 const Survey = lazy(() => import("./Pages/Frontend/Survey"));
 
 const App = () => {
-  const { currentMode, currentUser, restaurantIsLoading, orderId, isLoading } =
-    useStateContext();
+  const {
+    currentMode,
+    currentUser: { id: userId = null },
+    restaurantIsLoading,
+    orderId,
+    isLoading,
+  } = useStateContext();
   useEffect(() => {
     if (
       process.env.NODE_ENV === "production" ||
@@ -68,19 +73,20 @@ const App = () => {
       element: <ConfirmedOrder />,
     },
     {
+      path: "login",
+      element: <Login />,
+    },
+    {
       path: "*",
       element: <NotFound />,
     },
+
     {
       path: "dashboard",
-      element: <Navigate to="dashboard" />,
-    },
-    {
-      path: "dashboard",
-      element: currentUser?.id ? <NavLayout /> : <Login />,
+      element: Boolean(userId) ? <NavLayout /> : <Navigate to="/login" />,
       children: [
         {
-          index: true,
+          path: "",
           element: <DashBoard />,
         },
         {

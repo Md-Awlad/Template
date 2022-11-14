@@ -23,7 +23,7 @@ const getPhoneInfo = () => {
 };
 
 const setColorInfo = (colorInfo) => {
-  return localStorage.setItem("colorInfo");
+  localStorage.setItem("colorInfo");
 };
 
 const getColorInfo = () => {

@@ -8,8 +8,7 @@ import {
 } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import moment from "moment";
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 import { Doughnut } from "react-chartjs-2";
 import { useStateContext } from "../../../../Contexts/ContextProvider";
 import myAxios from "../../../../utils/myAxios";
@@ -96,7 +95,9 @@ const MonthlySell = () => {
         paddingY: 3,
         border: "1px solid #ccc",
         borderRadius: 2,
-        boxShadow: "0 0 3px 3px #eee",
+        height: { md: "55vh" },
+
+        // boxShadow: "0 0 3px 3px #eee",
       }}
     >
       <Box sx={{ display: "flex", justifyContent: "space-between" }}>
