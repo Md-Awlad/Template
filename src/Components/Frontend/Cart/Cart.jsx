@@ -178,6 +178,8 @@ const Cart = () => {
       ) : null}
       <Box
         sx={{
+          overflowY: "scroll",
+
           maxHeight: Boolean(cart?.length) ? "60vh" : "10vh",
         }}
       >
@@ -189,7 +191,7 @@ const Cart = () => {
       {/* --submitInfo-- */}
       <form onSubmit={handleSubmit(onSubmit)}>
         <Box sx={{ marginY: 2 }}>
-          <Box className="space-y-4">
+          <Box className="space-y-4 bg-neutral">
             <Box className="space-y-3">
               {/* --subTotal-- */}
               <Box
