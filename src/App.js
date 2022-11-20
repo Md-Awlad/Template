@@ -74,7 +74,7 @@ const App = () => {
     },
     {
       path: "login",
-      element: <Login />,
+      element: Boolean(userId) ? <NavLayout /> : <Login />,
     },
     {
       path: "*",
