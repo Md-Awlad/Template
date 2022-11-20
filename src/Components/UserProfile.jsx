@@ -1,13 +1,13 @@
 import { Button } from "@mui/material";
-import { useQueryClient } from "@tanstack/react-query";
 import { Fragment } from "react";
 import { AiOutlineUserAdd } from "react-icons/ai";
 import { BsCheck } from "react-icons/bs";
 import { FiSettings } from "react-icons/fi";
+import { NavLink } from "react-router-dom";
 import { useStateContext } from "../Contexts/ContextProvider";
 import { themeColors } from "../Data/dummy";
-import { removeTokens } from "../utils/localStorages";
-import { NavLink } from "react-router-dom";
+import { getRefreshToken, removeTokens } from "../utils/localStorages";
+import { SSO_HOST } from "./Authentication/AuthRedirect";
 
 const UserProfile = ({ closeUserProfile }) => {
   const {
@@ -15,11 +15,21 @@ const UserProfile = ({ closeUserProfile }) => {
     setColor,
     currentUser: { id } = {},
   } = useStateContext();
-  const queryClient = useQueryClient();
+  // const queryClient = useQueryClient();
   const logOut = () => {
+    const { host, protocol } = window.location;
+    const refreshToken = getRefreshToken();
     removeTokens();
-    closeUserProfile();
-    queryClient.resetQueries();
+    // setBranchId(null);
+    // closeUserProfile();
+    // queryClient.resetQueries();
+    window.location.replace(
+      `${SSO_HOST}/signOutCallback?redirect=${
+        protocol + "//" + host
+      }&token=${refreshToken}`
+    );
+    // Navigate('/')
+    // console.log(`${SSO_HOST}/signOutCallback?token=${refreshToken}`);
   };
 
   return (

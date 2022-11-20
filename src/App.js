@@ -1,17 +1,18 @@
 import { lazy, useEffect } from "react";
-import { Navigate, useLocation, useRoutes } from "react-router-dom";
+import { Navigate, useRoutes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 import AuthRedirect from "./Components/Authentication/AuthRedirect";
 import AuthValidate from "./Components/Authentication/AuthValidate";
 import ChangePassword from "./Components/ChangePassword";
-import NavLayout from "./Components/Layouts/NavLayout.jsx";
+import NavLayout from "./Components/Layouts/NavLayout";
 import ThemeLayout from "./Components/Layouts/ThemeLayout";
 import MainLoader from "./Components/Loaders/MainLoader";
 import NotFound from "./Components/NotFound/NotFound";
 import { SuspenseLoader } from "./Components/Shared/SharedStyles";
 import { useStateContext } from "./Contexts/ContextProvider";
+import { getAccessToken } from "./utils/localStorages";
 const CancelOrder = lazy(() => import("./Pages/Admin/CancelOrder"));
 const CompleteOrder = lazy(() => import("./Pages/Admin/CompleteOrder"));
 const CustomizeFood = lazy(() => import("./Pages/Admin/CustomizeFood"));
@@ -37,8 +38,6 @@ const App = () => {
     orderId,
     isLoading,
   } = useStateContext();
-
-  const { pathname } = useLocation();
   useEffect(() => {
     if (
       process.env.NODE_ENV === "production" ||
@@ -54,6 +53,8 @@ const App = () => {
       console.error = function () {};
     }
   }, []);
+  const access = getAccessToken();
+
   const routes = [
     {
       path: "",
@@ -76,34 +77,23 @@ const App = () => {
       path: "confirmed",
       element: <ConfirmedOrder />,
     },
-    {
-      path: "login",
-      element: <Login />,
-    },
+    // {
+    //   path: "login",
+    //   element: Boolean(userId) ? <NavLayout /> : <Login />,
+    // },
     {
       path: "*",
       element: <NotFound />,
     },
 
     {
-      path: "/auth",
-      element: Boolean(userId) ? (
-        <Navigate to="/dashboard" />
-      ) : (
-        <AuthRedirect />
-      ),
-    },
-    {
-      path: "/authCallback",
-      element: Boolean(userId) ? (
-        <Navigate to="/dashboard" />
-      ) : (
-        <AuthValidate />
-      ),
-    },
-    {
       path: "",
-      element: <NavLayout />,
+      element:
+        access !== null || Boolean(userId) ? (
+          <NavLayout />
+        ) : (
+          <Navigate to="/auth" />
+        ),
       children: [
         {
           path: "dashboard",
@@ -155,8 +145,24 @@ const App = () => {
         },
       ],
     },
+    {
+      path: "/auth",
+      element: Boolean(userId) ? (
+        <Navigate to="/dashboard" />
+      ) : (
+        <AuthRedirect />
+      ),
+    },
+    {
+      path: "/authCallback",
+      element: Boolean(userId) ? (
+        <Navigate to="/dashboard" />
+      ) : (
+        <AuthValidate />
+      ),
+    },
   ];
-
+  console.log(getAccessToken());
   const allRoutes = useRoutes(routes);
 
   return (

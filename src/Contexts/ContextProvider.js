@@ -1,7 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
 import { createContext, useContext, useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
-import { setCurrentUser } from "../utils/localStorages";
 import myAxios, { staticAxios } from "../utils/myAxios";
 
 const StateContext = createContext();
@@ -29,19 +27,26 @@ export const ContextProvider = ({ children }) => {
   const [orderId, setOrderId] = useState();
   const [confirmed, setConfirmed] = useState();
   const [customColor, setCustomColor] = useState();
-  const [currentUser, setCurrentUserData] = useState({});
-  const { pathname } = useLocation();
+  // const [currentUser, setCurrentUserData] = useState({});
+  // const { pathname } = useLocation();
 
-  if (pathname === "dashboard") {
-    console.log(pathname);
-    const userInfo = async () => {
-      const res = await myAxios("/user_info/");
-      sessionStorage.setItem("currentUser", res?.data);
-      setCurrentUserData(res?.data);
-      setCurrentUser(res?.data);
-      // return res?.data;
-    };
-  }
+  // if (pathname === "dashboard") {
+  //   console.log(pathname);
+  //   const userInfo = async () => {
+  //     const res = await myAxios("/user_info/");
+  //     // sessionStorage.setItem("currentUser", res?.data);
+  //     setCurrentUserData(res?.data);
+  //     setCurrentUser(res?.data);
+  //     // return res?.data;
+  //   };
+  // }
+  const { isLoading, data: currentUser = {} } = useQuery(
+    ["currentUser"],
+    async () => {
+      const res = await myAxios("/user_info");
+      return res?.data;
+    }
+  );
   const {
     data: restaurantData = [],
     isLoading: restaurantIsLoading,
@@ -123,6 +128,7 @@ export const ContextProvider = ({ children }) => {
         themeSettings,
         setThemeSettings,
         cart,
+        isLoading,
         setCart,
         checkbox,
         setCheckbox,
