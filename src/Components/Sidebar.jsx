@@ -95,7 +95,7 @@ const Sidebar = () => {
           </Box>
           <div className="mt-5">
             <NavLink
-              to=""
+              to="/dashboard"
               onClick={() => handleCloseSidebar("i_am_dashboard")}
               // style={({ isActive }) => ({
               //   backgroundColor: isActive ? `${currentColor}10` : "",

@@ -3,6 +3,7 @@ import { styled } from "@mui/material/styles";
 import { Outlet } from "react-router-dom";
 import Footer from "../Footer";
 import Navbar from "../Navbar";
+import { SuspenseLoader } from "../Shared/SharedStyles";
 
 const DrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",
@@ -18,7 +19,7 @@ export default function NavLayout() {
     <Box sx={{ display: "flex" }} className="bg-main-bg dark:bg-main-dark-bg">
       <Navbar />
       <Box
-        component="main"
+        // component="main"
         sx={{
           p: 2,
           display: "flex",
@@ -33,7 +34,9 @@ export default function NavLayout() {
             flexGrow: 1,
           }}
         >
-          <Outlet />
+          <SuspenseLoader>
+            <Outlet />
+          </SuspenseLoader>
         </Box>
         <Footer />
       </Box>

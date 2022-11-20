@@ -1,10 +1,12 @@
 import { lazy, useEffect } from "react";
-import { Navigate, useRoutes } from "react-router-dom";
+import { Navigate, useLocation, useRoutes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
+import AuthRedirect from "./Components/Authentication/AuthRedirect";
+import AuthValidate from "./Components/Authentication/AuthValidate";
 import ChangePassword from "./Components/ChangePassword";
-import NavLayout from "./Components/Layouts/NavLayout";
+import NavLayout from "./Components/Layouts/NavLayout.jsx";
 import ThemeLayout from "./Components/Layouts/ThemeLayout";
 import MainLoader from "./Components/Loaders/MainLoader";
 import NotFound from "./Components/NotFound/NotFound";
@@ -35,6 +37,8 @@ const App = () => {
     orderId,
     isLoading,
   } = useStateContext();
+
+  const { pathname } = useLocation();
   useEffect(() => {
     if (
       process.env.NODE_ENV === "production" ||
@@ -82,11 +86,27 @@ const App = () => {
     },
 
     {
-      path: "dashboard",
-      element: Boolean(userId) ? <NavLayout /> : <Navigate to="/login" />,
+      path: "/auth",
+      element: Boolean(userId) ? (
+        <Navigate to="/dashboard" />
+      ) : (
+        <AuthRedirect />
+      ),
+    },
+    {
+      path: "/authCallback",
+      element: Boolean(userId) ? (
+        <Navigate to="/dashboard" />
+      ) : (
+        <AuthValidate />
+      ),
+    },
+    {
+      path: "",
+      element: <NavLayout />,
       children: [
         {
-          path: "",
+          path: "dashboard",
           element: <DashBoard />,
         },
         {
