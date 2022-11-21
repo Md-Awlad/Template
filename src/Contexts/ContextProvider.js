@@ -27,7 +27,19 @@ export const ContextProvider = ({ children }) => {
   const [orderId, setOrderId] = useState();
   const [confirmed, setConfirmed] = useState();
   const [customColor, setCustomColor] = useState();
+  // const [currentUser, setCurrentUserData] = useState({});
+  // const { pathname } = useLocation();
 
+  // if (pathname === "dashboard") {
+  //   console.log(pathname);
+  //   const userInfo = async () => {
+  //     const res = await myAxios("/user_info/");
+  //     // sessionStorage.setItem("currentUser", res?.data);
+  //     setCurrentUserData(res?.data);
+  //     setCurrentUser(res?.data);
+  //     // return res?.data;
+  //   };
+  // }
   const { isLoading, data: currentUser = {} } = useQuery(
     ["currentUser"],
     async () => {
@@ -35,13 +47,12 @@ export const ContextProvider = ({ children }) => {
       return res?.data;
     }
   );
-
   const {
     data: restaurantData = [],
     isLoading: restaurantIsLoading,
     isError: restaurantIsError,
     refetch,
-  } = useQuery(["restaurant"], async () => {
+  } = useQuery(["restaurantData"], async () => {
     const res = await staticAxios("/restaurant/");
     return res.data;
   });
@@ -95,7 +106,7 @@ export const ContextProvider = ({ children }) => {
         refetch,
 
         currentPass,
-        isLoading,
+        // isLoading,
         confirmed,
         setConfirmed,
         expandedMenu,
@@ -117,6 +128,7 @@ export const ContextProvider = ({ children }) => {
         themeSettings,
         setThemeSettings,
         cart,
+        isLoading,
         setCart,
         checkbox,
         setCheckbox,

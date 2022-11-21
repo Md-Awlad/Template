@@ -7,7 +7,7 @@ import {
   Tab,
   Tabs,
   TextField,
-  Typography
+  Typography,
 } from "@mui/material";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { matchIsValidTel, MuiTelInput } from "mui-tel-input";
@@ -20,7 +20,7 @@ import interceptor from "../../../utils/interceptors";
 import {
   setGmailInfo,
   setOrderInfo,
-  setPhoneInfo
+  setPhoneInfo,
 } from "../../../utils/localStorages";
 import { staticAxios } from "../../../utils/myAxios";
 import CartItems from "./CartItems";

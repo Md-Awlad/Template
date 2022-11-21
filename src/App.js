@@ -3,6 +3,8 @@ import { Navigate, useRoutes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
+import AuthRedirect from "./Components/Authentication/AuthRedirect";
+import AuthValidate from "./Components/Authentication/AuthValidate";
 import ChangePassword from "./Components/ChangePassword";
 import NavLayout from "./Components/Layouts/NavLayout";
 import ThemeLayout from "./Components/Layouts/ThemeLayout";
@@ -10,6 +12,7 @@ import MainLoader from "./Components/Loaders/MainLoader";
 import NotFound from "./Components/NotFound/NotFound";
 import { SuspenseLoader } from "./Components/Shared/SharedStyles";
 import { useStateContext } from "./Contexts/ContextProvider";
+import { getAccessToken } from "./utils/localStorages";
 const CancelOrder = lazy(() => import("./Pages/Admin/CancelOrder"));
 const CompleteOrder = lazy(() => import("./Pages/Admin/CompleteOrder"));
 const CustomizeFood = lazy(() => import("./Pages/Admin/CustomizeFood"));
@@ -50,6 +53,8 @@ const App = () => {
       console.error = function () {};
     }
   }, []);
+  const access = getAccessToken();
+
   const routes = [
     {
       path: "",
@@ -72,21 +77,26 @@ const App = () => {
       path: "confirmed",
       element: <ConfirmedOrder />,
     },
-    {
-      path: "login",
-      element: Boolean(userId) ? <NavLayout /> : <Login />,
-    },
+    // {
+    //   path: "login",
+    //   element: Boolean(userId) ? <NavLayout /> : <Login />,
+    // },
     {
       path: "*",
       element: <NotFound />,
     },
 
     {
-      path: "dashboard",
-      element: Boolean(userId) ? <NavLayout /> : <Navigate to="/login" />,
+      path: "",
+      element:
+        access !== null || Boolean(userId) ? (
+          <NavLayout />
+        ) : (
+          <Navigate to="/auth" />
+        ),
       children: [
         {
-          path: "",
+          path: "dashboard",
           element: <DashBoard />,
         },
         {
@@ -135,8 +145,23 @@ const App = () => {
         },
       ],
     },
+    {
+      path: "/auth",
+      element: Boolean(userId) ? (
+        <Navigate to="/dashboard" />
+      ) : (
+        <AuthRedirect />
+      ),
+    },
+    {
+      path: "/authCallback",
+      element: Boolean(userId) ? (
+        <Navigate to="/dashboard" />
+      ) : (
+        <AuthValidate />
+      ),
+    },
   ];
-
   const allRoutes = useRoutes(routes);
 
   return (

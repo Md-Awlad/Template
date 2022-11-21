@@ -229,6 +229,8 @@ const AddFoodItem = ({
             <FormControl fullWidth>
               <InputLabel id="demo-simple-select-label">Categories</InputLabel>
               <Select
+                required
+                // inputProps={{ required: true }}
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
                 label="Categories"
