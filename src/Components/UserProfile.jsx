@@ -10,11 +10,7 @@ import { getRefreshToken, removeTokens } from "../utils/localStorages";
 import { SSO_HOST } from "./Authentication/AuthRedirect";
 
 const UserProfile = ({ closeUserProfile }) => {
-  const {
-    currentColor,
-    setColor,
-    currentUser: { id } = {},
-  } = useStateContext();
+  const { currentColor, setColor, currentMode } = useStateContext();
   // const queryClient = useQueryClient();
   const logOut = () => {
     const { host, protocol } = window.location;
@@ -45,8 +41,19 @@ const UserProfile = ({ closeUserProfile }) => {
               <FiSettings className="text-white" />
             </div>
             <div>
-              <p className="font-medium dark:text-gray-200 ">Theme Settings</p>
-              <p className="text-gray-500 text-sm dark:text-gray-400 text-center">
+              <p
+                style={{
+                  color: currentMode === "Dark" ? "#fff" : "#000",
+                }}
+              >
+                Theme Settings
+              </p>
+              <p
+                style={{
+                  color: currentMode === "Dark" ? "#B2BEB5	" : "#000",
+                }}
+                className="text-gray-500 text-sm dark:text-gray-400 text-center"
+              >
                 Customize your theme
               </p>
             </div>

@@ -96,19 +96,19 @@ const Sidebar = () => {
           <div className="mt-5">
             <NavLink
               to="/dashboard"
-              onClick={() => handleCloseSidebar("i_am_dashboard")}
-              // style={({ isActive }) => ({
-              //   backgroundColor: isActive ? `${currentColor}10` : "",
-              //   color: currentMode === "Dark" ? "#fff" : "#000",
-              // })}
+              //onClick={() => handleCloseSidebar("i_am_dashboard")}
               style={({ isActive }) => ({
-                backgroundColor: isActive && !changeMe ? currentColor : "",
-                color: !changeMe
-                  ? "#fff"
-                  : currentMode === "Light"
-                  ? "#000"
-                  : "#fff",
+                backgroundColor: isActive ? `${currentColor}10` : "",
+                color: currentMode === "Dark" ? "#fff" : "#000",
               })}
+              // style={({ isActive }) => ({
+              //   backgroundColor: isActive && !changeMe ? currentColor : "",
+              //   color: !changeMe
+              //     ? "#fff"
+              //     : currentMode === "Light"
+              //     ? "#000"
+              //     : "#fff",
+              // })}
               className={({ isActive }) => (isActive ? activeLink : normalLink)}
             >
               <MdDashboard />
@@ -116,7 +116,7 @@ const Sidebar = () => {
             </NavLink>
             <NavLink
               to="customfood"
-              onClick={() => handleCloseSidebar("i_am_not_dashboard")}
+              //onClick={() => handleCloseSidebar("i_am_not_dashboard")}
               style={({ isActive }) => ({
                 backgroundColor: isActive ? currentColor : "",
               })}
@@ -127,7 +127,7 @@ const Sidebar = () => {
             </NavLink>
             <NavLink
               to="fooditem"
-              onClick={() => handleCloseSidebar("i_am_not_dashboard")}
+              //onClick={() => handleCloseSidebar("i_am_not_dashboard")}
               style={({ isActive }) => ({
                 backgroundColor: isActive ? currentColor : "",
               })}
@@ -139,7 +139,7 @@ const Sidebar = () => {
 
             <NavLink
               to="order"
-              onClick={() => handleCloseSidebar("i_am_not_dashboard")}
+              //onClick={() => handleCloseSidebar("i_am_not_dashboard")}
               style={({ isActive }) => ({
                 backgroundColor: isActive ? currentColor : "",
               })}
@@ -150,7 +150,7 @@ const Sidebar = () => {
             </NavLink>
             <NavLink
               to="completeOrder"
-              onClick={() => handleCloseSidebar("i_am_not_dashboard")}
+              //onClick={() => handleCloseSidebar("i_am_not_dashboard")}
               style={({ isActive }) => ({
                 backgroundColor: isActive ? currentColor : "",
               })}
@@ -161,7 +161,7 @@ const Sidebar = () => {
             </NavLink>
             <NavLink
               to="cancelorder"
-              onClick={() => handleCloseSidebar("i_am_not_dashboard")}
+              //onClick={() => handleCloseSidebar("i_am_not_dashboard")}
               style={({ isActive }) => ({
                 backgroundColor: isActive ? currentColor : "",
               })}
@@ -172,7 +172,7 @@ const Sidebar = () => {
             </NavLink>
             <NavLink
               to="discount"
-              onClick={() => handleCloseSidebar("i_am_not_dashboard")}
+              //onClick={() => handleCloseSidebar("i_am_not_dashboard")}
               style={({ isActive }) => ({
                 backgroundColor: isActive ? currentColor : "",
               })}
@@ -183,7 +183,7 @@ const Sidebar = () => {
             </NavLink>
             <NavLink
               to="report"
-              onClick={() => handleCloseSidebar("i_am_not_dashboard")}
+              //onClick={() => handleCloseSidebar("i_am_not_dashboard")}
               style={({ isActive }) => ({
                 backgroundColor: isActive ? currentColor : "",
               })}
@@ -194,7 +194,7 @@ const Sidebar = () => {
             </NavLink>
             <NavLink
               to="surveylist"
-              onClick={() => handleCloseSidebar("i_am_not_dashboard")}
+              ////onClick={() => handleCloseSidebar("i_am_not_dashboard")}
               style={({ isActive }) => ({
                 backgroundColor: isActive ? currentColor : "",
               })}
@@ -205,7 +205,7 @@ const Sidebar = () => {
             </NavLink>
             <NavLink
               to="settings"
-              onClick={() => handleCloseSidebar("i_am_not_dashboard")}
+              //onClick={() => handleCloseSidebar("i_am_not_dashboard")}
               style={({ isActive }) => ({
                 backgroundColor: isActive ? currentColor : "",
               })}
@@ -236,7 +236,7 @@ const Sidebar = () => {
           <div className="mt-10 ">
             <NavLink
               to=""
-              onClick={() => handleCloseSidebar("i_am_dashboard")}
+              //onClick={() => handleCloseSidebar("i_am_dashboard")}
               style={({ isActive }) => ({
                 backgroundColor: isActive && !changeMe ? currentColor : "",
                 color: !changeMe
@@ -253,7 +253,7 @@ const Sidebar = () => {
             </NavLink>
             <NavLink
               to="customfood"
-              onClick={() => handleCloseSidebar("i_am_not_dashboard")}
+              //onClick={() => handleCloseSidebar("i_am_not_dashboard")}
               style={({ isActive }) => ({
                 backgroundColor: isActive ? currentColor : "",
               })}
@@ -265,7 +265,7 @@ const Sidebar = () => {
             </NavLink>
             <NavLink
               to="fooditem"
-              onClick={() => handleCloseSidebar("i_am_not_dashboard")}
+              //onClick={() => handleCloseSidebar("i_am_not_dashboard")}
               style={({ isActive }) => ({
                 backgroundColor: isActive ? currentColor : "",
               })}
@@ -278,7 +278,7 @@ const Sidebar = () => {
 
             <NavLink
               to="order"
-              onClick={() => handleCloseSidebar("i_am_not_dashboard")}
+              //onClick={() => handleCloseSidebar("i_am_not_dashboard")}
               style={({ isActive }) => ({
                 backgroundColor: isActive ? currentColor : "",
               })}
@@ -290,7 +290,7 @@ const Sidebar = () => {
             </NavLink>
             <NavLink
               to="completeOrder"
-              onClick={() => handleCloseSidebar("i_am_not_dashboard")}
+              //onClick={() => handleCloseSidebar("i_am_not_dashboard")}
               style={({ isActive }) => ({
                 backgroundColor: isActive ? currentColor : "",
               })}
@@ -302,7 +302,7 @@ const Sidebar = () => {
             </NavLink>
             <NavLink
               to="cancelorder"
-              onClick={() => handleCloseSidebar("i_am_not_dashboard")}
+              //onClick={() => handleCloseSidebar("i_am_not_dashboard")}
               style={({ isActive }) => ({
                 backgroundColor: isActive ? currentColor : "",
               })}
@@ -314,7 +314,7 @@ const Sidebar = () => {
             </NavLink>
             <NavLink
               to="discount"
-              onClick={() => handleCloseSidebar("i_am_not_dashboard")}
+              //onClick={() => handleCloseSidebar("i_am_not_dashboard")}
               style={({ isActive }) => ({
                 backgroundColor: isActive ? currentColor : "",
               })}
@@ -326,7 +326,7 @@ const Sidebar = () => {
             </NavLink>
             <NavLink
               to="report"
-              onClick={() => handleCloseSidebar("i_am_not_dashboard")}
+              //onClick={() => handleCloseSidebar("i_am_not_dashboard")}
               style={({ isActive }) => ({
                 backgroundColor: isActive ? currentColor : "",
               })}
@@ -338,7 +338,7 @@ const Sidebar = () => {
             </NavLink>
             <NavLink
               to="surveylist"
-              onClick={() => handleCloseSidebar("i_am_not_dashboard")}
+              //onClick={() => handleCloseSidebar("i_am_not_dashboard")}
               style={({ isActive }) => ({
                 backgroundColor: isActive ? currentColor : "",
               })}
@@ -350,7 +350,7 @@ const Sidebar = () => {
             </NavLink>
             <NavLink
               to="settings"
-              onClick={() => handleCloseSidebar("i_am_not_dashboard")}
+              //onClick={() => handleCloseSidebar("i_am_not_dashboard")}
               style={({ isActive }) => ({
                 backgroundColor: isActive ? currentColor : "",
               })}

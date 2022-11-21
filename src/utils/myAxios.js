@@ -16,7 +16,6 @@ export const baseURL =
 
 const myAxios = axios.create({ baseURL });
 export const staticAxios = axios.create({ baseURL });
-console.log(getAccessToken());
 // Add a request interceptor
 myAxios.interceptors.request.use(
   function (config) {

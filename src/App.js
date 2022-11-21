@@ -162,7 +162,6 @@ const App = () => {
       ),
     },
   ];
-  console.log(getAccessToken());
   const allRoutes = useRoutes(routes);
 
   return (
