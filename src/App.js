@@ -6,20 +6,18 @@ import "./App.css";
 import AuthRedirect from "./Components/Authentication/AuthRedirect";
 import AuthValidate from "./Components/Authentication/AuthValidate";
 import ChangePassword from "./Components/ChangePassword";
-import NavLayout from "./Components/Layouts/NavLayout";
-import ThemeLayout from "./Components/Layouts/ThemeLayout";
 import MainLoader from "./Components/Loaders/MainLoader";
 import NotFound from "./Components/NotFound/NotFound";
 import { SuspenseLoader } from "./Components/Shared/SharedStyles";
 import { useStateContext } from "./Contexts/ContextProvider";
-import { getAccessToken } from "./utils/localStorages";
+const ThemeLayout = lazy(() => import("./Components/Layouts/ThemeLayout"));
+const NavLayout = lazy(() => import("./Components/Layouts/NavLayout"));
 const CancelOrder = lazy(() => import("./Pages/Admin/CancelOrder"));
 const CompleteOrder = lazy(() => import("./Pages/Admin/CompleteOrder"));
 const CustomizeFood = lazy(() => import("./Pages/Admin/CustomizeFood"));
 const DashBoard = lazy(() => import("./Pages/Admin/Dashboard"));
 const Discount = lazy(() => import("./Pages/Admin/Discount"));
 const FoodItem = lazy(() => import("./Pages/Admin/FoodItem"));
-const Login = lazy(() => import("./Pages/Admin/Login"));
 const MonthReport = lazy(() => import("./Pages/Admin/MonthReport"));
 const Order = lazy(() => import("./Pages/Admin/Order"));
 const Settings = lazy(() => import("./Pages/Admin/Settings"));
@@ -36,7 +34,6 @@ const App = () => {
     currentUser: { id: userId = null },
     restaurantIsLoading,
     orderId,
-    isLoading,
   } = useStateContext();
   useEffect(() => {
     if (
@@ -53,7 +50,6 @@ const App = () => {
       console.error = function () {};
     }
   }, []);
-  const access = getAccessToken();
 
   const routes = [
     {
@@ -77,10 +73,7 @@ const App = () => {
       path: "confirmed",
       element: <ConfirmedOrder />,
     },
-    // {
-    //   path: "login",
-    //   element: Boolean(userId) ? <NavLayout /> : <Login />,
-    // },
+
     {
       path: "*",
       element: <NotFound />,
@@ -88,12 +81,7 @@ const App = () => {
 
     {
       path: "",
-      element:
-        access !== null || Boolean(userId) ? (
-          <NavLayout />
-        ) : (
-          <Navigate to="/auth" />
-        ),
+      element: Boolean(userId) ? <NavLayout /> : <Navigate to="/auth" />,
       children: [
         {
           path: "dashboard",

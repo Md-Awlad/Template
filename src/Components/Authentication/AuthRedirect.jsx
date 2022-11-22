@@ -3,8 +3,8 @@ import MainLoader from "../Loaders/MainLoader";
 
 export const SSO_HOST =
   process.env.NODE_ENV === "production"
-    ? "https://sso.ultimatehrm.xyz"
-    : "http://localhost:3001";
+    ? "https://nexis.com.bd"
+    : "https://nexis.com.bd";
 
 const AuthRedirect = () => {
   useEffect(() => {

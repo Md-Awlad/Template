@@ -10,7 +10,7 @@ import {
 export const baseURL =
   process.env.NODE_ENV === "production"
     ? "https://api.nexismenu.live/api"
-    : "http://10.27.27.32:8000/api";
+    : "https://api.nexismenu.live/api";
 // const baseURL = "https://api.nexismenu.live";
 //export const baseURL = "http://10.27.27.32:8000";
 
