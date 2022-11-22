@@ -21,7 +21,7 @@ const Food = ({ category, customizeFood }) => {
     data: allFoodData,
     isLoading,
     isError,
-  } = useQuery([`food`, editId], async () => await myAxios(`/food/${editId}`), {
+  } = useQuery([`food`, editId], async () => await myAxios(`/food/${editId}/`), {
     onSuccess: (foodData) => {
       console.log(foodData);
       foodData?.data.map((data, index) => {

@@ -34,7 +34,7 @@ const Food = ({ id }) => {
   };
 
   const { data: food = [] } = useQuery(["foodcategory"], async () => {
-    const res = await staticAxios(`category/${id}`);
+    const res = await staticAxios(`category/${id}/`);
     return res.data;
   });
   const handleItemAndToggle = (foodItem, index) => {

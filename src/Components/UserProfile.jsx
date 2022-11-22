@@ -1,9 +1,7 @@
 import { Button } from "@mui/material";
 import { Fragment } from "react";
-import { AiOutlineUserAdd } from "react-icons/ai";
 import { BsCheck } from "react-icons/bs";
 import { FiSettings } from "react-icons/fi";
-import { NavLink } from "react-router-dom";
 import { useStateContext } from "../Contexts/ContextProvider";
 import { themeColors } from "../Data/dummy";
 import { getRefreshToken, removeTokens } from "../utils/localStorages";
@@ -81,7 +79,7 @@ const UserProfile = ({ closeUserProfile }) => {
           </div>
         </div>
       </div>
-      <NavLink
+      {/* <NavLink
         to="/dashboard/change-password"
         className="flex gap-3 flex-col border-color py-2  px-6 "
       >
@@ -93,7 +91,7 @@ const UserProfile = ({ closeUserProfile }) => {
           <AiOutlineUserAdd className="text-xl" />
           Change your Password
         </Button>
-      </NavLink>
+      </NavLink> */}
       <div className="flex gap-3 flex-col border-color py-2  px-6 ">
         <Button
           fullWidth

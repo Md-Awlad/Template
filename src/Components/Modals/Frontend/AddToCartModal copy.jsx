@@ -144,7 +144,7 @@ function AddToCartModal(props) {
   /* Using the useQuery hook to fetch data from the server. */
   const { data: { data: ingredients = [] } = {} } = useQuery(
     [`/customize_food_category/${item.category}`],
-    () => staticAxios(`/customize_food_category/${item.category}`)
+    () => staticAxios(`/customize_food_category/${item.category}/`)
   );
 
   /**
