@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { createContext, useContext, useEffect, useState } from "react";
+import { getAccessToken } from "../utils/localStorages";
 import myAxios, { staticAxios } from "../utils/myAxios";
 
 const StateContext = createContext();
@@ -43,8 +44,15 @@ export const ContextProvider = ({ children }) => {
   const { isLoading, data: currentUser = {} } = useQuery(
     ["currentUser"],
     async () => {
-      const res = await myAxios("/user_info");
+      const res = await myAxios("/user_info/");
       return res?.data;
+    },
+    {
+      enabled: Object.entries(getAccessToken()).length ? true : false,
+      refetchOnWindowFocus: false,
+      cacheTime: 0,
+      retry: false,
+      keepPreviousData: false,
     }
   );
   const {
