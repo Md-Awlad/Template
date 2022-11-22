@@ -43,7 +43,7 @@ export const ContextProvider = ({ children }) => {
   const { isLoading, data: currentUser = {} } = useQuery(
     ["currentUser"],
     async () => {
-      const res =  myAxios("/user_info/");
+      const res = await myAxios("/user_info/");
       return res?.data;
     },
     {
