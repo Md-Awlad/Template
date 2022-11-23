@@ -8,7 +8,6 @@ import { Tooltip, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import LoaderSource from "../../Loaders/LoaderSource";
 import CustomDataGrid from "../../Shared/CustomDataGrid";
-import { DataGrid } from "@mui/x-data-grid";
 
 const DiscountList = ({ discounts, isLoading }) => {
   console.log(discounts?.map((a) => a?.notice));
@@ -126,7 +125,7 @@ const DiscountList = ({ discounts, isLoading }) => {
       {isLoading ? (
         <LoaderSource />
       ) : (
-        <DataGrid rows={discounts} columns={columns} />
+        <CustomDataGrid rows={discounts} columns={columns} />
       )}
       {Boolean(editId) && (
         <EditDiscount editId={editId} handleClose={() => setEditId(null)} />

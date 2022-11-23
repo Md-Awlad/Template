@@ -236,7 +236,7 @@ const Food = ({ category, customizeFood }) => {
       },
     },
   ];
-  console.log(editPrice);
+
   return (
     <>
       <DataGrid rows={food} columns={columns} />

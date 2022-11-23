@@ -1,6 +1,5 @@
 import { Alert, AlertTitle, Tooltip, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import { DataGrid } from "@mui/x-data-grid";
 import React, { useState } from "react";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import LoaderSource from "../../Loaders/LoaderSource";
@@ -139,7 +138,7 @@ const CancelOrderList = ({ cancelOrder, isLoading, isError }) => {
             Could not get Cancel Orders
           </Alert>
         ) : (
-          <DataGrid rows={cancelOrder} columns={columns} />
+          <CustomDataGrid rows={cancelOrder} columns={columns} />
         )}
       </div>
       {Boolean(deleteId) && (
