@@ -1,4 +1,5 @@
 import { Box, Tooltip } from "@mui/material";
+import { DataGrid } from "@mui/x-data-grid";
 import { useQuery } from "@tanstack/react-query";
 import React, { useState } from "react";
 import { MdModeEdit } from "react-icons/md";
@@ -21,22 +22,26 @@ const Food = ({ category, customizeFood }) => {
     data: allFoodData,
     isLoading,
     isError,
-  } = useQuery([`food`, editId], async () => await myAxios(`/food/${editId}/`), {
-    onSuccess: (foodData) => {
-      console.log(foodData);
-      foodData?.data.map((data, index) => {
-        console.log(data?.price);
-        setEditPrice(
-          Object.entries(data?.price).map((key, i) => {
-            return {
-              title: key[0],
-              price: key[1],
-            };
-          })
-        );
-      });
-    },
-  });
+  } = useQuery(
+    [`food`, editId],
+    async () => await myAxios(`/food/${editId}/`),
+    {
+      onSuccess: (foodData) => {
+        console.log(foodData);
+        foodData?.data.map((data, index) => {
+          console.log(data?.price);
+          setEditPrice(
+            Object.entries(data?.price).map((key, i) => {
+              return {
+                title: key[0],
+                price: key[1],
+              };
+            })
+          );
+        });
+      },
+    }
+  );
 
   const columns = [
     {
@@ -234,7 +239,7 @@ const Food = ({ category, customizeFood }) => {
   console.log(editPrice);
   return (
     <>
-      <CustomDataGrid rows={food} columns={columns} />
+      <DataGrid rows={food} columns={columns} />
 
       {Boolean(allFoodData && editId && editPrice.length > 0) ? (
         <EditFood
