@@ -52,7 +52,6 @@ const EditFood = ({
   ]);
   const queryClient = useQueryClient();
 
-
   const onSubmit = async (data) => {
     const price = {};
 
@@ -101,6 +100,13 @@ const EditFood = ({
         pending: "updating Foods...",
         success: "Food Added",
         error: "Error Adding Foods!",
+      },
+      {
+        enabled: Boolean(editId),
+        refetchOnWindowFocus: false,
+        cacheTime: 0,
+        retry: false,
+        keepPreviousData: false,
       }
     );
     queryClient.invalidateQueries("food");

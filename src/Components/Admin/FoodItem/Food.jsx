@@ -39,6 +39,10 @@ const Food = ({ category, customizeFood }) => {
     },
     {
       enabled: Boolean(editId),
+      refetchOnWindowFocus: false,
+      cacheTime: 0,
+      retry: false,
+      keepPreviousData: false,
     }
   );
 
