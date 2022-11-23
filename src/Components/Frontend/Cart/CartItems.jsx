@@ -275,6 +275,7 @@ const CartItems = ({ cart, setCart, item }) => {
           <AccordionDetails>
             <Typography>
               {item?.customize_food?.map((extraPrice, index) => {
+                console.log(item?.customize_food);
                 console.log(extraPrice);
                 return (
                   <Box

@@ -45,20 +45,17 @@ const EditFood = ({
   customizeFood,
 }) => {
   const { currentColor } = useStateContext();
-  const [extra, setExtra] = useState();
   const [image, setImage] = useState(null);
-  // const [newprice, setNewPrice] = useState(0);
-  // const [Index, setIndex] = useState(0);
 
   const [customFood, setCustomFood] = useState([
     ...allFoodData?.data[0]?.customize_food,
   ]);
-  // const [variants, setVariants] = useState(0);
   const queryClient = useQueryClient();
 
   console.log(editPrice);
 
   const onSubmit = async (data) => {
+    console.log(customFood);
     const price = {};
 
     /* This is a function that is called when the form is submitted. It is used to update the data in
@@ -87,10 +84,10 @@ const EditFood = ({
       payloadForm.append("packaging", data?.package);
     }
     payloadForm.append("base_ingredient", data?.ingredient);
-    if (extra) {
+    if (customFood) {
       payloadForm.append(
         "custom_food",
-        JSON.stringify(extra?.map((a) => a?.id))
+        JSON.stringify(customFood?.map((a) => a?.id))
       );
     }
 
@@ -126,7 +123,6 @@ const EditFood = ({
   React.useEffect(() => {
     allFoodData?.data.map((data, index) => {
       console.log();
-      // setVariants(data?.price ? Object.entries(data.price).length : null);
       setValue("foodName", data?.food_name);
       setValue("ingredient", data?.base_ingredient);
       setImage(data?.image);
@@ -214,102 +210,6 @@ const EditFood = ({
                     </Box>
                   );
                 })}
-
-                {/* {Object.entries(price).map((p, i) => {
-                  return (
-                    <Box
-                      key={i}
-                      sx={{
-                        display: "flex",
-                        alignItems: "center",
-                        columnGap: 2,
-                        marginTop: 2,
-                      }}
-                    >
-                      <TextField
-                        label="Food Size"
-                        type="text"
-                        value={p[0]}
-                        // required={variants > 1 ? true : false}
-                        // {...register(`item.${index + 1}.title`)}
-                        fullWidth
-                      />
-                      <TextField
-                        // required
-                        label="Food Price"
-                        type="number"
-                        // value={p[1]}
-                        InputProps={{ inputProps: { min: 0 } }}
-                        // {...register(`item.${index + 1}.price`)}
-                        fullWidth
-                      />
-                      <AiOutlineClose
-                        onClick={
-                          () => {
-                            if (Object.keys(price).length) {
-                              for (const key in price) {
-                                console.log(key);
-                                if (key === p[0]) {
-                                  console.log(key);
-                                  delete price[key];
-                                  break;
-                                }
-                              }
-                            }
-                          }
-                          // Object.keys(price).map(
-                          //   (key, index) => {
-                          //     console.log(key);
-
-                          //   }
-                          //   // setPrice(key[0] === p[0] ? (p[0] = " ") : null)
-                          // )
-                        }
-                        className={`text-5xl cursor-pointer text-red-700 `}
-                      />
-                    </Box>
-                  );
-                })}
-
-                {new Array(variants).fill(null)?.map((item, index) => {
-                  return (
-                    <Box
-                      key={index}
-                      sx={{
-                        display: "flex",
-                        alignItems: "center",
-                        columnGap: 2,
-                        marginTop: 2,
-                      }}
-                    >
-                      <TextField
-                        label="Food Size"
-                        type="text"
-                        // value={p[0]}
-                        // required={variants > 1 ? true : false}
-                        // {...register(`item.${index + 1}.title`)}
-                        fullWidth
-                      />
-                      <TextField
-                        // required
-                        label="Food Price"
-                        type="number"
-                        // value={p[1]}
-                        InputProps={{ inputProps: { min: 0 } }}
-                        // {...register(`item.${index + 1}.price`)}
-                        fullWidth
-                      />
-                      <AiOutlineClose
-                        onClick={() =>
-                          setVariants((variants) => (variants -= 1))
-                        }
-                        className={`text-5xl cursor-pointer text-red-700`}
-                      />
-                    </Box>
-                  );
-                })} */}
-                {/* );
-                })} */}
               </Grid>
 
               {/* --img-- */}
