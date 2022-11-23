@@ -10,6 +10,7 @@ import MainLoader from "./Components/Loaders/MainLoader";
 import NotFound from "./Components/NotFound/NotFound";
 import { SuspenseLoader } from "./Components/Shared/SharedStyles";
 import { useStateContext } from "./Contexts/ContextProvider";
+import { getAccessToken } from "./utils/localStorages";
 const ThemeLayout = lazy(() => import("./Components/Layouts/ThemeLayout"));
 const NavLayout = lazy(() => import("./Components/Layouts/NavLayout"));
 const CancelOrder = lazy(() => import("./Pages/Admin/CancelOrder"));
@@ -35,6 +36,7 @@ const App = () => {
     restaurantIsLoading,
     orderId,
   } = useStateContext();
+  console.log(Boolean(getAccessToken()));
   useEffect(() => {
     if (
       process.env.NODE_ENV === "production" ||
@@ -135,19 +137,21 @@ const App = () => {
     },
     {
       path: "/auth",
-      element: Boolean(userId) ? (
-        <Navigate to="/dashboard" />
-      ) : (
-        <AuthRedirect />
-      ),
+      element:
+        Boolean(getAccessToken()) || Boolean(userId) ? (
+          <Navigate to="/dashboard" />
+        ) : (
+          <AuthRedirect />
+        ),
     },
     {
       path: "/authCallback",
-      element: Boolean(userId) ? (
-        <Navigate to="/dashboard" />
-      ) : (
-        <AuthValidate />
-      ),
+      element:
+        Boolean(getAccessToken()) || Boolean(userId) ? (
+          <Navigate to="/dashboard" />
+        ) : (
+          <AuthValidate />
+        ),
     },
   ];
   const allRoutes = useRoutes(routes);

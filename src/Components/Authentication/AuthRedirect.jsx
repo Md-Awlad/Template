@@ -4,7 +4,8 @@ import MainLoader from "../Loaders/MainLoader";
 export const SSO_HOST =
   process.env.NODE_ENV === "production"
     ? "https://nexis.com.bd"
-    : "https://nexis.com.bd";
+    : // : "https://nexis.com.bd";
+      "http://localhost:3001";
 
 const AuthRedirect = () => {
   useEffect(() => {
