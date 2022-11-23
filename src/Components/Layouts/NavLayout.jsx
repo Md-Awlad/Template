@@ -1,7 +1,7 @@
 import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
 import { Outlet } from "react-router-dom";
-import Footer from "../Footer";
+import Footer from "../Frontend/Footer";
 import Navbar from "../Navbar";
 import { SuspenseLoader } from "../Shared/SharedStyles";
 

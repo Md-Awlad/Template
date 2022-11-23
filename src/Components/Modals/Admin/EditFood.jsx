@@ -102,7 +102,7 @@ const EditFood = ({
         error: "Error Adding Foods!",
       },
       {
-        enabled: Boolean(editId),
+        // enabled: Boolean(editId),
         refetchOnWindowFocus: false,
         cacheTime: 0,
         retry: false,
