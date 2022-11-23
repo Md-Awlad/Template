@@ -1,18 +1,18 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import React from "react";
-import interceptor from "../../utils/interceptor";
 import {
   getAccessToken,
   getRefreshToken,
   removeTokens,
   setTokens,
 } from "../utils/localStorages";
+import { staticAxios } from "../utils/myAxios";
 
 const useAuth = () => {
   const [loggedIn, setLoggedIn] = React.useState(false);
   const [loading, setLoading] = React.useState(true);
   React.useEffect(() => {
-    interceptor
+    staticAxios
       .post("/token/verify/", {
         token: getAccessToken(),
       })
@@ -21,7 +21,7 @@ const useAuth = () => {
         setLoading(false);
       })
       .catch((err) => {
-        interceptor
+        staticAxios
           .post("/token/refresh/", {
             refresh: getRefreshToken(),
           })

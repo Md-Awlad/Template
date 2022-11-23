@@ -1,4 +1,4 @@
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+  import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import { Box, Collapse, Typography } from "@mui/material";
 import { FiCheckCircle, FiSettings } from "react-icons/fi";

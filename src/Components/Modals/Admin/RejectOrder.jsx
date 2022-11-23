@@ -1,7 +1,3 @@
-import { Box } from "@mui/system";
-import React from "react";
-import TextField from "@mui/material/TextField";
-import { useForm } from "react-hook-form";
 import {
   Button,
   Grid,
@@ -9,10 +5,14 @@ import {
   TextareaAutosize,
   Typography,
 } from "@mui/material";
+import TextField from "@mui/material/TextField";
+import { Box } from "@mui/system";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import React from "react";
+import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { useStateContext } from "../../../Contexts/ContextProvider";
 import myAxios from "../../../utils/myAxios";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 const style = {
   position: "absolute",
@@ -62,7 +62,7 @@ const RejectOrder = ({ reject, handleModalClose }) => {
     handleModalClose();
   };
 
-  const { data } = useQuery([`orders`], () => myAxios(`/order/${reject}`), {
+  const { data } = useQuery([`orders`], () => myAxios(`/order/${reject}/`), {
     onSuccess: ({ data: orderFood = [] }) => {
       setValue("orderId", orderFood?.id);
       setValue("email", orderFood?.customer_mail);

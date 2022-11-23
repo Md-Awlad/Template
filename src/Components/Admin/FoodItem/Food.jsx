@@ -3,7 +3,6 @@ import { useQuery } from "@tanstack/react-query";
 import React, { useState } from "react";
 import { MdModeEdit } from "react-icons/md";
 import { RiDeleteBin6Line } from "react-icons/ri";
-import { useStateContext } from "../../../Contexts/ContextProvider";
 import myAxios from "../../../utils/myAxios";
 import DeleteFood from "../../Modals/Admin/DeleteFood";
 import EditFood from "../../Modals/Admin/EditFood";
@@ -37,6 +36,9 @@ const Food = ({ category, customizeFood }) => {
           );
         });
       },
+    },
+    {
+      enabled: Boolean(editId),
     }
   );
 

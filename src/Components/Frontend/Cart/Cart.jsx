@@ -16,7 +16,6 @@ import { Controller, useForm } from "react-hook-form";
 import { BiShoppingBag } from "react-icons/bi";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useStateContext } from "../../../Contexts/ContextProvider";
-import interceptor from "../../../utils/interceptors";
 import {
   setGmailInfo,
   setOrderInfo,
@@ -59,8 +58,6 @@ const Cart = () => {
   const { cart, setCart } = useStateContext();
   const { register, handleSubmit, reset, control } = useForm();
 
-  
-
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -72,11 +69,9 @@ const Cart = () => {
     );
   };
 
-  
-
   const orderConfirmMutation = useMutation(
     (payload) =>
-      interceptor.post(
+      staticAxios.post(
         `/order/?table=${
           searchParams.get("table") ? searchParams.get("table") : []
         }`,

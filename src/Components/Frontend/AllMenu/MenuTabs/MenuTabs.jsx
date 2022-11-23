@@ -69,11 +69,19 @@ const MenuTabs = ({ setCart, cart }) => {
           ))}
         </Tabs>
       ))}
-      {categories?.map((category, index) => (
-        <TabPanel key={index} value={value} index={index}>
-          <Food setCart={setCart} id={category.id} cart={cart} />
-        </TabPanel>
-      ))}
+      {categories?.map((category, index) => {
+        console.log(category);
+        return (
+          <TabPanel key={index} value={value} index={index}>
+            <Food
+              setCart={setCart}
+              id={category.id}
+              cart={cart}
+              category={category}
+            />
+          </TabPanel>
+        );
+      })}
     </Fragment>
   );
 };
