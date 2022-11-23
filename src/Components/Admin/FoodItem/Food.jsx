@@ -1,5 +1,4 @@
 import { Box, Tooltip } from "@mui/material";
-import { DataGrid } from "@mui/x-data-grid";
 import { useQuery } from "@tanstack/react-query";
 import React, { useState } from "react";
 import { MdModeEdit } from "react-icons/md";
@@ -239,7 +238,7 @@ const Food = ({ category, customizeFood }) => {
 
   return (
     <>
-      <DataGrid rows={food} columns={columns} />
+      <CustomDataGrid rows={food} columns={columns} />
 
       {Boolean(allFoodData && editId && editPrice.length > 0) ? (
         <EditFood
