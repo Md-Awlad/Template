@@ -64,7 +64,6 @@ const RejectOrder = ({ reject, handleModalClose }) => {
 
   const { data } = useQuery([`orders`], () => myAxios(`/order/${reject}`), {
     onSuccess: ({ data: orderFood = [] }) => {
-      console.log(orderFood?.id);
       setValue("orderId", orderFood?.id);
       setValue("email", orderFood?.customer_mail);
     },

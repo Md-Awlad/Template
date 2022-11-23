@@ -45,7 +45,6 @@ const Register = () => {
         setValue("password", "");
       }
     }
-    console.log(data);
   };
   return (
     <div className="md:max-w-xl p-8 border border-gray-400 rounded-md m-auto my-16 shadow-2xl">

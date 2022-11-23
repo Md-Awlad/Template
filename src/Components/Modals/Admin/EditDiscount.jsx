@@ -73,7 +73,6 @@ const EditDiscount = ({ editId, handleClose }) => {
     () => myAxios(`/create_discount/${editId}`),
     {
       onSuccess: ({ data: discount = [] }) => {
-        console.log(discount);
         setValue("notice", discount?.notice);
         setValue("amount", discount?.amount);
         setValue("condition", discount?.condition);

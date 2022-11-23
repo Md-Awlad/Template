@@ -27,9 +27,7 @@ const Food = ({ category, customizeFood }) => {
     async () => await myAxios(`/food/${editId}/`),
     {
       onSuccess: (foodData) => {
-        console.log(foodData);
         foodData?.data.map((data, index) => {
-          console.log(data?.price);
           setEditPrice(
             Object.entries(data?.price).map((key, i) => {
               return {

@@ -54,9 +54,7 @@ const AddFoodItem = ({
   const onSubmit = async (data) => {
     const price = {};
     data.item?.forEach((item) => {
-      console.log(item.price);
       if (item.title.endsWith('"')) {
-        console.log(item.title, item.price);
         const a = item?.title?.replace(/"/g, " inch");
         price[a] = item.price;
       } else if (fields.length > 1) {

@@ -16,7 +16,6 @@ const PopularFood = () => {
     const res = await staticAxios("/popularfood/");
     return res.data;
   });
-  console.log(popularFood);
   return (
     <Box
       sx={{

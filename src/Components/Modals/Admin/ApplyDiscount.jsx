@@ -24,7 +24,6 @@ const ApplyDiscount = ({
   const [food, setFood] = useState();
   const [date, setDate] = useState(moment());
   const queryClient = useQueryClient();
-  console.log(category?.map((da) => da?.id));
   const { handleSubmit } = useForm();
 
   const onSubmit = async (data) => {

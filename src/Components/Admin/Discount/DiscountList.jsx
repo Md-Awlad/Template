@@ -36,7 +36,6 @@ const DiscountList = ({ discounts, isLoading }) => {
       headerAlign: "center",
       align: "center",
       renderCell: ({ row }) => {
-        console.log(row);
         return (
           <Tooltip
             title={row?.notice.length >= 15 ? row?.notice : ""}

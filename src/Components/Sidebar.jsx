@@ -36,10 +36,7 @@ const Sidebar = () => {
       setActiveMenu(false);
     }
   };
-  // const handleOpenSubMenu = (e) => {
-  //   setOpenSubmenu(e);
-  //   console.log(e);
-  // };
+ 
   const activeLink =
     "flex  items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg  text-neutral  text-md m-2";
   const smActiveLink =

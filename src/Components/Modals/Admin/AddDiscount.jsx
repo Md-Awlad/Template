@@ -56,9 +56,7 @@ const AddDiscount = ({ handleModalClose, discountRefetch }) => {
     payloadForm.append("is_fixed", status);
     payloadForm.append("expired_at", date.format("YYYY-MM-DD"));
 
-    for (const value of payloadForm.values()) {
-      console.log(value);
-    }
+   
 
     const response = await toast.promise(
       myAxios.post("/create_discount/", payloadForm, {

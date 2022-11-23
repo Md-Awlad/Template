@@ -11,7 +11,6 @@ import { toast } from "react-toastify";
 import myAxios from "../../../utils/myAxios";
 
 const DeleteCancelOrder = ({ deleteId, handleClose }) => {
-  console.log(deleteId);
   const queryClient = useQueryClient();
 
   const handleDelete = async () => {

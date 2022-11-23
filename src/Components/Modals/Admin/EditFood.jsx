@@ -52,10 +52,8 @@ const EditFood = ({
   ]);
   const queryClient = useQueryClient();
 
-  console.log(editPrice);
 
   const onSubmit = async (data) => {
-    console.log(customFood);
     const price = {};
 
     /* This is a function that is called when the form is submitted. It is used to update the data in
@@ -122,7 +120,6 @@ const EditFood = ({
   });
   React.useEffect(() => {
     allFoodData?.data.map((data, index) => {
-      console.log();
       setValue("foodName", data?.food_name);
       setValue("ingredient", data?.base_ingredient);
       setImage(data?.image);

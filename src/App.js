@@ -36,7 +36,6 @@ const App = () => {
     restaurantIsLoading,
     orderId,
   } = useStateContext();
-  console.log(Boolean(getAccessToken()));
   useEffect(() => {
     if (
       process.env.NODE_ENV === "production" ||
