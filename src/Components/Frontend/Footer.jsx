@@ -12,7 +12,16 @@ const Footer = () => {
         marginY: 5,
       }}
     >
-      <p>© 2022 All rights reserved by Nexis Ltd.</p>
+      <p>
+        © 2022 All rights reserved by{" "}
+        <a
+          rel="noopener noreferrer"
+          href="https://www.nexisltd.com/"
+          target="_blank"
+        >
+          Nexis Ltd.
+        </a>
+      </p>
     </Typography>
   );
 };

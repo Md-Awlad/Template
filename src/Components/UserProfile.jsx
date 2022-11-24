@@ -23,7 +23,6 @@ const UserProfile = ({ closeUserProfile }) => {
       }&token=${refreshToken}`
     );
     // Navigate('/')
-    // console.log(`${SSO_HOST}/signOutCallback?token=${refreshToken}`);
   };
 
   return (

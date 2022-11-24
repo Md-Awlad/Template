@@ -149,7 +149,9 @@ const Navbar = () => {
                     currentTarget.src = "https://i.ibb.co/0q5B8VP/MainLogo.png";
                   }}
                   sx={{
-                    width: "50px",
+                    objectFit: "cover",
+                    maxWidth: "100px",
+                    height: "54px",
                   }}
                 />
               ))}

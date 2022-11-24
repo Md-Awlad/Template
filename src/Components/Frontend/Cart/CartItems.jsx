@@ -142,7 +142,6 @@ const CartItems = ({ cart, setCart, item }) => {
       );
     }
   };
-  console.log(item);
   // const handleDecrement = (item) => {
   //   if (cart.find((i) => i.id === item.id && i.size === item.size)) {
   //     setCart(
@@ -275,8 +274,7 @@ const CartItems = ({ cart, setCart, item }) => {
           <AccordionDetails>
             <Typography>
               {item?.customize_food?.map((extraPrice, index) => {
-                console.log(item?.customize_food);
-                console.log(extraPrice);
+               
                 return (
                   <Box
                     key={index}

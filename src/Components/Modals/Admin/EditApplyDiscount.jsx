@@ -81,7 +81,6 @@ const EditApplyDiscount = ({
     setStatus(allData?.is_active);
     setDate(allData?.expired_at);
   }, [editId]);
-  console.log(discountName);
 
   return (
     <CustomModal open={Boolean(editId)} onClose={handleClose}>

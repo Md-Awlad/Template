@@ -1,9 +1,9 @@
+import { Button, Modal } from "@mui/material";
 import { Box } from "@mui/system";
+import { useMutation } from "@tanstack/react-query";
 import React from "react";
 import { useForm } from "react-hook-form";
-import { Button, Modal } from "@mui/material";
-import { useMutation, } from "@tanstack/react-query";
-import interceptor from "../../../utils/interceptors";
+import { staticAxios } from "../../../utils/myAxios";
 
 const style = {
   position: "absolute",
@@ -29,13 +29,10 @@ const OrderInfo = ({
   name,
   phoneNumber,
 }) => {
-
-  const {
-    handleSubmit,
-  } = useForm();
+  const { handleSubmit } = useForm();
 
   const orderConfirmMutation = useMutation(
-    (payload) => interceptor.post("/order/", payload),
+    (payload) => staticAxios.post("/order/", payload),
     {
       onSuccess: () => {
         setCart([]);
@@ -79,7 +76,7 @@ const OrderInfo = ({
             </h2>
             <hr className="text-gray-900 w-64 m-auto" />
             <div className="h-96 overflow-scroll space-y-5">
-              {cart?.map((item,index) => (
+              {cart?.map((item, index) => (
                 <div key={index} className="space-y-1 grid grid-cols-2">
                   <div>
                     <h2>Food Id</h2>

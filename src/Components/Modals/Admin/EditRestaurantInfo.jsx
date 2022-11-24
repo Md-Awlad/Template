@@ -14,7 +14,6 @@ const EditRestaurantInfo = ({ handleModalClose, data, data: { id } }) => {
   const { register, handleSubmit, setValue } = useForm();
 
   const onSubmit = async (data) => {
-    console.log(data);
     const payloadForm = new FormData();
     payloadForm.append("name", data?.name);
     payloadForm.append("restaurants_email", data?.email);

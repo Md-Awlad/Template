@@ -96,7 +96,6 @@ function AddToCartModal(props) {
       [checkbox.index]: checkbox.key,
     });
   };
-  console.log(Boolean(Object.entries(size).length));
   const handleAddToCartSingleValue = (param, key) => {
     const item = { ...param, extra: {} };
     setIngredientId(item.category);
@@ -629,7 +628,6 @@ function AddToCartModal(props) {
                   <Box sx={{ width: 1 }}>
                     {Object.values(item?.discount_price).length < 2 ? (
                       Object.entries(item?.discount_price).map((key, i) => {
-                        console.log(item?.discount_price);
                         return (
                           <Button
                             key={i}
@@ -646,7 +644,6 @@ function AddToCartModal(props) {
 
                             //   `}
                             onClick={(e) => {
-                              console.log(e);
                               handleAddToCartSingleValue(item, key);
                             }}
                           >
@@ -670,7 +667,6 @@ function AddToCartModal(props) {
                         //   activeMenu ? "left-[500px]" : "left-[300px]"
                         // }`}
                         onClick={(e) => {
-                          console.log(e);
                           handleAddToCart(item, index);
                         }}
                       >
@@ -682,7 +678,6 @@ function AddToCartModal(props) {
                   <Box sx={{ width: 1 }}>
                     {Object.values(item?.price).length < 2 ? (
                       Object.entries(item?.price).map((key, i) => {
-                        console.log(item?.price);
                         return (
                           <Button
                             key={i}
@@ -699,7 +694,6 @@ function AddToCartModal(props) {
                             //   activeMenu ? "left-[500px]" : "left-[300px]"
                             // }`}
                             onClick={(e) => {
-                              console.log(e);
                               handleAddToCartSingleValue(item, key);
                             }}
                           >
@@ -724,7 +718,6 @@ function AddToCartModal(props) {
                         //   activeMenu ? "left-[500px]" : "left-[300px]"
                         // }`}
                         onClick={(e) => {
-                          console.log(e);
                           handleAddToCart(item, index);
                         }}
                       >

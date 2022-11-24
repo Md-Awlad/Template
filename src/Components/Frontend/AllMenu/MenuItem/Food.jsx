@@ -1,54 +1,29 @@
-import { Grid, Modal, Typography } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import Box from "@mui/material/Box";
-import { useQuery } from "@tanstack/react-query";
-import React, { useState } from "react";
+import React, { lazy, useState } from "react";
 import { IoMdAdd } from "react-icons/io";
 import { useStateContext } from "../../../../Contexts/ContextProvider";
-import { staticAxios } from "../../../../utils/myAxios";
-import AddToCartModal from "../../../Modals/Frontend/AddToCartModal";
-import ItemDetails from "../../../Modals/Frontend/ItemDetails";
-const Food = ({ id }) => {
+const AddToCartModal = lazy(() =>
+  import("../../../Modals/Frontend/AddToCartModal")
+);
+const Food = ({ id, category }) => {
   const { activeMenu } = useStateContext();
-  const [openModal, setOpenModal] = useState(false);
-  const [item, setItem] = useState(null);
+  // const [openModal, setOpenModal] = useState(false);
+  // const [item, setItem] = useState(null);
   const [foodItem, setFoodItem] = useState({});
   const [foodIndex, setFoodIndex] = useState(null);
   const [open, setOpen] = useState(false);
-  const [onClose, setOnClose] = useState(false);
-  const toggleDrawer = (newOpen) => () => {
-    console.log(newOpen);
-    setOpen(newOpen);
-  };
 
-  // const { data: popularFood = [] } = useQuery(["popular"], async () => {
-  //   const res = await staticAxios("/popularfood/");
-  //   return res.data;
-  // });
-
-  // const handleModalOpen = (item) => {
-  //   setItem(item);
-  //   setOpenModal(true);
-  // };
-  const handleModalClose = (e) => {
-    setOpenModal(false);
-  };
-
-  const { data: food = [] } = useQuery(["foodcategory"], async () => {
-    const res = await staticAxios(`category/${id}/`);
-    return res.data;
-  });
   const handleItemAndToggle = (foodItem, index) => {
-    console.log(foodItem);
     setOpen(true);
     setFoodIndex(index);
     setFoodItem(foodItem);
   };
-  console.log(food);
   return (
     <Box sx={{ mb: 10 }}>
-      <Modal open={openModal} onClose={handleModalClose}>
+      {/* <Modal open={openModal} onClose={handleModalClose}>
         <ItemDetails handleModalClose={handleModalClose} item={item} />
-      </Modal>
+      </Modal> */}
       {/* --food-- */}
       <Box
         className=" "
@@ -57,7 +32,7 @@ const Food = ({ id }) => {
         }}
       >
         <Grid container sx={{ padding: 0, m: 0 }}>
-          {food?.foodItems_category?.map((item, index) => {
+          {category?.foodItems_category?.map((item, index) => {
             return (
               <Grid item sm={6} md={6}>
                 <div
@@ -225,7 +200,7 @@ const Food = ({ id }) => {
           open={open}
           index={foodIndex}
           item={foodItem}
-          onClose={onClose}
+          // onClose={onClose}
           setOpen={() => setOpen(false)}
         />
       )}

@@ -16,7 +16,6 @@ import { Controller, useForm } from "react-hook-form";
 import { BiShoppingBag } from "react-icons/bi";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useStateContext } from "../../../Contexts/ContextProvider";
-import interceptor from "../../../utils/interceptors";
 import {
   setGmailInfo,
   setOrderInfo,
@@ -59,12 +58,6 @@ const Cart = () => {
   const { cart, setCart } = useStateContext();
   const { register, handleSubmit, reset, control } = useForm();
 
-  // const { data: orderSummary = [] } = useQuery(["orderSummary"], async () => {
-  //   const res = await staticAxios(`/order_summery/`);
-  //   return res.data;
-  // });
-  // console.log(orderSummary);
-
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -76,17 +69,9 @@ const Cart = () => {
     );
   };
 
-  // const {
-  //   data: { data: ingredients = [] },
-  // } = useQuery([`/customize_food_category/${item.category}`], () =>
-  //   staticAxios(`/customize_food_category/${item.category}`)
-  // );
-  // const { data: total = [] } = staticAxios("/viewcart/");
-  // console.log(total);
-
   const orderConfirmMutation = useMutation(
     (payload) =>
-      interceptor.post(
+      staticAxios.post(
         `/order/?table=${
           searchParams.get("table") ? searchParams.get("table") : []
         }`,
@@ -120,7 +105,6 @@ const Cart = () => {
       phone: data?.phoneNumber,
     };
     orderConfirmMutation.mutate(payload);
-    console.log(payload);
   };
 
   const { data: cartCalculation } = useQuery(

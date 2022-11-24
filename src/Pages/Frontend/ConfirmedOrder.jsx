@@ -17,7 +17,6 @@ const style = {
 };
 
 const ConfirmedOrder = ({ confirmed }) => {
-  console.log(confirmed);
   return (
     <Layout>
       <Box>confirmed order</Box>

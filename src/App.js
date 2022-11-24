@@ -1,4 +1,4 @@
-import { lazy, useEffect } from "react";
+import { lazy } from "react";
 import { Navigate, useRoutes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -36,7 +36,6 @@ const App = () => {
     restaurantIsLoading,
     orderId,
   } = useStateContext();
-  console.log(Boolean(getAccessToken()));
   // useEffect(() => {
   //   if (
   //     process.env.NODE_ENV === "production" ||
@@ -83,7 +82,12 @@ const App = () => {
 
     {
       path: "",
-      element: Boolean(userId) ? <NavLayout /> : <Navigate to="/auth" />,
+      element:
+        Boolean(getAccessToken()) || Boolean(userId) ? (
+          <NavLayout />
+        ) : (
+          <Navigate to="/auth" />
+        ),
       children: [
         {
           path: "dashboard",

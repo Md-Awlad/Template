@@ -21,7 +21,6 @@ function AddToCartModal(props) {
   const { open, setOpen, index, item } = props;
   // const [expanded, setExpanded] = React.useState("panel1");
   const [size, setSize] = React.useState({});
-  console.log(!Boolean(Object.entries(size).length));
   const { activeMenu, setCart, cart, setIngredientId, currentMode } =
     useStateContext();
   // This is used only for the example
@@ -31,7 +30,6 @@ function AddToCartModal(props) {
       [checkbox.index]: checkbox.key,
     });
   };
-  // console.log(!Boolean(Object.entries(size).length));
   const handleAddToCartSingleValue = (param, key) => {
     setOpen(false);
     const item = { ...param, extra: {} };
@@ -506,7 +504,6 @@ function AddToCartModal(props) {
                     {Object.values(item?.discount_price).length < 2 &&
                     !Object.values(item?.discount_price).length < 1 ? (
                       Object.entries(item?.discount_price).map((key, i) => {
-                        console.log(item?.discount_price);
                         return (
                           <Button
                             disabled={
@@ -525,7 +522,6 @@ function AddToCartModal(props) {
                                   : "none",
                             }}
                             onClick={(e) => {
-                              console.log(e);
                               handleAddToCartSingleValue(item, key);
                             }}
                           >
@@ -552,7 +548,6 @@ function AddToCartModal(props) {
                               : "none",
                         }}
                         onClick={(e) => {
-                          console.log(e);
                           handleAddToCart(item, index);
                         }}
                       >
@@ -580,7 +575,6 @@ function AddToCartModal(props) {
                                   : "none",
                             }}
                             onClick={(e) => {
-                              console.log(e);
                               handleAddToCartSingleValue(item, key);
                             }}
                           >
