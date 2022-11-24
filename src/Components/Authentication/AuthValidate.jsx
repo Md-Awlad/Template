@@ -30,7 +30,7 @@ const AuthValidate = () => {
         setRefreshToken(refreshToken);
         setSearchParams({});
         queryClient.resetQueries();
-        // navigate("/dashboard");
+        navigate("/dashboard");
       },
     }
   );
