@@ -185,7 +185,7 @@ const CartItems = ({ cart, setCart, item }) => {
           src={item?.image}
           onError={({ currentTarget }) => {
             currentTarget.onerror = null; // prevents looping
-            currentTarget.src = "https://i.ibb.co/0q5B8VP/MainLogo.png";
+            currentTarget.src = "https://i.ibb.co/XbJNdft/defaultfood.png";
           }}
           alt="img"
         />
