@@ -1,13 +1,19 @@
+import { Dashboard } from "@mui/icons-material";
 import { Badge, Box, Typography } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { AiOutlineHome, AiOutlineShoppingCart } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import { useStateContext } from "../../Contexts/ContextProvider";
+import { getAccessToken } from "../../utils/localStorages";
 import SvgImage from "../Loaders/SvgImage";
 import CustomDrawer from "../Shared/CustomDrawer";
 
 const ResponsiveBottomMenu = () => {
   const { cart, activeMenu, restaurantData } = useStateContext();
+  const [accessToken, setAccessToken] = useState("");
+  useEffect(() => {
+    setAccessToken(getAccessToken());
+  }, []);
   return (
     <>
       {restaurantData?.map((data) => (
@@ -31,11 +37,11 @@ const ResponsiveBottomMenu = () => {
             {activeMenu ? null : cart?.length ? (
               <CustomDrawer />
             ) : (
-              <Box className="md:w-28 md:h-28 w-20 h-20 border-8 border-neutral rounded-full md:-mt-20 -mt-8 bg-neutral flex items-center cursor-pointer hover:bg-gray-100">
+              <Box className={`md:w-28 md:h-28 w-20 h-20 border-8 border-neutral rounded-full md:-mt-20 -mt-8 bg-neutral flex items-center ${!activeMenu&&"cursor-pointer"} hover:bg-gray-100`}>
                 <Box
                   className={`w-full h-full ${
                     cart.length ? "border-1 border-red-400" : "border-1"
-                  } rounded-full  p-1  cursor-pointer `}
+                  } rounded-full  p-1   `}
                 >
                   <SvgImage />
                   <Typography
@@ -54,9 +60,15 @@ const ResponsiveBottomMenu = () => {
               </Box>
             )}
 
-            <Link to="/">
-              <AiOutlineHome className="inline md:w-20 md:h-20 w-8 h-8 text-neutral" />
-            </Link>
+            {Boolean(accessToken) ? (
+              <Link to="/">
+                <AiOutlineHome className=" text-neutral" />
+              </Link>
+            ) : (
+              <Link to="/dashboard">
+                <Dashboard className=" text-neutral" />
+              </Link>
+            )}
           </Box>
         </Box>
       ))}

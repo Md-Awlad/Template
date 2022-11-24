@@ -1,6 +1,6 @@
 import { Dashboard } from "@mui/icons-material";
 import { Box, Button } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { MdOutlineAddShoppingCart } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { useStateContext } from "../../Contexts/ContextProvider";
@@ -10,6 +10,10 @@ import CustomDrawer from "../Shared/CustomDrawer";
 
 const Header = () => {
   const { cart, activeMenu, restaurantData } = useStateContext();
+  const [accessToken, setAccessToken] = useState();
+  useEffect(() => {
+    setAccessToken(getAccessToken());
+  }, []);
   return (
     <>
       {restaurantData?.map((data, index) => (
@@ -31,22 +35,23 @@ const Header = () => {
               alt=""
             />
           </Link>
-          {Boolean(getAccessToken()) && (
-            <Link to="dashboard">
-              {activeMenu ? (
-                <Button
-                  sx={{
-                    color: "#fff",
-                  }}
-                  variant="contained"
-                >
-                  go to dashboard
-                </Button>
-              ) : (
-                <Dashboard />
-              )}
-            </Link>
-          )}
+          {Boolean(accessToken) ||
+            (Boolean() && (
+              <Link to="dashboard">
+                {activeMenu ? (
+                  <Button
+                    sx={{
+                      color: "#fff",
+                    }}
+                    variant="contained"
+                  >
+                    go to dashboard
+                  </Button>
+                ) : (
+                  <Dashboard />
+                )}
+              </Link>
+            ))}
           {activeMenu ? null : cart?.length ? (
             <CustomDrawer />
           ) : (

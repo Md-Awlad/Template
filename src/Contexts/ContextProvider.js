@@ -28,19 +28,11 @@ export const ContextProvider = ({ children }) => {
   const [orderId, setOrderId] = useState();
   const [confirmed, setConfirmed] = useState();
   const [customColor, setCustomColor] = useState();
-  // const [currentUser, setCurrentUserData] = useState({});
-  // const { pathname } = useLocation();
+  const [accessToken, setAccessToken] = useState("");
+  useEffect(() => {
+    setAccessToken(getAccessToken());
+  }, []);
 
-  // if (pathname === "dashboard") {
-  //   console.log(pathname);
-  //   const userInfo = async () => {
-  //     const res = await myAxios("/user_info/");
-  //     // sessionStorage.setItem("currentUser", res?.data);
-  //     setCurrentUserData(res?.data);
-  //     setCurrentUser(res?.data);
-  //     // return res?.data;
-  //   };
-  // }
   const { isLoading, data: currentUser = {} } = useQuery(
     ["currentUser"],
     async () => {
@@ -48,7 +40,7 @@ export const ContextProvider = ({ children }) => {
       return res?.data;
     },
     {
-      enabled: Boolean(getAccessToken()),
+      enabled: Boolean(accessToken),
       refetchOnWindowFocus: false,
       cacheTime: 0,
       retry: false,

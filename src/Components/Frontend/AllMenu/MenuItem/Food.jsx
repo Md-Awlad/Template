@@ -1,9 +1,11 @@
 import { Grid, Typography } from "@mui/material";
 import Box from "@mui/material/Box";
-import React, { useState } from "react";
+import React, { lazy, useState } from "react";
 import { IoMdAdd } from "react-icons/io";
 import { useStateContext } from "../../../../Contexts/ContextProvider";
-import AddToCartModal from "../../../Modals/Frontend/AddToCartModal";
+const AddToCartModal = lazy(() =>
+  import("../../../Modals/Frontend/AddToCartModal")
+);
 const Food = ({ id, category }) => {
   const { activeMenu } = useStateContext();
   // const [openModal, setOpenModal] = useState(false);
@@ -11,30 +13,7 @@ const Food = ({ id, category }) => {
   const [foodItem, setFoodItem] = useState({});
   const [foodIndex, setFoodIndex] = useState(null);
   const [open, setOpen] = useState(false);
-  // const [onClose, setOnClose] = useState(false);
 
-  // const toggleDrawer = (newOpen) => () => {
-  //   console.log(newOpen);
-  //   setOpen(newOpen);
-  // };
-
-  // const { data: popularFood = [] } = useQuery(["popular"], async () => {
-  //   const res = await staticAxios("/popularfood/");
-  //   return res.data;
-  // });
-
-  // const handleModalOpen = (item) => {
-  //   setItem(item);
-  //   setOpenModal(true);
-  // };
-  // const handleModalClose = (e) => {
-  //   setOpenModal(false);
-  // };
-
-  // const { data: food = [] } = useQuery(["foodcategory"], async () => {
-  //   const res = await staticAxios(`category/${id}/`);
-  //   return res.data;
-  // });
   const handleItemAndToggle = (foodItem, index) => {
     setOpen(true);
     setFoodIndex(index);
