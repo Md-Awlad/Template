@@ -20,7 +20,7 @@ import {
   Typography,
 } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
-import React, { useState } from "react";
+import React, { Fragment, useState } from "react";
 import { useForm } from "react-hook-form";
 import { BsCheck2Circle } from "react-icons/bs";
 import { toast } from "react-toastify";
@@ -87,7 +87,7 @@ const OrderList = ({ orders, orderRefetch, isLoading, isError }) => {
   };
 
   return (
-    <>
+    <Fragment>
       {isLoading ? (
         <LoaderSource />
       ) : isError ? (
@@ -430,7 +430,7 @@ const OrderList = ({ orders, orderRefetch, isLoading, isError }) => {
           handleClose={() => setDeleteId(null)}
         />
       )}
-    </>
+    </Fragment>
   );
 };
 

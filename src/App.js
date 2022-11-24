@@ -52,7 +52,6 @@ const App = () => {
       console.error = function () {};
     }
   }, []);
-  console.log(accessToken);
   const routes = [
     {
       path: "",

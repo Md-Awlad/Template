@@ -1,5 +1,6 @@
+import { Home } from "@mui/icons-material";
 import MenuIcon from "@mui/icons-material/Menu";
-import { Box, Menu } from "@mui/material";
+import { Box, Button, Menu } from "@mui/material";
 import MuiAppBar from "@mui/material/AppBar";
 import Divider from "@mui/material/Divider";
 import MuiDrawer from "@mui/material/Drawer";
@@ -164,6 +165,16 @@ const Navbar = () => {
               checked={!isDarkMode}
               size={50}
             /> */}
+            <Box>
+              <Link target={"_blank"} to="/">
+                <Button
+                  variant="contained"
+                  sx={{ justifyContent: "space-between", alignItems: "center" }}
+                >
+                  <Home /> Go to Store
+                </Button>
+              </Link>
+            </Box>
             {restaurantData?.map((data, index) => {
               return (
                 <div

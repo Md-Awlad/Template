@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { createContext, useContext, useEffect, useState } from "react";
-import { getAccessToken, getRefreshToken } from "../utils/localStorages";
+import { getAccessToken } from "../utils/localStorages";
 import myAxios, { staticAxios } from "../utils/myAxios";
 
 const StateContext = createContext();
@@ -29,17 +29,16 @@ export const ContextProvider = ({ children }) => {
   const [confirmed, setConfirmed] = useState();
   const [customColor, setCustomColor] = useState();
   const [accessToken, setAccessToken] = useState("");
-  const [refreshToken, setRefreshToken] = useState("");
-  const [currentUser, setCurrentUser] = useState({});
+  // const [refreshToken, setRefreshToken] = useState("");
+  // const [currentUser, setCurrentUser] = useState({});
   useEffect(() => {
     setAccessToken(getAccessToken());
-    setRefreshToken(getRefreshToken());
   }, []);
-  const { isLoading, data: currentUserData = {} } = useQuery(
+  const { isLoading, data: currentUser = {} } = useQuery(
     ["currentUser"],
     async () => {
       const res = await myAxios("/user_info/");
-      setCurrentUser(res.data);
+
       return res?.data;
     },
     {
@@ -115,7 +114,6 @@ export const ContextProvider = ({ children }) => {
         expandedMenu,
         currentColor,
         orderId,
-        accessToken,
         customColor,
         setCustomColor,
         setOrderId,
@@ -123,6 +121,7 @@ export const ContextProvider = ({ children }) => {
         setCurrentMode,
         activeMenu,
         screenSize,
+        accessToken,
         setScreenSize,
         initialState,
         setActiveMenu,

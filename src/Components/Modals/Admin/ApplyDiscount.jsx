@@ -10,8 +10,6 @@ import { toast } from "react-toastify";
 import { useStateContext } from "../../../Contexts/ContextProvider";
 import myAxios from "../../../utils/myAxios";
 
-
-
 const ApplyDiscount = ({
   discounts,
   categories,
@@ -58,6 +56,7 @@ const ApplyDiscount = ({
             id="combo-box-demo"
             options={discounts?.map((discount) => discount)}
             getOptionLabel={(option) => option?.name}
+            isOptionEqualToValue={(option, value) => option.id === value.id}
             filterSelectedOptions
             onChange={(_, newValue) => setDiscount(newValue)}
             renderInput={(params) => (
@@ -73,6 +72,7 @@ const ApplyDiscount = ({
             id="combo-box-demo"
             options={categories?.map((category) => category)}
             getOptionLabel={(option) => option?.name}
+            isOptionEqualToValue={(option, value) => option.id === value.id}
             filterSelectedOptions
             onChange={(_, newValue) => setCategory(newValue)}
             renderInput={(params) => (
@@ -88,6 +88,7 @@ const ApplyDiscount = ({
             id="combo-box-demo"
             options={foods?.map((food) => food)}
             getOptionLabel={(option) => option?.food_name}
+            isOptionEqualToValue={(option, value) => option.id === value.id}
             filterSelectedOptions
             onChange={(_, newValue) => setFood(newValue)}
             renderInput={(params) => (

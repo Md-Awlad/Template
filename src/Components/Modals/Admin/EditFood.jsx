@@ -72,7 +72,7 @@ const EditFood = ({
            the database. */
     const payloadForm = new FormData();
     payloadForm.append("food_name", data?.foodName);
-    payloadForm.append("price", `'${JSON.stringify(price)}'`);
+    payloadForm.append("prices", `'${JSON.stringify(price)}'`);
     if (data?.image[0]) {
       payloadForm.append("image", data?.image[0]);
     }
@@ -100,13 +100,6 @@ const EditFood = ({
         pending: "updating Foods...",
         success: "Food Added",
         error: "Error Adding Foods!",
-      },
-      {
-        // enabled: Boolean(editId),
-        refetchOnWindowFocus: false,
-        cacheTime: 0,
-        retry: false,
-        keepPreviousData: false,
       }
     );
     queryClient.invalidateQueries("food");
@@ -284,6 +277,9 @@ const EditFood = ({
                   value={customFood}
                   options={customizeFood?.map((custom) => custom)}
                   getOptionLabel={(option) => option.ingredient_name}
+                  isOptionEqualToValue={(option, value) =>
+                    option.id === value.id
+                  }
                   onChange={(event, newValue) => setCustomFood(newValue)}
                   renderTags={(tagValue, getTagProps) =>
                     tagValue.map((option, index) => (

@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import { Box } from "@mui/system";
-import { useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import React, { useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { AiOutlineClose } from "react-icons/ai";
@@ -50,7 +50,32 @@ const AddFoodItem = ({
   /**
    * I'm trying to get the price of the food from the form and store it in a variable called price.
    * </code>
+   *
+   *
    */
+
+  const { mutate: addFood } = useMutation(
+    (payloadForm) =>
+      toast.promise(
+        myAxios.postForm("/food/", payloadForm, {
+          headers: {
+            "content-type": "multipart/form-data",
+          },
+        }),
+        {
+          pending: "Adding Foods...",
+          success: "Food Added",
+          error: "Error Adding Foods!",
+        }
+      ),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries("food");
+        handleModalCloseTwo();
+        foodRefetch();
+      },
+    }
+  );
   const onSubmit = async (data) => {
     const price = {};
     data.item?.forEach((item) => {
@@ -68,7 +93,7 @@ const AddFoodItem = ({
 
     const payloadForm = new FormData();
     payloadForm.append("food_name", data?.foodName);
-    payloadForm.append("price", `'${JSON.stringify(price)}'`);
+    payloadForm.append("prices", `'${JSON.stringify(price)}'`);
     payloadForm.append("image", data?.image[0]);
     if (data?.package) {
       payloadForm.append("packaging", data?.package);
@@ -78,21 +103,7 @@ const AddFoodItem = ({
     payloadForm.append("category", category);
     payloadForm.append("custom_food", JSON.stringify(extra?.map((a) => a?.id)));
 
-    toast.promise(
-      myAxios.postForm("/food/", payloadForm, {
-        headers: {
-          "content-type": "multipart/form-data",
-        },
-      }),
-      {
-        pending: "Adding Foods...",
-        success: "Food Added",
-        error: "Error Adding Foods!",
-      }
-    );
-    queryClient.invalidateQueries("food");
-    handleModalCloseTwo();
-    foodRefetch();
+    addFood(payloadForm);
   };
 
   return (

@@ -5,6 +5,7 @@ import {
   AccordionSummary,
   Alert,
   AlertTitle,
+  Box,
   Typography,
 } from "@mui/material";
 import React, { useState } from "react";
@@ -48,7 +49,7 @@ const FoodCategory = ({ categories, isLoading, isError, customizeFood }) => {
               </Typography>
             </AccordionSummary>
             <AccordionDetails>
-              <Typography
+              <Box
                 sx={{
                   display: "flex",
                   gap: 1,
@@ -73,10 +74,10 @@ const FoodCategory = ({ categories, isLoading, isError, customizeFood }) => {
                   <RiDeleteBin6Line />
                   <h3>Delete</h3>
                 </button>
-              </Typography>
-              <Typography>
+              </Box>
+              <Box>
                 <Food category={item} customizeFood={customizeFood} />
-              </Typography>
+              </Box>
             </AccordionDetails>
           </Accordion>
         ))

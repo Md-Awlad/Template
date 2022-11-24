@@ -9,7 +9,12 @@ import { getAccessToken } from "../../utils/localStorages";
 import CustomDrawer from "../Shared/CustomDrawer";
 
 const Header = () => {
-  const { cart, activeMenu, restaurantData } = useStateContext();
+  const {
+    cart,
+    activeMenu,
+    restaurantData,
+    currentUser: { id: UID = null },
+  } = useStateContext();
   const [accessToken, setAccessToken] = useState();
   useEffect(() => {
     setAccessToken(getAccessToken());
@@ -35,23 +40,22 @@ const Header = () => {
               alt=""
             />
           </Link>
-          {Boolean(accessToken) ||
-            (Boolean() && (
-              <Link to="dashboard">
-                {activeMenu ? (
-                  <Button
-                    sx={{
-                      color: "#fff",
-                    }}
-                    variant="contained"
-                  >
-                    go to dashboard
-                  </Button>
-                ) : (
-                  <Dashboard />
-                )}
-              </Link>
-            ))}
+          {Boolean(UID) && (
+            <Link to="dashboard">
+              {activeMenu ? (
+                <Button
+                  sx={{
+                    color: "#fff",
+                  }}
+                  variant="contained"
+                >
+                  go to dashboard
+                </Button>
+              ) : (
+                <Dashboard />
+              )}
+            </Link>
+          )}
           {activeMenu ? null : cart?.length ? (
             <CustomDrawer />
           ) : (

@@ -14,14 +14,14 @@ const Food = ({ category, customizeFood }) => {
   const [editPrice, setEditPrice] = useState([]);
 
   const food = category?.foodItems_category?.map((a) => a);
-
+  console.log(!!editId);
   /* Fetching data from the backend and setting the value of the form. */
   const {
     data: allFoodData,
     isLoading,
     isError,
   } = useQuery(
-    [`food`, editId],
+    [`food`],
     async () => await myAxios(`/food/${editId}/`),
     {
       onSuccess: (foodData) => {
@@ -38,7 +38,7 @@ const Food = ({ category, customizeFood }) => {
       },
     },
     {
-      // enabled: Boolean(editId),
+      enabled: !!editId,
       refetchOnWindowFocus: false,
       cacheTime: 0,
       retry: false,
@@ -88,14 +88,12 @@ const Food = ({ category, customizeFood }) => {
       renderCell: ({ value }) => {
         return (
           <Tooltip
-            title={Object.keys(value).map((key, index) => {
-              return (
-                <div key={index} className="flex justify-between w-32">
-                  <h2>size: {key}</h2>
-                  <h2>Price: {value[key]}</h2>
-                </div>
-              );
-            })}
+            title={Object.keys(value).map((key, index) => (
+              <div key={index} className="flex justify-between w-32">
+                <h2>size: {key}</h2>
+                <h2>Price: {value[key]}</h2>
+              </div>
+            ))}
             placement="top"
           >
             <div className="overflow-y-auto h-12 w-full">
@@ -121,14 +119,12 @@ const Food = ({ category, customizeFood }) => {
       renderCell: ({ row }) => {
         return (
           <Tooltip
-            title={row?.customize_food?.map((data) => {
-              return (
-                <div key={data?.id} className="flex gap-5">
-                  <h2>Name: {data?.name}</h2>
-                  <h2>Price: {data?.price}</h2>
-                </div>
-              );
-            })}
+            title={row?.customize_food?.map((data) => (
+              <div key={data?.id} className="flex gap-5">
+                <h2>Name: {data?.name}</h2>
+                <h2>Price: {data?.price}</h2>
+              </div>
+            ))}
             placement="top"
           >
             <div className="overflow-y-auto h-12 w-full">
@@ -155,25 +151,21 @@ const Food = ({ category, customizeFood }) => {
         if (value) {
           return (
             <Tooltip
-              title={Object.keys(value)?.map((key, index) => {
-                return (
-                  <div key={index} className="flex justify-between w-36">
-                    <h2>size: {key}</h2>
-                    <h2>Price: {value[key]}</h2>
-                  </div>
-                );
-              })}
+              title={Object.keys(value)?.map((key, index) => (
+                <div key={index} className="flex justify-between w-36">
+                  <h2>size: {key}</h2>
+                  <h2>Price: {value[key]}</h2>
+                </div>
+              ))}
               placement="top"
             >
               <div className="overflow-y-auto h-12 w-full mt-7">
-                {Object.keys(value)?.map((key, index) => {
-                  return (
-                    <div key={index} className="grid grid-cols-2">
-                      <h2>size: {key}</h2>
-                      <h2>Price: {value[key]}</h2>
-                    </div>
-                  );
-                })}
+                {Object.keys(value)?.map((key, index) => (
+                  <div key={index} className="grid grid-cols-2">
+                    <h2>size: {key}</h2>
+                    <h2>Price: {value[key]}</h2>
+                  </div>
+                ))}
               </div>
             </Tooltip>
           );

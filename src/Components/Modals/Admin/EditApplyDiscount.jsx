@@ -103,6 +103,7 @@ const EditApplyDiscount = ({
               }}
               options={discounts?.map((discount) => discount)}
               getOptionLabel={(option) => option?.name}
+              isOptionEqualToValue={(option, value) => option.id === value.id}
               filterSelectedOptions
               renderTags={(tagValue, getTagProps) =>
                 tagValue.map((option, index) => (
@@ -151,6 +152,7 @@ const EditApplyDiscount = ({
                 ]);
               }}
               options={categories?.map((category) => category)}
+              isOptionEqualToValue={(option, value) => option.id === value.id}
               getOptionLabel={(option) => option?.name}
               filterSelectedOptions
               // options={allData.category ? allData.category : null}
@@ -195,6 +197,7 @@ const EditApplyDiscount = ({
               }}
               options={foods ? foods : null}
               getOptionLabel={(option) => option.food_name}
+              isOptionEqualToValue={(option, value) => option.id === value.id}
               renderTags={(tagValue, getTagProps) =>
                 tagValue.map((option, index) => (
                   <Chip
