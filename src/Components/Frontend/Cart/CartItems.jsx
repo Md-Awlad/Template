@@ -182,8 +182,12 @@ const CartItems = ({ cart, setCart, item }) => {
       >
         <img
           className="lg:w-16 lg:h-16 w-20 h-20 object-cover rounded-full border-2 border-gray-400"
-          src={item.image}
-          alt="food_image"
+          src={item?.image}
+          onError={({ currentTarget }) => {
+            currentTarget.onerror = null; // prevents looping
+            currentTarget.src = "https://i.ibb.co/0q5B8VP/MainLogo.png";
+          }}
+          alt="img"
         />
         <Box>
           <Typography variant="h6" sx={{ fontWeight: 500 }}>
@@ -274,7 +278,6 @@ const CartItems = ({ cart, setCart, item }) => {
           <AccordionDetails>
             <Typography>
               {item?.customize_food?.map((extraPrice, index) => {
-               
                 return (
                   <Box
                     key={index}

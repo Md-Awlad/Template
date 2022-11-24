@@ -1,15 +1,10 @@
 import { Grid, Typography } from "@mui/material";
 import Box from "@mui/material/Box";
-import React, { lazy, useState } from "react";
+import React, { useState } from "react";
 import { IoMdAdd } from "react-icons/io";
-import { useStateContext } from "../../../../Contexts/ContextProvider";
-const AddToCartModal = lazy(() =>
-  import("../../../Modals/Frontend/AddToCartModal")
-);
-const Food = ({ id, category }) => {
-  const { activeMenu } = useStateContext();
-  // const [openModal, setOpenModal] = useState(false);
-  // const [item, setItem] = useState(null);
+import AddToCartModal from "../../../Modals/Frontend/AddToCartModal";
+
+const Food = ({ category }) => {
   const [foodItem, setFoodItem] = useState({});
   const [foodIndex, setFoodIndex] = useState(null);
   const [open, setOpen] = useState(false);
@@ -21,9 +16,6 @@ const Food = ({ id, category }) => {
   };
   return (
     <Box sx={{ mb: 10 }}>
-      {/* <Modal open={openModal} onClose={handleModalClose}>
-        <ItemDetails handleModalClose={handleModalClose} item={item} />
-      </Modal> */}
       {/* --food-- */}
       <Box
         className=" "

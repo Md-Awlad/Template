@@ -32,20 +32,21 @@ const AddCustomFood = ({ handleModalClose, categories, foods }) => {
   } = useForm();
   const queryClient = useQueryClient();
 
+  /**
+   * OnSubmit is a function that takes in data, and then sends a post request to the server with the
+   * data, and then closes the modal.
+   */
   const onSubmit = async (data) => {
     const payload = {
       ingredient_name: data?.extraName,
       price: data?.extraPrice,
     };
 
-    const response = await toast.promise(
-      myAxios.post("/customize_food/", payload),
-      {
-        pending: "Adding Extra...",
-        success: "Extra Added",
-        error: "Error Adding Extra!",
-      }
-    );
+    await toast.promise(myAxios.post("/customize_food/", payload), {
+      pending: "Adding Extra...",
+      success: "Extra Added",
+      error: "Error Adding Extra!",
+    });
     queryClient.invalidateQueries("customize_food");
     handleModalClose();
   };

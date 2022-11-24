@@ -19,7 +19,6 @@ import { useStateContext } from "../../../Contexts/ContextProvider";
 import { CustomModal } from "../../Shared/SharedStyles";
 function AddToCartModal(props) {
   const { open, setOpen, index, item } = props;
-  // const [expanded, setExpanded] = React.useState("panel1");
   const [size, setSize] = React.useState({});
   const { activeMenu, setCart, cart, setIngredientId, currentMode } =
     useStateContext();

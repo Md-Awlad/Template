@@ -16,6 +16,17 @@ const AddCategory = ({ handleModalClose, categoryRefetch }) => {
     formState: { errors },
   } = useForm();
 
+  /**
+   * It takes in a data object, creates a new FormData object, appends the data object's category
+   * property to the FormData object, and if the data object's image property has a value, it appends
+   * the data object's image property to the FormData object.
+   *
+   * Then it makes an axios post request to the /category/ endpoint, passing in the FormData object as
+   * the request body, and passing in the headers object as the request headers.
+   *
+   * Then it uses the toast library to display a toast message, and if the response status is 201, it
+   * closes the modal and refetches the category data.
+   */
   const onSubmit = async (data) => {
     const payloadForm = new FormData();
     payloadForm.append("name", data?.category);
