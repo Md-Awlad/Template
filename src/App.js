@@ -1,5 +1,4 @@
-import { useEffect } from "react";
-import { lazy } from "react";
+import { lazy, useEffect } from "react";
 import { Navigate, useRoutes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -11,7 +10,6 @@ import MainLoader from "./Components/Loaders/MainLoader";
 import NotFound from "./Components/NotFound/NotFound";
 import { SuspenseLoader } from "./Components/Shared/SharedStyles";
 import { useStateContext } from "./Contexts/ContextProvider";
-import { getAccessToken } from "./utils/localStorages";
 const ThemeLayout = lazy(() => import("./Components/Layouts/ThemeLayout"));
 const NavLayout = lazy(() => import("./Components/Layouts/NavLayout"));
 const CancelOrder = lazy(() => import("./Pages/Admin/CancelOrder"));
@@ -35,7 +33,9 @@ const App = () => {
     currentMode,
     currentUser: { id: userId = null },
     restaurantIsLoading,
+    isLoading,
     orderId,
+    accessToken,
   } = useStateContext();
   useEffect(() => {
     if (
@@ -46,13 +46,13 @@ const App = () => {
       // eslint-disable-next-line no-global-assign
       console = {};
       // supress all type of consoles
-      console.log = function () { };
-      console.info = function () { };
-      console.warn = function () { };
-      console.error = function () { };
+      console.log = function () {};
+      console.info = function () {};
+      console.warn = function () {};
+      console.error = function () {};
     }
   }, []);
-
+  console.log(accessToken);
   const routes = [
     {
       path: "",
@@ -83,12 +83,13 @@ const App = () => {
 
     {
       path: "",
-      element:
-        Boolean(getAccessToken()) || Boolean(userId) ? (
-          <NavLayout />
-        ) : (
-          <Navigate to="/auth" />
-        ),
+      element: isLoading ? (
+        <MainLoader />
+      ) : Boolean(userId) ? (
+        <NavLayout />
+      ) : (
+        <Navigate to="/auth" />
+      ),
       children: [
         {
           path: "dashboard",
@@ -143,7 +144,7 @@ const App = () => {
     {
       path: "/auth",
       element:
-        Boolean(getAccessToken()) || Boolean(userId) ? (
+        Boolean(accessToken) || Boolean(userId) ? (
           <Navigate to="/dashboard" />
         ) : (
           <AuthRedirect />
@@ -152,7 +153,7 @@ const App = () => {
     {
       path: "/authCallback",
       element:
-        Boolean(getAccessToken()) || Boolean(userId) ? (
+        Boolean(accessToken) || Boolean(userId) ? (
           <Navigate to="/dashboard" />
         ) : (
           <AuthValidate />
