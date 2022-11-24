@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { lazy } from "react";
 import { Navigate, useRoutes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
@@ -36,21 +37,21 @@ const App = () => {
     restaurantIsLoading,
     orderId,
   } = useStateContext();
-  // useEffect(() => {
-  //   if (
-  //     process.env.NODE_ENV === "production" ||
-  //     process.env.REACT_APP_ENV === "STAGING"
-  //   ) {
-  //     // supress the default console functionality
-  //     // eslint-disable-next-line no-global-assign
-  //     console = {};
-  //     // supress all type of consoles
-  //     console.log = function () {};
-  //     console.info = function () {};
-  //     console.warn = function () {};
-  //     console.error = function () {};
-  //   }
-  // }, []);
+  useEffect(() => {
+    if (
+      process.env.NODE_ENV === "production" ||
+      process.env.REACT_APP_ENV === "STAGING"
+    ) {
+      // supress the default console functionality
+      // eslint-disable-next-line no-global-assign
+      console = {};
+      // supress all type of consoles
+      console.log = function () { };
+      console.info = function () { };
+      console.warn = function () { };
+      console.error = function () { };
+    }
+  }, []);
 
   const routes = [
     {
