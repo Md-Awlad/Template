@@ -29,14 +29,15 @@ export const ContextProvider = ({ children }) => {
   const [confirmed, setConfirmed] = useState();
   const [customColor, setCustomColor] = useState();
   const [accessToken, setAccessToken] = useState("");
+  const [currentUser, setCurrentUser] = useState({});
   useEffect(() => {
     setAccessToken(getAccessToken());
   }, []);
-
-  const { isLoading, data: currentUser = {} } = useQuery(
+  const { isLoading, data: currentUserData = {} } = useQuery(
     ["currentUser"],
     async () => {
       const res = await myAxios("/user_info/");
+      setCurrentUser(res.data);
       return res?.data;
     },
     {

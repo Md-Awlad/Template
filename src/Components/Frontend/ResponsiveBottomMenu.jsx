@@ -9,7 +9,12 @@ import SvgImage from "../Loaders/SvgImage";
 import CustomDrawer from "../Shared/CustomDrawer";
 
 const ResponsiveBottomMenu = () => {
-  const { cart, activeMenu, restaurantData } = useStateContext();
+  const {
+    cart,
+    activeMenu,
+    restaurantData,
+    currentUser: { id: U_ID = null },
+  } = useStateContext();
   const [accessToken, setAccessToken] = useState("");
   useEffect(() => {
     setAccessToken(getAccessToken());
@@ -37,7 +42,11 @@ const ResponsiveBottomMenu = () => {
             {activeMenu ? null : cart?.length ? (
               <CustomDrawer />
             ) : (
-              <Box className={`md:w-28 md:h-28 w-20 h-20 border-8 border-neutral rounded-full md:-mt-20 -mt-8 bg-neutral flex items-center ${!activeMenu&&"cursor-pointer"} hover:bg-gray-100`}>
+              <Box
+                className={`md:w-28 md:h-28 w-20 h-20 border-8 border-neutral rounded-full md:-mt-20 -mt-8 bg-neutral flex items-center ${
+                  !activeMenu && "cursor-pointer"
+                } hover:bg-gray-100`}
+              >
                 <Box
                   className={`w-full h-full ${
                     cart.length ? "border-1 border-red-400" : "border-1"
@@ -60,13 +69,13 @@ const ResponsiveBottomMenu = () => {
               </Box>
             )}
 
-            {Boolean(accessToken) ? (
+            {Boolean(U_ID) || Boolean(accessToken) ? (
               <Link to="/">
-                <AiOutlineHome className=" text-neutral" />
+                <AiOutlineHome className=" text-neutral text-3xl" />
               </Link>
             ) : (
               <Link to="/dashboard">
-                <Dashboard className=" text-neutral" />
+                <Dashboard className=" text-neutral " />
               </Link>
             )}
           </Box>
