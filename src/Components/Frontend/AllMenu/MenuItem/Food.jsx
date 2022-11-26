@@ -8,7 +8,6 @@ const Food = ({ category }) => {
   const [foodItem, setFoodItem] = useState({});
   const [foodIndex, setFoodIndex] = useState(null);
   const [open, setOpen] = useState(false);
-
   const handleItemAndToggle = (foodItem, index) => {
     setOpen(true);
     setFoodIndex(index);
@@ -25,6 +24,7 @@ const Food = ({ category }) => {
       >
         <Grid container sx={{ padding: 0, m: 0 }}>
           {category?.foodItems_category?.map((item, index) => {
+            console.log(item);
             return (
               <Grid item sm={6} md={6}>
                 <div

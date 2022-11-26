@@ -46,9 +46,9 @@ const EditFood = ({
 }) => {
   const { currentColor } = useStateContext();
   const [image, setImage] = useState(null);
-
+  console.log(allFoodData);
   const [customFood, setCustomFood] = useState([
-    ...allFoodData?.data[0]?.customize_food,
+    ...allFoodData?.data?.customize_food,
   ]);
   const queryClient = useQueryClient();
 
@@ -118,13 +118,11 @@ const EditFood = ({
     },
   });
   React.useEffect(() => {
-    allFoodData?.data.map((data, index) => {
-      setValue("foodName", data?.food_name);
-      setValue("ingredient", data?.base_ingredient);
-      setImage(data?.image);
+    setValue("foodName", allFoodData?.data?.food_name);
+    setValue("ingredient", allFoodData?.data?.base_ingredient);
+    setImage(allFoodData?.data?.image);
 
-      setValue("packaging", data?.packaging);
-    });
+    setValue("packaging", allFoodData?.data?.packaging);
   }, [editId]);
   return (
     <Modal open={Boolean(editId)} onClose={handleModalClose}>

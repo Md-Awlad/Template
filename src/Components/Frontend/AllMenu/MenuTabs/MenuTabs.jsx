@@ -38,7 +38,6 @@ const MenuTabs = ({ setCart, cart }) => {
     const res = await staticAxios("/category/");
     return res.data;
   });
-
   return (
     <Fragment>
       {restaurantData?.map((data, index) => (

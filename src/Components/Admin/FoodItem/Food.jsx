@@ -14,38 +14,27 @@ const Food = ({ category, customizeFood }) => {
   const [editPrice, setEditPrice] = useState([]);
 
   const food = category?.foodItems_category?.map((a) => a);
-  console.log(!!editId);
   /* Fetching data from the backend and setting the value of the form. */
   const {
     data: allFoodData,
     isLoading,
     isError,
   } = useQuery(
-    [`food`],
+    [`food`, editId],
     async () => await myAxios(`/food/${editId}/`),
     {
       onSuccess: (foodData) => {
-        foodData?.data.map((data, index) => {
-          setEditPrice(
-            Object.entries(data?.price).map((key, i) => {
-              return {
-                title: key[0],
-                price: key[1],
-              };
-            })
-          );
-        });
+        setEditPrice(
+          Object.entries(foodData?.data?.price).map((key, i) => {
+            return {
+              title: key[0],
+              price: key[1],
+            };
+          })
+        );
       },
-    },
-    {
-      enabled: !!editId,
-      refetchOnWindowFocus: false,
-      cacheTime: 0,
-      retry: false,
-      keepPreviousData: false,
     }
   );
-
   const columns = [
     {
       field: "id",
@@ -231,7 +220,7 @@ const Food = ({ category, customizeFood }) => {
       },
     },
   ];
-
+  console.log(allFoodData && editId && editPrice.length > 0);
   return (
     <>
       <CustomDataGrid rows={food} columns={columns} />

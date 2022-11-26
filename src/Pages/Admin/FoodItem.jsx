@@ -34,7 +34,7 @@ const FoodItem = () => {
     const res = await myAxios("/category/");
     return res.data;
   });
-
+  console.log(categories);
   const { refetch: foodRefetch } = useQuery(["food"], async () => {
     const res = await myAxios("/food/");
     return res.data;
