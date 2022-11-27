@@ -18,7 +18,6 @@ import myAxios from "../../../utils/myAxios";
 
 const EditFood = ({
   allFoodData,
-  editId,
   handleModalClose,
 
   customizeFood,
@@ -36,19 +35,6 @@ const EditFood = ({
 
   const [customFood, setCustomFood] = useState([...customizeFood]);
   const queryClient = useQueryClient();
-
-  // if (Boolean(Object.entries(allFoodData).length)) {
-  //   setEditPrice(
-  //     Object.entries(allFoodData?.price).map((key, i) => {
-  //       return {
-  //         title: key[0],
-  //         price: key[1],
-  //       };
-  //     })
-  //   );
-  // }
-  // console.log(allFoodData);
-  // console.log(editPrice);
 
   const onSubmit = async (data) => {
     const price = {};
@@ -116,12 +102,20 @@ const EditFood = ({
     },
   });
   React.useEffect(() => {
+    setEditPrice(
+      Object.entries(allFoodData?.price).map((key, i) => {
+        return {
+          title: key[0],
+          price: key[1],
+        };
+      })
+    );
     setValue("foodName", allFoodData?.food_name);
     setValue("ingredient", allFoodData?.base_ingredient);
     setImage(allFoodData?.image);
 
     setValue("packaging", allFoodData?.packaging);
-  }, [allFoodData]);
+  }, [allFoodData?.price]);
   return (
     <Box className="p-5">
       <h2 className="text-3xl font-bold pb-3 text-center">Edit Food Item</h2>
@@ -148,7 +142,6 @@ const EditFood = ({
               Add Size and Price
             </Button>
             {fields?.map((field, index) => {
-              console.log(fields.length);
               return (
                 <Box
                   key={field.id}

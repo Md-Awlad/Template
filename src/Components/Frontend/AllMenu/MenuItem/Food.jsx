@@ -25,11 +25,8 @@ const Food = ({ category }) => {
         <Grid container sx={{ padding: 0, m: 0 }}>
           {category?.foodItems_category?.map((item, index) => {
             return (
-              <Grid item sm={6} md={6}>
-                <div
-                  key={item.id}
-                  onClick={() => handleItemAndToggle(item, index)}
-                >
+              <Grid key={index} item sm={6} md={6}>
+                <div onClick={() => handleItemAndToggle(item, index)}>
                   <Box
                     sx={{
                       minHeight: { xs: 300, sm: "auto", md: "auto" },
@@ -64,8 +61,8 @@ const Food = ({ category }) => {
                       </Grid>
                       {/* details section */}
                       <Grid item xs={12} sm={7} md={7}>
-                        <div className="">
-                          <div className="md:flex justify-between">
+                        <Box className="">
+                          <Box className="md:flex justify-between">
                             <Typography
                               sx={{
                                 fontWeight: 500,
@@ -74,7 +71,7 @@ const Food = ({ category }) => {
                               {item.food_name.substr(0, 20) +
                                 `${item.food_name.length > 20 ? ".." : ""}`}
                             </Typography>
-                          </div>
+                          </Box>
                           <Typography
                             sx={{
                               fontSize: 12,
@@ -88,7 +85,7 @@ const Food = ({ category }) => {
                           </Typography>
                           {/* --size-- */}
 
-                          <div>
+                          <Box>
                             {Boolean(item?.discount_price) ? (
                               Object.entries(item?.discount_price).map(
                                 (key, index) => (
@@ -172,9 +169,9 @@ const Food = ({ category }) => {
                             ) : (
                               <></>
                             )}
-                          </div>
+                          </Box>
                           {/* --size End-- */}
-                        </div>
+                        </Box>
                       </Grid>
                     </Grid>
                     {/* </div> */}

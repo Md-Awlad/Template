@@ -69,7 +69,6 @@ const MenuTabs = ({ setCart, cart }) => {
         </Tabs>
       ))}
       {categories?.map((category, index) => {
-        console.log(category);
         return (
           <TabPanel key={index} value={value} index={index}>
             <Food

@@ -12,28 +12,6 @@ const Food = ({ category, customizeFood }) => {
   const [deleteId, setDeleteId] = useState(null);
 
   const food = category?.foodItems_category?.map((a) => a);
-  /* Fetching data from the backend and setting the value of the form. */
-
-  // const {
-  //   data: allFoodData,
-  //   isLoading,
-  //   isError,
-  // } = useQuery(
-  //   [`food`, editId],
-  //   async () => await myAxios(`/food/${editId}/`),
-  //   {
-  //     onSuccess: (foodData) => {
-  //       setEditPrice(
-  //         Object.entries(foodData?.data?.price).map((key, i) => {
-  //           return {
-  //             title: key[0],
-  //             price: key[1],
-  //           };
-  //         })
-  //       );
-  //     },
-  //   }
-  // );
 
   const columns = [
     {
@@ -232,9 +210,6 @@ const Food = ({ category, customizeFood }) => {
         >
           <EditFood
             allFoodData={editFood}
-            // editId={editId}
-            // isLoading={isLoading}
-            // isError={isError}
             handleModalClose={() => setEditFood({})}
             categories={food}
             customizeFood={customizeFood}
