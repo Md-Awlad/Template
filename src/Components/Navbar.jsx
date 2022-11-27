@@ -169,9 +169,12 @@ const Navbar = () => {
               <Link target={"_blank"} to="/">
                 <Button
                   variant="contained"
-                  sx={{ justifyContent: "space-between", alignItems: "center" }}
+                  sx={{
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                  }}
                 >
-                  <Home /> Go to Store
+                  <Home /> {activeMenu && "Go to Store"}
                 </Button>
               </Link>
             </Box>

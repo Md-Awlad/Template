@@ -24,7 +24,6 @@ const Food = ({ category }) => {
       >
         <Grid container sx={{ padding: 0, m: 0 }}>
           {category?.foodItems_category?.map((item, index) => {
-            console.log(item);
             return (
               <Grid item sm={6} md={6}>
                 <div
@@ -90,87 +89,89 @@ const Food = ({ category }) => {
                           {/* --size-- */}
 
                           <div>
-                            {Boolean(item?.discount_price)
-                              ? Object.entries(item?.discount_price).map(
-                                  (key, index) => (
-                                    <Box
-                                      sx={{
-                                        display: "flex",
-                                        alignItems: "center",
-                                      }}
-                                    >
-                                      {index === 0 && (
-                                        <Box className="absolute flex  items-center bottom-3">
-                                          <Typography
-                                            sx={{
-                                              fontSize: {
-                                                md: "16px",
-                                              },
-                                              pr: 1,
-                                            }}
-                                          >
-                                            {`from TK `}
-                                          </Typography>
+                            {Boolean(item?.discount_price) ? (
+                              Object.entries(item?.discount_price).map(
+                                (key, index) => (
+                                  <Box
+                                    sx={{
+                                      display: "flex",
+                                      alignItems: "center",
+                                    }}
+                                  >
+                                    {index === 0 && (
+                                      <Box className="absolute flex  items-center bottom-3">
+                                        <Typography
+                                          sx={{
+                                            fontSize: {
+                                              md: "16px",
+                                            },
+                                            pr: 1,
+                                          }}
+                                        >
+                                          {`from TK `}
+                                        </Typography>
 
-                                          <Typography
-                                            sx={{
-                                              fontSize: {
-                                                sm: "13px",
-                                              },
-                                              textDecoration: "line-through",
-                                            }}
-                                          >
-                                            {item.price[key[0]]}
-                                          </Typography>
-                                          <Typography
-                                            sx={{
-                                              fontWeight: 500,
-                                              fontSize: {
-                                                sm: "18px",
-                                              },
-                                              mr: 1,
-                                            }}
-                                          >
-                                            {key[1]} ৳
-                                          </Typography>
-                                        </Box>
-                                      )}
-                                    </Box>
-                                  )
-                                )
-                              : Object.entries(item?.price).map(
-                                  (key, index) => {
-                                    return (
-                                      <Box className="flex items-center">
-                                        {Boolean(index === 0) && (
-                                          <Box className=" absolute flex  items-center bottom-3">
-                                            <Typography
-                                              sx={{
-                                                fontSize: "16px",
-
-                                                pr: 1,
-                                              }}
-                                            >
-                                              {`from TK `}
-                                            </Typography>
-
-                                            <Typography
-                                              sx={{
-                                                fontWeight: 500,
-                                                fontSize: {
-                                                  sm: "18px",
-                                                },
-                                                mr: 1,
-                                              }}
-                                            >
-                                              {key[1]} ৳
-                                            </Typography>
-                                          </Box>
-                                        )}
+                                        <Typography
+                                          sx={{
+                                            fontSize: {
+                                              sm: "13px",
+                                            },
+                                            textDecoration: "line-through",
+                                          }}
+                                        >
+                                          {item.price[key[0]]}
+                                        </Typography>
+                                        <Typography
+                                          sx={{
+                                            fontWeight: 500,
+                                            fontSize: {
+                                              sm: "18px",
+                                            },
+                                            mr: 1,
+                                          }}
+                                        >
+                                          {key[1]} ৳
+                                        </Typography>
                                       </Box>
-                                    );
-                                  }
-                                )}
+                                    )}
+                                  </Box>
+                                )
+                              )
+                            ) : Boolean(item?.price) ? (
+                              Object.entries(item?.price).map((key, index) => {
+                                return (
+                                  <Box className="flex items-center">
+                                    {Boolean(index === 0) && (
+                                      <Box className=" absolute flex  items-center bottom-3">
+                                        <Typography
+                                          sx={{
+                                            fontSize: "16px",
+
+                                            pr: 1,
+                                          }}
+                                        >
+                                          {`from TK `}
+                                        </Typography>
+
+                                        <Typography
+                                          sx={{
+                                            fontWeight: 500,
+                                            fontSize: {
+                                              sm: "18px",
+                                            },
+                                            mr: 1,
+                                          }}
+                                        >
+                                          {key[1]} ৳
+                                        </Typography>
+                                      </Box>
+                                    )}
+                                  </Box>
+                                );
+                              })
+                            ) : (
+                              <></>
+                            )}
                           </div>
                           {/* --size End-- */}
                         </div>

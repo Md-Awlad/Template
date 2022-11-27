@@ -14,8 +14,9 @@ import myAxios from "../../utils/myAxios";
 
 const CustomizeFood = () => {
   const [openModal, setOpenModal] = useState(false);
-  const [editId, setEditId] = useState(null);
+  const [editCustomFood, setEditCustomFood] = useState({});
   const [deleteId, setDeleteId] = useState(null);
+  console.log(editCustomFood);
   const handleModalOpen = (e) => {
     setOpenModal(true);
   };
@@ -55,7 +56,7 @@ const CustomizeFood = () => {
         return (
           <Box className="flex gap-5 items-center">
             <MdModeEdit
-              onClick={() => setEditId(row?.id)}
+              onClick={() => setEditCustomFood(row)}
               className="text-gray-600 dark:text-neutral text-xl cursor-pointer"
             />
             <RiDeleteBin6Line
@@ -71,7 +72,6 @@ const CustomizeFood = () => {
     data: customizeFood = [],
     refetch: foodRefetch,
     isLoading,
-    isError,
   } = useQuery(["customizeFood"], async () => {
     const res = await myAxios("/customize_food/");
     return res.data;
@@ -116,8 +116,17 @@ const CustomizeFood = () => {
         isLoading={isLoading}
         columns={columns}
       />
-      {Boolean(editId) && (
-        <EditCustomFood editId={editId} handleClose={() => setEditId(null)} />
+      {Boolean(Object.entries(editCustomFood).length) && (
+        <CustomModal
+          open={Boolean(Object.entries(editCustomFood).length)}
+          onClose={() => setEditCustomFood({})}
+        >
+          <EditCustomFood
+            open={Boolean(Object.entries(editCustomFood).length)}
+            editCustomFood={editCustomFood}
+            handleClose={() => setEditCustomFood({})}
+          />
+        </CustomModal>
       )}
       {Boolean(deleteId) && (
         <DeleteCustomFood

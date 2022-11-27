@@ -1,40 +1,40 @@
 import { Box, Tooltip } from "@mui/material";
-import { useQuery } from "@tanstack/react-query";
 import React, { useState } from "react";
 import { MdModeEdit } from "react-icons/md";
 import { RiDeleteBin6Line } from "react-icons/ri";
-import myAxios from "../../../utils/myAxios";
 import DeleteFood from "../../Modals/Admin/DeleteFood";
 import EditFood from "../../Modals/Admin/EditFood";
 import CustomDataGrid from "../../Shared/CustomDataGrid";
+import { CustomModal } from "../../Shared/SharedStyles";
 
 const Food = ({ category, customizeFood }) => {
-  const [editId, setEditId] = useState(null);
+  const [editFood, setEditFood] = useState({});
   const [deleteId, setDeleteId] = useState(null);
-  const [editPrice, setEditPrice] = useState([]);
 
   const food = category?.foodItems_category?.map((a) => a);
   /* Fetching data from the backend and setting the value of the form. */
-  const {
-    data: allFoodData,
-    isLoading,
-    isError,
-  } = useQuery(
-    [`food`, editId],
-    async () => await myAxios(`/food/${editId}/`),
-    {
-      onSuccess: (foodData) => {
-        setEditPrice(
-          Object.entries(foodData?.data?.price).map((key, i) => {
-            return {
-              title: key[0],
-              price: key[1],
-            };
-          })
-        );
-      },
-    }
-  );
+
+  // const {
+  //   data: allFoodData,
+  //   isLoading,
+  //   isError,
+  // } = useQuery(
+  //   [`food`, editId],
+  //   async () => await myAxios(`/food/${editId}/`),
+  //   {
+  //     onSuccess: (foodData) => {
+  //       setEditPrice(
+  //         Object.entries(foodData?.data?.price).map((key, i) => {
+  //           return {
+  //             title: key[0],
+  //             price: key[1],
+  //           };
+  //         })
+  //       );
+  //     },
+  //   }
+  // );
+
   const columns = [
     {
       field: "id",
@@ -205,7 +205,7 @@ const Food = ({ category, customizeFood }) => {
           <Box className="flex gap-5 items-center">
             <Tooltip title="Edit Food" placement="top">
               <MdModeEdit
-                onClick={() => setEditId(row?.id)}
+                onClick={() => setEditFood(row)}
                 className="text-gray-600 dark:text-neutral text-xl cursor-pointer"
               />
             </Tooltip>
@@ -220,22 +220,26 @@ const Food = ({ category, customizeFood }) => {
       },
     },
   ];
-  console.log(allFoodData && editId && editPrice.length > 0);
+
   return (
     <>
       <CustomDataGrid rows={food} columns={columns} />
 
-      {Boolean(allFoodData && editId && editPrice.length > 0) ? (
-        <EditFood
-          editPrice={editPrice}
-          allFoodData={allFoodData}
-          editId={editId}
-          isLoading={isLoading}
-          isError={isError}
-          handleModalClose={() => setEditId(null)}
-          categories={food}
-          customizeFood={customizeFood}
-        />
+      {Boolean(Object.entries(editFood).length) ? (
+        <CustomModal
+          open={Boolean(Object.entries(editFood).length)}
+          onClose={() => setEditFood({})}
+        >
+          <EditFood
+            allFoodData={editFood}
+            // editId={editId}
+            // isLoading={isLoading}
+            // isError={isError}
+            handleModalClose={() => setEditFood({})}
+            categories={food}
+            customizeFood={customizeFood}
+          />
+        </CustomModal>
       ) : null}
       {Boolean(deleteId) && (
         <DeleteFood deleteId={deleteId} handleClose={() => setDeleteId(null)} />

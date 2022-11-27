@@ -1,12 +1,12 @@
-import { Box } from "@mui/system";
-import React from "react";
+import { Grid, InputAdornment, Modal } from "@mui/material";
 import TextField from "@mui/material/TextField";
+import { Box } from "@mui/system";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import React from "react";
 import { useForm } from "react-hook-form";
-import { useStateContext } from "../../../Contexts/ContextProvider";
 import { FiUpload } from "react-icons/fi";
 import { toast } from "react-toastify";
-import { Grid, InputAdornment, Modal } from "@mui/material";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useStateContext } from "../../../Contexts/ContextProvider";
 import myAxios from "../../../utils/myAxios";
 
 const style = {
@@ -35,7 +35,7 @@ const EditCategory = ({ editId, handleClose }) => {
       image: data?.image[0],
     };
 
-    const response = await toast.promise(
+    await toast.promise(
       myAxios.patch(`/category/${editId}/`, payloadForm, {
         headers: {
           "content-type": "multipart/form-data",
