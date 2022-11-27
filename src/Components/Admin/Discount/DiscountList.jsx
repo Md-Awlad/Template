@@ -124,7 +124,12 @@ const DiscountList = ({ discounts, isLoading }) => {
       {isLoading ? (
         <LoaderSource />
       ) : (
-        <CustomDataGrid rows={discounts} columns={columns} />
+        <CustomDataGrid
+          rows={discounts}
+          columns={columns}
+          leftPinning={["id"]}
+          rightPinning={["action"]}
+        />
       )}
       {Boolean(editId) && (
         <EditDiscount editId={editId} handleClose={() => setEditId(null)} />

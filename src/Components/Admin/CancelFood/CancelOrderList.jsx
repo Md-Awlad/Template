@@ -138,7 +138,12 @@ const CancelOrderList = ({ cancelOrder, isLoading, isError }) => {
             Could not get Cancel Orders
           </Alert>
         ) : (
-          <CustomDataGrid rows={cancelOrder} columns={columns} />
+          <CustomDataGrid
+            rows={cancelOrder}
+            columns={columns}
+            leftPinning={["id"]}
+            rightPinning={["action"]}
+          />
         )}
       </div>
       {Boolean(deleteId) && (

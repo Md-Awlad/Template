@@ -201,7 +201,12 @@ const Food = ({ category, customizeFood }) => {
 
   return (
     <>
-      <CustomDataGrid rows={food} columns={columns} />
+      <CustomDataGrid
+        rows={food}
+        columns={columns}
+        leftPinning={["id"]}
+        rightPinning={["action"]}
+      />
 
       {Boolean(Object.entries(editFood).length) ? (
         <CustomModal

@@ -36,7 +36,7 @@ const ApplyDiscountList = ({
       headerAlign: "center",
       align: "center",
     },
-    
+
     {
       field: "food",
       headerName: "Food",
@@ -116,6 +116,8 @@ const ApplyDiscountList = ({
           rows={applyDiscount}
           applyRefetch={applyRefetch}
           columns={columns}
+          leftPinning={["id"]}
+          rightPinning={["action"]}
         />
       )}
       {Boolean(allData && editId) ? (
