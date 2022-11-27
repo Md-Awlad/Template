@@ -114,7 +114,11 @@ function AddToCartModal(props) {
         <Box>
           <img
             src={item?.image}
-            className="w-full  h-56 object-cover rounded-t-lg  "
+            className="w-full  h-56 object-cover rounded-t-lg "
+            onError={({ currentTarget }) => {
+              currentTarget.onerror = null; // prevents looping
+              currentTarget.src = "https://i.ibb.co/XbJNdft/defaultfood.png";
+            }}
             alt=""
           />
         </Box>
