@@ -166,7 +166,7 @@ const App = () => {
       <div className={currentMode === "Dark" ? "dark" : ""}>
         <div className="overflow-hidden">
           <SuspenseLoader>
-            {restaurantIsLoading ? <MainLoader /> : allRoutes}
+            { allRoutes}
           </SuspenseLoader>
         </div>
         <ToastContainer
