@@ -24,6 +24,8 @@ const CustomDataGrid = ({
   component = true,
   showQuickFilter = true,
   hideFooter = false,
+  leftPinning = [],
+  rightPinning = [],
 }) => {
   const [pageSize, setPageSize] = useState(7);
   const [density, setDensity] = useState("standard");
@@ -140,6 +142,9 @@ const CustomDataGrid = ({
               disableToolbarButton: allowExport && csv ? false : true,
             },
           },
+        }}
+        initialState={{
+          pinnedColumns: { left: leftPinning, right: rightPinning },
         }}
       />
     </Box>

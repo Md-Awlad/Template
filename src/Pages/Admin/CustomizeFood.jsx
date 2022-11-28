@@ -115,6 +115,8 @@ const CustomizeFood = () => {
         rows={customizeFood}
         isLoading={isLoading}
         columns={columns}
+        leftPinning={["id"]}
+        rightPinning={["action"]}
       />
       {Boolean(Object.entries(editCustomFood).length) && (
         <CustomModal
