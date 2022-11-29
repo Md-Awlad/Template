@@ -17,7 +17,13 @@ import EditCategory from "../../Modals/Admin/EditCategory";
 import DeleteCategory from "../../Modals/Admin/DeleteCategory";
 import LoaderSource from "../../Loaders/LoaderSource";
 
-const FoodCategory = ({ categories, isLoading, isError, customizeFood }) => {
+const FoodCategory = ({
+  categories,
+  isLoading,
+  isError,
+  customizeFood,
+  foodRefetch,
+}) => {
   const { currentMode } = useStateContext();
   const [editId, setEditId] = useState(null);
   const [deleteId, setDeleteId] = useState(null);
@@ -76,7 +82,11 @@ const FoodCategory = ({ categories, isLoading, isError, customizeFood }) => {
                 </button>
               </Typography>
               <Typography>
-                <Food category={item} customizeFood={customizeFood} />
+                <Food
+                  category={item}
+                  customizeFood={customizeFood}
+                  foodRefetch={foodRefetch}
+                />
               </Typography>
             </AccordionDetails>
           </Accordion>

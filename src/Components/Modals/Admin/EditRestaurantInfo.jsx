@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import { useStateContext } from "../../../Contexts/ContextProvider";
 import { staticAxios } from "../../../utils/myAxios";
 import { useState } from "react";
+import { SketchPicker } from "react-color";
 
 const style = {
   position: "absolute",
@@ -120,7 +121,7 @@ const EditRestaurantInfo = ({ handleModalClose, data, data: { id } }) => {
         </Grid>
         {/* --color-- */}
         <Grid item xs={12} md={6}>
-          <TextField
+          {/* <TextField
             id="colorCode"
             label="Restaurant Color Code"
             type="text"
@@ -128,7 +129,8 @@ const EditRestaurantInfo = ({ handleModalClose, data, data: { id } }) => {
             defaultValue={data?.color}
             {...register("colorCode")}
             fullWidth
-          />
+          /> */}
+          <SketchPicker />
         </Grid>
 
         {/* --logo-- */}

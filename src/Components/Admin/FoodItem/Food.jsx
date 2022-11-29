@@ -3,14 +3,12 @@ import { useQuery } from "@tanstack/react-query";
 import React, { useState } from "react";
 import { MdModeEdit } from "react-icons/md";
 import { RiDeleteBin6Line } from "react-icons/ri";
-import { useStateContext } from "../../../Contexts/ContextProvider";
 import myAxios from "../../../utils/myAxios";
 import DeleteFood from "../../Modals/Admin/DeleteFood";
 import EditFood from "../../Modals/Admin/EditFood";
 import CustomDataGrid from "../../Shared/CustomDataGrid";
 
-const Food = ({ category, customizeFood }) => {
-  const { currentColor, currentMode } = useStateContext();
+const Food = ({ category, customizeFood, foodRefetch }) => {
   const [editId, setEditId] = useState(null);
   const [deleteId, setDeleteId] = useState(null);
 
@@ -220,7 +218,11 @@ const Food = ({ category, customizeFood }) => {
   return (
     <>
       <div style={{ height: 510, width: "100%" }}>
-        <CustomDataGrid rows={food} columns={columns} />
+        <CustomDataGrid
+          rows={food}
+          columns={columns}
+          foodRefetch={foodRefetch}
+        />
       </div>
       {Boolean(allFoodData && editId) ? (
         <EditFood
