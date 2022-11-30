@@ -36,7 +36,7 @@ const AddFoodItem = ({
     formState: { errors },
   } = useForm({
     defaultValues: {
-      item: [{ title: "" }],
+      item: [{ title: "", price: "" }],
     },
   });
   const { fields, append, remove } = useFieldArray({
