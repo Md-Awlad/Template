@@ -1,16 +1,12 @@
 import { Box, Avatar, Grid, InputAdornment, TextField } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { ColorPicker, toColor, useColor } from "react-color-palette";
-// import { SketchPicker } from "react-color";
 import "react-color-palette/lib/css/styles.css";
 
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { useStateContext } from "../../../Contexts/ContextProvider";
 import myAxios from "../../../utils/myAxios";
-// import Hue from "@uiw/react-color-hue";
-// import HexEditor from "react-hex-editor";
-// import oneDarkPro from "react-hex-editor/themes/oneDarkPro";
 
 const EditRestaurantInfo = ({
   handleModalClose,
@@ -169,17 +165,9 @@ const EditRestaurantInfo = ({
                 </InputAdornment>
               ),
             }}
-            // onChange={(e) => setColorCode(e.target.value)}
             {...register("colorCode")}
             fullWidth
           />
-          {/* <input
-            defaultValue={data?.color}
-            value={colorCode}
-            onChange={(e) => setColorCode(e.target.value)}
-            type="color"
-            className="w-full h-6 border-neutral rounded-md"
-          /> */}
           <Box
             sx={{
               mt: 2,
@@ -196,12 +184,6 @@ const EditRestaurantInfo = ({
               hex
             />
           </Box>
-          {/* <Hue
-            hue={hsva.h}
-            onChange={(newHue) => {
-              setHsva({ ...hsva, ...newHue });
-            }}
-          /> */}
         </Grid>
 
         {/* --logo-- */}

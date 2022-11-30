@@ -1039,13 +1039,6 @@
   dependencies:
     regenerator-runtime "^0.13.10"
 
-"@babel/runtime@~7.19.0":
-  version "7.19.4"
-  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.19.4.tgz#a42f814502ee467d55b38dd1c256f53a7b885c78"
-  integrity sha512-EXpLCrk55f+cYqmHsSR+yD/0gAIMxxA9QK9lnQWzhMCvt+YmoBN7Zx94s++Kv0+unHk39vxNO8t+CMA2WSS3wA==
-  dependencies:
-    regenerator-runtime "^0.13.4"
-
 "@babel/template@^7.18.6", "@babel/template@^7.3.3":
   version "7.18.6"
   resolved "https://registry.npmjs.org/@babel/template/-/template-7.18.6.tgz"
@@ -2545,36 +2538,6 @@
     "@typescript-eslint/types" "5.31.0"
     eslint-visitor-keys "^3.3.0"
 
-"@uiw/color-convert@1.1.1":
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/@uiw/color-convert/-/color-convert-1.1.1.tgz#6dc15114f5047b2c6382195d2720d1db17137935"
-  integrity sha512-lLuNBe6r1/hXzQi04YOnaOWJFgpbJgEuL+CYOfd03EBwo0r1aKVGlmhu6xhDATooKRx3CRWM+SgImy9Iebj/Tg==
-
-"@uiw/react-color-alpha@1.1.1":
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/@uiw/react-color-alpha/-/react-color-alpha-1.1.1.tgz#006883e7fb6c55478726d8b64dbf83e53f1d82ba"
-  integrity sha512-PM4CuZDJpljiALflIKO6fMJAs70N7W087OZe3VsFgDC5joqjr/ScNQ4aY1OVJCorfbA441q4bK3SRSrjQyQd/A==
-  dependencies:
-    "@babel/runtime" "~7.19.0"
-    "@uiw/color-convert" "1.1.1"
-    "@uiw/react-drag-event-interactive" "1.1.1"
-
-"@uiw/react-color-hue@^1.1.1":
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/@uiw/react-color-hue/-/react-color-hue-1.1.1.tgz#0e4ea0f33f0ae04ec4d44be513f9032cb927a467"
-  integrity sha512-p1z64yLc52x1OVJkN1zk9W14B85MR+xj1qRFxX5JRTFds6bfKmXdwDAu4dBRmHg1LRkTRpMvIs89z/0u71jgJg==
-  dependencies:
-    "@babel/runtime" "~7.19.0"
-    "@uiw/color-convert" "1.1.1"
-    "@uiw/react-color-alpha" "1.1.1"
-
-"@uiw/react-drag-event-interactive@1.1.1":
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/@uiw/react-drag-event-interactive/-/react-drag-event-interactive-1.1.1.tgz#96c023fc63cf93126a33663c7b94ed85a8d707dc"
-  integrity sha512-vD/I7zzDJR6plZKRrgVimKhcpBBtJoTk8AjNi+qvGHu33pMg4/BwuGhTyk02EAzj8HtosZvTDnPcfgERNPGQDg==
-  dependencies:
-    "@babel/runtime" "~7.19.0"
-
 "@webassemblyjs/ast@1.11.1":
   version "1.11.1"
   resolved "https://registry.npmjs.org/@webassemblyjs/ast/-/ast-1.11.1.tgz"
@@ -3476,7 +3439,7 @@ cjs-module-lexer@^1.0.0:
   resolved "https://registry.npmjs.org/cjs-module-lexer/-/cjs-module-lexer-1.2.2.tgz"
   integrity sha512-cOU9usZw8/dXIXKtwa8pM0OTJQuJkxMN6w30csNRUerHfeQ5R6U3kkU/FtJeIf3M202OHfY2U8ccInBG7/xogA==
 
-classnames@^2.2.5, classnames@^2.2.6:
+classnames@^2.2.5:
   version "2.3.2"
   resolved "https://registry.npmjs.org/classnames/-/classnames-2.3.2.tgz"
   integrity sha512-CSbhY4cFEJRe6/GQzIk5qXZ4Jeg5pcsP7b5peFSDpffpe1cqjASH/n9UTjBwOp6XpMSTwQ8Za2K5V02ueA7Tmw==
@@ -6493,16 +6456,6 @@ jspdf@^2.5.1:
     array-includes "^3.1.5"
     object.assign "^4.1.2"
 
-keycode-js@^2.0.3:
-  version "2.0.3"
-  resolved "https://registry.yarnpkg.com/keycode-js/-/keycode-js-2.0.3.tgz#0ef559be057847aae6c520ce03577f4a12f7e257"
-  integrity sha512-nGuOQ0zvYQFr0OOBOZS47e/ifsiuNz1pleQIFS+LX+udj3St6AvHpv55MI8DCre6Yg9D2CG/qqWbuAx7iQt9FQ==
-
-keycoder@^1.1.1:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/keycoder/-/keycoder-1.1.1.tgz#09d7abee7e52b0171722f5bb238e8af885d2b16a"
-  integrity sha512-a5/Z1O28CLLGtzOmknZPPCze8OG8ZavCYRxB/GGfqyHMP3i1zTyBHCp6oyCNA4S/0jhOWIK/Sb7Zbaof6XY+yw==
-
 kind-of@^6.0.2:
   version "6.0.3"
   resolved "https://registry.npmjs.org/kind-of/-/kind-of-6.0.3.tgz"
@@ -6738,11 +6691,6 @@ memfs@^3.1.2, memfs@^3.4.3:
   integrity sha512-ygaiUSNalBX85388uskeCyhSAoOSgzBbtVCr9jA2RROssFL9Q19/ZXFqS+2Th2sr1ewNIWgFdLzLC3Yl1Zv+lw==
   dependencies:
     fs-monkey "^1.0.3"
-
-"memoize-one@>=3.1.1 <6":
-  version "5.2.1"
-  resolved "https://registry.yarnpkg.com/memoize-one/-/memoize-one-5.2.1.tgz#8337aa3c4335581839ec01c3d594090cebe8f00e"
-  integrity sha512-zYiwtZUcYyXKo/np96AGZAckk+FWWsUdJ3cHGGmld7+AhvcWmQyGCYUh1hc4Q/pkOhb65dQR/pqCyK0cOaHz4Q==
 
 merge-class-names@^1.1.1:
   version "1.4.2"
@@ -8130,17 +8078,6 @@ react-fast-marquee@^1.3.5:
   resolved "https://registry.npmjs.org/react-fast-marquee/-/react-fast-marquee-1.3.5.tgz"
   integrity sha512-eOqLoz4iVVBvi2wN/web8hd2XX9y2Z6CYR7g++7nTVHlTOXBtqyARQJ9rYNpbp179hAzloMx0yBFAo8LpNYmKQ==
 
-react-hex-editor@^0.3.0:
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/react-hex-editor/-/react-hex-editor-0.3.0.tgz#4133715faa9eb46ea3f373ec0c81a2e379fe6575"
-  integrity sha512-LnmNYK4OKDb4tgPGkC4j4ASwN1PRPvXy6cxlDawJnggAjp9eohtR728ohVkWolr/U67XgPH3657zmzoRg2WUFQ==
-  dependencies:
-    classnames "^2.2.6"
-    keycode-js "^2.0.3"
-    keycoder "^1.1.1"
-    react-virtualized-auto-sizer "^1.0.2"
-    react-window "^1.8.5"
-
 react-hook-form@^7.34.0:
   version "7.34.0"
   resolved "https://registry.npmjs.org/react-hook-form/-/react-hook-form-7.34.0.tgz"
@@ -8355,19 +8292,6 @@ react-transition-group@^4.4.2:
     dom-helpers "^5.0.1"
     loose-envify "^1.4.0"
     prop-types "^15.6.2"
-
-react-virtualized-auto-sizer@^1.0.2:
-  version "1.0.7"
-  resolved "https://registry.yarnpkg.com/react-virtualized-auto-sizer/-/react-virtualized-auto-sizer-1.0.7.tgz#bfb8414698ad1597912473de3e2e5f82180c1195"
-  integrity sha512-Mxi6lwOmjwIjC1X4gABXMJcKHsOo0xWl3E3ugOgufB8GJU+MqrtY35aBuvCYv/razQ1Vbp7h1gWJjGjoNN5pmA==
-
-react-window@^1.8.5:
-  version "1.8.8"
-  resolved "https://registry.yarnpkg.com/react-window/-/react-window-1.8.8.tgz#1b52919f009ddf91970cbdb2050a6c7be44df243"
-  integrity sha512-D4IiBeRtGXziZ1n0XklnFGu7h9gU684zepqyKzgPNzrsrk7xOCxni+TCckjg2Nr/DiaEEGVVmnhYSlT2rB47dQ==
-  dependencies:
-    "@babel/runtime" "^7.0.0"
-    memoize-one ">=3.1.1 <6"
 
 "react@^17.0.0 || ^18.0.0", react@^18.2.0:
   version "18.2.0"
