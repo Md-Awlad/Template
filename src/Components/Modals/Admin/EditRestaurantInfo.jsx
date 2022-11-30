@@ -12,13 +12,18 @@ import myAxios from "../../../utils/myAxios";
 // import HexEditor from "react-hex-editor";
 // import oneDarkPro from "react-hex-editor/themes/oneDarkPro";
 
-const EditRestaurantInfo = ({ handleModalClose, data, data: { id } }) => {
+const EditRestaurantInfo = ({
+  handleModalClose,
+  data: restData,
+  data: { id },
+}) => {
   const { currentColor, refetch } = useStateContext();
-  const [colorCode, setColorCode] = useState();
   const [restaurantBanner, setRestaurantBanner] = useState(null);
   const { register, handleSubmit, setValue } = useForm();
-  // const [hsva, setHsva] = useState("#ffffff");
-  const [color, setColor] = useColor("hex", "#121212");
+  const [color, setColor] = useColor(
+    "hex",
+    `${restData.colorCode ? restData.colorCode : "#121212"}`
+  );
   console.log(color);
 
   const onSubmit = async (data) => {
@@ -31,7 +36,7 @@ const EditRestaurantInfo = ({ handleModalClose, data, data: { id } }) => {
       payloadForm.append("address_two", data?.address_two);
     }
 
-    payloadForm.append("color", colorCode);
+    payloadForm.append("color", color?.hex);
     // if (data?.logo[0]) {
     //   payloadForm.append("logo", data?.logo[0]);
     // }
@@ -53,16 +58,18 @@ const EditRestaurantInfo = ({ handleModalClose, data, data: { id } }) => {
     handleModalClose();
     refetch();
   };
+
+  console.log(restData?.color);
   useEffect(() => {
-    setValue("name", data?.name);
-    setValue("phone", data?.phone_number);
-    setValue("email", data?.email);
-    setValue("address_one", data?.address_one);
-    setValue("address_two", data?.address_two);
-    setValue("colorCode", colorCode);
+    setValue("name", restData?.name);
+    setValue("phone", restData?.phone_number);
+    setValue("email", restData?.email);
+    setValue("address_one", restData?.address_one);
+    setValue("address_two", restData?.address_two);
+    setValue("colorCode", restData?.color);
     // setValue("logo", data?.logo);
     // setValue("banner", data?.banner);
-  }, [data]);
+  }, [restData]);
   return (
     <Box
       sx={{
@@ -142,11 +149,28 @@ const EditRestaurantInfo = ({ handleModalClose, data, data: { id } }) => {
             label="Restaurant Color Code"
             type="text"
             InputLabelProps={{ shrink: true }}
-            // defaultValue={data?.color}
+            defaultValue={restData?.color}
             // value={data?.color}
             value={color?.hex}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment
+                  position="end"
+                  sx={{
+                    marginRight: "-10px",
+                  }}
+                >
+                  <Box
+                    sx={{
+                      bgcolor: color?.hex,
+                    }}
+                    className="w-11 h-11 rounded-md"
+                  ></Box>
+                </InputAdornment>
+              ),
+            }}
             // onChange={(e) => setColorCode(e.target.value)}
-            // {...register("colorCode")}
+            {...register("colorCode")}
             fullWidth
           />
           {/* <input
@@ -156,16 +180,22 @@ const EditRestaurantInfo = ({ handleModalClose, data, data: { id } }) => {
             type="color"
             className="w-full h-6 border-neutral rounded-md"
           /> */}
-          {/* <ColorPicker
-            width={520}
-            height={50}
-            color={color}
-            onChange={setColor}
-            hideHEX
-            hideHSV
-            hideRGB
-            hex
-          /> */}
+          <Box
+            sx={{
+              mt: 2,
+            }}
+          >
+            <ColorPicker
+              width={520}
+              height={50}
+              color={color}
+              onChange={setColor}
+              hideHEX
+              hideHSV
+              hideRGB
+              hex
+            />
+          </Box>
           {/* <Hue
             hue={hsva.h}
             onChange={(newHue) => {
@@ -232,7 +262,7 @@ const EditRestaurantInfo = ({ handleModalClose, data, data: { id } }) => {
                   }}
                 >
                   <Avatar
-                    src={restaurantBanner ?? data?.banner}
+                    src={restaurantBanner ?? restData?.banner}
                     variant="rounded"
                   />
                 </InputAdornment>
