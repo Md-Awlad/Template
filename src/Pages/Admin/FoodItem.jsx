@@ -70,6 +70,7 @@ const FoodItem = () => {
         modalOpenTwo={handleModalOpenTwo}
       />
       <FoodCategory
+        foodRefetch={foodRefetch}
         categories={categories}
         isLoading={isLoading}
         isError={isError}

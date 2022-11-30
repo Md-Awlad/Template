@@ -17,7 +17,13 @@ import DeleteCategory from "../../Modals/Admin/DeleteCategory";
 import EditCategory from "../../Modals/Admin/EditCategory";
 import Food from "./Food";
 
-const FoodCategory = ({ categories, isLoading, isError, customizeFood }) => {
+const FoodCategory = ({
+  categories,
+  isLoading,
+  isError,
+  customizeFood,
+  foodRefetch,
+}) => {
   const { currentMode } = useStateContext();
   const [editId, setEditId] = useState(null);
   const [deleteId, setDeleteId] = useState(null);

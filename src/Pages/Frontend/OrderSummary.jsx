@@ -98,18 +98,23 @@ const OrderSummary = () => {
                   Order Details
                 </Typography>
                 <Box>
-                  <Typography variant="h6" sx={{ fontSize: { xs: 14 } }}>
+                  {/* <Typography variant="h6" sx={{ fontSize: { xs: 14 } }}>
                     {`${
                       orderSummary?.order_type === "takeaway"
                         ? "Takeaway"
                         : orderSummary?.order_type === "dine_in" && "Dine In"
                     }`}
-                  </Typography>
+                  </Typography> */}
                   <Typography variant="h6" sx={{ fontSize: { xs: 14 } }}>
                     Phone: {orderSummary.phone}
                   </Typography>
                   <Typography variant="h6" sx={{ fontSize: { xs: 14 } }}>
-                    Order Type: {orderSummary.order_type.replace("_", " ")}
+                    Order Type:{" "}
+                    {`${
+                      orderSummary?.order_type === "takeaway"
+                        ? "Takeaway"
+                        : orderSummary?.order_type === "dine_in" && "Dine In"
+                    }`}
                   </Typography>
                 </Box>
               </Box>
