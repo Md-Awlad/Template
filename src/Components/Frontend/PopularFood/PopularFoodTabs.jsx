@@ -34,44 +34,41 @@ const PopularFoodTabs = () => {
     setValue(newValue);
   };
   return (
-    <div>
-      {" "}
-      <Box>
-        <Tabs
-          value={value}
-          onChange={handleChange}
-          aria-label="basic tabs example"
-          variant="scrollable"
-          scrollButtons="auto"
-          allowScrollButtonsMobile
-          sx={{
-            "& .MuiTabs-indicator": {
-              backgroundColor: "#F0A70B",
-            },
-            "& button": {
-              color: "#000",
-              borderRadius: "5px 5px 0 0 ",
-              paddingX: 3,
-            },
-            "& button.Mui-selected": {
-              backgroundColor: "#F0A70B",
-              color: "#000",
-            },
-          }}
-        >
-          <Tab label="Popular Food" {...a11yProps(0)} />
-          <Tab label="Recommend Food" {...a11yProps(1)} />
-        </Tabs>
-        {/* --dineIn-- */}
-        <TabPanel value={value} index={0}>
-          <PopularFood />
-        </TabPanel>
-        {/* --takeaway-- */}
-        <TabPanel value={value} index={1}>
-          <RecommendFood />
-        </TabPanel>
-      </Box>
-    </div>
+    <Box>
+      <Tabs
+        value={value}
+        onChange={handleChange}
+        aria-label="basic tabs example"
+        variant="scrollable"
+        scrollButtons="auto"
+        allowScrollButtonsMobile
+        sx={{
+          "& .MuiTabs-indicator": {
+            backgroundColor: "#F0A70B",
+          },
+          "& button": {
+            color: "#000",
+            borderRadius: "5px 5px 0 0 ",
+            paddingX: 3,
+          },
+          "& button.Mui-selected": {
+            backgroundColor: "#F0A70B",
+            color: "#000",
+          },
+        }}
+      >
+        <Tab label="Popular Food" {...a11yProps(0)} />
+        <Tab label="Recommend Food" {...a11yProps(1)} />
+      </Tabs>
+      {/* --dineIn-- */}
+      <TabPanel value={value} index={0}>
+        <PopularFood />
+      </TabPanel>
+      {/* --takeaway-- */}
+      <TabPanel value={value} index={1}>
+        <RecommendFood />
+      </TabPanel>
+    </Box>
   );
 };
 

@@ -1,4 +1,5 @@
 import { Box, Grid, Paper, Typography } from "@mui/material";
+import moment from "moment";
 import React from "react";
 import { useStateContext } from "../../../Contexts/ContextProvider";
 import mainBanner from "../../../image/Cover-Banner-17.jpg";
@@ -27,6 +28,11 @@ const RestaurantSetting = () => {
               <img
                 className="md:w-52 md:h-52 w-40 h-40 object-cover rounded-full m-auto"
                 src={data?.logo || mainLogo}
+                onError={({ currentTarget }) => {
+                  currentTarget.onerror = null; // prevents looping
+                  currentTarget.src =
+                    "https://i.ibb.co/L1v4dJD/resturant-Defalut-Banner.jpg";
+                }}
                 alt=""
               />
             </Box>
@@ -83,8 +89,7 @@ const RestaurantSetting = () => {
                         fontWeight: 500,
                       }}
                     >
-                      {data?.address ||
-                        "6th Floor, House#30, Sonargaon Janapath Road, Sector#12, Uttara, Dhaka-1230."}
+                      {data?.address_one || "no address"}
                     </Typography>
                   </Grid>
                 </Grid>
@@ -107,7 +112,7 @@ const RestaurantSetting = () => {
                         fontWeight: 500,
                       }}
                     >
-                      {data?.phone_number || "+880 1738-812828"}
+                      {data?.phone_number || ""}
                     </Typography>
                   </Grid>
                 </Grid>
@@ -130,7 +135,48 @@ const RestaurantSetting = () => {
                         fontWeight: 500,
                       }}
                     >
-                      {data?.restaurants_email || "info@nexisltd.com"}
+                      {data?.email || "no email set"}
+                    </Typography>
+                  </Grid>
+                </Grid>
+                <Grid
+                  container
+                  sx={{
+                    justifyContent: "space-between",
+                    mt: 4,
+                    // color: {},
+                    fontWeight: 500,
+                    fontSize: 11,
+                  }}
+                >
+                  <Grid item xs={4}>
+                    <Typography
+                      sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                      }}
+                    >
+                      <Box
+                        component="span"
+                        sx={{
+                          fontWeight: 500,
+                        }}
+                      >
+                        Subscription End Date
+                      </Box>
+                      <Box component="span">:</Box>
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={7}>
+                    <Typography
+                      sx={{
+                        fontWeight: 500,
+                      }}
+                    >
+                      {moment(data?.subscription_end_date).format(
+                        "DD-MM-YYYY"
+                      ) || "N/A"}
                     </Typography>
                   </Grid>
                 </Grid>

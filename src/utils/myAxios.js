@@ -6,17 +6,13 @@ import {
   setAccessToken,
 } from "./localStorages";
 
-// const baseURL = "https://api.nexismenu.live";
 export const baseURL =
   process.env.NODE_ENV === "production"
-    ? "https://api.nexismenu.live"
-    : "https://api.nexismenu.live";
-// const baseURL = "https://api.nexismenu.live";
-// export const baseURL = "http://10.27.27.32:8000";
+    ? "https://api.nexismenu.live/api"
+    : "http://10.27.27.32:8000/api";
 
 const myAxios = axios.create({ baseURL });
 export const staticAxios = axios.create({ baseURL });
-
 // Add a request interceptor
 myAxios.interceptors.request.use(
   function (config) {

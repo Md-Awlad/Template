@@ -1,30 +1,14 @@
-import { Box } from "@mui/system";
-import React from "react";
-import TextField from "@mui/material/TextField";
-import { useForm } from "react-hook-form";
-import { useStateContext } from "../../../Contexts/ContextProvider";
 import { Autocomplete, Grid } from "@mui/material";
-import { toast } from "react-toastify";
-import myAxios from "../../../utils/myAxios";
-import { useState } from "react";
+import TextField from "@mui/material/TextField";
+import { Box } from "@mui/system";
+import { DatePicker } from "@mui/x-date-pickers";
 import { useQueryClient } from "@tanstack/react-query";
 import moment from "moment";
-import { DatePicker } from "@mui/x-date-pickers";
-
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "#fff",
-  border: "2px solid #fff",
-  borderRadius: "5px",
-  boxShadow: 24,
-  pt: 2,
-  px: 4,
-  pb: 3,
-};
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
+import { useStateContext } from "../../../Contexts/ContextProvider";
+import myAxios from "../../../utils/myAxios";
 
 const ApplyDiscount = ({
   discounts,
@@ -38,7 +22,6 @@ const ApplyDiscount = ({
   const [food, setFood] = useState();
   const [date, setDate] = useState(moment());
   const queryClient = useQueryClient();
-  console.log(category?.map((da) => da?.id));
   const { handleSubmit } = useForm();
 
   const onSubmit = async (data) => {
@@ -62,7 +45,7 @@ const ApplyDiscount = ({
   };
 
   return (
-    <Box sx={{ ...style, width: { sm: 700, xs: 400 } }}>
+    <Box sx={{ p: 5 }}>
       <h2 className="text-xl font-bold pb-3">Apply Discount</h2>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
         {/* --discount-- */}
@@ -73,6 +56,7 @@ const ApplyDiscount = ({
             id="combo-box-demo"
             options={discounts?.map((discount) => discount)}
             getOptionLabel={(option) => option?.name}
+            isOptionEqualToValue={(option, value) => option.id === value.id}
             filterSelectedOptions
             onChange={(_, newValue) => setDiscount(newValue)}
             renderInput={(params) => (
@@ -88,6 +72,7 @@ const ApplyDiscount = ({
             id="combo-box-demo"
             options={categories?.map((category) => category)}
             getOptionLabel={(option) => option?.name}
+            isOptionEqualToValue={(option, value) => option.id === value.id}
             filterSelectedOptions
             onChange={(_, newValue) => setCategory(newValue)}
             renderInput={(params) => (
@@ -103,6 +88,7 @@ const ApplyDiscount = ({
             id="combo-box-demo"
             options={foods?.map((food) => food)}
             getOptionLabel={(option) => option?.food_name}
+            isOptionEqualToValue={(option, value) => option.id === value.id}
             filterSelectedOptions
             onChange={(_, newValue) => setFood(newValue)}
             renderInput={(params) => (

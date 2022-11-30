@@ -1,10 +1,11 @@
-import { Container, Modal } from "@mui/material";
+import { Container } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import FoodCategory from "../../Components/Admin/FoodItem/FoodCategory";
 import AddCategory from "../../Components/Modals/Admin/AddCategory";
 import AddFoodItem from "../../Components/Modals/Admin/AddFoodItem";
 import PageTitle from "../../Components/PageTitle/PageTitle";
+import { CustomModal } from "../../Components/Shared/SharedStyles";
 import myAxios from "../../utils/myAxios";
 
 const FoodItem = () => {
@@ -33,7 +34,7 @@ const FoodItem = () => {
     const res = await myAxios("/category/");
     return res.data;
   });
-
+  console.log(categories);
   const { refetch: foodRefetch } = useQuery(["food"], async () => {
     const res = await myAxios("/food/");
     return res.data;
@@ -46,20 +47,20 @@ const FoodItem = () => {
 
   return (
     <Container>
-      <Modal open={openModal} onClose={handleModalClose}>
+      <CustomModal open={openModal} onClose={handleModalClose}>
         <AddCategory
           categoryRefetch={categoryRefetch}
           handleModalClose={handleModalClose}
         />
-      </Modal>
-      <Modal open={openModalTwo} onClose={handleModalCloseTwo}>
+      </CustomModal>
+      <CustomModal open={openModalTwo} onClose={handleModalCloseTwo}>
         <AddFoodItem
           foodRefetch={foodRefetch}
           handleModalCloseTwo={handleModalCloseTwo}
           categories={categories}
           customizeFood={customizeFood}
         />
-      </Modal>
+      </CustomModal>
       <PageTitle
         headingText="Food Item"
         pageName="food"

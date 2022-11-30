@@ -1,12 +1,12 @@
-import { Box } from "@mui/system";
-import React from "react";
-import TextField from "@mui/material/TextField";
-import { useForm } from "react-hook-form";
 import { Grid } from "@mui/material";
+import TextField from "@mui/material/TextField";
+import { Box } from "@mui/system";
+import { useQueryClient } from "@tanstack/react-query";
+import React from "react";
+import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { useStateContext } from "../../../Contexts/ContextProvider";
 import myAxios from "../../../utils/myAxios";
-import { useQueryClient } from "@tanstack/react-query";
 
 const style = {
   position: "absolute",
@@ -32,26 +32,27 @@ const AddCustomFood = ({ handleModalClose, categories, foods }) => {
   } = useForm();
   const queryClient = useQueryClient();
 
+  /**
+   * OnSubmit is a function that takes in data, and then sends a post request to the server with the
+   * data, and then closes the modal.
+   */
   const onSubmit = async (data) => {
     const payload = {
       ingredient_name: data?.extraName,
       price: data?.extraPrice,
     };
 
-    const response = await toast.promise(
-      myAxios.post("/customize_food/", payload),
-      {
-        pending: "Adding Extra...",
-        success: "Extra Added",
-        error: "Error Adding Extra!",
-      }
-    );
+    await toast.promise(myAxios.post("/customize_food/", payload), {
+      pending: "Adding Extra...",
+      success: "Extra Added",
+      error: "Error Adding Extra!",
+    });
     queryClient.invalidateQueries("customize_food");
     handleModalClose();
   };
 
   return (
-    <Box sx={{ ...style, width: { sm: 700, xs: 400 } }}>
+    <Box sx={{ p: 5 }}>
       <h2 className="text-xl font-bold pb-3">Add Custom Food</h2>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
         {/* --Extra Name-- */}

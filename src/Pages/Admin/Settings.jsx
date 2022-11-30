@@ -1,9 +1,9 @@
-import { Container, Modal } from "@mui/material";
-import React from "react";
-import { useState } from "react";
+import { Container } from "@mui/material";
+import React, { useState } from "react";
 import RestaurantSetting from "../../Components/Admin/RestaurantSetting/RestaurantSetting";
 import EditRestaurantInfo from "../../Components/Modals/Admin/EditRestaurantInfo";
 import PageTitle from "../../Components/PageTitle/PageTitle";
+import { CustomModal } from "../../Components/Shared/SharedStyles";
 import { useStateContext } from "../../Contexts/ContextProvider";
 
 const Settings = () => {
@@ -20,9 +20,9 @@ const Settings = () => {
   return (
     <Container>
       {restaurantData?.map((data, index) => (
-        <Modal key={index} open={openModal} onClose={handleModalClose}>
+        <CustomModal key={index} open={openModal} onClose={handleModalClose}>
           <EditRestaurantInfo data={data} handleModalClose={handleModalClose} />
-        </Modal>
+        </CustomModal>
       ))}
       <PageTitle
         headingText="Settings"

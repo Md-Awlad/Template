@@ -10,29 +10,14 @@ import {
 } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import { Box } from "@mui/system";
-import { useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import React, { useState } from "react";
-import { useForm } from "react-hook-form";
+import { useFieldArray, useForm } from "react-hook-form";
 import { AiOutlineClose } from "react-icons/ai";
 import { FiUpload } from "react-icons/fi";
 import { toast } from "react-toastify";
 import { useStateContext } from "../../../Contexts/ContextProvider";
 import myAxios from "../../../utils/myAxios";
-
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "#fff",
-  border: "2px solid #fff",
-  borderRadius: "5px",
-  boxShadow: 24,
-  pt: 2,
-  px: 4,
-  pb: 3,
-};
 
 const AddFoodItem = ({
   handleModalCloseTwo,
@@ -41,30 +26,68 @@ const AddFoodItem = ({
   customizeFood,
 }) => {
   const { currentColor } = useStateContext();
-  const [variants, setVariants] = useState(1);
   const [category, setCategory] = useState();
   const [extra, setExtra] = useState();
-
   const queryClient = useQueryClient();
   const {
+    control,
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    defaultValues: {
+      item: [{ title: "" }],
+    },
+  });
+  const { fields, append, remove } = useFieldArray({
+    name: "item",
+    control,
+    rules: {
+      required: "Please append at least 1 item",
+    },
+  });
 
   /**
    * I'm trying to get the price of the food from the form and store it in a variable called price.
    * </code>
+   *
+   *
    */
+
+  const { mutate: addFood } = useMutation(
+    (payloadForm) =>
+      toast.promise(
+        myAxios.postForm("/food/", payloadForm, {
+          headers: {
+            "content-type": "multipart/form-data",
+          },
+        }),
+        {
+          pending: "Adding Foods...",
+          success: "Food Added",
+          error: "Error Adding Foods!",
+        }
+      ),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries("food");
+        handleModalCloseTwo();
+        foodRefetch();
+      },
+    }
+  );
   const onSubmit = async (data) => {
-    console.log(data);
     const price = {};
     data.item?.forEach((item) => {
       if (item.title.endsWith('"')) {
         const a = item?.title?.replace(/"/g, " inch");
         price[a] = item.price;
-      } else {
+      } else if (fields.length > 1) {
         price[item.title] = item.price;
+      } else if (item.title && item.price) {
+        price[item.title] = item.price;
+      } else if (!item.title) {
+        price["regular"] = item.price;
       }
     });
     // data.item?.forEach((item) => {
@@ -84,20 +107,9 @@ const AddFoodItem = ({
     //   }
     // });
 
-    // const payloadForm = {
-    //   food_name: data?.foodName,
-    //   price: `'${JSON.stringify(price)}'`,
-    //   image: data?.image[0],
-    //   base_ingredient: data?.ingredient,
-    //   review: data?.review,
-    //   taste: data?.taste,
-    //   packaging: data?.package === null ? 0 : data?.package,
-    //   category: category,
-    //   customize_food: JSON.stringify(extra?.map((a) => a?.id)),
-    // };
     const payloadForm = new FormData();
     payloadForm.append("food_name", data?.foodName);
-    payloadForm.append("price", `'${JSON.stringify(price)}'`);
+    payloadForm.append("prices", `'${JSON.stringify(price)}'`);
     payloadForm.append("image", data?.image[0]);
     if (data?.package) {
       payloadForm.append("packaging", data?.package);
@@ -107,30 +119,13 @@ const AddFoodItem = ({
     payloadForm.append("category", category);
     payloadForm.append("custom_food", JSON.stringify(extra?.map((a) => a?.id)));
 
-    toast.promise(
-      myAxios.postForm("/food/", payloadForm, {
-        headers: {
-          "content-type": "multipart/form-data",
-        },
-      }),
-      {
-        pending: "Adding Foods...",
-        success: "Food Added",
-        error: "Error Adding Foods!",
-      }
-    );
-    queryClient.invalidateQueries("food");
-    handleModalCloseTwo();
-    foodRefetch();
+    addFood(payloadForm);
   };
 
   return (
     <Box
       sx={{
-        ...style,
-        width: { sm: 600, xs: 400 },
-        height: 500,
-        overflowY: "scroll",
+        p: 5,
       }}
     >
       <h2 className="text-3xl font-bold pb-3 text-center">Add Food Item</h2>
@@ -142,12 +137,7 @@ const AddFoodItem = ({
               id="foodName"
               label="Food Name"
               type="text"
-              // value={foodName}
-              // onChange={(newValue) => {
-              //   setFoodName(newValue);
-              // }}
               error={Boolean(errors.foodName)}
-              helperText={errors.foodName && "This food name is required *"}
               {...register("foodName", { required: true })}
               fullWidth
             />
@@ -157,14 +147,16 @@ const AddFoodItem = ({
             <Button
               sx={{ width: "100%", backgroundColor: `${currentColor}` }}
               variant="contained"
-              onClick={() => setVariants((variants) => (variants += 1))}
+              onClick={() => {
+                append();
+              }}
             >
               Add Size and Price
             </Button>
-            {new Array(variants).fill(null)?.map((item, index) => {
+            {fields?.map((field, index) => {
               return (
                 <Box
-                  key={index}
+                  key={field.id}
                   sx={{
                     display: "flex",
                     alignItems: "center",
@@ -175,13 +167,7 @@ const AddFoodItem = ({
                   <TextField
                     label="Food Size"
                     type="text"
-                    required={variants > 1 ? true : false}
-                    // error={Boolean(`errors.item.${index + 1}.title`)}
-                    // helperText={
-                    //   `errors.item.${index + 1}.title` &&
-                    //   "Food size is required *"
-                    // }
-
+                    required={fields.length > 1 ? true : false}
                     {...register(`${`item.${index}.title`}`)}
                     fullWidth
                   />
@@ -190,11 +176,13 @@ const AddFoodItem = ({
                     type="number"
                     InputProps={{ inputProps: { min: 0 } }}
                     required
-                    {...register(`item.${index}.price`)}
+                    {...register(`item.${index}.price`, {
+                      valueAsNumber: true,
+                    })}
                     fullWidth
                   />
                   <AiOutlineClose
-                    onClick={() => setVariants((variants) => (variants -= 1))}
+                    onClick={() => remove(index)}
                     className={`text-5xl cursor-pointer text-red-700 ${
                       index === 0 && "hidden"
                     }`}
@@ -266,6 +254,8 @@ const AddFoodItem = ({
             <FormControl fullWidth>
               <InputLabel id="demo-simple-select-label">Categories</InputLabel>
               <Select
+                required
+                // inputProps={{ required: true }}
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
                 label="Categories"

@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { createContext, useContext, useEffect, useState } from "react";
+import { getAccessToken } from "../utils/localStorages";
 import myAxios, { staticAxios } from "../utils/myAxios";
 
 const StateContext = createContext();
@@ -27,22 +28,36 @@ export const ContextProvider = ({ children }) => {
   const [orderId, setOrderId] = useState();
   const [confirmed, setConfirmed] = useState();
   const [customColor, setCustomColor] = useState();
-
-  const {
-    isLoading,
-    data: currentUser = {},
-  } = useQuery(["currentUser"], async () => {
-    const res = await myAxios("/user_info");
-    return res?.data;
-  });
-
-  const { data: restaurantData = [], refetch } = useQuery(
-    ["restaurant"],
+  const [accessToken, setAccessToken] = useState("");
+  // const [refreshToken, setRefreshToken] = useState("");
+  // const [currentUser, setCurrentUser] = useState({});
+  useEffect(() => {
+    setAccessToken(getAccessToken());
+  }, []);
+  const { isLoading, data: currentUser = {} } = useQuery(
+    ["currentUser"],
     async () => {
-      const res = await staticAxios("/restaurant/");
-      return res.data;
+      const res = await myAxios("/user_info/");
+
+      return res?.data;
+    },
+    {
+      // enabled: Boolean(accessToken) || Boolean(refreshToken),
+      refetchOnWindowFocus: false,
+      cacheTime: 0,
+      retry: false,
+      keepPreviousData: false,
     }
   );
+  const {
+    data: restaurantData = [],
+    isLoading: restaurantIsLoading,
+    isError: restaurantIsError,
+    refetch,
+  } = useQuery(["restaurantData"], async () => {
+    const res = await staticAxios("/restaurant/");
+    return res.data;
+  });
 
   // const { data: create_menu = {} } = useQuery(["create_menu"], async () => {
   //   const res = await myAxios("/create_menu");
@@ -87,10 +102,13 @@ export const ContextProvider = ({ children }) => {
     <StateContext.Provider
       value={{
         currentUser,
+        restaurantIsLoading,
+        restaurantIsError,
         restaurantData,
         refetch,
+
         currentPass,
-        isLoading,
+        // isLoading,
         confirmed,
         setConfirmed,
         expandedMenu,
@@ -103,6 +121,7 @@ export const ContextProvider = ({ children }) => {
         setCurrentMode,
         activeMenu,
         screenSize,
+        accessToken,
         setScreenSize,
         initialState,
         setActiveMenu,
@@ -112,6 +131,7 @@ export const ContextProvider = ({ children }) => {
         themeSettings,
         setThemeSettings,
         cart,
+        isLoading,
         setCart,
         checkbox,
         setCheckbox,

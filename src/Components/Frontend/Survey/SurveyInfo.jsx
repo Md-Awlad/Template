@@ -12,9 +12,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { useQuery } from "@tanstack/react-query";
 import React, { useState } from "react";
-import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { useStateContext } from "../../../Contexts/ContextProvider";
@@ -764,6 +762,7 @@ const SurveyInfo = () => {
               id="combo-box-demo"
               options={question}
               getOptionLabel={(option) => option.label}
+              isOptionEqualToValue={(option, value) => option.id === value.id}
               onChange={(_, newValue) => setSource(newValue.value)}
               renderInput={(params) => (
                 <TextField

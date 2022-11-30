@@ -1,9 +1,3 @@
-import { Box } from "@mui/system";
-import React, { useState } from "react";
-import TextField from "@mui/material/TextField";
-import { useForm } from "react-hook-form";
-import { useStateContext } from "../../../Contexts/ContextProvider";
-import { toast } from "react-toastify";
 import {
   FormControl,
   Grid,
@@ -12,10 +6,16 @@ import {
   Modal,
   Select,
 } from "@mui/material";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
-import myAxios from "../../../utils/myAxios";
-import moment from "moment";
+import TextField from "@mui/material/TextField";
+import { Box } from "@mui/system";
 import { DatePicker } from "@mui/x-date-pickers";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import moment from "moment";
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
+import { useStateContext } from "../../../Contexts/ContextProvider";
+import myAxios from "../../../utils/myAxios";
 
 const style = {
   position: "absolute",
@@ -48,11 +48,7 @@ const EditDiscount = ({ editId, handleClose }) => {
     payloadForm.append("is_fixed", status);
     payloadForm.append("expired_at", date);
 
-    for (const value of payloadForm.values()) {
-      console.log(value);
-    }
-
-    const response = await toast.promise(
+    await toast.promise(
       myAxios.patch(`/create_discount/${editId}/`, payloadForm, {
         headers: {
           "content-type": "multipart/form-data",
@@ -68,20 +64,15 @@ const EditDiscount = ({ editId, handleClose }) => {
     handleClose();
   };
 
-  const { data: value } = useQuery(
-    [`discounts`, editId],
-    () => myAxios(`/create_discount/${editId}`),
-    {
-      onSuccess: ({ data: discount = [] }) => {
-        console.log(discount);
-        setValue("notice", discount?.notice);
-        setValue("amount", discount?.amount);
-        setValue("condition", discount?.condition);
-        setStatus(discount?.is_fixed);
-        setDate(discount?.expired_at);
-      },
-    }
-  );
+  useQuery([`discounts`, editId], () => myAxios(`/create_discount/${editId}`), {
+    onSuccess: ({ data: discount = [] }) => {
+      setValue("notice", discount?.notice);
+      setValue("amount", discount?.amount);
+      setValue("condition", discount?.condition);
+      setStatus(discount?.is_fixed);
+      setDate(discount?.expired_at);
+    },
+  });
 
   return (
     <Modal open={Boolean(editId)} onClose={handleClose}>
@@ -90,12 +81,7 @@ const EditDiscount = ({ editId, handleClose }) => {
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
           <div className="grid grid-cols-2 gap-4">
             {/* --notice-- */}
-            <Grid
-           
-              item
-              xs={12}
-              md={6}
-            >
+            <Grid item xs={12} md={6}>
               <TextField
                 id="notice"
                 InputLabelProps={{ shrink: true }}
@@ -106,12 +92,7 @@ const EditDiscount = ({ editId, handleClose }) => {
               />
             </Grid>
             {/* --amount-- */}
-            <Grid
-            
-              item
-              xs={12}
-              md={6}
-            >
+            <Grid item xs={12} md={6}>
               <TextField
                 id="amount"
                 InputLabelProps={{ shrink: true }}
@@ -156,12 +137,7 @@ const EditDiscount = ({ editId, handleClose }) => {
             </FormControl>
           </div>
           {/* --condition-- */}
-          <Grid
-          
-            item
-            xs={12}
-            md={6}
-          >
+          <Grid item xs={12} md={6}>
             <TextField
               id="condition"
               InputLabelProps={{ shrink: true }}

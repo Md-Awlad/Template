@@ -1,4 +1,4 @@
-import { Container, Modal } from "@mui/material";
+import { Container } from "@mui/material";
 import { Box } from "@mui/system";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
@@ -9,12 +9,14 @@ import DeleteCustomFood from "../../Components/Modals/Admin/DeleteCustomFood";
 import EditCustomFood from "../../Components/Modals/Admin/EditCustomFood";
 import PageTitle from "../../Components/PageTitle/PageTitle";
 import CustomDataGrid from "../../Components/Shared/CustomDataGrid";
+import { CustomModal } from "../../Components/Shared/SharedStyles";
 import myAxios from "../../utils/myAxios";
 
 const CustomizeFood = () => {
   const [openModal, setOpenModal] = useState(false);
-  const [editId, setEditId] = useState(null);
+  const [editCustomFood, setEditCustomFood] = useState({});
   const [deleteId, setDeleteId] = useState(null);
+  console.log(editCustomFood);
   const handleModalOpen = (e) => {
     setOpenModal(true);
   };
@@ -54,7 +56,7 @@ const CustomizeFood = () => {
         return (
           <Box className="flex gap-5 items-center">
             <MdModeEdit
-              onClick={() => setEditId(row?.id)}
+              onClick={() => setEditCustomFood(row)}
               className="text-gray-600 dark:text-neutral text-xl cursor-pointer"
             />
             <RiDeleteBin6Line
@@ -70,7 +72,6 @@ const CustomizeFood = () => {
     data: customizeFood = [],
     refetch: foodRefetch,
     isLoading,
-    isError,
   } = useQuery(["customizeFood"], async () => {
     const res = await myAxios("/customize_food/");
     return res.data;
@@ -88,7 +89,7 @@ const CustomizeFood = () => {
 
   return (
     <Container>
-      <Modal open={openModal} onClose={handleModalClose}>
+      <CustomModal open={openModal} onClose={handleModalClose}>
         <AddCustomFood
           customizeFood={customizeFood}
           categories={categories}
@@ -96,7 +97,7 @@ const CustomizeFood = () => {
           foodRefetch={foodRefetch}
           handleModalClose={handleModalClose}
         />
-      </Modal>
+      </CustomModal>
       <PageTitle
         headingText="Customize Food"
         pageName="Custom Foods"
@@ -114,9 +115,20 @@ const CustomizeFood = () => {
         rows={customizeFood}
         isLoading={isLoading}
         columns={columns}
+        leftPinning={["id"]}
+        rightPinning={["action"]}
       />
-      {Boolean(editId) && (
-        <EditCustomFood editId={editId} handleClose={() => setEditId(null)} />
+      {Boolean(Object.entries(editCustomFood).length) && (
+        <CustomModal
+          open={Boolean(Object.entries(editCustomFood).length)}
+          onClose={() => setEditCustomFood({})}
+        >
+          <EditCustomFood
+            open={Boolean(Object.entries(editCustomFood).length)}
+            editCustomFood={editCustomFood}
+            handleClose={() => setEditCustomFood({})}
+          />
+        </CustomModal>
       )}
       {Boolean(deleteId) && (
         <DeleteCustomFood

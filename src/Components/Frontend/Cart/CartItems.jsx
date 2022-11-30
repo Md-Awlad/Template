@@ -12,7 +12,6 @@ import React from "react";
 import { AiOutlineMinus } from "react-icons/ai";
 import { GrAdd } from "react-icons/gr";
 import { MdClose } from "react-icons/md";
-import { staticAxios } from "../../../utils/myAxios";
 
 const CartItems = ({ cart, setCart, item }) => {
   // const addExtra = (extraId, price = 0) => {
@@ -143,7 +142,6 @@ const CartItems = ({ cart, setCart, item }) => {
       );
     }
   };
-  console.log(item);
   // const handleDecrement = (item) => {
   //   if (cart.find((i) => i.id === item.id && i.size === item.size)) {
   //     setCart(
@@ -184,8 +182,12 @@ const CartItems = ({ cart, setCart, item }) => {
       >
         <img
           className="lg:w-16 lg:h-16 w-20 h-20 object-cover rounded-full border-2 border-gray-400"
-          src={item.image}
-          alt="food_image"
+          src={item?.image}
+          onError={({ currentTarget }) => {
+            currentTarget.onerror = null; // prevents looping
+            currentTarget.src = "https://i.ibb.co/XbJNdft/defaultfood.png";
+          }}
+          alt="img"
         />
         <Box>
           <Typography variant="h6" sx={{ fontWeight: 500 }}>
@@ -275,41 +277,45 @@ const CartItems = ({ cart, setCart, item }) => {
           </AccordionSummary>
           <AccordionDetails>
             <Typography>
-              {item?.customize_food?.map((extraPrice, index) => (
-                <Box
-                  key={index}
-                  sx={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    flexWrap: { xs: "wrap", gap: 1 },
-                  }}
-                >
-                  <Box>
-                    <FormControlLabel
-                      sx={{ "& .MuiCheckbox-root": { padding: 1 } }}
-                      control={
-                        <Checkbox
-                          style={{
-                            color: "#F0A70B",
-                          }}
-                        />
-                      }
-                      label={extraPrice.name}
-                      name="size"
-                      value={
-                        item?.extra
-                          ? Boolean(item?.extra[extraPrice?.id])
-                          : false
-                      }
-                      onChange={() => addExtra(extraPrice.id, extraPrice.price)}
-                    />
+              {item?.customize_food?.map((extraPrice, index) => {
+                return (
+                  <Box
+                    key={index}
+                    sx={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                      flexWrap: { xs: "wrap", gap: 1 },
+                    }}
+                  >
+                    <Box>
+                      <FormControlLabel
+                        sx={{ "& .MuiCheckbox-root": { padding: 1 } }}
+                        control={
+                          <Checkbox
+                            style={{
+                              color: "#F0A70B",
+                            }}
+                          />
+                        }
+                        label={extraPrice.ingredient_name}
+                        name="size"
+                        value={
+                          item?.extra
+                            ? Boolean(item?.extra[extraPrice?.id])
+                            : false
+                        }
+                        onChange={() =>
+                          addExtra(extraPrice.id, extraPrice.price)
+                        }
+                      />
+                    </Box>
+                    <Typography variant="h6" sx={{ fontSize: "14px" }}>
+                      {extraPrice.price} ৳
+                    </Typography>
                   </Box>
-                  <Typography variant="h6" sx={{ fontSize: "14px" }}>
-                    {extraPrice.price} ৳
-                  </Typography>
-                </Box>
-              ))}
+                );
+              })}
             </Typography>
           </AccordionDetails>
         </Accordion>

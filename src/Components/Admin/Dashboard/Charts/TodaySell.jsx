@@ -24,8 +24,8 @@ const TodaySell = ({ orders }) => {
         paddingY: 3,
         border: "1px solid #ccc",
         borderRadius: 2,
-        boxShadow: "0 0 3px 3px #eee",
-        // height: { md: "61.5vh" },
+        // boxShadow: "0 0 3px 3px #eee",
+        height: { md: "55vh" },
       }}
     >
       <Typography variant="h6">Today Report</Typography>

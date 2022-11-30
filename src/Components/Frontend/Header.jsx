@@ -1,14 +1,24 @@
-import { Box } from "@mui/material";
-import React from "react";
+import { Dashboard } from "@mui/icons-material";
+import { Box, Button } from "@mui/material";
+import React, { useEffect, useState } from "react";
 import { MdOutlineAddShoppingCart } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { useStateContext } from "../../Contexts/ContextProvider";
 import mainLogo from "../../image/logo.png";
+import { getAccessToken } from "../../utils/localStorages";
 import CustomDrawer from "../Shared/CustomDrawer";
 
 const Header = () => {
-  const { cart, activeMenu, restaurantData } = useStateContext();
-
+  const {
+    cart,
+    activeMenu,
+    restaurantData,
+    currentUser: { id: UID = null },
+  } = useStateContext();
+  const [accessToken, setAccessToken] = useState();
+  useEffect(() => {
+    setAccessToken(getAccessToken());
+  }, []);
   return (
     <>
       {restaurantData?.map((data, index) => (
@@ -23,21 +33,29 @@ const Header = () => {
             <img
               className="w-12 h-12 object-cover rounded-full"
               src={data?.logo || mainLogo}
+              onError={({ currentTarget }) => {
+                currentTarget.onerror = null; // prevents looping
+                currentTarget.src = "https://i.ibb.co/0q5B8VP/MainLogo.png";
+              }}
               alt=""
             />
           </Link>
-
-          {/* <Typography
-      variant="h6"
-      sx={{
-        color: "#F0A70B",
-        letterSpacing: { md: "2rem", xs: "1rem" },
-        textTransform: "uppercase",
-        fontWeight: 500,
-      }}
-    >
-      digital menu card
-    </Typography> */}
+          {Boolean(UID) && (
+            <Link to="dashboard">
+              {activeMenu ? (
+                <Button
+                  sx={{
+                    color: "#fff",
+                  }}
+                  variant="contained"
+                >
+                  go to dashboard
+                </Button>
+              ) : (
+                <Dashboard />
+              )}
+            </Link>
+          )}
           {activeMenu ? null : cart?.length ? (
             <CustomDrawer />
           ) : (

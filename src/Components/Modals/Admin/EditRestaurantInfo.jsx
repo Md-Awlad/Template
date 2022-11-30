@@ -1,50 +1,45 @@
-import { Box } from "@mui/system";
-import React from "react";
-import TextField from "@mui/material/TextField";
+import { Box, Avatar, Grid, InputAdornment, TextField } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { ColorPicker, toColor, useColor } from "react-color-palette";
+// import { SketchPicker } from "react-color";
+import "react-color-palette/lib/css/styles.css";
+
 import { useForm } from "react-hook-form";
-import { Avatar, Grid, InputAdornment } from "@mui/material";
 import { toast } from "react-toastify";
 import { useStateContext } from "../../../Contexts/ContextProvider";
-import { staticAxios } from "../../../utils/myAxios";
-import { useState } from "react";
-import { SketchPicker } from "react-color";
-
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "#fff",
-  border: "2px solid #fff",
-  borderRadius: "5px",
-  boxShadow: 24,
-  pt: 2,
-  px: 4,
-  pb: 3,
-};
+import myAxios from "../../../utils/myAxios";
+// import Hue from "@uiw/react-color-hue";
+// import HexEditor from "react-hex-editor";
+// import oneDarkPro from "react-hex-editor/themes/oneDarkPro";
 
 const EditRestaurantInfo = ({ handleModalClose, data, data: { id } }) => {
   const { currentColor, refetch } = useStateContext();
-  const [restaurantLogo, setRestaurantLogo] = useState(null);
+  const [colorCode, setColorCode] = useState();
   const [restaurantBanner, setRestaurantBanner] = useState(null);
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, setValue } = useForm();
+  // const [hsva, setHsva] = useState("#ffffff");
+  const [color, setColor] = useColor("hex", "#121212");
+  console.log(color);
 
   const onSubmit = async (data) => {
     const payloadForm = new FormData();
     payloadForm.append("name", data?.name);
     payloadForm.append("restaurants_email", data?.email);
     payloadForm.append("phone_number", data?.phone);
-    payloadForm.append("address", data?.address);
-    payloadForm.append("color", data?.colorCode);
-    if (data?.logo[0]) {
-      payloadForm.append("logo", data?.logo[0]);
+    payloadForm.append("address_one", data?.address_one);
+    if (data?.addressTwo) {
+      payloadForm.append("address_two", data?.address_two);
     }
+
+    payloadForm.append("color", colorCode);
+    // if (data?.logo[0]) {
+    //   payloadForm.append("logo", data?.logo[0]);
+    // }
     if (data?.banner[0]) {
       payloadForm.append("banner", data?.banner[0]);
     }
     await toast.promise(
-      staticAxios.patch(`/restaurant/${id}/`, payloadForm, {
+      myAxios.patch(`/restaurant/${id}/`, payloadForm, {
         headers: {
           "content-type": "multipart/form-data",
         },
@@ -58,26 +53,33 @@ const EditRestaurantInfo = ({ handleModalClose, data, data: { id } }) => {
     handleModalClose();
     refetch();
   };
-
+  useEffect(() => {
+    setValue("name", data?.name);
+    setValue("phone", data?.phone_number);
+    setValue("email", data?.email);
+    setValue("address_one", data?.address_one);
+    setValue("address_two", data?.address_two);
+    setValue("colorCode", colorCode);
+    // setValue("logo", data?.logo);
+    // setValue("banner", data?.banner);
+  }, [data]);
   return (
     <Box
       sx={{
-        ...style,
-        width: { sm: 700, xs: 400 },
-        height: 500,
-        overflowY: "scroll",
+        p: 5,
       }}
     >
-      <h2 className="text-xl font-bold pb-3">Edit Restaurants</h2>
+      <h2 className="text-xl font-bold pb-3">Edit Restaurants{color?.hex}</h2>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
         {/* --name-- */}
         <Grid item xs={12} md={6}>
           <TextField
+            required
             id="name"
             label="Restaurant Name"
             type="text"
             InputLabelProps={{ shrink: true }}
-            defaultValue={data?.name}
+            // value={data?.name}
             {...register("name")}
             fullWidth
           />
@@ -85,11 +87,11 @@ const EditRestaurantInfo = ({ handleModalClose, data, data: { id } }) => {
         {/* --phone-- */}
         <Grid item xs={12} md={6}>
           <TextField
+            required
             id="phone"
             label="Restaurant Phone"
             type="text"
             InputLabelProps={{ shrink: true }}
-            defaultValue={data?.phone_number}
             {...register("phone")}
             fullWidth
           />
@@ -98,43 +100,82 @@ const EditRestaurantInfo = ({ handleModalClose, data, data: { id } }) => {
         {/* --email-- */}
         <Grid item xs={12} md={6}>
           <TextField
+            required
             id="email"
             label="Restaurant Email"
             type="text"
             InputLabelProps={{ shrink: true }}
-            defaultValue={data?.restaurants_email}
+            // value={data?.email || "no email"}
             {...register("email")}
             fullWidth
           />
         </Grid>
-        {/* --address-- */}
+        {/* --address one-- */}
+        <Grid item xs={12} md={6}>
+          <TextField
+            required
+            id="address"
+            label="Restaurant Address One"
+            type="text"
+            InputLabelProps={{ shrink: true }}
+            {...register("address_one")}
+            fullWidth
+          />
+        </Grid>
+        {/* --address two-- */}
         <Grid item xs={12} md={6}>
           <TextField
             id="address"
-            label="Restaurant Address"
+            label="Restaurant Address Two(optional)"
             type="text"
             InputLabelProps={{ shrink: true }}
-            defaultValue={data?.address}
-            {...register("address")}
+            // value={data?.address_one || "no address"}
+            {...register("address_two")}
             fullWidth
           />
         </Grid>
         {/* --color-- */}
         <Grid item xs={12} md={6}>
-          {/* <TextField
+          <TextField
+            required
             id="colorCode"
             label="Restaurant Color Code"
             type="text"
             InputLabelProps={{ shrink: true }}
-            defaultValue={data?.color}
-            {...register("colorCode")}
+            // defaultValue={data?.color}
+            // value={data?.color}
+            value={color?.hex}
+            // onChange={(e) => setColorCode(e.target.value)}
+            // {...register("colorCode")}
             fullWidth
+          />
+          {/* <input
+            defaultValue={data?.color}
+            value={colorCode}
+            onChange={(e) => setColorCode(e.target.value)}
+            type="color"
+            className="w-full h-6 border-neutral rounded-md"
           /> */}
-          <SketchPicker />
+          {/* <ColorPicker
+            width={520}
+            height={50}
+            color={color}
+            onChange={setColor}
+            hideHEX
+            hideHSV
+            hideRGB
+            hex
+          /> */}
+          {/* <Hue
+            hue={hsva.h}
+            onChange={(newHue) => {
+              setHsva({ ...hsva, ...newHue });
+            }}
+          /> */}
         </Grid>
 
         {/* --logo-- */}
-        <Grid item xs={12} md={6}>
+        {/* <Grid item xs={12} md={6}>
           <TextField
             id="logo"
             type="file"
@@ -171,7 +212,7 @@ const EditRestaurantInfo = ({ handleModalClose, data, data: { id } }) => {
               },
             }}
           />
-        </Grid>
+        </Grid> */}
 
         {/* --banner-- */}
         <Grid item xs={12} md={6}>

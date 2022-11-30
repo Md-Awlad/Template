@@ -1,25 +1,17 @@
 import { Box, Tooltip } from "@mui/material";
-import { useQuery } from "@tanstack/react-query";
 import React, { useState } from "react";
 import { MdModeEdit } from "react-icons/md";
 import { RiDeleteBin6Line } from "react-icons/ri";
-import myAxios from "../../../utils/myAxios";
 import DeleteFood from "../../Modals/Admin/DeleteFood";
 import EditFood from "../../Modals/Admin/EditFood";
 import CustomDataGrid from "../../Shared/CustomDataGrid";
+import { CustomModal } from "../../Shared/SharedStyles";
 
-const Food = ({ category, customizeFood, foodRefetch }) => {
-  const [editId, setEditId] = useState(null);
+const Food = ({ category, customizeFood }) => {
+  const [editFood, setEditFood] = useState({});
   const [deleteId, setDeleteId] = useState(null);
 
   const food = category?.foodItems_category?.map((a) => a);
-
-  /* Fetching data from the backend and setting the value of the form. */
-  const {
-    data: allFoodData,
-    isLoading,
-    isError,
-  } = useQuery([`food`, editId], async () => await myAxios(`/food/${editId}`));
 
   const columns = [
     {
@@ -63,14 +55,12 @@ const Food = ({ category, customizeFood, foodRefetch }) => {
       renderCell: ({ value }) => {
         return (
           <Tooltip
-            title={Object.keys(value).map((key, index) => {
-              return (
-                <div key={index} className="flex justify-between w-32">
-                  <h2>size: {key}</h2>
-                  <h2>Price: {value[key]}</h2>
-                </div>
-              );
-            })}
+            title={Object.keys(value).map((key, index) => (
+              <div key={index} className="flex justify-between w-32">
+                <h2>size: {key}</h2>
+                <h2>Price: {value[key]}</h2>
+              </div>
+            ))}
             placement="top"
           >
             <div className="overflow-y-auto h-12 w-full">
@@ -96,14 +86,12 @@ const Food = ({ category, customizeFood, foodRefetch }) => {
       renderCell: ({ row }) => {
         return (
           <Tooltip
-            title={row?.customize_food?.map((data) => {
-              return (
-                <div key={data?.id} className="flex gap-5">
-                  <h2>Name: {data?.name}</h2>
-                  <h2>Price: {data?.price}</h2>
-                </div>
-              );
-            })}
+            title={row?.customize_food?.map((data) => (
+              <div key={data?.id} className="flex gap-5">
+                <h2>Name: {data?.name}</h2>
+                <h2>Price: {data?.price}</h2>
+              </div>
+            ))}
             placement="top"
           >
             <div className="overflow-y-auto h-12 w-full">
@@ -130,25 +118,21 @@ const Food = ({ category, customizeFood, foodRefetch }) => {
         if (value) {
           return (
             <Tooltip
-              title={Object.keys(value)?.map((key, index) => {
-                return (
-                  <div key={index} className="flex justify-between w-36">
-                    <h2>size: {key}</h2>
-                    <h2>Price: {value[key]}</h2>
-                  </div>
-                );
-              })}
+              title={Object.keys(value)?.map((key, index) => (
+                <div key={index} className="flex justify-between w-36">
+                  <h2>size: {key}</h2>
+                  <h2>Price: {value[key]}</h2>
+                </div>
+              ))}
               placement="top"
             >
               <div className="overflow-y-auto h-12 w-full mt-7">
-                {Object.keys(value)?.map((key, index) => {
-                  return (
-                    <div key={index} className="grid grid-cols-2">
-                      <h2>size: {key}</h2>
-                      <h2>Price: {value[key]}</h2>
-                    </div>
-                  );
-                })}
+                {Object.keys(value)?.map((key, index) => (
+                  <div key={index} className="grid grid-cols-2">
+                    <h2>size: {key}</h2>
+                    <h2>Price: {value[key]}</h2>
+                  </div>
+                ))}
               </div>
             </Tooltip>
           );
@@ -199,7 +183,7 @@ const Food = ({ category, customizeFood, foodRefetch }) => {
           <Box className="flex gap-5 items-center">
             <Tooltip title="Edit Food" placement="top">
               <MdModeEdit
-                onClick={() => setEditId(row?.id)}
+                onClick={() => setEditFood(row)}
                 className="text-gray-600 dark:text-neutral text-xl cursor-pointer"
               />
             </Tooltip>
@@ -217,23 +201,25 @@ const Food = ({ category, customizeFood, foodRefetch }) => {
 
   return (
     <>
-      <div style={{ height: 510, width: "100%" }}>
-        <CustomDataGrid
-          rows={food}
-          columns={columns}
-          foodRefetch={foodRefetch}
-        />
-      </div>
-      {Boolean(allFoodData && editId) ? (
-        <EditFood
-          allFoodData={allFoodData}
-          editId={editId}
-          isLoading={isLoading}
-          isError={isError}
-          handleModalClose={() => setEditId(null)}
-          categories={food}
-          customizeFood={customizeFood}
-        />
+      <CustomDataGrid
+        rows={food}
+        columns={columns}
+        leftPinning={["id"]}
+        rightPinning={["action"]}
+      />
+
+      {Boolean(Object.entries(editFood).length) ? (
+        <CustomModal
+          open={Boolean(Object.entries(editFood).length)}
+          onClose={() => setEditFood({})}
+        >
+          <EditFood
+            allFoodData={editFood}
+            handleModalClose={() => setEditFood({})}
+            categories={food}
+            customizeFood={customizeFood}
+          />
+        </CustomModal>
       ) : null}
       {Boolean(deleteId) && (
         <DeleteFood deleteId={deleteId} handleClose={() => setDeleteId(null)} />

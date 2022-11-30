@@ -1,4 +1,3 @@
-import React from "react";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import {
   Accordion,
@@ -6,16 +5,17 @@ import {
   AccordionSummary,
   Alert,
   AlertTitle,
+  Box,
   Typography,
 } from "@mui/material";
-import { RiDeleteBin6Line } from "react-icons/ri";
-import { useState } from "react";
+import React, { useState } from "react";
 import { MdModeEdit } from "react-icons/md";
+import { RiDeleteBin6Line } from "react-icons/ri";
 import { useStateContext } from "../../../Contexts/ContextProvider";
-import Food from "./Food";
-import EditCategory from "../../Modals/Admin/EditCategory";
-import DeleteCategory from "../../Modals/Admin/DeleteCategory";
 import LoaderSource from "../../Loaders/LoaderSource";
+import DeleteCategory from "../../Modals/Admin/DeleteCategory";
+import EditCategory from "../../Modals/Admin/EditCategory";
+import Food from "./Food";
 
 const FoodCategory = ({
   categories,
@@ -46,7 +46,7 @@ const FoodCategory = ({
             }}
           >
             <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
+              expandIcon={<ExpandMoreIcon className="dark:text-white" />}
               aria-controls="panel1a-content"
               id="panel1a-header"
             >
@@ -55,7 +55,7 @@ const FoodCategory = ({
               </Typography>
             </AccordionSummary>
             <AccordionDetails>
-              <Typography
+              <Box
                 sx={{
                   display: "flex",
                   gap: 1,
@@ -80,14 +80,10 @@ const FoodCategory = ({
                   <RiDeleteBin6Line />
                   <h3>Delete</h3>
                 </button>
-              </Typography>
-              <Typography>
-                <Food
-                  category={item}
-                  customizeFood={customizeFood}
-                  foodRefetch={foodRefetch}
-                />
-              </Typography>
+              </Box>
+              <Box>
+                <Food category={item} customizeFood={customizeFood} />
+              </Box>
             </AccordionDetails>
           </Accordion>
         ))

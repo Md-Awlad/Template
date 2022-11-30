@@ -1,17 +1,17 @@
-import React, { useState } from "react";
-import { RiDeleteBin6Line } from "react-icons/ri";
-import { DataGrid, GridToolbar } from "@mui/x-data-grid";
-import { useStateContext } from "../../../Contexts/ContextProvider";
-import { MdModeEdit } from "react-icons/md";
 import { Alert, AlertTitle } from "@mui/material";
 import { Box } from "@mui/system";
-import EditCustomFood from "../../Modals/Admin/EditCustomFood";
-import DeleteCustomFood from "../../Modals/Admin/DeleteCustomFood";
+import { DataGrid, GridToolbar } from "@mui/x-data-grid";
+import React, { useState } from "react";
+import { MdModeEdit } from "react-icons/md";
+import { RiDeleteBin6Line } from "react-icons/ri";
+import { useStateContext } from "../../../Contexts/ContextProvider";
 import LoaderSource from "../../Loaders/LoaderSource";
+import DeleteCustomFood from "../../Modals/Admin/DeleteCustomFood";
+import EditCustomFood from "../../Modals/Admin/EditCustomFood";
 
 const CustomFoods = ({ customizeFood, isLoading, isError }) => {
   const { currentColor, currentMode } = useStateContext();
-  const [editId, setEditId] = useState(null);
+  const [editCustomFood, setEditCustomFood] = useState({});
   const [deleteId, setDeleteId] = useState(null);
 
   const columns = [
@@ -47,7 +47,7 @@ const CustomFoods = ({ customizeFood, isLoading, isError }) => {
         return (
           <Box className="flex gap-5 items-center">
             <MdModeEdit
-              onClick={() => setEditId(row?.id)}
+              onClick={() => setEditCustomFood(row)}
               className="text-gray-600 dark:text-neutral text-xl cursor-pointer"
             />
             <RiDeleteBin6Line
@@ -115,8 +115,11 @@ const CustomFoods = ({ customizeFood, isLoading, isError }) => {
           }}
         />
       )}
-      {Boolean(editId) && (
-        <EditCustomFood editId={editId} handleClose={() => setEditId(null)} />
+      {Boolean(Object.entries(setEditCustomFood).length) && (
+        <EditCustomFood
+          editCustomFood={editCustomFood}
+          handleModalClose={() => setEditCustomFood({})}
+        />
       )}
       {Boolean(deleteId) && (
         <DeleteCustomFood

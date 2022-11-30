@@ -1,4 +1,4 @@
-import { Box, Container, Modal, Tab, Tabs, Typography } from "@mui/material";
+import { Box, Container, Tab, Tabs, Typography } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import React, { useState } from "react";
 import ApplyDiscountList from "../../Components/Admin/Discount/ApplyDiscountList";
@@ -6,6 +6,7 @@ import DiscountList from "../../Components/Admin/Discount/DiscountList";
 import AddDiscount from "../../Components/Modals/Admin/AddDiscount";
 import ApplyDiscount from "../../Components/Modals/Admin/ApplyDiscount";
 import PageTitle from "../../Components/PageTitle/PageTitle";
+import { CustomModal } from "../../Components/Shared/SharedStyles";
 import { useStateContext } from "../../Contexts/ContextProvider";
 import myAxios from "../../utils/myAxios";
 
@@ -89,20 +90,20 @@ const Discount = () => {
 
   return (
     <Container>
-      <Modal open={openModal} onClose={handleModalClose}>
+      <CustomModal open={openModal} onClose={handleModalClose}>
         <AddDiscount
           discountRefetch={discountRefetch}
           handleModalClose={handleModalClose}
         />
-      </Modal>
-      <Modal open={discountModal} onClose={handleDiscountModalClose}>
+      </CustomModal>
+      <CustomModal open={discountModal} onClose={handleDiscountModalClose}>
         <ApplyDiscount
           discounts={discounts}
           categories={categories}
           foods={foods}
           handleDiscountModalClose={handleDiscountModalClose}
         />
-      </Modal>
+      </CustomModal>
       <PageTitle
         headingText="discount"
         pageName="discount"

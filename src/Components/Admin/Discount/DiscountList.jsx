@@ -36,7 +36,6 @@ const DiscountList = ({ discounts, isLoading }) => {
       headerAlign: "center",
       align: "center",
       renderCell: ({ row }) => {
-        console.log(row);
         return (
           <Tooltip
             title={row?.notice.length >= 15 ? row?.notice : ""}
@@ -125,7 +124,12 @@ const DiscountList = ({ discounts, isLoading }) => {
       {isLoading ? (
         <LoaderSource />
       ) : (
-        <CustomDataGrid rows={discounts} columns={columns} />
+        <CustomDataGrid
+          rows={discounts}
+          columns={columns}
+          leftPinning={["id"]}
+          rightPinning={["action"]}
+        />
       )}
       {Boolean(editId) && (
         <EditDiscount editId={editId} handleClose={() => setEditId(null)} />

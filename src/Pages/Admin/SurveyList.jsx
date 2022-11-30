@@ -10,7 +10,7 @@ const SurveyList = () => {
   const columns = [
     {
       field: "order_id",
-      headerName: "Order_ID",
+      headerName: "Order ID",
       width: 80,
       headerAlign: "center",
       align: "center",
@@ -134,6 +134,8 @@ const SurveyList = () => {
             rows={surveyList}
             columns={columns}
             orderRefetch={orderRefetch}
+            leftPinning={["order_id"]}
+            rightPinning={["overall"]}
           />
         )}
       </div>

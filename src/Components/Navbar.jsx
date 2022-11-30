@@ -1,5 +1,6 @@
+import { Home } from "@mui/icons-material";
 import MenuIcon from "@mui/icons-material/Menu";
-import { Box, Menu } from "@mui/material";
+import { Box, Button, Menu } from "@mui/material";
 import MuiAppBar from "@mui/material/AppBar";
 import Divider from "@mui/material/Divider";
 import MuiDrawer from "@mui/material/Drawer";
@@ -8,11 +9,9 @@ import { styled } from "@mui/material/styles";
 import Toolbar from "@mui/material/Toolbar";
 import * as React from "react";
 import { Fragment } from "react";
-import DarkModeToggle from "react-dark-mode-toggle";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { useStateContext } from "../Contexts/ContextProvider";
-import { default as avatar, default as MainLogo } from "../image/logo.png";
 import Sidebar from "./Sidebar";
 import UserProfile from "./UserProfile";
 
@@ -79,8 +78,14 @@ const Drawer = styled(MuiDrawer, {
 
 const Navbar = () => {
   const [userProfile, setUserProfile] = React.useState(null);
-  const { activeMenu, setActiveMenu, setMode, currentMode, restaurantData } =
-    useStateContext();
+  const {
+    activeMenu,
+    setActiveMenu,
+    setMode,
+    currentMode,
+    restaurantData,
+    currentUser: { user, profile_pic },
+  } = useStateContext();
 
   const [isDarkMode, setIsDarkMode] = React.useState(
     Boolean(currentMode === "Dark")
@@ -139,44 +144,70 @@ const Navbar = () => {
                 <Box
                   key={index}
                   component="img"
-                  src={data?.logo || MainLogo}
+                  src={data?.logo}
+                  onError={({ currentTarget }) => {
+                    currentTarget.onerror = null; // prevents looping
+                    currentTarget.src = "https://i.ibb.co/0q5B8VP/MainLogo.png";
+                  }}
                   sx={{
-                    width: "50px",
+                    objectFit: "cover",
+                    maxWidth: "100px",
+                    height: "54px",
                   }}
                 />
               ))}
             </IconButton>
           </Box>
           <div className="flex items-center justify-between space-x-1">
-            <DarkModeToggle
+            {/* <DarkModeToggle
               onChange={toggleTheme}
               value={currentMode === "Light" ? "Light" : "Dark"}
               checked={!isDarkMode}
               size={50}
-            />
-            {restaurantData?.map((data, index) => (
-              <div
-                key={index}
-                className="flex items-center gap-2 cursor-pointer p-1 hover:bg-light-gray rounded-lg"
-                onClick={(event) => setUserProfile(event.currentTarget)}
-              >
-                <div className="flex items-center">
-                  <img
-                    className="rounded-full w-8 h-8 "
-                    src={data?.logo || avatar}
-                    alt=""
-                  />
-                </div>
+            /> */}
+            <Box>
+              <Link target={"_blank"} to="/">
+                <Button
+                  variant="contained"
+                  sx={{
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                  }}
+                >
+                  <Home /> {activeMenu && "Go to Store"}
+                </Button>
+              </Link>
+            </Box>
+            {restaurantData?.map((data, index) => {
+              return (
+                <div
+                  key={index}
+                  className="flex items-center gap-2 cursor-pointer p-1 hover:bg-light-gray rounded-lg"
+                  onClick={(event) => setUserProfile(event.currentTarget)}
+                >
+                  <div className="flex items-center">
+                    <img
+                      className="rounded-full w-8 h-8 "
+                      src={profile_pic}
+                      onError={({ currentTarget }) => {
+                        currentTarget.onerror = null; // prevents looping
+                        currentTarget.src =
+                          "https://i.ibb.co/0q5B8VP/MainLogo.png";
+                      }}
+                      alt=""
+                    />
+                  </div>
 
-                <p>
-                  <span className="text-gray-400 text-14">Hi,</span>{" "}
-                  <span className="text-gray-400 font-bold ml-1 text-14">
-                    {"User"}
-                  </span>
-                </p>
-                <MdKeyboardArrowDown className="text-gray-400 text-14" />
-              </div>
-            ))}
+                  <p>
+                    <span className="text-gray-400 text-14">Hi,</span>{" "}
+                    <span className="text-gray-400 font-bold ml-1 text-14">
+                      {user?.username ? user?.username : "user"}
+                    </span>
+                  </p>
+                  <MdKeyboardArrowDown className="text-gray-400 text-14" />
+                </div>
+              );
+            })}
             <Menu
               sx={{ mt: "45px" }}
               id="menu-appbar"

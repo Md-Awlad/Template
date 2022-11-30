@@ -24,6 +24,8 @@ const CustomDataGrid = ({
   component = true,
   showQuickFilter = true,
   hideFooter = false,
+  leftPinning = [],
+  rightPinning = [],
 }) => {
   const [pageSize, setPageSize] = useState(7);
   const [density, setDensity] = useState("standard");
@@ -35,13 +37,17 @@ const CustomDataGrid = ({
         "//div[text()='MUI X: Missing license key']",
         document,
         null,
-        XPathResult.FIRST_ORDERED_NODE_TYPE,
+        XPathResult.ANY_TYPE,
         null
-      ).singleNodeValue;
-
-      if (hideNode) {
-        hideNode.style.display = "none";
-        clearInterval(interval);
+      );
+      while (true) {
+        const hide = hideNode.iterateNext();
+        if (hide) {
+          hide.style.display = "none";
+        } else {
+          clearInterval(interval);
+          break;
+        }
       }
     }, 10);
   }, [rows]);
@@ -136,6 +142,9 @@ const CustomDataGrid = ({
               disableToolbarButton: allowExport && csv ? false : true,
             },
           },
+        }}
+        initialState={{
+          pinnedColumns: { left: leftPinning, right: rightPinning },
         }}
       />
     </Box>

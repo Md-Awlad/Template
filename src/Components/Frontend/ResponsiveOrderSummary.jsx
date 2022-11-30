@@ -4,11 +4,11 @@ import { useQuery } from "@tanstack/react-query";
 import React, { useRef } from "react";
 import { BsCheckCircle } from "react-icons/bs";
 import { useReactToPrint } from "react-to-print";
+import { useStateContext } from "../../Contexts/ContextProvider";
+import { baseURL } from "../../utils/myAxios";
 import Footer from "./Footer";
 import Header from "./Header";
 import ResponsiveBottomMenu from "./ResponsiveBottomMenu";
-import { useStateContext } from "../../Contexts/ContextProvider";
-import { baseURL } from "../../utils/myAxios";
 
 const ResponsiveOrderSummery = () => {
   const { orderId, activeMenu } = useStateContext();
@@ -96,19 +96,7 @@ const ResponsiveOrderSummery = () => {
               Order Type: {orderSummary.order_type}
             </Typography>
           </Box>
-          {/* --rightOrder-- */}
-          {/* <Box>
-            <Typography variant="h6">Delivery Details</Typography>
-            <Typography variant="h6" sx={{ fontSize: { xs: 14 } }}>
-              {orderSummary.name && `Name: ${orderSummary?.name}`}
-            </Typography>
-            <Typography variant="h6" sx={{ fontSize: { xs: 14 } }}>
-              Phone: {orderSummary.phone}
-            </Typography>
-            <Typography variant="h6" sx={{ fontSize: { xs: 14 } }}>
-              Order Type: {orderSummary.order_type}
-            </Typography>
-          </Box> */}
+        
 
           {/* --orderSummary-- */}
           <Box>

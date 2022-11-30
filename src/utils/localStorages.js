@@ -1,6 +1,9 @@
 // Set access token to localstorage
 const setAccessToken = (accessToken) => {
-  localStorage.setItem("accessToken", accessToken);
+  sessionStorage.setItem("accessToken", accessToken);
+};
+const setCurrentUser = (userinfo) => {
+  sessionStorage.setItem("currentUser", userinfo);
 };
 
 const setOrderInfo = (orderInfo) => {
@@ -23,7 +26,7 @@ const getPhoneInfo = () => {
 };
 
 const setColorInfo = (colorInfo) => {
-  return localStorage.setItem("colorInfo");
+  localStorage.setItem("colorInfo");
 };
 
 const getColorInfo = () => {
@@ -32,23 +35,26 @@ const getColorInfo = () => {
 
 // Get access token from localstorage
 const getAccessToken = () => {
-  return localStorage.getItem("accessToken");
+  return sessionStorage.getItem("accessToken");
+};
+const getCurrentUser = () => {
+  return sessionStorage.getItem("currentUser");
 };
 
 // Set refresh token to localstorage
 const setRefreshToken = (refreshToken) => {
-  localStorage.setItem("refreshToken", refreshToken);
+  sessionStorage.setItem("refreshToken", refreshToken);
 };
 
 // Get refresh token from localstorage
 const getRefreshToken = () => {
-  return localStorage.getItem("refreshToken");
+  return sessionStorage.getItem("refreshToken");
 };
 
 // Remove access token and refresh token from localstorage
 const removeTokens = () => {
-  localStorage.removeItem("accessToken");
-  localStorage.removeItem("refreshToken");
+  sessionStorage.removeItem("accessToken");
+  sessionStorage.removeItem("refreshToken");
 };
 
 export {
@@ -56,6 +62,8 @@ export {
   setRefreshToken,
   getAccessToken,
   getRefreshToken,
+  setCurrentUser,
+  getCurrentUser,
   removeTokens,
   setOrderInfo,
   getOrderInfo,

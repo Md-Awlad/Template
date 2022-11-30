@@ -1,4 +1,4 @@
-import { Grid, InputAdornment, TextField } from "@mui/material";
+import { Box, Grid, InputAdornment, TextField } from "@mui/material";
 import { useQueryClient } from "@tanstack/react-query";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -47,7 +47,12 @@ const Login = () => {
   };
 
   return (
-    <div className="md:max-w-xl p-8 border border-gray-400 rounded-md m-auto my-16 shadow-2xl">
+    <Box
+      sx={{
+        bgcolor: currentMode === "Dark" ? "#000" : "#fff",
+      }}
+      className="md:max-w-xl p-8 border dark:border-gray-500 border-gray-400 rounded-md m-auto my-16 shadow-2xl"
+    >
       <FiLogIn
         style={{ color: currentColor }}
         className="text-7xl m-auto mb-8"
@@ -64,6 +69,11 @@ const Login = () => {
               errors.username &&
               (errors.username.message || "Username is required")
             }
+            sx={{
+              bgcolor: currentMode === "Dark" ? "#000" : "#fff",
+              color: currentMode === "Dark" ? "#fff" : "#000",
+            }}
+            className="dark:border-gray-600 border-1 dark:text-black"
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
@@ -86,6 +96,7 @@ const Login = () => {
               errors.password &&
               (errors.password.message || "Password is required")
             }
+            className="dark:border-gray-600 border-1"
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
@@ -116,7 +127,7 @@ const Login = () => {
           </span> */}
         </div>
       </form>
-    </div>
+    </Box>
   );
 };
 

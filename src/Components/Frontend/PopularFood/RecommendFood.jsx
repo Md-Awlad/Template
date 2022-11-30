@@ -16,7 +16,6 @@ const RecommendFood = () => {
     const res = await staticAxios("/popularfood/");
     return res.data;
   });
-  console.log(recommendFood);
   return (
     <Box
       sx={{

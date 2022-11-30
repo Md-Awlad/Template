@@ -1,25 +1,28 @@
 import { Button } from "@mui/material";
-import { useQueryClient } from "@tanstack/react-query";
 import { Fragment } from "react";
-import { AiOutlineUserAdd } from "react-icons/ai";
 import { BsCheck } from "react-icons/bs";
 import { FiSettings } from "react-icons/fi";
 import { useStateContext } from "../Contexts/ContextProvider";
 import { themeColors } from "../Data/dummy";
-import { removeTokens } from "../utils/localStorages";
-import { NavLink } from "react-router-dom";
+import { getRefreshToken, removeTokens } from "../utils/localStorages";
+import { SSO_HOST } from "./Authentication/AuthRedirect";
 
 const UserProfile = ({ closeUserProfile }) => {
-  const {
-    currentColor,
-    setColor,
-    currentUser: { id } = {},
-  } = useStateContext();
-  const queryClient = useQueryClient();
+  const { currentColor, setColor, currentMode } = useStateContext();
+  // const queryClient = useQueryClient();
   const logOut = () => {
+    const { host, protocol } = window.location;
+    const refreshToken = getRefreshToken();
     removeTokens();
-    closeUserProfile();
-    queryClient.resetQueries();
+    // setBranchId(null);
+    // closeUserProfile();
+    // queryClient.resetQueries();
+    window.location.replace(
+      `${SSO_HOST}/signOutCallback?redirect=${
+        protocol + "//" + host
+      }&token=${refreshToken}`
+    );
+    // Navigate('/')
   };
 
   return (
@@ -35,8 +38,19 @@ const UserProfile = ({ closeUserProfile }) => {
               <FiSettings className="text-white" />
             </div>
             <div>
-              <p className="font-medium dark:text-gray-200 ">Theme Settings</p>
-              <p className="text-gray-500 text-sm dark:text-gray-400 text-center">
+              <p
+                style={{
+                  color: currentMode === "Dark" ? "#fff" : "#000",
+                }}
+              >
+                Theme Settings
+              </p>
+              <p
+                style={{
+                  color: currentMode === "Dark" ? "#B2BEB5	" : "#000",
+                }}
+                className="text-gray-500 text-sm dark:text-gray-400 text-center"
+              >
                 Customize your theme
               </p>
             </div>
@@ -64,7 +78,7 @@ const UserProfile = ({ closeUserProfile }) => {
           </div>
         </div>
       </div>
-      <NavLink
+      {/* <NavLink
         to="/dashboard/change-password"
         className="flex gap-3 flex-col border-color py-2  px-6 "
       >
@@ -76,7 +90,7 @@ const UserProfile = ({ closeUserProfile }) => {
           <AiOutlineUserAdd className="text-xl" />
           Change your Password
         </Button>
-      </NavLink>
+      </NavLink> */}
       <div className="flex gap-3 flex-col border-color py-2  px-6 ">
         <Button
           fullWidth

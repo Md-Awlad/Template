@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import { TextField } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
+import { DatePicker } from "@mui/x-date-pickers";
 import { useQuery } from "@tanstack/react-query";
+import moment from "moment";
+import React, { useState } from "react";
 import { useStateContext } from "../../../Contexts/ContextProvider";
 import myAxios from "../../../utils/myAxios";
-import moment from "moment";
-import { DatePicker } from "@mui/x-date-pickers";
-import { TextField } from "@mui/material";
 import LoaderSource from "../../Loaders/LoaderSource";
 
 const Report = () => {
@@ -79,7 +79,7 @@ const Report = () => {
               width: 200,
               ".MuiInputBase-input": {
                 padding: 1.2,
-                color: `${currentMode === "Light" ? "#000" : "#fff"}`,
+                // color: `${currentMode === "Light" ? "#000" : "#fff"}`,
               },
             }}
             {...params}

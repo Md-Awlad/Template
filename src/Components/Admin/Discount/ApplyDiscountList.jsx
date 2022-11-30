@@ -17,7 +17,6 @@ const ApplyDiscountList = ({
   foods,
   isLoading,
 }) => {
-  console.log(applyDiscount);
   const [editId, setEditId] = useState(null);
   const [deleteId, setDeleteId] = useState(null);
 
@@ -25,11 +24,9 @@ const ApplyDiscountList = ({
     [`apply_discount`, editId],
     async () => {
       const res = await myAxios(`/apply_discount/${editId}`);
-      console.log(res);
       return res.data;
     }
   );
-  console.log(allData);
 
   const columns = [
     {
@@ -39,23 +36,7 @@ const ApplyDiscountList = ({
       headerAlign: "center",
       align: "center",
     },
-    // {
-    //   field: "category",
-    //   headerName: "Category",
-    //   width: 200,
-    //   headerAlign: "center",
-    //   align: "center",
-    //   renderCell: ({ row }) => {
-    //     return (
-    //       <Box sx={{ height: 60, overflow: "scroll" }}>
-    //         {row?.category?.map((data) => {
-    //           console.log(data);
-    //           return <Typography key={data.id}>{data.name}</Typography>;
-    //         })}
-    //       </Box>
-    //     );
-    //   },
-    // },
+
     {
       field: "food",
       headerName: "Food",
@@ -135,6 +116,8 @@ const ApplyDiscountList = ({
           rows={applyDiscount}
           applyRefetch={applyRefetch}
           columns={columns}
+          leftPinning={["id"]}
+          rightPinning={["action"]}
         />
       )}
       {Boolean(allData && editId) ? (

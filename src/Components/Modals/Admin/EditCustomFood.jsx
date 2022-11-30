@@ -1,29 +1,14 @@
-import { Box } from "@mui/system";
-import React from "react";
-import TextField from "@mui/material/TextField";
-import { useForm } from "react-hook-form";
 import { Grid } from "@mui/material";
+import TextField from "@mui/material/TextField";
+import { Box } from "@mui/system";
+import { useQueryClient } from "@tanstack/react-query";
+import React from "react";
+import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { useStateContext } from "../../../Contexts/ContextProvider";
 import myAxios from "../../../utils/myAxios";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
 
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "#fff",
-  border: "2px solid #fff",
-  borderRadius: "5px",
-  boxShadow: 24,
-  pt: 2,
-  px: 4,
-  pb: 3,
-};
-
-const EditCustomFood = ({ handleClose, editId }) => {
+const EditCustomFood = ({ handleClose, editCustomFood }) => {
   const { currentColor } = useStateContext();
   const { register, handleSubmit, setValue } = useForm();
   const queryClient = useQueryClient();
@@ -35,8 +20,8 @@ const EditCustomFood = ({ handleClose, editId }) => {
     };
     console.log(payload);
 
-    const response = await toast.promise(
-      myAxios.patch(`/customize_food/${editId}/`, payload),
+    await toast.promise(
+      myAxios.patch(`/customize_food/${editCustomFood?.id}/`, payload),
       {
         pending: "Edit Extra...",
         success: "Extra Added",
@@ -47,19 +32,13 @@ const EditCustomFood = ({ handleClose, editId }) => {
     handleClose();
   };
 
-  const { data } = useQuery(
-    [`customize_food`],
-    () => myAxios(`/customize_food/${editId}`),
-    {
-      onSuccess: ({ data }) => {
-        setValue("extraName", data?.ingredient_name);
-        setValue("extraPrice", data?.price);
-      },
-    }
-  );
+  React.useEffect(() => {
+    setValue("extraName", editCustomFood?.ingredient_name);
+    setValue("extraPrice", editCustomFood?.price);
+  }, [editCustomFood]);
 
   return (
-    <Box sx={{ ...style, width: { sm: 700, xs: 400 } }}>
+    <Box className="p-5">
       <h2 className="text-xl font-bold pb-3">Edit Custom Food</h2>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
         {/* --Extra Name-- */}

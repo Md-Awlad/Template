@@ -6,9 +6,9 @@ import { BsCheckCircle } from "react-icons/bs";
 import { useReactToPrint } from "react-to-print";
 import Footer from "../../Components/Frontend/Footer";
 import Header from "../../Components/Frontend/Header";
+import ResponsiveOrderSummery from "../../Components/Frontend/ResponsiveOrderSummary";
 import { useStateContext } from "../../Contexts/ContextProvider";
 import { baseURL } from "../../utils/myAxios";
-import ResponsiveOrderSummery from "../../Components/Frontend/ResponsiveOrderSummary";
 
 const OrderSummary = () => {
   const { orderId, activeMenu } = useStateContext();
@@ -98,14 +98,23 @@ const OrderSummary = () => {
                   Order Details
                 </Typography>
                 <Box>
-                  <Typography variant="h6" sx={{ fontSize: { xs: 14 } }}>
-                    {orderSummary.name && `Name: ${orderSummary?.name}`}
-                  </Typography>
+                  {/* <Typography variant="h6" sx={{ fontSize: { xs: 14 } }}>
+                    {`${
+                      orderSummary?.order_type === "takeaway"
+                        ? "Takeaway"
+                        : orderSummary?.order_type === "dine_in" && "Dine In"
+                    }`}
+                  </Typography> */}
                   <Typography variant="h6" sx={{ fontSize: { xs: 14 } }}>
                     Phone: {orderSummary.phone}
                   </Typography>
                   <Typography variant="h6" sx={{ fontSize: { xs: 14 } }}>
-                    Order Type: {orderSummary.order_type}
+                    Order Type:{" "}
+                    {`${
+                      orderSummary?.order_type === "takeaway"
+                        ? "Takeaway"
+                        : orderSummary?.order_type === "dine_in" && "Dine In"
+                    }`}
                   </Typography>
                 </Box>
               </Box>

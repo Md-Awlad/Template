@@ -5,7 +5,6 @@ import {
   Grid,
   InputLabel,
   MenuItem,
-  Modal,
   Select,
 } from "@mui/material";
 import TextField from "@mui/material/TextField";
@@ -18,6 +17,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { useStateContext } from "../../../Contexts/ContextProvider";
 import myAxios from "../../../utils/myAxios";
+import { CustomModal } from "../../Shared/SharedStyles";
 
 const style = {
   position: "absolute",
@@ -81,11 +81,10 @@ const EditApplyDiscount = ({
     setStatus(allData?.is_active);
     setDate(allData?.expired_at);
   }, [editId]);
-  console.log(discountName);
 
   return (
-    <Modal open={Boolean(editId)} onClose={handleClose}>
-      <Box sx={{ ...style, width: { sm: 700, xs: 400 } }}>
+    <CustomModal open={Boolean(editId)} onClose={handleClose}>
+      <Box sx={{ p: 5 }}>
         <h2 className="text-3xl font-bold pb-3 text-center">
           Edit Apply Discount
         </h2>
@@ -104,6 +103,7 @@ const EditApplyDiscount = ({
               }}
               options={discounts?.map((discount) => discount)}
               getOptionLabel={(option) => option?.name}
+              isOptionEqualToValue={(option, value) => option.id === value.id}
               filterSelectedOptions
               renderTags={(tagValue, getTagProps) =>
                 tagValue.map((option, index) => (
@@ -152,6 +152,7 @@ const EditApplyDiscount = ({
                 ]);
               }}
               options={categories?.map((category) => category)}
+              isOptionEqualToValue={(option, value) => option.id === value.id}
               getOptionLabel={(option) => option?.name}
               filterSelectedOptions
               // options={allData.category ? allData.category : null}
@@ -196,6 +197,7 @@ const EditApplyDiscount = ({
               }}
               options={foods ? foods : null}
               getOptionLabel={(option) => option.food_name}
+              isOptionEqualToValue={(option, value) => option.id === value.id}
               renderTags={(tagValue, getTagProps) =>
                 tagValue.map((option, index) => (
                   <Chip
@@ -280,7 +282,7 @@ const EditApplyDiscount = ({
           </button>
         </form>
       </Box>
-    </Modal>
+    </CustomModal>
   );
 };
 
