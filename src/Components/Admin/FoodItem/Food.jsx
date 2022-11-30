@@ -55,23 +55,31 @@ const Food = ({ category, customizeFood }) => {
       renderCell: ({ value }) => {
         return (
           <Tooltip
-            title={Object.keys(value).map((key, index) => (
-              <div key={index} className="flex justify-between w-32">
-                <h2>size: {key}</h2>
-                <h2>Price: {value[key]}</h2>
-              </div>
-            ))}
+            title={
+              Object.entries(value).length
+                ? Object.keys(value).map((key, index) => {
+                    return (
+                      <div key={index} className="flex gap-5">
+                        <h2>size: {key}</h2>
+                        <h2>Price: {value[key]}</h2>
+                      </div>
+                    );
+                  })
+                : "no data"
+            }
             placement="top"
           >
             <div className="overflow-y-auto h-12 w-full">
-              {Object.keys(value).map((key, index) => {
-                return (
-                  <div key={index} className="flex gap-5">
-                    <h2>size: {key}</h2>
-                    <h2>Price: {value[key]}</h2>
-                  </div>
-                );
-              })}
+              {Object.entries(value).length
+                ? Object.keys(value).map((key, index) => {
+                    return (
+                      <div key={index} className="flex gap-5">
+                        <h2>size: {key}</h2>
+                        <h2>Price: {value[key]}</h2>
+                      </div>
+                    );
+                  })
+                : "no data"}
             </div>
           </Tooltip>
         );
