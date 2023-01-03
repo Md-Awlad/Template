@@ -1,348 +1,332 @@
-import { Box, Typography } from "@mui/material";
-import { Fragment } from "react";
-import { AiOutlineCloseCircle, AiOutlineFileProtect } from "react-icons/ai";
-import { BsCartCheckFill } from "react-icons/bs";
+import MenuIcon from "@mui/icons-material/Menu";
+import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import { Box, Collapse, IconButton, Typography } from "@mui/material";
+import { useState } from "react";
+import {
+  AiOutlineCloseCircle,
+  AiOutlineFileProtect,
+  AiTwotoneNotification,
+} from "react-icons/ai";
+import { BiCalendarCheck, BiCalendarX } from "react-icons/bi";
+import { BsArrowUpSquare, BsCartCheckFill } from "react-icons/bs";
+import { CgFileDocument } from "react-icons/cg";
+import { FaCodeBranch } from "react-icons/fa";
 import { FiCheckCircle, FiSettings } from "react-icons/fi";
-import { HiDocumentReport } from "react-icons/hi";
+import { HiDocumentReport, HiOutlineDocumentReport } from "react-icons/hi";
+import { IoMdContacts } from "react-icons/io";
 import {
   MdDashboard,
   MdFastfood,
-  MdOutlineCancel,
+  MdLocalAtm,
+  MdManageAccounts,
   MdOutlineFoodBank,
+  MdOutlineWork,
+  MdQrCode2,
+  MdReviews,
 } from "react-icons/md";
-import { TbShoppingCartDiscount } from "react-icons/tb";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { useStateContext } from "../Contexts/ContextProvider";
-import mainLogo from "../image/logo.png";
+import MainLogo from "../image/logo.png";
+import { TbShoppingCartDiscount } from "react-icons/tb";
+import { QrCode } from "@mui/icons-material";
 
 const Sidebar = () => {
+  const { pathname } = useLocation();
+  const navigate = useNavigate();
+  const [activeMenu, setActiveMenu] = useState(pathname);
   const {
-    activeMenu,
-    setActiveMenu,
+    expandedMenu,
+    setExpandedMenu,
     screenSize,
     currentColor,
     currentMode,
     restaurantData,
   } = useStateContext();
-  // const [openSubMenu, setOpenSubmenu] = useState(false);
-  const handleCloseSidebar = (value) => {
-    if (activeMenu && screenSize <= 900) {
-      setActiveMenu(false);
+
+  const handleCloseSidebar = () => {
+    if (expandedMenu && screenSize <= 900) {
+      setExpandedMenu(false);
     }
   };
 
-  const activeLink =
-    "flex  items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg  text-neutral  text-md m-2";
-  const smActiveLink =
-    "flex  items-center m-3 p-2 rounded-lg  text-neutral  text-md ";
-  const normalLink =
-    "flex  items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg text-md text-gray-700 dark:text-gray-200 dark:hover:text-black hover:bg-light-gray m-2";
-  const smNormalLink =
-    "flex  items-center m-3 p-2 rounded-lg text-md text-gray-700 dark:text-gray-200 dark:hover:text-black hover:bg-light-gray ";
+  const sidebarMenu = [
+    {
+      path: "/dashboard",
+      icon: MdDashboard,
+      name: "Dashboard",
+    },
+    {
+      path: "/customfood",
+      icon: MdOutlineFoodBank,
+      name: "Custom Food",
+    },
+    {
+      path: "/fooditem",
+      icon: MdFastfood,
+      name: "Food Item",
+    },
+    {
+      path: "/order",
+      icon: BsCartCheckFill,
+      name: "order",
+    },
+    {
+      path: "/completeOrder",
+      icon: FiCheckCircle,
+      name: "Complete Order",
+    },
+    {
+      path: "/cancelorder",
+      icon: AiOutlineCloseCircle,
+      name: "Cancel Order",
+    },
+
+    {
+      path: "/discount",
+      icon: TbShoppingCartDiscount,
+      name: "Discount",
+    },
+
+    {
+      path: "/surveylist",
+      icon: AiOutlineFileProtect,
+      name: "Survey",
+    },
+    {
+      path: "/report",
+      icon: HiDocumentReport,
+      name: "Report",
+    },
+    {
+      path: "/qr",
+      icon: MdQrCode2,
+      name: "Qr Generator",
+    },
+    {
+      path: "/settings",
+      icon: FiSettings,
+      name: "Settings",
+    },
+  ];
+
+  const handleDrawerToggle = () => {
+    setExpandedMenu(!expandedMenu);
+  };
 
   return (
-    <Box className="h-screen lg:overflow-hidden overflow-auto lg:hover:overflow-auto pb-10 bg-white dark:bg-main-dark-bg">
-      {activeMenu ? (
-        <Fragment>
-          <Box className="flex justify-between items-center">
-            {restaurantData?.map((data, index) => (
+    <Box
+      className="h-screen pb-5 bg-white dark:bg-secondary-dark-bg"
+      sx={{
+        overflowY: { xs: expandedMenu ? "auto" : "hidden", md: "hidden" },
+        "&:hover": {
+          overflowY: { md: "auto" },
+        },
+      }}
+    >
+      {expandedMenu && (
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            marginTop: { xs: "5px", md: 2 },
+            px: 2,
+          }}
+        >
+          {restaurantData?.map((data, i) => {
+            return (
               <Box
-                key={index}
-                to="/dashboard"
+                key={i}
                 onClick={handleCloseSidebar}
                 sx={{
                   display: "flex",
                   alignItems: "center",
                   gap: 2,
-                  px: 1,
-                  mt: 2,
                 }}
               >
                 <Box
                   component="img"
-                  src={data?.logo || mainLogo}
+                  src={data?.logo}
+                  onClick={() => navigate("/")}
                   onError={({ currentTarget }) => {
                     currentTarget.onerror = null; // prevents looping
                     currentTarget.src = "https://i.ibb.co/0q5B8VP/MainLogo.png";
                   }}
                   sx={{
-                    objectFit: "cover",
-                    maxWidth: "100px",
-                    height: "54px",
+                    width: "50px",
+                    maxHeight: "50px",
+                    borderRadius: "5px",
+                    cursor: "pointer",
                   }}
                 />
-
-                <Typography variant="h6" className="dark:text-neutral">
-                  {data?.name || "Nexis Menu"}
+                <Typography
+                  variant="h6"
+                  className="dark:text-neutral"
+                  sx={{
+                    whiteSpace: "pre-wrap",
+                  }}
+                >
+                  {"hgh"}
                 </Typography>
               </Box>
-            ))}
-            <button
-              type="button"
-              onClick={() => setActiveMenu(!activeMenu)}
-              style={{ color: currentColor }}
-              className="text-xl rounded-full p-3 hover:bg-light-gray mt-4 block lg:hidden "
-            >
-              <MdOutlineCancel />
-            </button>
-          </Box>
-          <div className="mt-5">
-            <NavLink
-              to="dashboard"
-              onClick={handleCloseSidebar}
-              style={({ isActive }) => ({
-                backgroundColor: isActive ? currentColor : "",
-              })}
-              className={({ isActive }) => (isActive ? activeLink : normalLink)}
-            >
-              <MdDashboard />
-              <span className="capitalize ">dashboard</span>
-            </NavLink>
-            <NavLink
-              to="customfood"
-              onClick={handleCloseSidebar}
-              style={({ isActive }) => ({
-                backgroundColor: isActive ? currentColor : "",
-              })}
-              className={({ isActive }) => (isActive ? activeLink : normalLink)}
-            >
-              <MdOutlineFoodBank className="text-md" />
-              <span className="capitalize ">custom food</span>
-            </NavLink>
-            <NavLink
-              to="fooditem"
-              onClick={handleCloseSidebar}
-              style={({ isActive }) => ({
-                backgroundColor: isActive ? currentColor : "",
-              })}
-              className={({ isActive }) => (isActive ? activeLink : normalLink)}
-            >
-              <MdFastfood />
-              <span className="capitalize ">food item</span>
-            </NavLink>
-
-            <NavLink
-              to="order"
-              onClick={handleCloseSidebar}
-              style={({ isActive }) => ({
-                backgroundColor: isActive ? currentColor : "",
-              })}
-              className={({ isActive }) => (isActive ? activeLink : normalLink)}
-            >
-              <BsCartCheckFill />
-              <span className="capitalize ">order</span>
-            </NavLink>
-            <NavLink
-              to="completeOrder"
-              onClick={handleCloseSidebar}
-              style={({ isActive }) => ({
-                backgroundColor: isActive ? currentColor : "",
-              })}
-              className={({ isActive }) => (isActive ? activeLink : normalLink)}
-            >
-              <FiCheckCircle />
-              <span className="capitalize ">Completed Order</span>
-            </NavLink>
-            <NavLink
-              to="cancelorder"
-              onClick={handleCloseSidebar}
-              style={({ isActive }) => ({
-                backgroundColor: isActive ? currentColor : "",
-              })}
-              className={({ isActive }) => (isActive ? activeLink : normalLink)}
-            >
-              <AiOutlineCloseCircle />
-              <span className="capitalize ">Cancel Order</span>
-            </NavLink>
-            <NavLink
-              to="discount"
-              onClick={handleCloseSidebar}
-              style={({ isActive }) => ({
-                backgroundColor: isActive ? currentColor : "",
-              })}
-              className={({ isActive }) => (isActive ? activeLink : normalLink)}
-            >
-              <TbShoppingCartDiscount />
-              <span className="capitalize ">discount</span>
-            </NavLink>
-            <NavLink
-              to="report"
-              onClick={handleCloseSidebar}
-              style={({ isActive }) => ({
-                backgroundColor: isActive ? currentColor : "",
-              })}
-              className={({ isActive }) => (isActive ? activeLink : normalLink)}
-            >
-              <HiDocumentReport />
-              <span className="capitalize ">Report</span>
-            </NavLink>
-            <NavLink
-              to="surveylist"
-              //onClick={handleCloseSidebar}
-
-              style={({ isActive }) => ({
-                backgroundColor: isActive ? currentColor : "",
-              })}
-              className={({ isActive }) => (isActive ? activeLink : normalLink)}
-            >
-              <AiOutlineFileProtect />
-              <span className="capitalize ">survey</span>
-            </NavLink>
-            <NavLink
-              to="settings"
-              onClick={handleCloseSidebar}
-              style={({ isActive }) => ({
-                backgroundColor: isActive ? currentColor : "",
-              })}
-              className={({ isActive }) => (isActive ? activeLink : normalLink)}
-            >
-              <FiSettings />
-              <span className="capitalize ">settings</span>
-            </NavLink>
-          </div>
-        </Fragment>
-      ) : (
-        <Fragment>
-          <Box className="flex justify-between items-center pt-5 ">
-            <Link
-              to="/dashboard"
-              onClick={handleCloseSidebar}
-              className="items-center gap-3 ml-3 mt-4 flex text-xl font-extrabold tracking-tight dark:text-neutral text-slate-900"
-            ></Link>
-            <button
-              type="button"
-              onClick={() => setActiveMenu(!activeMenu)}
-              style={{ color: currentColor }}
-              className="text-xl rounded-full p-3 hover:bg-light-gray mt-4 block md:hidden"
-            >
-              <MdOutlineCancel />
-            </button>
-          </Box>
-          <div className="mt-10 ">
-            <NavLink
-              to="dashboard"
-              onClick={handleCloseSidebar}
-              style={({ isActive }) => ({
-                backgroundColor: isActive ? currentColor : "",
-              })}
-              className={({ isActive }) =>
-                isActive ? smActiveLink : smNormalLink
-              }
-            >
-              <MdDashboard className="text-3xl" />
-            </NavLink>
-            <NavLink
-              to="customfood"
-              onClick={handleCloseSidebar}
-              style={({ isActive }) => ({
-                backgroundColor: isActive ? currentColor : "",
-              })}
-              className={({ isActive }) =>
-                isActive ? smActiveLink : smNormalLink
-              }
-            >
-              <MdOutlineFoodBank className="text-3xl" />
-            </NavLink>
-            <NavLink
-              to="fooditem"
-              onClick={handleCloseSidebar}
-              style={({ isActive }) => ({
-                backgroundColor: isActive ? currentColor : "",
-              })}
-              className={({ isActive }) =>
-                isActive ? smActiveLink : smNormalLink
-              }
-            >
-              <MdFastfood className="text-3xl" />
-            </NavLink>
-
-            <NavLink
-              to="order"
-              onClick={handleCloseSidebar}
-              style={({ isActive }) => ({
-                backgroundColor: isActive ? currentColor : "",
-              })}
-              className={({ isActive }) =>
-                isActive ? smActiveLink : smNormalLink
-              }
-            >
-              <BsCartCheckFill className="text-3xl" />
-            </NavLink>
-            <NavLink
-              to="completeOrder"
-              onClick={handleCloseSidebar}
-              style={({ isActive }) => ({
-                backgroundColor: isActive ? currentColor : "",
-              })}
-              className={({ isActive }) =>
-                isActive ? smActiveLink : smNormalLink
-              }
-            >
-              <FiCheckCircle className="text-3xl" />
-            </NavLink>
-            <NavLink
-              to="cancelorder"
-              onClick={handleCloseSidebar}
-              style={({ isActive }) => ({
-                backgroundColor: isActive ? currentColor : "",
-              })}
-              className={({ isActive }) =>
-                isActive ? smActiveLink : smNormalLink
-              }
-            >
-              <AiOutlineCloseCircle className="text-3xl" />
-            </NavLink>
-            <NavLink
-              to="discount"
-              onClick={handleCloseSidebar}
-              style={({ isActive }) => ({
-                backgroundColor: isActive ? currentColor : "",
-              })}
-              className={({ isActive }) =>
-                isActive ? smActiveLink : smNormalLink
-              }
-            >
-              <TbShoppingCartDiscount className="text-3xl" />
-            </NavLink>
-            <NavLink
-              to="report"
-              onClick={handleCloseSidebar}
-              style={({ isActive }) => ({
-                backgroundColor: isActive ? currentColor : "",
-              })}
-              className={({ isActive }) =>
-                isActive ? smActiveLink : smNormalLink
-              }
-            >
-              <HiDocumentReport className="text-3xl" />
-            </NavLink>
-            <NavLink
-              to="surveylist"
-              onClick={handleCloseSidebar}
-              style={({ isActive }) => ({
-                backgroundColor: isActive ? currentColor : "",
-              })}
-              className={({ isActive }) =>
-                isActive ? smActiveLink : smNormalLink
-              }
-            >
-              <AiOutlineFileProtect className="text-3xl" />
-            </NavLink>
-            <NavLink
-              to="settings"
-              onClick={handleCloseSidebar}
-              style={({ isActive }) => ({
-                backgroundColor: isActive ? currentColor : "",
-              })}
-              className={({ isActive }) =>
-                isActive ? smActiveLink : smNormalLink
-              }
-            >
-              <FiSettings className="text-3xl" />
-            </NavLink>
-          </div>
-        </Fragment>
+            );
+          })}
+          <IconButton
+            onClick={handleDrawerToggle}
+            edge="start"
+            sx={{
+              display: { xs: expandedMenu ? "block" : "none", sm: "none" },
+              color: Boolean(currentMode === "Dark") ? "#fff" : "#33373e",
+            }}
+          >
+            <MenuIcon />
+          </IconButton>
+        </Box>
       )}
+      <Box
+        id={!expandedMenu ? "" : "drawer__guide__anchor"}
+        sx={{
+          mt: !expandedMenu && 10,
+        }}
+      >
+        {sidebarMenu.map(
+          ({ path, icon: NavIcon, name, children, visibility = true }, idx) => {
+            if (!visibility) {
+              return false;
+            }
+
+            if (Boolean(children?.length)) {
+              return (
+                <Box
+                  key={idx + 7865476}
+                  sx={{
+                    borderRadius: 3,
+                    borderColor: currentColor,
+                    ml: 1,
+                  }}
+                >
+                  <Box
+                    className={`flex justify-between items-center gap-5 pl-4 pt-3 pb-2.5 pr-2.5 rounded-lg text-md  hover:text-gray-700 dark:text-gray-200   dark:hover:text-black hover:bg-gray-200 my-1 mr-2`}
+                    sx={{
+                      cursor: "pointer",
+                      color: currentMode === "Dark" ? "#fff" : "#000",
+                    }}
+                    onClick={() =>
+                      Boolean(activeMenu.includes(path))
+                        ? setActiveMenu("")
+                        : setActiveMenu(path)
+                    }
+                  >
+                    <Typography className="flex items-center gap-5 capitalize">
+                      <NavIcon />
+                      {expandedMenu && name}
+                    </Typography>
+
+                    {Boolean(activeMenu.includes(path)) ? (
+                      <ArrowDropUpIcon
+                        sx={{ display: !expandedMenu && "none" }}
+                        className={expandedMenu ? "text-md" : "text-2xl"}
+                      />
+                    ) : (
+                      <ArrowDropDownIcon
+                        sx={{ display: !expandedMenu && "none" }}
+                        className={expandedMenu ? "text-md" : "text-2xl"}
+                      />
+                    )}
+                  </Box>
+                  <Collapse in={Boolean(activeMenu.includes(path))}>
+                    {children.map((subMenu, index) => {
+                      if (expandedMenu) {
+                        // expanded menus
+                        return (
+                          <NavLink
+                            key={index + 534756}
+                            to={path + "/" + subMenu.path}
+                            onClick={handleCloseSidebar}
+                            style={({ isActive }) => ({
+                              backgroundColor: isActive ? currentColor : "",
+                            })}
+                            className={({ isActive }) =>
+                              isActive
+                                ? "flex items-center gap-5 pl-4 pt-3 pb-2.5  rounded-lg text-neutral text-md mt-2 ml-10 mr-4"
+                                : "flex items-center gap-5 pl-4 pt-3 pb-2.5  rounded-lg text-md hover:text-gray-700 dark:text-gray-200 dark:hover:text-black hover:bg-gray-200 m-2 ml-10 mr-4"
+                            }
+                          >
+                            <Typography component="span" className="capitalize">
+                              {subMenu.name}
+                            </Typography>
+                          </NavLink>
+                        );
+                      } else {
+                        // collapsed menus
+                        return (
+                          <NavLink
+                            key={index + 534756}
+                            to={path + "/" + subMenu.path}
+                            onClick={handleCloseSidebar}
+                            style={({ isActive }) => ({
+                              backgroundColor: isActive ? currentColor : "",
+                            })}
+                            className={({ isActive }) =>
+                              isActive
+                                ? "flex items-center pl-2 py-2 rounded-lg  text-neutral  text-md mt-2 mr-4"
+                                : "flex  items-center pl-2 py-2 rounded-lg text-md hover:text-gray-700 dark:text-gray-200 dark:hover:text-black hover:bg-light-gray mt-2 mr-4"
+                            }
+                          >
+                            {/* <NavIcon className="text-xl" /> */}
+                          </NavLink>
+                        );
+                      }
+                    })}
+                  </Collapse>
+                </Box>
+              );
+            }
+
+            if (expandedMenu) {
+              // expanded menus
+              return (
+                <NavLink
+                  key={idx + 7865476}
+                  to={path}
+                  onClick={handleCloseSidebar}
+                  style={({ isActive }) => ({
+                    backgroundColor: isActive ? currentColor : "",
+                  })}
+                  className={({ isActive }) =>
+                    isActive
+                      ? "flex  items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg  text-neutral  text-md m-2"
+                      : "flex  items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg text-md text-gray-700 dark:text-gray-200 dark:hover:text-black hover:bg-light-gray m-2"
+                  }
+                >
+                  <NavIcon />
+                  <span className="capitalize ">{name}</span>
+                </NavLink>
+              );
+            } else {
+              // collapsed menus
+              return (
+                <NavLink
+                  key={idx + 7865476}
+                  to={path}
+                  onClick={handleCloseSidebar}
+                  style={({ isActive }) => ({
+                    backgroundColor: isActive ? currentColor : "",
+                  })}
+                  className={({ isActive }) =>
+                    isActive
+                      ? "flex  items-center m-3 p-2 rounded-lg  text-neutral  text-md"
+                      : "flex  items-center m-3 p-2 rounded-lg text-md text-gray-700 dark:text-gray-200 dark:hover:text-black hover:bg-light-gray"
+                  }
+                >
+                  <NavIcon className="text-3xl" />
+                </NavLink>
+              );
+            }
+          }
+        )}
+      </Box>
     </Box>
   );
 };

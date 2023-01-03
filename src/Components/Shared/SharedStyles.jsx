@@ -11,6 +11,7 @@ import { styled } from "@mui/material/styles";
 import { Suspense } from "react";
 import { useStateContext } from "../../Contexts/ContextProvider";
 import QueryLoader from "../Loaders/QueryLoader";
+import BGIcon from "../../image/restaurant_icons.webp";
 
 export const SuspenseLoader = ({ children }) => {
   return (
@@ -26,18 +27,20 @@ export const SuspenseLoader = ({ children }) => {
   );
 };
 
-export const CustomModal = ({ open, onClose, children }) => {
+export const CustomModal = ({ open, onClose, children, width, center }) => {
   const { currentMode } = useStateContext();
   return (
     <Modal open={Boolean(open)} onClose={onClose} sx={{ overflowY: "scroll" }}>
       <Box
         className={currentMode === "Dark" ? "dark" : ""}
         sx={{
+          display: center && "flex",
+          justifyContent: center && "center",
           position: "absolute",
           top: "50%",
           left: "50%",
           transform: "translate(-50%, -50%)",
-          minWidth: { xs: "90%", md: 600 },
+          minWidth: { xs: "90%", md: width ?? 600 },
           maxHeight: { xs: "100%", md: "auto" },
           bgcolor: currentMode === "Dark" ? "#33373E" : "background.paper",
           // border: "1px solid #707070",
@@ -52,7 +55,35 @@ export const CustomModal = ({ open, onClose, children }) => {
     </Modal>
   );
 };
-
+export const CustomModal2 = ({ open, onClose, children, width, center }) => {
+  const { currentMode } = useStateContext();
+  return (
+    <Modal open={Boolean(open)} onClose={onClose} sx={{ overflowY: "scroll" }}>
+      <Box
+        className={currentMode === "Dark" ? "dark" : ""}
+        sx={{
+          backgroundImage: `url(${BGIcon})`,
+          display: center && "flex",
+          justifyContent: center && "center",
+          position: "absolute",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          minWidth: { xs: "90%", md: width ?? 600 },
+          maxHeight: { xs: "100%", md: "auto" },
+          bgcolor: currentMode === "Dark" ? "#33373E" : "background.paper",
+          // border: "1px solid #707070",
+          borderRadius: "4px",
+          boxShadow: 24,
+          // padding: 2,
+          overflowY: "auto",
+        }}
+      >
+        <Box className="dark:text-neutral ">{children}</Box>
+      </Box>
+    </Modal>
+  );
+};
 export const CustomDialog = ({ open, onClose, children }) => {
   const { currentMode } = useStateContext();
   return (

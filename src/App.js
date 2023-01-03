@@ -10,6 +10,8 @@ import MainLoader from "./Components/Loaders/MainLoader";
 import NotFound from "./Components/NotFound/NotFound";
 import { SuspenseLoader } from "./Components/Shared/SharedStyles";
 import { useStateContext } from "./Contexts/ContextProvider";
+import QRCodeGen from "./Pages/Admin/QRCode";
+import Home from "./Pages/Frontend/Home";
 const ThemeLayout = lazy(() => import("./Components/Layouts/ThemeLayout"));
 const NavLayout = lazy(() => import("./Components/Layouts/NavLayout"));
 const CancelOrder = lazy(() => import("./Pages/Admin/CancelOrder"));
@@ -55,7 +57,7 @@ const App = () => {
   const routes = [
     {
       path: "",
-      element: <LandingPage />,
+      element: <Home />,
     },
     {
       path: "cart",
@@ -105,6 +107,10 @@ const App = () => {
         {
           path: "customfood",
           element: <CustomizeFood />,
+        },
+        {
+          path: "qr",
+          element: <QRCodeGen />,
         },
         {
           path: "completeOrder",
@@ -165,9 +171,7 @@ const App = () => {
     <ThemeLayout>
       <div className={currentMode === "Dark" ? "dark" : ""}>
         <div className="overflow-hidden">
-          <SuspenseLoader>
-            { allRoutes}
-          </SuspenseLoader>
+          <SuspenseLoader>{allRoutes}</SuspenseLoader>
         </div>
         <ToastContainer
           position="top-right"

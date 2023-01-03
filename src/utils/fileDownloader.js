@@ -1,11 +1,11 @@
 import { toast } from "react-toastify";
-import myAxios from "./myAxios";
+import myAxios, { staticAxios } from "./myAxios";
 
 const fileDownloadHelper = async (fileTitle, fileURL) => {
   const extention = fileURL?.split(".")?.pop();
   const fileName = `${fileTitle}.${extention}`;
   try {
-    const response = await myAxios({
+    const response = await staticAxios({
       url: fileURL,
       method: "GET",
       responseType: "blob", // important
