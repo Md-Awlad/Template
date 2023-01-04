@@ -79,7 +79,6 @@ function AddToCartModal(props) {
   const { window, open, setOpen, index, item } = props;
   // const [expanded, setExpanded] = React.useState("panel1");
   const [size, setSize] = React.useState({});
-  console.log(Boolean(Object.entries(size).length));
   const { activeMenu, setCart, cart, setIngredientId } = useStateContext();
   // This is used only for the example
   const container =
@@ -544,7 +543,7 @@ function AddToCartModal(props) {
                                 variant="h6"
                                 sx={{ fontSize: "14px" }}
                               >
-                                {extraPrice.price} ৳
+                                {extraPrice.price} 
                               </Typography>
                             </Box>
                           ))}

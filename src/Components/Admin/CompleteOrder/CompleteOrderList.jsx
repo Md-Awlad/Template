@@ -344,7 +344,7 @@ const CompleteOrderList = ({ completes, isLoading, isError }) => {
                       sx={{ fontSize: 18, fontWeight: 500 }}
                       variant="h6"
                     >
-                      {item?.price} ৳
+                      {item?.price}
                     </Typography>
                   </Box>
                   {/* <--action Button--> */}

@@ -177,8 +177,8 @@ const OrderSummary = () => {
                             </div>
                           </td>
                           <td class="py-3 text-center">{data.price}</td>
-                          <td class="py-3 text-center">{data.food_price} ৳</td>
-                          <td class="py-3 text-center">{data.food_amount} ৳</td>
+                          <td class="py-3 text-center">{data.food_price} </td>
+                          <td class="py-3 text-center">{data.food_amount} </td>
                         </tr>
                       ))}
                     </tbody>
@@ -197,7 +197,7 @@ const OrderSummary = () => {
                       :
                     </Typography>
                     <Typography variant="h6" sx={{ fontSize: { xs: 14 } }}>
-                      {orderSummary.packaging || "00"} ৳
+                      {orderSummary.packaging || "00"}
                     </Typography>
                   </Box>
                   <Box className="grid grid-cols-3 gap-8 ">
@@ -208,7 +208,7 @@ const OrderSummary = () => {
                       :
                     </Typography>
                     <Typography variant="h6" sx={{ fontSize: { xs: 14 } }}>
-                      {orderSummary.sub_total || "00"} ৳
+                      {orderSummary.sub_total || "00"}
                     </Typography>
                   </Box>
                   <Box className="grid grid-cols-3 gap-8">
@@ -219,7 +219,7 @@ const OrderSummary = () => {
                       :
                     </Typography>
                     <Typography variant="h6" sx={{ fontSize: { xs: 14 } }}>
-                      {orderSummary.discount || "00"} ৳
+                      {orderSummary.discount || "00"}
                     </Typography>
                   </Box>
                   <hr />
@@ -231,7 +231,7 @@ const OrderSummary = () => {
                       :
                     </Typography>
                     <Typography variant="h6" sx={{ fontSize: { xs: 14 } }}>
-                      {orderSummary.total_amount || "00"} ৳
+                      {orderSummary.total_amount || "00"}
                     </Typography>
                   </Box>
                 </Box>

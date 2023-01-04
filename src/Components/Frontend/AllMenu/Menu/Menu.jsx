@@ -2,6 +2,7 @@ import Grid from "@mui/material/Grid";
 import { Box } from "@mui/system";
 import React, { lazy } from "react";
 import { useStateContext } from "../../../../Contexts/ContextProvider";
+import { CustomTabs } from "../../../Shared/CustomTabs";
 
 const Cart = lazy(() => import("../../Cart/Cart"));
 const MenuTabs = lazy(() => import("../MenuTabs/MenuTabs"));
@@ -18,8 +19,19 @@ const Menu = () => {
         },
       }}
     >
-      <Grid container sx={{ "& .MuiGrid-root": { margin: 0, padding: 1 } }}>
+      <Grid
+        container
+        sx={{
+          height: "80vh",
+          overflowY: "scroll",
+          "& .MuiGrid-root": {
+            margin: 0,
+            padding: 1,
+          },
+        }}
+      >
         <Grid item xs={12} md={8}>
+          {/* <CustomTabs tabOptions={}/> */}
           <MenuTabs />
         </Grid>
         {activeMenu ? (

@@ -96,7 +96,6 @@ const ResponsiveOrderSummery = () => {
               Order Type: {orderSummary.order_type}
             </Typography>
           </Box>
-        
 
           {/* --orderSummary-- */}
           <Box>
@@ -182,7 +181,7 @@ const ResponsiveOrderSummery = () => {
                     fontWeight: 600,
                   }}
                 >
-                  {orderSummary.packaging || "00"} ৳
+                  {orderSummary.packaging || "00"}
                 </Typography>
               </Box>
               <Box className="grid grid-cols-3 gap-8 ">
@@ -200,7 +199,7 @@ const ResponsiveOrderSummery = () => {
                     fontWeight: 600,
                   }}
                 >
-                  {orderSummary.sub_total || "00"} ৳
+                  {orderSummary.sub_total || "00"}
                 </Typography>
               </Box>
               <Box className="grid grid-cols-3 gap-8">
@@ -218,7 +217,7 @@ const ResponsiveOrderSummery = () => {
                     fontWeight: 600,
                   }}
                 >
-                  {orderSummary.discount || "00"} ৳
+                  {orderSummary.discount || "00"}
                 </Typography>
               </Box>
               <hr />
@@ -237,7 +236,7 @@ const ResponsiveOrderSummery = () => {
                     fontWeight: 600,
                   }}
                 >
-                  {orderSummary.total_amount || "00"} ৳
+                  {orderSummary.total_amount || "00"}
                 </Typography>
               </Box>
             </Box>

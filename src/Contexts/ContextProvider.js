@@ -37,9 +37,12 @@ export const ContextProvider = ({ children }) => {
   const { isLoading, data: currentUser = {} } = useQuery(
     ["currentUser"],
     async () => {
-      const res = await myAxios("/user_info/");
-
-      return res?.data;
+      if (getAccessToken() && sessionStorage.getItem("accessToken")) {
+        const res = await myAxios("/user_info/");
+        return res?.data;
+      } else {
+        return [];
+      }
     },
     {
       // enabled: Boolean(accessToken) || Boolean(refreshToken),

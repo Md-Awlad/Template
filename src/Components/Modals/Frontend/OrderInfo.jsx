@@ -41,7 +41,6 @@ const OrderInfo = ({
   );
 
   const onSubmit = async (data) => {
-    console.log(data);
     const payload = {
       order_type: "takeaway",
       order_items: cart.map((item) => {

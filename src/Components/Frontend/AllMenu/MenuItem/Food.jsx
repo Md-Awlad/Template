@@ -127,7 +127,7 @@ const Food = ({ category }) => {
                                             mr: 1,
                                           }}
                                         >
-                                          {key[1]} ৳
+                                          {key[1]}
                                         </Typography>
                                       </Box>
                                     )}
@@ -159,7 +159,7 @@ const Food = ({ category }) => {
                                             mr: 1,
                                           }}
                                         >
-                                          {key[1]} ৳
+                                          {key[1]}
                                         </Typography>
                                       </Box>
                                     )}

@@ -19,7 +19,6 @@ const fileDownloadHelper = async (fileTitle, fileURL) => {
     window.document.body.removeChild(link);
   } catch (error) {
     toast.error("Error downloading document");
-    console.log(error.response);
   }
 };
 export default fileDownloadHelper;

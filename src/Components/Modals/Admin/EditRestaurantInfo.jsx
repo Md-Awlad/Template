@@ -20,7 +20,6 @@ const EditRestaurantInfo = ({
     "hex",
     `${restData.colorCode ? restData.colorCode : "#121212"}`
   );
-  console.log(color);
 
   const onSubmit = async (data) => {
     const payloadForm = new FormData();

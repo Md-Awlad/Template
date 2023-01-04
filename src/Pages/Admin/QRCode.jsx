@@ -7,7 +7,7 @@ function QRCodeGen() {
     <>
       <Box className=" w-full border-2  flex justify-center items-center h-screen space-x-20">
         <GenerateQR />
-        <GenerateQR />
+        {/* <GenerateQR /> */}
       </Box>
     </>
   );

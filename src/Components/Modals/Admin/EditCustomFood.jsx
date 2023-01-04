@@ -18,7 +18,6 @@ const EditCustomFood = ({ handleClose, editCustomFood }) => {
       ingredient_name: data?.extraName,
       price: data?.extraPrice,
     };
-    console.log(payload);
 
     await toast.promise(
       myAxios.patch(`/customize_food/${editCustomFood?.id}/`, payload),

@@ -108,7 +108,6 @@ const CustomDataGrid = ({
         columns={columns}
         columnVisibilityModel={columnVisibilityModel}
         onColumnVisibilityModelChange={(newModel) => {
-          console.log(columnVisibilityModel);
           return setColumnVisibilityModel(newModel);
         }}
         loading={loading}

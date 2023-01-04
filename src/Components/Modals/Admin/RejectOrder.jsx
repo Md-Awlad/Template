@@ -48,7 +48,6 @@ const RejectOrder = ({ reject, handleModalClose }) => {
       message: data?.message,
     };
 
-    console.log(payloadForm);
 
     const response = await toast.promise(
       myAxios.patch("/order_cancel/", payloadForm),

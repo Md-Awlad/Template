@@ -117,8 +117,12 @@ const AddFoodItem = ({
     payloadForm.append("base_ingredient", data?.ingredient);
 
     payloadForm.append("category", category);
-    payloadForm.append("custom_food", JSON.stringify(extra?.map((a) => a?.id)));
-
+    if (extra?.length) {
+      payloadForm.append(
+        "custom_food",
+        JSON.stringify(extra?.map((a) => a?.id))
+      );
+    }
     addFood(payloadForm);
   };
 

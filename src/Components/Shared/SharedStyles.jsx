@@ -11,7 +11,6 @@ import { styled } from "@mui/material/styles";
 import { Suspense } from "react";
 import { useStateContext } from "../../Contexts/ContextProvider";
 import QueryLoader from "../Loaders/QueryLoader";
-import BGIcon from "../../image/restaurant_icons.webp";
 
 export const SuspenseLoader = ({ children }) => {
   return (
@@ -55,14 +54,20 @@ export const CustomModal = ({ open, onClose, children, width, center }) => {
     </Modal>
   );
 };
-export const CustomModal2 = ({ open, onClose, children, width, center }) => {
+export const CustomQRGenModal = ({
+  open,
+  onClose,
+  children,
+  width,
+  center,
+}) => {
   const { currentMode } = useStateContext();
   return (
     <Modal open={Boolean(open)} onClose={onClose} sx={{ overflowY: "scroll" }}>
       <Box
-        className={currentMode === "Dark" ? "dark" : ""}
+        className={`${currentMode === "Dark" ? "dark" : ""} `}
         sx={{
-          backgroundImage: `url(${BGIcon})`,
+          // backgroundImage: `url(${BGIcon})`,
           display: center && "flex",
           justifyContent: center && "center",
           position: "absolute",

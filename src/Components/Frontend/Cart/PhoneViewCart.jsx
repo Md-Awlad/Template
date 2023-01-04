@@ -1,12 +1,9 @@
-import {
-  Box,
-  Typography,
-} from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import React, { useState } from "react";
-import {  useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { useStateContext } from "../../../Contexts/ContextProvider";
 import CartItems from "./CartItems";
-import {  useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { staticAxios } from "../../../utils/myAxios";
 
 const PhoneViewCart = () => {
@@ -60,7 +57,7 @@ const PhoneViewCart = () => {
         ))}
       </Box>
 
-      <Box sx={{ mt: 2,mb:10 }}>
+      <Box sx={{ mt: 2, mb: 10 }}>
         <Box className="space-y-4">
           <Box className="space-y-3">
             {/* --subTotal-- */}
@@ -76,7 +73,7 @@ const PhoneViewCart = () => {
               </Typography>
               <Typography variant="h6" sx={{ fontSize: "14px" }}>
                 {cartCalculation?.sub_total ? cartCalculation?.sub_total : "00"}{" "}
-                <span>৳</span>
+                <span></span>
               </Typography>
             </Box>
             {/* --package-- */}
@@ -92,7 +89,7 @@ const PhoneViewCart = () => {
               </Typography>
               <Typography variant="h6" sx={{ fontSize: "14px" }}>
                 {cartCalculation?.packaging ? cartCalculation?.packaging : "00"}{" "}
-                <span>৳</span>
+                <span></span>
               </Typography>
             </Box>
             {/* --discount-- */}
@@ -110,7 +107,7 @@ const PhoneViewCart = () => {
                 {cartCalculation?.discount_amount
                   ? -cartCalculation?.discount_amount
                   : "00"}{" "}
-                <span>৳</span>
+                <span></span>
               </Typography>
             </Box>
             <hr className="border-[#F0A70B]" />
@@ -120,7 +117,7 @@ const PhoneViewCart = () => {
                 display: "flex",
                 justifyContent: "space-between",
                 alignItems: "center",
-                mb:10
+                mb: 10,
               }}
             >
               <Typography variant="h6" sx={{ fontSize: "16px" }}>
@@ -130,7 +127,7 @@ const PhoneViewCart = () => {
                 {cartCalculation?.total_amount
                   ? cartCalculation?.total_amount
                   : "00"}{" "}
-                <span>৳</span>
+                <span></span>
               </Typography>
             </Box>
           </Box>

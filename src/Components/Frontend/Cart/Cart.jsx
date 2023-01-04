@@ -192,7 +192,7 @@ const Cart = () => {
                   {cartCalculation?.sub_total
                     ? cartCalculation?.sub_total
                     : "00"}{" "}
-                  <span>৳</span>
+                  <span></span>
                 </Typography>
               </Box>
               {/* --package-- */}
@@ -210,7 +210,7 @@ const Cart = () => {
                   {cartCalculation?.packaging
                     ? cartCalculation?.packaging
                     : "00"}{" "}
-                  <span>৳</span>
+                  <span></span>
                 </Typography>
               </Box>
               {/* --discount-- */}
@@ -228,7 +228,7 @@ const Cart = () => {
                   {cartCalculation?.discount_amount
                     ? -cartCalculation?.discount_amount
                     : "00"}{" "}
-                  <span>৳</span>
+                  <span></span>
                 </Typography>
               </Box>
               <hr
@@ -253,7 +253,7 @@ const Cart = () => {
                   {cartCalculation?.total_amount
                     ? cartCalculation?.total_amount
                     : "00"}{" "}
-                  <span>৳</span>
+                  <span></span>
                 </Typography>
               </Box>
               <hr

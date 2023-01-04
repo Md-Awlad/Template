@@ -240,7 +240,7 @@ const CartItems = ({ cart, setCart, item }) => {
                     : 0
                 )
               : 0}
-            <span className="md:text-lg font-semibold pl-1">৳</span>
+            <span className="md:text-lg font-semibold pl-1"></span>
           </h3>
         </div>
       </Box>
@@ -311,7 +311,7 @@ const CartItems = ({ cart, setCart, item }) => {
                       />
                     </Box>
                     <Typography variant="h6" sx={{ fontSize: "14px" }}>
-                      {extraPrice.price} ৳
+                      {extraPrice.price}
                     </Typography>
                   </Box>
                 );
