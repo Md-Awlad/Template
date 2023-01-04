@@ -52,26 +52,34 @@ const Food = ({ category, customizeFood }) => {
       width: 230,
       headerAlign: "center",
       align: "center",
-      renderCell: ({ value }) => {
+      renderCell: ({ row: { price = {} } }) => {
         return (
           <Tooltip
-            title={Object.keys(value).map((key, index) => (
-              <div key={index} className="flex justify-between w-32">
-                <h2>size: {key}</h2>
-                <h2>Price: {value[key]}</h2>
-              </div>
-            ))}
+            title={
+              !price
+                ? "no data"
+                : Object.keys(price).map((key, index) => {
+                    return (
+                      <div key={index} className="flex gap-5">
+                        <h2>size: {key}</h2>
+                        <h2>Price: {price[key]}</h2>
+                      </div>
+                    );
+                  })
+            }
             placement="top"
           >
             <div className="overflow-y-auto h-12 w-full">
-              {Object.keys(value).map((key, index) => {
-                return (
-                  <div key={index} className="flex gap-5">
-                    <h2>size: {key}</h2>
-                    <h2>Price: {value[key]}</h2>
-                  </div>
-                );
-              })}
+              {!price
+                ? "no data"
+                : Object.keys(price).map((key, index) => {
+                    return (
+                      <div key={index} className="flex gap-5">
+                        <h2>size: {key}</h2>
+                        <h2>Price: {price[key]}</h2>
+                      </div>
+                    );
+                  })}
             </div>
           </Tooltip>
         );
