@@ -81,7 +81,7 @@ const Navbar = () => {
   const {
     activeMenu,
     setActiveMenu,
-    setMode,
+  
     currentMode,
     restaurantData,
     currentUser: { first_name, profile_pic },
@@ -89,10 +89,7 @@ const Navbar = () => {
   const [isDarkMode, setIsDarkMode] = React.useState(
     Boolean(currentMode === "Dark")
   );
-  const toggleTheme = () => {
-    setMode(currentMode === "Light" ? "Dark" : "Light");
-    setIsDarkMode(currentMode === "Dark" ? false : true);
-  };
+
 
   const handleDrawerToggle = () => {
     setActiveMenu(!activeMenu);

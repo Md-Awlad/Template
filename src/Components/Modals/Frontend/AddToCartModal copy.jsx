@@ -167,19 +167,19 @@ function AddToCartModal(props) {
   /**
    * If the item is in the cart, then decrement the count of the item in the cart.
    */
-  const handleDecrement = (item) => {
-    if (cart.find((i) => i === item)) {
-      setCart(
-        cart.map((e) => {
-          if (e === item && e.count > 1) {
-            return { ...e, count: e.count - 1 };
-          } else {
-            return e;
-          }
-        })
-      );
-    }
-  };
+  // const handleDecrement = (item) => {
+  //   if (cart.find((i) => i === item)) {
+  //     setCart(
+  //       cart.map((e) => {
+  //         if (e === item && e.count > 1) {
+  //           return { ...e, count: e.count - 1 };
+  //         } else {
+  //           return e;
+  //         }
+  //       })
+  //     );
+  //   }
+  // };
   /**
    * If the item is in the cart, add the extra to the item. If the extra is already in the item, remove
    * it.

@@ -16,7 +16,6 @@ import BGIcon from "../../../image/restaurant_icons.webp";
 import ContentCutIcon from "@mui/icons-material/ContentCut";
 import CustomDataGrid from "../../Shared/CustomDataGrid";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { MdModeEdit } from "react-icons/md";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { QrCode } from "@mui/icons-material";
 import myAxios from "../../../utils/myAxios";
@@ -25,7 +24,6 @@ const GenerateQR = ({ text }) => {
   const [qrImg, setQrImg] = useState();
   const [qrSurveyImg, setQrSurveyImg] = useState();
   const [openQr, setOpenQr] = useState(false);
-  const [tableNo, setTableNo] = useState("");
   const [addTableNo, setAddTableNo] = useState("");
   const [delTabId, setDelTabId] = useState(null);
   const { restaurantData, currentColor } = useStateContext();
@@ -150,12 +148,7 @@ const GenerateQR = ({ text }) => {
         </Box>
       </Box>
       <Box className="w-full ">
-        <CustomDataGrid
-          rows={QrTableData}
-          columns={columns}
-          // leftPinning={["table_name"]}
-          // rightPinning={["action"]}
-        />
+        <CustomDataGrid rows={QrTableData} columns={columns} />
       </Box>
       <CustomQRGenModal
         width={1000}

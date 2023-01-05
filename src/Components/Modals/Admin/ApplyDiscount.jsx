@@ -32,7 +32,7 @@ const ApplyDiscount = ({
       date: date?.expired_at,
     };
 
-    const response = await toast.promise(
+     await toast.promise(
       myAxios.post("/apply_discount/", payload),
       {
         pending: "Adding Discounts...",

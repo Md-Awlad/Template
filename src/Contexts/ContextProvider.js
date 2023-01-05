@@ -19,7 +19,6 @@ export const ContextProvider = ({ children }) => {
   );
   const [themeSettings, setThemeSettings] = useState(false);
   const [activeMenu, setActiveMenu] = useState(true);
-  const [currentPass, setCurrentPass] = useState(null);
   const [cart, setCart] = useState([]);
   const [checkbox, setCheckbox] = useState();
   const [ingredientId, setIngredientId] = useState();
@@ -110,7 +109,6 @@ export const ContextProvider = ({ children }) => {
         restaurantData,
         refetch,
 
-        currentPass,
         // isLoading,
         confirmed,
         setConfirmed,

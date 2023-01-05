@@ -26,7 +26,6 @@ const Settings = lazy(() => import("./Pages/Admin/Settings"));
 const SurveyList = lazy(() => import("./Pages/Admin/SurveyList"));
 const CartInfo = lazy(() => import("./Pages/Frontend/CartInfo"));
 const ConfirmedOrder = lazy(() => import("./Pages/Frontend/ConfirmedOrder"));
-const LandingPage = lazy(() => import("./Pages/Frontend/LandingPage"));
 const OrderSummary = lazy(() => import("./Pages/Frontend/OrderSummary"));
 const Survey = lazy(() => import("./Pages/Frontend/Survey"));
 
@@ -34,7 +33,6 @@ const App = () => {
   const {
     currentMode,
     currentUser: { id: userId = null },
-    restaurantIsLoading,
     isLoading,
     orderId,
     accessToken,

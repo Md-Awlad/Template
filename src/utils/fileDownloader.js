@@ -1,5 +1,5 @@
 import { toast } from "react-toastify";
-import myAxios, { staticAxios } from "./myAxios";
+import { staticAxios } from "./myAxios";
 
 const fileDownloadHelper = async (fileTitle, fileURL) => {
   const extention = fileURL?.split(".")?.pop();

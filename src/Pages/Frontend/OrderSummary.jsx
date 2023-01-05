@@ -3,10 +3,8 @@ import { Box, Button, Typography } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import React, { useRef } from "react";
 import { BsCheckCircle } from "react-icons/bs";
-import { useSearchParams } from "react-router-dom";
 import { useReactToPrint } from "react-to-print";
 import Footer from "../../Components/Frontend/Footer";
-import Header from "../../Components/Frontend/Header";
 import ResponsiveOrderSummery from "../../Components/Frontend/ResponsiveOrderSummary";
 import { useStateContext } from "../../Contexts/ContextProvider";
 import { baseURL } from "../../utils/myAxios";
@@ -14,7 +12,6 @@ import { baseURL } from "../../utils/myAxios";
 const OrderSummary = () => {
   const { orderId, activeMenu } = useStateContext();
   const componentRef = useRef();
-  const { searchparams } = useSearchParams();
   const [orderSummary, setOrderSummary] = React.useState([]);
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
@@ -40,8 +37,6 @@ const OrderSummary = () => {
             },
           }}
         >
-          {/* {activeMenu ? <Header /> : <ResponsiveBottomMenu />} */}
-          {/* { searchparams==="ordersummary"  <Header />} */}
           <Box
             sx={{
               display: "flex",

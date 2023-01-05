@@ -1,6 +1,6 @@
 import { Box, Avatar, Grid, InputAdornment, TextField } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { ColorPicker, toColor, useColor } from "react-color-palette";
+import { ColorPicker, useColor } from "react-color-palette";
 import "react-color-palette/lib/css/styles.css";
 
 import { useForm } from "react-hook-form";

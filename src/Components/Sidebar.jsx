@@ -3,33 +3,19 @@ import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { Box, Collapse, IconButton, Typography } from "@mui/material";
 import { useState } from "react";
-import {
-  AiOutlineCloseCircle,
-  AiOutlineFileProtect,
-  AiTwotoneNotification,
-} from "react-icons/ai";
-import { BiCalendarCheck, BiCalendarX } from "react-icons/bi";
-import { BsArrowUpSquare, BsCartCheckFill } from "react-icons/bs";
-import { CgFileDocument } from "react-icons/cg";
-import { FaCodeBranch } from "react-icons/fa";
+import { AiOutlineCloseCircle, AiOutlineFileProtect } from "react-icons/ai";
+import { BsCartCheckFill } from "react-icons/bs";
 import { FiCheckCircle, FiSettings } from "react-icons/fi";
-import { HiDocumentReport, HiOutlineDocumentReport } from "react-icons/hi";
-import { IoMdContacts } from "react-icons/io";
+import { HiDocumentReport } from "react-icons/hi";
 import {
   MdDashboard,
   MdFastfood,
-  MdLocalAtm,
-  MdManageAccounts,
   MdOutlineFoodBank,
-  MdOutlineWork,
   MdQrCode2,
-  MdReviews,
 } from "react-icons/md";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { useStateContext } from "../Contexts/ContextProvider";
-import MainLogo from "../image/logo.png";
 import { TbShoppingCartDiscount } from "react-icons/tb";
-import { QrCode } from "@mui/icons-material";
 
 const Sidebar = () => {
   const { pathname } = useLocation();
