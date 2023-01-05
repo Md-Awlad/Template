@@ -84,9 +84,8 @@ const Navbar = () => {
     setMode,
     currentMode,
     restaurantData,
-    currentUser: { user, profile_pic },
+    currentUser: { first_name, profile_pic },
   } = useStateContext();
-
   const [isDarkMode, setIsDarkMode] = React.useState(
     Boolean(currentMode === "Dark")
   );
@@ -201,7 +200,7 @@ const Navbar = () => {
                   <p>
                     <span className="text-gray-400 text-14">Hi,</span>{" "}
                     <span className="text-gray-400 font-bold ml-1 text-14">
-                      {user?.username ? user?.username : "user"}
+                      {first_name ?? "user"}
                     </span>
                   </p>
                   <MdKeyboardArrowDown className="text-gray-400 text-14" />

@@ -1,6 +1,10 @@
 import {
   Box,
+  Button,
   Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
   Modal,
   Skeleton,
   Switch,
@@ -8,8 +12,11 @@ import {
   tooltipClasses,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
+import { useQueryClient } from "@tanstack/react-query";
 import { Suspense } from "react";
+import { toast } from "react-toastify";
 import { useStateContext } from "../../Contexts/ContextProvider";
+import myAxios from "../../utils/myAxios";
 import QueryLoader from "../Loaders/QueryLoader";
 
 export const SuspenseLoader = ({ children }) => {
@@ -164,3 +171,42 @@ export const CustomSwitch = styled(Switch)(({ theme }) => ({
     margin: 2,
   },
 }));
+
+export const CustomDelete = ({ deleteId, handleClose, path }) => {
+  const queryClient = useQueryClient();
+
+  const handleDelete = async () => {
+    try {
+      await toast.promise(myAxios.delete(`/${path}/${deleteId}/`), {
+        pending: `Deleting ${path}...`,
+        success: `${path} Delete Successfully`,
+        error: `Error Deleting ${path}`,
+      });
+      queryClient.invalidateQueries(`${path}`);
+      handleClose();
+    } catch (error) {
+      console.log(error.response);
+    }
+  };
+
+  return (
+    <Dialog open={Boolean(deleteId)} onClose={handleClose}>
+      <DialogContent>
+        <DialogContentText
+          id="alert-dialog-description"
+          sx={{ fontWeight: 600 }}
+        >
+          Are you sure want to delete this {path}?
+        </DialogContentText>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={handleDelete} variant="outlined">
+          Delete
+        </Button>
+        <Button onClick={handleClose} variant="outlined" color="error">
+          Cancel
+        </Button>
+      </DialogActions>
+    </Dialog>
+  );
+};

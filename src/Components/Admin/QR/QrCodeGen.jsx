@@ -10,7 +10,7 @@ import QRCode from "qrcode";
 import { useRef, useState } from "react";
 import { useReactToPrint } from "react-to-print";
 import { useStateContext } from "../../../Contexts/ContextProvider";
-import { CustomQRGenModal } from "../../Shared/SharedStyles";
+import { CustomDelete, CustomQRGenModal } from "../../Shared/SharedStyles";
 import LocalPrintshopIcon from "@mui/icons-material/LocalPrintshop";
 import BGIcon from "../../../image/restaurant_icons.webp";
 import ContentCutIcon from "@mui/icons-material/ContentCut";
@@ -26,6 +26,8 @@ const GenerateQR = ({ text }) => {
   const [qrSurveyImg, setQrSurveyImg] = useState();
   const [openQr, setOpenQr] = useState(false);
   const [tableNo, setTableNo] = useState("");
+  const [addTableNo, setAddTableNo] = useState("");
+  const [delTabId, setDelTabId] = useState(null);
   const { restaurantData, currentColor } = useStateContext();
   let menuQrImg;
   let surveyQrImg;
@@ -45,20 +47,24 @@ const GenerateQR = ({ text }) => {
       console.error(err);
     }
   };
+  const { data: QrTableData = [], refetch: QrRefetch } = useQuery(["/table"]);
+
   const { mutate: tableName } = useMutation(
-    (payload) => toast.promise(myAxios.post("/table/", payload)),
+    (payload) =>
+      toast.promise(myAxios.post("/table/", payload), {
+        pending: "Your Table adding ...",
+        success: "Table is Successfully Done",
+        error: " Table adding is Error!",
+      }),
     {
-      pending: "Your table adding ...",
-      success: "Thank you table is Successfully Done",
-      error: " table added is Error!",
-    },
-    {
-      onSuccess: ({ data }) => {},
+      onSuccess: () => {
+        setAddTableNo(" ");
+        QrRefetch();
+      },
     }
   );
-
   const handleAddTable = () => {
-    const payload = { table_name: tableNo };
+    const payload = { table_name: addTableNo };
     tableName(payload);
   };
   const handleQr = (table) => {
@@ -66,27 +72,27 @@ const GenerateQR = ({ text }) => {
     table && generateQR(`${window.location.origin}/?table=${table}`);
     table && generateQRSurvey(`${window.location.origin}/survey`);
   };
-  const { data: QrTableData = [] } = useQuery(["/table"]);
 
   const columns = [
-    {
-      field: "id",
-      headerName: "ID",
-      width: 200,
-      headerAlign: "center",
-      align: "center",
-    },
+    // {
+    //   field: "id",
+    //   headerName: "ID",
+    //   width: 200,
+    //   headerAlign: "center",
+    //   align: "center",
+    // },
     {
       field: "table_name",
       headerName: "Table Name",
-      width: 200,
+      flex: 1,
       headerAlign: "center",
       align: "center",
     },
     {
       field: "action",
       headerName: "Action",
-      width: 150,
+      flex: 1,
+
       headerAlign: "center",
       align: "center",
       renderCell: ({ row }) => {
@@ -100,7 +106,7 @@ const GenerateQR = ({ text }) => {
             </Tooltip>
             <Tooltip title="Delete Discount" placement="top">
               <RiDeleteBin6Line
-                // onClick={() => setDeleteId(row?.id)}
+                onClick={() => setDelTabId(row?.id)}
                 className="text-red-400 dark:text-neutral text-xl cursor-pointer"
               />
             </Tooltip>
@@ -116,9 +122,43 @@ const GenerateQR = ({ text }) => {
   });
   return (
     <>
+      <Box className=" border-1 p-4 text-center">
+        <Typography
+          sx={{
+            fontSize: 20,
+            mb: 5,
+          }}
+        >
+          Table QR Code
+        </Typography>
+        <Box className="  flex flex-col space-y-2 ">
+          <TextField
+            size="small"
+            type="text"
+            value={addTableNo}
+            placeholder="Type your table no"
+            onChange={(e) => setAddTableNo(e.target.value)}
+          />
+          <Button
+            size="medium"
+            variant="contained"
+            className="border-2 "
+            onClick={handleAddTable}
+          >
+            Add Table
+          </Button>
+        </Box>
+      </Box>
+      <Box className="w-full ">
+        <CustomDataGrid
+          rows={QrTableData}
+          columns={columns}
+          // leftPinning={["table_name"]}
+          // rightPinning={["action"]}
+        />
+      </Box>
       <CustomQRGenModal
-        // center={true}
-        width={900}
+        width={1000}
         open={openQr}
         onClose={() => setOpenQr(false)}
       >
@@ -129,10 +169,6 @@ const GenerateQR = ({ text }) => {
             width: 1,
             "@media print": {
               paddingBottom: 9,
-
-              // "@page": {
-              //   size: "A4",
-              // },
             },
           }}
         >
@@ -149,7 +185,7 @@ const GenerateQR = ({ text }) => {
                       }}
                       className=" mb-2 text-sm"
                     >
-                      Table No: {tableNo && tableNo}
+                      Table No: {addTableNo && addTableNo}
                     </p>
                     <div
                       style={{
@@ -203,20 +239,36 @@ const GenerateQR = ({ text }) => {
               })}
             </div>
 
-            <div className="border-1 border-dashed border-gray-400"></div>
-            {/* <ContentCutIcon
+            <Box
               sx={{
-                fontSize: 12,
-                marginLeft: "-7px",
-                transform: "rotate(90deg)",
+                display: "none",
+                "@media print": {
+                  display: "block",
+                  mt: 8,
+                  border: "1px dashed #9ca3af",
+                },
               }}
-            /> */}
+            >
+              {" "}
+              <ContentCutIcon
+                sx={{
+                  display: "none",
+                  "@media print": {
+                    display: "block",
+                    position: "absolute",
+                    fontSize: 12,
+                    marginLeft: "-6px",
+                    transform: "rotate(90deg)",
+                  },
+                }}
+              />
+            </Box>
 
-            {/* servey */}
+            {/* survey */}
             <div className="text-center overflow-x-hidden p-4">
               {restaurantData?.map((data, index) => {
                 return (
-                  <div key={index}>
+                  <Box key={index} className="w-[300px]">
                     <img className="w-24 h-24 inline" src={data?.logo} alt="" />
                     <p className="font-semibold mb-[45px]">{data?.name}</p>
                     <p
@@ -257,6 +309,11 @@ const GenerateQR = ({ text }) => {
                       {" "}
                       Survey
                     </h1>
+                    <p className="justify-center text-[11px] mt-2">
+                      <span>*</span> your feedback is important to us and will
+                      be used to improve our products and services.
+                    </p>
+
                     <div className="flex justify-end mt-14">
                       <div>
                         <p className="text-[10px] font-medium text-gray-400">
@@ -269,12 +326,20 @@ const GenerateQR = ({ text }) => {
                         />
                       </div>
                     </div>
-                  </div>
+                  </Box>
                 );
               })}
             </div>
           </Box>
-          <Grid container>
+          <Grid
+            container
+            sx={{
+              p: 4,
+              "@media print": {
+                display: "none",
+              },
+            }}
+          >
             <Grid
               item
               xs={12}
@@ -298,35 +363,13 @@ const GenerateQR = ({ text }) => {
           </Grid>
         </Box>
       </CustomQRGenModal>
-      <Box className=" border-1 p-4 text-center">
-        <Typography
-          sx={{
-            fontSize: 20,
-            mb: 5,
-          }}
-        >
-          Table QR Code
-        </Typography>
-        <Box className="  flex flex-col space-y-2 ">
-          <TextField
-            size="small"
-            type="text"
-            placeholder="Type your table no"
-            onChange={(e) => setTableNo(e.target.value)}
-          />
-          <Button
-            size="medium"
-            variant="contained"
-            className="border-2 "
-            onClick={handleAddTable}
-          >
-            Add{" "}
-          </Button>
-        </Box>
-      </Box>
-      <Box className="w-full p-4">
-        <CustomDataGrid rows={QrTableData} columns={columns} />
-      </Box>
+      {Boolean(delTabId) && (
+        <CustomDelete
+          path="table"
+          deleteId={delTabId}
+          handleClose={() => setDelTabId(null)}
+        />
+      )}
     </>
   );
 };

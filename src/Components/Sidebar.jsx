@@ -167,7 +167,7 @@ const Sidebar = () => {
                     whiteSpace: "pre-wrap",
                   }}
                 >
-                  {"hgh"}
+                  {data?.name}
                 </Typography>
               </Box>
             );
