@@ -48,7 +48,7 @@ function a11yProps(index) {
 }
 
 const Cart = () => {
-  const { setOrderId, activeMenu, restaurantData } = useStateContext();
+  const { setOrderId, expandedMenu, restaurantData } = useStateContext();
   let [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const [value, setValue] = useState(0);
@@ -132,6 +132,10 @@ const Cart = () => {
   return (
     <Box
       sx={{
+        position: "sticky",
+        top: 0,
+        zIndex: 1,
+        alignSelf: "flex-start",
         bgcolor: "#FAFAEE",
         paddingX: 2,
         paddingY: 2,
@@ -142,7 +146,7 @@ const Cart = () => {
     >
       {/* --cartInfo-- */}
 
-      {activeMenu ? (
+      {expandedMenu ? (
         <Box className="flex justify-between ">
           <Typography variant="h6" sx={{ textTransform: "uppercase" }}>
             your food
@@ -233,9 +237,7 @@ const Cart = () => {
               </Box>
               <hr
                 style={{
-                  borderColor: restaurantData?.map(
-                    (data) => data?.color || "#F0A70B"
-                  ),
+                  borderColor: restaurantData?.color || "#F0A70B",
                 }}
               />
               {/* --total-- */}
@@ -258,195 +260,189 @@ const Cart = () => {
               </Box>
               <hr
                 style={{
-                  borderColor: restaurantData?.map(
-                    (data) => data?.color || "#F0A70B"
-                  ),
+                  borderColor: restaurantData.color || "#F0A70B",
                 }}
               />
-              {restaurantData?.map((data, index) => (
-                <Box key={index}>
-                  <Tabs
-                    value={value}
-                    onChange={handleChange}
-                    aria-label="basic tabs example"
-                    variant="scrollable"
-                    scrollButtons="auto"
-                    allowScrollButtonsMobile
-                    sx={{
-                      "& .MuiTabs-indicator": {
-                        backgroundColor: data?.color || "#F0A70B",
-                      },
-                      "& button": {
-                        color: "#000",
-                        borderRadius: "5px 5px 0 0 ",
-                        paddingX: 3,
-                      },
-                      "& button.Mui-selected": {
-                        backgroundColor: data?.color || "#F0A70B",
-                        color: data?.color ? "#fff" : "#000",
-                      },
-                    }}
-                  >
-                    {searchParams.get("table") ? (
-                      <Tab
-                        onClick={handleType}
-                        label="Dine In"
-                        {...a11yProps(0)}
-                      />
-                    ) : null}
-
-                    {searchParams.get("table") ? (
-                      <Tab
-                        onClick={handleType}
-                        label="Takeaway"
-                        {...a11yProps(1)}
-                      />
-                    ) : (
-                      <Tab
-                        onClick={handleType}
-                        label="Takeaway"
-                        {...a11yProps(0)}
-                      />
-                    )}
-                  </Tabs>
-                  {/* --dineIn-- */}
-
+              <Box>
+                <Tabs
+                  value={value}
+                  onChange={handleChange}
+                  aria-label="basic tabs example"
+                  variant="scrollable"
+                  scrollButtons="auto"
+                  allowScrollButtonsMobile
+                  sx={{
+                    "& .MuiTabs-indicator": {
+                      backgroundColor: restaurantData?.color || "#F0A70B",
+                    },
+                    "& button": {
+                      color: "#000",
+                      borderRadius: "5px 5px 0 0 ",
+                      paddingX: 3,
+                    },
+                    "& button.Mui-selected": {
+                      backgroundColor: restaurantData?.color || "#F0A70B",
+                      color: restaurantData?.color ? "#fff" : "#000",
+                    },
+                  }}
+                >
                   {searchParams.get("table") ? (
-                    <TabPanel value={value} index={0}>
-                      <Box className="space-y-2">
-                        <TextField
-                          size="small"
-                          label="Your Email"
-                          type="email"
-                          {...register("email")}
-                          fullWidth
-                        />
-                        <Controller
-                          name="phoneNumber"
-                          control={control}
-                          defaultValue="+880"
-                          rules={{ validate: matchIsValidTel }}
-                          render={({ field, fieldState }) => (
-                            <MuiTelInput
-                              {...field}
-                              fullWidth
-                              preferredCountries={["BD"]}
-                              helperText={
-                                Boolean(fieldState.error)
-                                  ? "Phone Number is Invalid"
-                                  : ""
-                              }
-                              error={Boolean(fieldState.error)}
-                            />
-                          )}
-                        />
-                      </Box>
-                    </TabPanel>
+                    <Tab
+                      onClick={handleType}
+                      label="Dine In"
+                      {...a11yProps(0)}
+                    />
                   ) : null}
 
-                  {/* --takeaway-- */}
                   {searchParams.get("table") ? (
-                    <TabPanel value={value} index={1}>
-                      <Box className="space-y-2">
-                        <TextField
-                          size="small"
-                          label="Your Name"
-                          type="text"
-                          {...register("name")}
-                          fullWidth
-                        />
-                        <TextField
-                          size="small"
-                          label="Your Email"
-                          type="email"
-                          {...register("email")}
-                          fullWidth
-                        />
-                        <Controller
-                          name="phoneNumber"
-                          control={control}
-                          defaultValue="+880"
-                          rules={{ validate: matchIsValidTel }}
-                          render={({ field, fieldState }) => (
-                            <MuiTelInput
-                              {...field}
-                              fullWidth
-                              preferredCountries={["BD"]}
-                              helperText={
-                                Boolean(fieldState.error)
-                                  ? "Phone Number is Invalid"
-                                  : ""
-                              }
-                              error={Boolean(fieldState.error)}
-                            />
-                          )}
-                        />
-                      </Box>
-                    </TabPanel>
+                    <Tab
+                      onClick={handleType}
+                      label="Takeaway"
+                      {...a11yProps(1)}
+                    />
                   ) : (
-                    <TabPanel value={value} index={0}>
-                      <Box className="space-y-2">
-                        <TextField
-                          size="small"
-                          label="Your Name"
-                          type="text"
-                          {...register("name")}
-                          fullWidth
-                        />
-                        <TextField
-                          size="small"
-                          label="Your Email"
-                          type="email"
-                          {...register("email")}
-                          fullWidth
-                        />
-                        <Controller
-                          name="phoneNumber"
-                          control={control}
-                          defaultValue="+880"
-                          rules={{ validate: matchIsValidTel }}
-                          render={({ field, fieldState }) => (
-                            <MuiTelInput
-                              {...field}
-                              fullWidth
-                              // preferredCountries={["BD"]}
-                              helperText={
-                                Boolean(fieldState.error)
-                                  ? "Phone Number is Invalid"
-                                  : ""
-                              }
-                              error={Boolean(fieldState.error)}
-                            />
-                          )}
-                        />
-                      </Box>
-                    </TabPanel>
+                    <Tab
+                      onClick={handleType}
+                      label="Takeaway"
+                      {...a11yProps(0)}
+                    />
                   )}
-                </Box>
-              ))}
+                </Tabs>
+                {/* --dineIn-- */}
+
+                {searchParams.get("table") ? (
+                  <TabPanel value={value} index={0}>
+                    <Box className="space-y-2">
+                      <TextField
+                        size="small"
+                        label="Your Email"
+                        type="email"
+                        {...register("email")}
+                        fullWidth
+                      />
+                      <Controller
+                        name="phoneNumber"
+                        control={control}
+                        defaultValue="+880"
+                        rules={{ validate: matchIsValidTel }}
+                        render={({ field, fieldState }) => (
+                          <MuiTelInput
+                            {...field}
+                            fullWidth
+                            preferredCountries={["BD"]}
+                            helperText={
+                              Boolean(fieldState.error)
+                                ? "Phone Number is Invalid"
+                                : ""
+                            }
+                            error={Boolean(fieldState.error)}
+                          />
+                        )}
+                      />
+                    </Box>
+                  </TabPanel>
+                ) : null}
+
+                {/* --takeaway-- */}
+                {searchParams.get("table") ? (
+                  <TabPanel value={value} index={1}>
+                    <Box className="space-y-2">
+                      <TextField
+                        size="small"
+                        label="Your Name"
+                        type="text"
+                        {...register("name")}
+                        fullWidth
+                      />
+                      <TextField
+                        size="small"
+                        label="Your Email"
+                        type="email"
+                        {...register("email")}
+                        fullWidth
+                      />
+                      <Controller
+                        name="phoneNumber"
+                        control={control}
+                        defaultValue="+880"
+                        rules={{ validate: matchIsValidTel }}
+                        render={({ field, fieldState }) => (
+                          <MuiTelInput
+                            {...field}
+                            fullWidth
+                            preferredCountries={["BD"]}
+                            helperText={
+                              Boolean(fieldState.error)
+                                ? "Phone Number is Invalid"
+                                : ""
+                            }
+                            error={Boolean(fieldState.error)}
+                          />
+                        )}
+                      />
+                    </Box>
+                  </TabPanel>
+                ) : (
+                  <TabPanel value={value} index={0}>
+                    <Box className="space-y-2">
+                      <TextField
+                        size="small"
+                        label="Your Name"
+                        type="text"
+                        {...register("name")}
+                        fullWidth
+                      />
+                      <TextField
+                        size="small"
+                        label="Your Email"
+                        type="email"
+                        {...register("email")}
+                        fullWidth
+                      />
+                      <Controller
+                        name="phoneNumber"
+                        control={control}
+                        defaultValue="+880"
+                        rules={{ validate: matchIsValidTel }}
+                        render={({ field, fieldState }) => (
+                          <MuiTelInput
+                            {...field}
+                            fullWidth
+                            // preferredCountries={["BD"]}
+                            helperText={
+                              Boolean(fieldState.error)
+                                ? "Phone Number is Invalid"
+                                : ""
+                            }
+                            error={Boolean(fieldState.error)}
+                          />
+                        )}
+                      />
+                    </Box>
+                  </TabPanel>
+                )}
+              </Box>
             </Box>
-            {restaurantData?.map((data, index) => (
-              <Button
-                key={index}
-                type="submit"
-                variant="outlined"
-                sx={{
-                  ":hover": {
-                    borderColor: data?.color || "#F0A70B",
-                    color: data?.color || "#000",
-                  },
-                  width: "100%",
-                  height: { md: 35, xs: 50 },
-                  backgroundColor: data?.color || "#F0A70B",
-                  borderColor: data?.color || "#F0A70B",
-                  color: data?.color ? "#fff" : "#000",
-                  borderRadius: "20px",
-                  fontSize: { xs: 17, md: 14 },
-                }}
-              >
-                Confirm Your Order
-              </Button>
-            ))}
+            <Button
+              type="submit"
+              variant="outlined"
+              sx={{
+                ":hover": {
+                  borderColor: restaurantData?.color || "#F0A70B",
+                  color: restaurantData?.color || "#000",
+                },
+                width: "100%",
+                height: { md: 35, xs: 50 },
+                backgroundColor: restaurantData?.color || "#F0A70B",
+                borderColor: restaurantData?.color || "#F0A70B",
+                color: restaurantData?.color ? "#fff" : "#000",
+                borderRadius: "20px",
+                fontSize: { xs: 17, md: 14 },
+              }}
+            >
+              Confirm Your Order
+            </Button>
+
             {orderConfirmMutation.isSuccess ? (
               <Alert severity="success">Your Order Successfully Done!</Alert>
             ) : null}

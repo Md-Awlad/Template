@@ -6,7 +6,7 @@ import Footer from "../Footer";
 import Header from "../Header";
 import ResponsiveMenu from "../ResponsiveBottomMenu";
 const Layout = ({ children }) => {
-  const { activeMenu } = useStateContext();
+  const { expandedMenu } = useStateContext();
   return (
     <>
       <Box
@@ -21,9 +21,9 @@ const Layout = ({ children }) => {
           overflowY: "scroll",
         }}
       >
-        {activeMenu ? <Header /> : null}
+        {expandedMenu ? <Header /> : null}
         <main>{children}</main>
-        {activeMenu ? <Footer /> : <ResponsiveMenu />}
+        {expandedMenu ? <Footer /> : <ResponsiveMenu />}
       </Box>
     </>
   );

@@ -10,7 +10,7 @@ import { useStateContext } from "../../Contexts/ContextProvider";
 import { baseURL } from "../../utils/myAxios";
 
 const OrderSummary = () => {
-  const { orderId, activeMenu } = useStateContext();
+  const { orderId, expandedMenu } = useStateContext();
   const componentRef = useRef();
   const [orderSummary, setOrderSummary] = React.useState([]);
   const handlePrint = useReactToPrint({
@@ -24,7 +24,7 @@ const OrderSummary = () => {
   });
   return (
     <>
-      {activeMenu ? (
+      {expandedMenu ? (
         <Box
           ref={componentRef}
           sx={{

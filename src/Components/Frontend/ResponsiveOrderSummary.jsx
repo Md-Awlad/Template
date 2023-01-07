@@ -11,7 +11,7 @@ import Header from "./Header";
 import ResponsiveBottomMenu from "./ResponsiveBottomMenu";
 
 const ResponsiveOrderSummery = () => {
-  const { orderId, activeMenu } = useStateContext();
+  const { orderId, expandedMenu } = useStateContext();
   const componentRef = useRef();
   const [orderSummary, setOrderSummary] = React.useState([]);
   const handlePrint = useReactToPrint({
@@ -36,7 +36,7 @@ const ResponsiveOrderSummery = () => {
         },
       }}
     >
-      {activeMenu ? <Header /> : <ResponsiveBottomMenu />}
+      {expandedMenu ? <Header /> : <ResponsiveBottomMenu />}
       {/* <Header /> */}
       <Box
         sx={{

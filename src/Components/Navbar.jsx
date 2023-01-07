@@ -15,7 +15,7 @@ import { useStateContext } from "../Contexts/ContextProvider";
 import Sidebar from "./Sidebar";
 import UserProfile from "./UserProfile";
 
-const drawerWidth = 240;
+const drawerWidth = 270;
 
 const openedMixin = (theme) => ({
   width: "100%",
@@ -79,9 +79,9 @@ const Drawer = styled(MuiDrawer, {
 const Navbar = () => {
   const [userProfile, setUserProfile] = React.useState(null);
   const {
-    activeMenu,
-    setActiveMenu,
-  
+    expandedMenu,
+    setExpandedMenu,
+    setDrawerToggle,
     currentMode,
     restaurantData,
     currentUser: { first_name, profile_pic },
@@ -90,19 +90,20 @@ const Navbar = () => {
     Boolean(currentMode === "Dark")
   );
 
-
   const handleDrawerToggle = () => {
-    setActiveMenu(!activeMenu);
+    setDrawerToggle((prev) => !prev);
+
+    setExpandedMenu(!expandedMenu);
   };
 
   return (
     <Fragment>
       <AppBar
         position="fixed"
-        open={activeMenu}
+        open={expandedMenu}
         sx={{
           bgcolor: !isDarkMode ? "#fff" : "#33373e",
-          display: { xs: activeMenu ? "none" : "block", md: "block" },
+          display: { xs: expandedMenu ? "none" : "block", md: "block" },
           boxShadow: "0",
         }}
       >
@@ -115,10 +116,11 @@ const Navbar = () => {
           <Box className="flex justify-between items-center">
             <IconButton
               onClick={handleDrawerToggle}
+              // id="menu__guide__anchor"
               edge="start"
               sx={{
                 marginRight: 2,
-                display: { xs: activeMenu ? "none" : "block", sm: "block" },
+                display: { xs: expandedMenu ? "none" : "block", sm: "block" },
                 color: isDarkMode ? "#fff" : "#33373e",
               }}
             >
@@ -131,30 +133,27 @@ const Navbar = () => {
               component={Link}
               to="/"
               sx={{
-                ...(activeMenu && { display: "none" }),
+                ...(expandedMenu && { display: "none" }),
                 color: isDarkMode ? "#fff" : "#33373e",
                 ml: "8px",
               }}
             >
-              {restaurantData?.map((data, index) => (
-                <Box
-                  key={index}
-                  component="img"
-                  src={data?.logo}
-                  onError={({ currentTarget }) => {
-                    currentTarget.onerror = null; // prevents looping
-                    currentTarget.src = "https://i.ibb.co/0q5B8VP/MainLogo.png";
-                  }}
-                  sx={{
-                    objectFit: "cover",
-                    maxWidth: "100px",
-                    height: "54px",
-                  }}
-                />
-              ))}
+              <Box
+                component="img"
+                src={restaurantData?.logo}
+                onError={({ currentTarget }) => {
+                  currentTarget.onerror = null; // prevents looping
+                  currentTarget.src = "https://i.ibb.co/0q5B8VP/MainLogo.png";
+                }}
+                sx={{
+                  objectFit: "cover",
+                  maxWidth: "100px",
+                  height: "54px",
+                }}
+              />
             </IconButton>
           </Box>
-          <div className="flex items-center justify-between space-x-1">
+          <Box className="flex items-center justify-between space-x-1">
             {/* <DarkModeToggle
               onChange={toggleTheme}
               value={currentMode === "Light" ? "Light" : "Dark"}
@@ -170,40 +169,36 @@ const Navbar = () => {
                     alignItems: "center",
                   }}
                 >
-                  <Home /> {activeMenu && "Go to Store"}
+                  <Home /> {expandedMenu && "Go to Store"}
                 </Button>
               </Link>
             </Box>
-            {restaurantData?.map((data, index) => {
-              return (
-                <div
-                  key={index}
-                  className="flex items-center gap-2 cursor-pointer p-1 hover:bg-light-gray rounded-lg"
-                  onClick={(event) => setUserProfile(event.currentTarget)}
-                >
-                  <div className="flex items-center">
-                    <img
-                      className="rounded-full w-8 h-8 "
-                      src={profile_pic}
-                      onError={({ currentTarget }) => {
-                        currentTarget.onerror = null; // prevents looping
-                        currentTarget.src =
-                          "https://i.ibb.co/0q5B8VP/MainLogo.png";
-                      }}
-                      alt=""
-                    />
-                  </div>
 
-                  <p>
-                    <span className="text-gray-400 text-14">Hi,</span>{" "}
-                    <span className="text-gray-400 font-bold ml-1 text-14">
-                      {first_name ?? "user"}
-                    </span>
-                  </p>
-                  <MdKeyboardArrowDown className="text-gray-400 text-14" />
-                </div>
-              );
-            })}
+            <Box
+              className="flex items-center gap-2 cursor-pointer p-1 hover:bg-light-gray rounded-lg"
+              onClick={(event) => setUserProfile(event.currentTarget)}
+            >
+              <div className="flex items-center">
+                <img
+                  className="rounded-full w-8 h-8 "
+                  src={profile_pic}
+                  onError={({ currentTarget }) => {
+                    currentTarget.onerror = null; // prevents looping
+                    currentTarget.src = "https://i.ibb.co/0q5B8VP/MainLogo.png";
+                  }}
+                  alt=""
+                />
+              </div>
+
+              <p>
+                <span className="text-gray-400 text-14">Hi,</span>{" "}
+                <span className="text-gray-400 font-bold ml-1 text-14">
+                  {first_name ?? "user"}
+                </span>
+              </p>
+              <MdKeyboardArrowDown className="text-gray-400 text-14" />
+            </Box>
+
             <Menu
               sx={{ mt: "45px" }}
               id="menu-appbar"
@@ -224,12 +219,12 @@ const Navbar = () => {
             </Menu>
 
             {/* {notification && <Notification />} */}
-          </div>
+          </Box>
         </Toolbar>
       </AppBar>
       <Drawer
         variant="permanent"
-        open={activeMenu}
+        open={expandedMenu}
         sx={{
           "& .MuiPaper-root": {
             bgcolor: isDarkMode ? "#20232a" : "#fff",

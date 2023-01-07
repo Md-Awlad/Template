@@ -74,7 +74,7 @@ const EditRestaurantInfo = ({
       <h2 className="text-xl font-bold pb-3">Edit Restaurants{color?.hex}</h2>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
         {/* --name-- */}
-        <Grid item xs={12} md={6}>
+        {/* <Grid item xs={12} md={6}>
           <TextField
             required
             id="name"
@@ -85,9 +85,9 @@ const EditRestaurantInfo = ({
             {...register("name")}
             fullWidth
           />
-        </Grid>
+        </Grid> */}
         {/* --phone-- */}
-        <Grid item xs={12} md={6}>
+        {/* <Grid item xs={12} md={6}>
           <TextField
             required
             id="phone"
@@ -97,10 +97,10 @@ const EditRestaurantInfo = ({
             {...register("phone")}
             fullWidth
           />
-        </Grid>
+        </Grid> */}
 
         {/* --email-- */}
-        <Grid item xs={12} md={6}>
+        {/* <Grid item xs={12} md={6}>
           <TextField
             required
             id="email"
@@ -111,9 +111,9 @@ const EditRestaurantInfo = ({
             {...register("email")}
             fullWidth
           />
-        </Grid>
+        </Grid> */}
         {/* --address one-- */}
-        <Grid item xs={12} md={6}>
+        {/* <Grid item xs={12} md={6}>
           <TextField
             required
             id="address"
@@ -123,9 +123,9 @@ const EditRestaurantInfo = ({
             {...register("address_one")}
             fullWidth
           />
-        </Grid>
+        </Grid> */}
         {/* --address two-- */}
-        <Grid item xs={12} md={6}>
+        {/* <Grid item xs={12} md={6}>
           <TextField
             id="address"
             label="Restaurant Address Two(optional)"
@@ -135,7 +135,7 @@ const EditRestaurantInfo = ({
             {...register("address_two")}
             fullWidth
           />
-        </Grid>
+        </Grid> */}
         {/* --color-- */}
         <Grid item xs={12} md={6}>
           <TextField

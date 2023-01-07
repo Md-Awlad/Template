@@ -5,12 +5,8 @@ import Layout from "../../Components/Frontend/Layout/Layout";
 import { useStateContext } from "../../Contexts/ContextProvider";
 
 const CartInfo = () => {
-  const {activeMenu}=useStateContext()
-  return (
-    <Layout>
-     {activeMenu? <Cart />:<PhoneViewCart/>}
-    </Layout>
-  );
+  const { expandedMenu } = useStateContext();
+  return <Layout>{expandedMenu ? <Cart /> : <PhoneViewCart />}</Layout>;
 };
 
 export default CartInfo;

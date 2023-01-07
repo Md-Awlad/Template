@@ -58,7 +58,7 @@ const CustomDrawer = () => {
               fontSize: { sm: 11, xs: 8 },
               fontWeight: 500,
               textAlign: "center",
-              color: restaurantData?.map((data) => data?.color || "#F0A70B"),
+              color: restaurantData.color || "#F0A70B",
             }}
           >
             Order Now

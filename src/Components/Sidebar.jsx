@@ -1,18 +1,14 @@
 import MenuIcon from "@mui/icons-material/Menu";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
+import TableRestaurantIcon from "@mui/icons-material/TableRestaurant";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { Box, Collapse, IconButton, Typography } from "@mui/material";
 import { useState } from "react";
-import { AiOutlineCloseCircle, AiOutlineFileProtect } from "react-icons/ai";
+import { AiOutlineFileProtect } from "react-icons/ai";
 import { BsCartCheckFill } from "react-icons/bs";
-import { FiCheckCircle, FiSettings } from "react-icons/fi";
+import { FiSettings } from "react-icons/fi";
 import { HiDocumentReport } from "react-icons/hi";
-import {
-  MdDashboard,
-  MdFastfood,
-  MdOutlineFoodBank,
-  MdQrCode2,
-} from "react-icons/md";
+import { MdDashboard, MdFastfood, MdOutlineFoodBank } from "react-icons/md";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { useStateContext } from "../Contexts/ContextProvider";
 import { TbShoppingCartDiscount } from "react-icons/tb";
@@ -24,6 +20,7 @@ const Sidebar = () => {
   const {
     expandedMenu,
     setExpandedMenu,
+    drawerToggle,
     screenSize,
     currentColor,
     currentMode,
@@ -42,30 +39,45 @@ const Sidebar = () => {
       icon: MdDashboard,
       name: "Dashboard",
     },
+
     {
-      path: "/customfood",
-      icon: MdOutlineFoodBank,
-      name: "Custom Food",
-    },
-    {
-      path: "/fooditem",
+      path: "/foodmanagement",
       icon: MdFastfood,
-      name: "Food Item",
+      name: "Food Management",
+      children: [
+        {
+          path: "",
+          name: "Food Item",
+        },
+        {
+          path: "customfood",
+          name: "Custom Food",
+        },
+      ],
     },
     {
       path: "/order",
       icon: BsCartCheckFill,
-      name: "order",
+      name: "Order Management",
+      children: [
+        {
+          path: "",
+          name: "order",
+        },
+        {
+          path: "completeOrder",
+          name: "Complete Order",
+        },
+        {
+          path: "cancelorder",
+          name: "Cancel Order",
+        },
+      ],
     },
     {
-      path: "/completeOrder",
-      icon: FiCheckCircle,
-      name: "Complete Order",
-    },
-    {
-      path: "/cancelorder",
-      icon: AiOutlineCloseCircle,
-      name: "Cancel Order",
+      path: "/table",
+      icon: TableRestaurantIcon,
+      name: "Table Management",
     },
 
     {
@@ -84,11 +96,7 @@ const Sidebar = () => {
       icon: HiDocumentReport,
       name: "Report",
     },
-    {
-      path: "/qr",
-      icon: MdQrCode2,
-      name: "Qr Generator",
-    },
+
     {
       path: "/settings",
       icon: FiSettings,
@@ -120,44 +128,40 @@ const Sidebar = () => {
             px: 2,
           }}
         >
-          {restaurantData?.map((data, i) => {
-            return (
-              <Box
-                key={i}
-                onClick={handleCloseSidebar}
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 2,
-                }}
-              >
-                <Box
-                  component="img"
-                  src={data?.logo}
-                  onClick={() => navigate("/")}
-                  onError={({ currentTarget }) => {
-                    currentTarget.onerror = null; // prevents looping
-                    currentTarget.src = "https://i.ibb.co/0q5B8VP/MainLogo.png";
-                  }}
-                  sx={{
-                    width: "50px",
-                    maxHeight: "50px",
-                    borderRadius: "5px",
-                    cursor: "pointer",
-                  }}
-                />
-                <Typography
-                  variant="h6"
-                  className="dark:text-neutral"
-                  sx={{
-                    whiteSpace: "pre-wrap",
-                  }}
-                >
-                  {data?.name}
-                </Typography>
-              </Box>
-            );
-          })}
+          <Box
+            onClick={handleCloseSidebar}
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              gap: 2,
+            }}
+          >
+            <Box
+              component="img"
+              src={restaurantData?.logo}
+              onClick={() => navigate("/")}
+              onError={({ currentTarget }) => {
+                currentTarget.onerror = null; // prevents looping
+                currentTarget.src = "https://i.ibb.co/0q5B8VP/MainLogo.png";
+              }}
+              sx={{
+                width: "50px",
+                maxHeight: "50px",
+                borderRadius: "5px",
+                cursor: "pointer",
+              }}
+            />
+            <Typography
+              variant="h6"
+              className="dark:text-neutral"
+              sx={{
+                whiteSpace: "pre-wrap",
+              }}
+            >
+              {restaurantData?.name}
+            </Typography>
+          </Box>
+
           <IconButton
             onClick={handleDrawerToggle}
             edge="start"
@@ -171,18 +175,25 @@ const Sidebar = () => {
         </Box>
       )}
       <Box
+        // id={!expandedMenu ? "" : "drawer__guide__anchor"}
         id={!expandedMenu ? "" : "drawer__guide__anchor"}
+        onMouseOver={() => {
+          drawerToggle && setExpandedMenu(drawerToggle);
+        }}
+        onMouseLeave={() => {
+          drawerToggle && setExpandedMenu(!drawerToggle);
+        }}
         sx={{
           mt: !expandedMenu && 10,
         }}
       >
-        {sidebarMenu.map(
+        {sidebarMenu?.map(
           ({ path, icon: NavIcon, name, children, visibility = true }, idx) => {
             if (!visibility) {
               return false;
             }
 
-            if (Boolean(children?.length)) {
+            if (Boolean(children?.length && expandedMenu)) {
               return (
                 <Box
                   key={idx + 7865476}
@@ -204,8 +215,8 @@ const Sidebar = () => {
                         : setActiveMenu(path)
                     }
                   >
-                    <Typography className="flex items-center gap-5 capitalize">
-                      <NavIcon />
+                    <Typography className="flex items-center gap-5 text-gray-700 ">
+                      <NavIcon className="text-xl" />
                       {expandedMenu && name}
                     </Typography>
 
@@ -286,8 +297,12 @@ const Sidebar = () => {
                       : "flex  items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg text-md text-gray-700 dark:text-gray-200 dark:hover:text-black hover:bg-light-gray m-2"
                   }
                 >
-                  <NavIcon />
-                  <span className="capitalize ">{name}</span>
+                  {/* <NavIcon />
+                  <span className="capitalize ">{name}</span> */}
+                  <Typography className="flex items-center gap-5  text-gray-700 ">
+                    <NavIcon className="text-xl" />
+                    {name}
+                  </Typography>
                 </NavLink>
               );
             } else {
@@ -306,7 +321,7 @@ const Sidebar = () => {
                       : "flex  items-center m-3 p-2 rounded-lg text-md text-gray-700 dark:text-gray-200 dark:hover:text-black hover:bg-light-gray"
                   }
                 >
-                  <NavIcon className="text-3xl" />
+                  <NavIcon className="text-xl" />
                 </NavLink>
               );
             }

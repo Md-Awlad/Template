@@ -18,18 +18,17 @@ export const ContextProvider = ({ children }) => {
     localStorage.getItem("themeMode") || "Light"
   );
   const [themeSettings, setThemeSettings] = useState(false);
-  const [activeMenu, setActiveMenu] = useState(true);
   const [cart, setCart] = useState([]);
   const [checkbox, setCheckbox] = useState();
   const [ingredientId, setIngredientId] = useState();
   const [screenSize, setScreenSize] = useState(undefined);
-  const [expandedMenu, setExpandedMenu] = useState(true);
   const [orderId, setOrderId] = useState();
   const [confirmed, setConfirmed] = useState();
   const [customColor, setCustomColor] = useState();
   const [accessToken, setAccessToken] = useState("");
-  // const [refreshToken, setRefreshToken] = useState("");
-  // const [currentUser, setCurrentUser] = useState({});
+  const [expandedMenu, setExpandedMenu] = useState(true);
+  const [drawerToggle, setDrawerToggle] = useState(false);
+
   useEffect(() => {
     setAccessToken(getAccessToken());
   }, []);
@@ -52,15 +51,15 @@ export const ContextProvider = ({ children }) => {
     }
   );
   const {
-    data: restaurantData = [],
+    data: restaurantData = {},
     isLoading: restaurantIsLoading,
     isError: restaurantIsError,
     refetch,
   } = useQuery(["restaurantData"], async () => {
     const res = await staticAxios("/restaurant/");
-    return res.data;
+    return res?.data;
   });
-
+  console.log(restaurantData);
   // const { data: create_menu = {} } = useQuery(["create_menu"], async () => {
   //   const res = await myAxios("/create_menu");
   //   return res?.data;
@@ -75,6 +74,20 @@ export const ContextProvider = ({ children }) => {
     setCurrentColor(color);
     localStorage.setItem("colorMode", color);
   };
+  /* Setting the screen size and then setting the active menu to false if the screen size is less than
+900. */
+
+  // useEffect(() => {
+  //   const handleResize = () => setScreenSize(window.innerWidth);
+  //   window.addEventListener("resize", handleResize);
+  //   handleResize();
+  //   if (screenSize <= 900) {
+  //     setActiveMenu(false);
+  //   } else {
+  //     setActiveMenu(true);
+  //   }
+  //   return () => window.removeEventListener("resize", handleResize);
+  // }, [screenSize]);
 
   useEffect(() => {
     const handleResize = () => setScreenSize(window.innerWidth);
@@ -88,55 +101,44 @@ export const ContextProvider = ({ children }) => {
     return () => window.removeEventListener("resize", handleResize);
   }, [screenSize]);
 
-  useEffect(() => {
-    const handleResize = () => setScreenSize(window.innerWidth);
-    window.addEventListener("resize", handleResize);
-    handleResize();
-    if (screenSize <= 900) {
-      setActiveMenu(false);
-    } else {
-      setActiveMenu(true);
-    }
-    return () => window.removeEventListener("resize", handleResize);
-  }, [screenSize]);
-
   return (
     <StateContext.Provider
       value={{
+        //states
         currentUser,
         restaurantIsLoading,
         restaurantIsError,
         restaurantData,
-        refetch,
-
-        // isLoading,
         confirmed,
-        setConfirmed,
-        expandedMenu,
         currentColor,
         orderId,
-        customColor,
-        setCustomColor,
-        setOrderId,
         currentMode,
-        setCurrentMode,
-        activeMenu,
         screenSize,
         accessToken,
-        setScreenSize,
         initialState,
-        setActiveMenu,
+        customColor,
+        checkbox,
+        themeSettings,
+        ingredientId,
+        cart,
+        isLoading,
+        expandedMenu,
+        drawerToggle,
+        //actions
+        setDrawerToggle,
+        refetch,
+        setExpandedMenu,
+        setConfirmed,
+        setCustomColor,
+        setOrderId,
+        setCurrentMode,
+        setScreenSize,
         setCurrentColor,
         setMode,
         setColor,
-        themeSettings,
         setThemeSettings,
-        cart,
-        isLoading,
         setCart,
-        checkbox,
         setCheckbox,
-        ingredientId,
         setIngredientId,
       }}
     >

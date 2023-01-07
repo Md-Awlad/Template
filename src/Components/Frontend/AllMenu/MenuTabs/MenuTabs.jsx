@@ -1,7 +1,7 @@
 import { Tab, Tabs, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { useQuery } from "@tanstack/react-query";
-import React, { Fragment, useState } from "react";
+import React, { useState } from "react";
 import { useStateContext } from "../../../../Contexts/ContextProvider";
 import { staticAxios } from "../../../../utils/myAxios";
 import Food from "../MenuItem/Food";
@@ -39,35 +39,37 @@ const MenuTabs = ({ setCart, cart }) => {
     return res.data;
   });
   return (
-    <Fragment>
-      {restaurantData?.map((data, index) => (
-        <Tabs
-          key={index}
-          value={value}
-          onChange={handleChange}
-          aria-label="basic tabs example"
-          variant="scrollable"
-          scrollButtons="auto"
-          allowScrollButtonsMobile
-          sx={{
-            "& .MuiTabs-indicator": {
-              backgroundColor: data?.color || "#F0A70B",
-            },
-            "& button": {
-              color: "#000",
-              borderRadius: "5px 5px 0 0 ",
-            },
-            "& button.Mui-selected": {
-              backgroundColor: data?.color || "#F0A70B",
-              color: data?.color ? "#fff" : "#000",
-            },
-          }}
-        >
-          {categories?.map((category, index) => (
-            <Tab label={category.name} key={index + 45674645} />
-          ))}
-        </Tabs>
-      ))}
+    <>
+      <Tabs
+        value={value}
+        onChange={handleChange}
+        aria-label="basic tabs example"
+        variant="scrollable"
+        scrollButtons="auto"
+        allowScrollButtonsMobile
+        sx={{
+          position: "sticky",
+          top: 0,
+          zIndex: 1,
+          "& .MuiTabs-indicator": {
+            backgroundColor: restaurantData?.color || "#F0A70B",
+          },
+          "& button": {
+            color: "#000",
+            backgroundColor: "#FAFAEE",
+            borderRadius: "5px 5px 0 0 ",
+          },
+          "& button.Mui-selected": {
+            backgroundColor: restaurantData?.color || "#F0A70B",
+            color: restaurantData?.color ? "#fff" : "#000",
+          },
+        }}
+      >
+        {categories?.map((category, index) => (
+          <Tab label={category.name} key={index + 45674645} />
+        ))}
+      </Tabs>
+
       {categories?.map((category, index) => {
         return (
           <TabPanel key={index} value={value} index={index}>
@@ -80,7 +82,7 @@ const MenuTabs = ({ setCart, cart }) => {
           </TabPanel>
         );
       })}
-    </Fragment>
+    </>
   );
 };
 

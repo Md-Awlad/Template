@@ -51,17 +51,13 @@ const EditCategory = ({ editId, handleClose }) => {
     handleClose();
   };
 
-  const { data } = useQuery(
-    [`categories`],
-    () => myAxios(`/category/${editId}`),
-    {
-      onSuccess: ({ data: categoryData = [] }) => {
-        categoryData.map((data) => {
-          setValue("category", data?.name);
-        });
-      },
-    }
-  );
+  useQuery([`categories`], () => myAxios(`/category/${editId}`), {
+    onSuccess: ({ data: categoryData = [] }) => {
+      categoryData.map((data) => {
+        return setValue("category", data?.name);
+      });
+    },
+  });
 
   return (
     <Modal open={Boolean(editId)} onClose={handleClose}>

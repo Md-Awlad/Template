@@ -16,12 +16,7 @@ const Food = ({ category }) => {
   return (
     <Box sx={{ mb: 10 }}>
       {/* --food-- */}
-      <Box
-        className=" "
-        sx={{
-          height: { md: "100vh" },
-        }}
-      >
+      <Box>
         <Grid container sx={{ padding: 0, m: 0 }}>
           {category?.foodItems_category?.map((item, index) => {
             return (

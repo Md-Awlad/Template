@@ -102,7 +102,7 @@ const GenerateQR = ({ text }) => {
                 className="text-gray-600 dark:text-neutral text-xl cursor-pointer"
               />
             </Tooltip>
-            <Tooltip title="Delete Discount" placement="top">
+            <Tooltip title="Delete Table" placement="top">
               <RiDeleteBin6Line
                 onClick={() => setDelTabId(row?.id)}
                 className="text-red-400 dark:text-neutral text-xl cursor-pointer"
@@ -303,7 +303,7 @@ const GenerateQR = ({ text }) => {
                       Survey
                     </h1>
                     <p className="justify-center text-[11px] mt-2">
-                      <span>*</span> your feedback is important to us and will
+                      <span>*</span> Your feedback is important to us and will
                       be used to improve our products and services.
                     </p>
 

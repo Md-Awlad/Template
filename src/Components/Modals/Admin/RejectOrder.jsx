@@ -48,20 +48,16 @@ const RejectOrder = ({ reject, handleModalClose }) => {
       message: data?.message,
     };
 
-
-    const response = await toast.promise(
-      myAxios.patch("/order_cancel/", payloadForm),
-      {
-        pending: "Cancel Foods...",
-        success: "Cancel Successfully",
-        error: "Error Cancel Foods!",
-      }
-    );
+    await toast.promise(myAxios.patch("/order_cancel/", payloadForm), {
+      pending: "Cancel Foods...",
+      success: "Cancel Successfully",
+      error: "Error Cancel Foods!",
+    });
     queryClient.invalidateQueries("orders");
     handleModalClose();
   };
 
-  const { data } = useQuery([`orders`], () => myAxios(`/order/${reject}/`), {
+  useQuery([`orders`], () => myAxios(`/order/${reject}/`), {
     onSuccess: ({ data: orderFood = [] }) => {
       setValue("orderId", orderFood?.id);
       setValue("email", orderFood?.customer_mail);

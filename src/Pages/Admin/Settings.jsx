@@ -19,15 +19,17 @@ const Settings = () => {
 
   return (
     <Container>
-      {restaurantData?.map((data, index) => (
-        <CustomModal key={index} open={openModal} onClose={handleModalClose}>
-          <EditRestaurantInfo data={data} handleModalClose={handleModalClose} />
-        </CustomModal>
-      ))}
+      <CustomModal open={openModal} onClose={handleModalClose}>
+        <EditRestaurantInfo
+          data={restaurantData}
+          handleModalClose={handleModalClose}
+        />
+      </CustomModal>
+
       <PageTitle
         headingText="Settings"
         pageName="Restaurants Settings"
-        buttonText="Edit Restaurant"
+        buttonText="Edit info"
         modalOpen={handleModalOpen}
       />
       <RestaurantSetting />

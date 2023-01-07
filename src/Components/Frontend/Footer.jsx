@@ -9,7 +9,7 @@ const Footer = () => {
         fontSize: "16px",
         textAlign: "center",
         color: "#000",
-        marginY: 5,
+        py: 2,
       }}
     >
       <p>

@@ -23,61 +23,9 @@ import { useSearchParams } from "react-router-dom";
 import { useStateContext } from "../../../Contexts/ContextProvider";
 import { staticAxios } from "../../../utils/myAxios";
 import { CustomModal } from "../../Shared/SharedStyles";
-// const style = {
-//   // position: "absolute",
-//   // top: "50%",
-//   // left: "50%",
-//   transform: "translate(-50%, -50%)",
-//   width: 400,
-//   bgcolor: "#fff",
-//   border: "2px solid #fff",
-//   borderRadius: "5px",
-//   boxShadow: 24,
-//   // zIndex: 5,
-//   pt: 2,
-//   px: 4,
-//   pb: 2,
-// };
-// const style = {
-//   position: "absolute",
-//   top: "55%",
-//   left: "50%",
-//   transform: "translate(-50%, -50%)",
-//   width: 600,
-//   bgcolor: "background.paper",
-//   border: "none",
-//   borderRadius: 2,
-//   zIndex: 5,
-//   boxShadow: 24,
-// };
-/* Creating a drawer that is 56px wide. */
-const drawerBleeding = 56;
-
-const Root = styled("div")(({ theme }) => ({
-  height: "100%",
-  backgroundColor:
-    theme.palette.mode === "light"
-      ? grey[100]
-      : theme.palette.background.default,
-}));
-
-const StyledBox = styled(Box)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === "light" ? "#fff" : grey[800],
-}));
-
-const Puller = styled(Box)(({ theme }) => ({
-  width: 30,
-  height: 6,
-  backgroundColor: theme.palette.mode === "light" ? grey[300] : grey[900],
-  borderRadius: 3,
-  position: "absolute",
-  top: 8,
-  left: "calc(50% - 15px)",
-}));
 
 function AddToCartModal(props) {
   const { window, open, setOpen, index, item } = props;
-  // const [expanded, setExpanded] = React.useState("panel1");
   const [size, setSize] = React.useState({});
   const { activeMenu, setCart, cart, setIngredientId } = useStateContext();
   // This is used only for the example
@@ -188,44 +136,8 @@ function AddToCartModal(props) {
   const [orderType, setOrderType] = useState(
     searchParams.get("table") ? "dine_in" : "takeaway"
   );
-  const addExtra = (extraId, price = 0) => {
-    setCart(
-      cart.map((e) => {
-        //e.id === item.id && e.size === item.size
-        if (e === item) {
-          const existing = e?.extra && Boolean(e.extra[extraId]);
 
-          if (Object.keys(e.extra).length) {
-            Object.keys(e.extra).map((ex) => {
-              if (parseInt(ex) === extraId) {
-                delete e.extra[extraId];
-              } else {
-                e["extra"] = {
-                  ...e?.extra,
-                  [extraId]: price,
-                };
-              }
-            });
-          } else {
-            e["extra"] = {
-              [extraId]: price,
-            };
-          }
-          return e;
-        } else {
-          return e;
-        }
-      })
-    );
-  };
-  const handleType = (e) => {
-    setOrderType(
-      e.target.innerText.toLowerCase() === "dine in"
-        ? "dine_in"
-        : e.target.innerText.toLowerCase()
-    );
-  };
-  const { data: cartCalculation } = useQuery(
+  useQuery(
     ["viewcart", cart],
     async () => {
       const { data } = await staticAxios.post("/viewcart/", {

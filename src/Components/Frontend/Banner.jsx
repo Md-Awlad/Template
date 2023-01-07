@@ -6,7 +6,7 @@ import { useStateContext } from "../../Contexts/ContextProvider";
 import { staticAxios } from "../../utils/myAxios";
 
 const Banner = () => {
-  const { activeMenu, restaurantData } = useStateContext();
+  const { expandedMenu, restaurantData } = useStateContext();
 
   const { data: discounts = [] } = useQuery(["discount"], async () => {
     const res = await staticAxios("/apply_discount/");
@@ -15,55 +15,61 @@ const Banner = () => {
 
   return (
     <>
-      {restaurantData?.map((data, index) => (
-        <Box key={index} className={`${activeMenu ? "pt-10" : ""} relative  `}>
-          <img
+      <Box>
+        <img
+          style={{
+            width: "100%",
+            height: `${expandedMenu ? "40vh" : "20vh"}`,
+            backgroundPosition: "center",
+            objectFit: "cover",
+            backgroundSize: "auto",
+            backgroundOrigin: "content-box",
+          }}
+          src={
+            restaurantData?.banner ||
+            "https://i.ibb.co/L1v4dJD/resturant-Defalut-Banner.jpg"
+          }
+          alt="banner"
+          onError={({ currentTarget }) => {
+            currentTarget.onerror = null; // prevents looping
+            currentTarget.src =
+              "https://i.ibb.co/L1v4dJD/resturant-Defalut-Banner.jpg";
+          }}
+        />
+
+        {Boolean(discounts.length) ? (
+          <Marquee
+            direction="left"
+            gradientColor
+            pauseOnHover
+            speed={30}
+            // className="sticky top-0 left-0 right-0 z-10"
             style={{
-              width: "100%",
-              height: `${activeMenu ? "40vh" : "20vh"}`,
-              backgroundPosition: "center",
-              objectFit: "cover",
-              backgroundSize: "auto",
-              backgroundOrigin: "content-box",
+              backgroundColor: restaurantData?.color || "#F0A70B",
+              height: "3rem",
+              position: "sticky",
+              top: 0,
+              // right: 0,
+              // left: 0,
+              // zIndex: 10,
             }}
-            src={data?.banner}
-            alt="banner"
-            onError={({ currentTarget }) => {
-              currentTarget.onerror = null; // prevents looping
-              currentTarget.src =
-                "https://i.ibb.co/L1v4dJD/resturant-Defalut-Banner.jpg";
-            }}
-          />
-          {Boolean(discounts.length) ? (
-            <Marquee
-              direction="left"
-              gradientColor
-              pauseOnHover
-              speed={30}
-              style={{
-                backgroundColor: data?.color || "#F0A70B",
-                height: "8vh",
-                position: "absolute",
-                bottom: 0,
-              }}
-            >
-              {discounts
-                .filter((e) => e.is_active)
-                ?.map((a) =>
-                  a.discount?.map((data, index) => (
-                    <Typography
-                      key={index}
-                      variant="h6"
-                      sx={{ mx: 2, fontSize: 22, fontWeight: 500 }}
-                    >
-                      {data.notice}
-                    </Typography>
-                  ))
-                )}
-            </Marquee>
-          ) : null}
-        </Box>
-      ))}
+          >
+            {discounts
+              .filter((e) => e.is_active)
+              ?.map((a) =>
+                a.discount?.map((data, index) => (
+                  <Typography
+                    key={index}
+                    variant="h6"
+                    sx={{ mx: 2, fontSize: 22, fontWeight: 500 }}
+                  >
+                    {data.notice}
+                  </Typography>
+                ))
+              )}
+          </Marquee>
+        ) : null}
+      </Box>
     </>
   );
 };

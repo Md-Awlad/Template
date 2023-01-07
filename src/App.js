@@ -1,5 +1,5 @@
 import { lazy, useEffect } from "react";
-import { Navigate, useRoutes } from "react-router-dom";
+import { Navigate, Outlet, useRoutes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
@@ -94,30 +94,48 @@ const App = () => {
           path: "dashboard",
           element: <DashBoard />,
         },
+        // {
+        //   path: "fooditem",
+        //   element: <FoodItem />,
+        // },
         {
-          path: "fooditem",
-          element: <FoodItem />,
+          path: "foodmanagement",
+          element: <Outlet />,
+          children: [
+            {
+              path: "",
+              element: <FoodItem />,
+            },
+            {
+              path: "customfood",
+              element: <CustomizeFood />,
+            },
+          ],
         },
         {
           path: "order",
-          element: <Order />,
+          element: <Outlet />,
+          children: [
+            {
+              path: "",
+              element: <Order />,
+            },
+            {
+              path: "completeOrder",
+              element: <CompleteOrder />,
+            },
+            {
+              path: "cancelorder",
+              element: <CancelOrder />,
+            },
+          ],
         },
+
         {
-          path: "customfood",
-          element: <CustomizeFood />,
-        },
-        {
-          path: "qr",
+          path: "table",
           element: <QRCodeGen />,
         },
-        {
-          path: "completeOrder",
-          element: <CompleteOrder />,
-        },
-        {
-          path: "cancelorder",
-          element: <CancelOrder />,
-        },
+
         {
           path: "discount",
           element: <Discount />,

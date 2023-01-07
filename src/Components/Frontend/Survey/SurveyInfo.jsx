@@ -789,28 +789,25 @@ const SurveyInfo = () => {
               {...register("message")}
             />
           </Grid>
-          {restaurantData?.map((data, index) => (
-            <Button
-              key={index}
-              type="submit"
-              variant="outlined"
-              sx={{
-                ":hover": {
-                  borderColor: data?.color || "#F0A70B",
-                  color: data?.color ? "#000" : "#fff",
-                },
-                width: "100%",
-                height: { md: 35, xs: 50 },
-                backgroundColor: data?.color || "#F0A70B",
-                borderColor: data?.color || "#F0A70B",
-                color: data?.color ? "#fff" : "#000",
-                borderRadius: "20px",
-                fontSize: { xs: 17, md: 14 },
-              }}
-            >
-              submit
-            </Button>
-          ))}
+          <Button
+            type="submit"
+            variant="outlined"
+            sx={{
+              ":hover": {
+                borderColor: restaurantData?.color || "#F0A70B",
+                color: restaurantData?.color ? "#000" : "#fff",
+              },
+              width: "100%",
+              height: { md: 35, xs: 50 },
+              backgroundColor: restaurantData?.color || "#F0A70B",
+              borderColor: restaurantData?.color || "#F0A70B",
+              color: restaurantData?.color ? "#fff" : "#000",
+              borderRadius: "20px",
+              fontSize: { xs: 17, md: 14 },
+            }}
+          >
+            submit
+          </Button>
         </Box>
       </form>
     </Box>

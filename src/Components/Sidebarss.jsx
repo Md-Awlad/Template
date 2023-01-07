@@ -21,7 +21,6 @@ const Sidebars = () => {
     setActiveMenu,
     screenSize,
     currentColor,
-    currentMode,
     restaurantData,
   } = useStateContext();
   // const [openSubMenu, setOpenSubmenu] = useState(false);
@@ -45,38 +44,36 @@ const Sidebars = () => {
       {activeMenu ? (
         <Fragment>
           <Box className="flex justify-between items-center">
-            {restaurantData?.map((data, index) => (
+            <Box
+              to="/dashboard"
+              onClick={handleCloseSidebar}
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                gap: 2,
+                px: 1,
+                mt: 2,
+              }}
+            >
               <Box
-                key={index}
-                to="/dashboard"
-                onClick={handleCloseSidebar}
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 2,
-                  px: 1,
-                  mt: 2,
+                component="img"
+                src={restaurantData?.logo || mainLogo}
+                onError={({ currentTarget }) => {
+                  currentTarget.onerror = null; // prevents looping
+                  currentTarget.src = "https://i.ibb.co/0q5B8VP/MainLogo.png";
                 }}
-              >
-                <Box
-                  component="img"
-                  src={data?.logo || mainLogo}
-                  onError={({ currentTarget }) => {
-                    currentTarget.onerror = null; // prevents looping
-                    currentTarget.src = "https://i.ibb.co/0q5B8VP/MainLogo.png";
-                  }}
-                  sx={{
-                    objectFit: "cover",
-                    maxWidth: "100px",
-                    height: "54px",
-                  }}
-                />
+                sx={{
+                  objectFit: "cover",
+                  maxWidth: "100px",
+                  height: "54px",
+                }}
+              />
 
-                <Typography variant="h6" className="dark:text-neutral">
-                  {data?.name || "Nexis Menu"}
-                </Typography>
-              </Box>
-            ))}
+              <Typography variant="h6" className="dark:text-neutral">
+                {restaurantData?.name || "Nexis Menu"}
+              </Typography>
+            </Box>
+
             <button
               type="button"
               onClick={() => setActiveMenu(!activeMenu)}

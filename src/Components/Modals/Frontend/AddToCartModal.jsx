@@ -20,7 +20,7 @@ import { CustomModal } from "../../Shared/SharedStyles";
 function AddToCartModal(props) {
   const { open, setOpen, index, item } = props;
   const [size, setSize] = React.useState({});
-  const { activeMenu, setCart, cart, setIngredientId, currentMode } =
+  const { expandedMenu, setCart, cart, setIngredientId, currentMode } =
     useStateContext();
   // This is used only for the example
   const handleChange = (checkbox) => {
@@ -281,7 +281,7 @@ function AddToCartModal(props) {
                               }}
                               control={
                                 <Radio
-                                  size={activeMenu ? "small" : "medium"}
+                                  size={expandedMenu ? "small" : "medium"}
                                   style={{
                                     color: "#F0A70B",
                                     display:
@@ -419,7 +419,7 @@ function AddToCartModal(props) {
                               }}
                               control={
                                 <Radio
-                                  size={activeMenu ? "small" : "medium"}
+                                  size={expandedMenu ? "small" : "medium"}
                                   style={{
                                     color: "#F0A70B",
                                     display:
