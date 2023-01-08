@@ -59,11 +59,6 @@ export const ContextProvider = ({ children }) => {
     const res = await staticAxios("/restaurant/");
     return res?.data;
   });
-  console.log(restaurantData);
-  // const { data: create_menu = {} } = useQuery(["create_menu"], async () => {
-  //   const res = await myAxios("/create_menu");
-  //   return res?.data;
-  // });
 
   const setMode = (value) => {
     setCurrentMode(value);
@@ -76,18 +71,6 @@ export const ContextProvider = ({ children }) => {
   };
   /* Setting the screen size and then setting the active menu to false if the screen size is less than
 900. */
-
-  // useEffect(() => {
-  //   const handleResize = () => setScreenSize(window.innerWidth);
-  //   window.addEventListener("resize", handleResize);
-  //   handleResize();
-  //   if (screenSize <= 900) {
-  //     setActiveMenu(false);
-  //   } else {
-  //     setActiveMenu(true);
-  //   }
-  //   return () => window.removeEventListener("resize", handleResize);
-  // }, [screenSize]);
 
   useEffect(() => {
     const handleResize = () => setScreenSize(window.innerWidth);

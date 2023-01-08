@@ -94,12 +94,9 @@ const App = () => {
           path: "dashboard",
           element: <DashBoard />,
         },
-        // {
-        //   path: "fooditem",
-        //   element: <FoodItem />,
-        // },
+
         {
-          path: "foodmanagement",
+          path: "food",
           element: <Outlet />,
           children: [
             {

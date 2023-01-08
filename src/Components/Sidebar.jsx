@@ -41,7 +41,7 @@ const Sidebar = () => {
     },
 
     {
-      path: "/foodmanagement",
+      path: "/food",
       icon: MdFastfood,
       name: "Food Management",
       children: [

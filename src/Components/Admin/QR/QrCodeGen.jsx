@@ -97,16 +97,20 @@ const GenerateQR = ({ text }) => {
         return (
           <Box className="flex gap-5 items-center">
             <Tooltip title="Generate Qr" placement="top">
-              <QrCode
-                onClick={() => handleQr(row?.table_name)}
-                className="text-gray-600 dark:text-neutral text-xl cursor-pointer"
-              />
+              <>
+                <QrCode
+                  onClick={() => handleQr(row?.table_name)}
+                  className="text-gray-600 dark:text-neutral text-xl cursor-pointer"
+                />
+              </>
             </Tooltip>
             <Tooltip title="Delete Table" placement="top">
-              <RiDeleteBin6Line
-                onClick={() => setDelTabId(row?.id)}
-                className="text-red-400 dark:text-neutral text-xl cursor-pointer"
-              />
+              <>
+                <RiDeleteBin6Line
+                  onClick={() => setDelTabId(row?.id)}
+                  className="text-red-400 dark:text-neutral text-xl cursor-pointer"
+                />
+              </>
             </Tooltip>
           </Box>
         );
@@ -127,7 +131,7 @@ const GenerateQR = ({ text }) => {
             mb: 5,
           }}
         >
-          Table QR Code
+          Add Table QR Code
         </Typography>
         <Box className="  flex flex-col space-y-2 ">
           <TextField
@@ -147,9 +151,11 @@ const GenerateQR = ({ text }) => {
           </Button>
         </Box>
       </Box>
+      {/* Table */}
       <Box className="w-full ">
         <CustomDataGrid rows={QrTableData} columns={columns} />
       </Box>
+      {/* QR Modal */}
       <CustomQRGenModal
         width={1000}
         open={openQr}
@@ -167,69 +173,69 @@ const GenerateQR = ({ text }) => {
         >
           <Box className="flex justify-evenly ">
             <div className="text-center overflow-x-hidden p-4  border-gray-400 border-dashed">
-              {restaurantData?.map((data, index) => {
-                return (
-                  <div key={index} className="w-[300px]">
-                    <img className="w-24 h-24 inline" src={data?.logo} alt="" />
-                    <p className="font-semibold mb-4">{data?.name}</p>
-                    <p
-                      style={{
-                        fontFamily: "cursive",
-                      }}
-                      className=" mb-2 text-sm"
-                    >
-                      Table No: {addTableNo && addTableNo}
-                    </p>
-                    <div
-                      style={{
-                        borderColor: data?.color ?? currentColor,
-                      }}
-                      className=" pb-3 border-4 border-dashed relative text-center"
-                    >
-                      <img
-                        className="w-[300px] h-[300px] text-center"
-                        src={qrImg}
-                        alt="qr"
-                      />
-                      <h6
-                        style={{
-                          fontFamily: "cursive",
-                        }}
-                        className=" absolute bottom-2 font-medium left-28"
-                      >
-                        Scan Me
-                      </h6>
-                    </div>
-                    <h1
-                      style={{
-                        color: data?.color ?? currentColor,
-                        fontFamily: "cursive",
-                      }}
-                      className="text-5xl font-extrabold  uppercase  mt-5"
-                    >
-                      {" "}
-                      menu
-                    </h1>
+              <div className="w-[300px]">
+                <img
+                  className="w-24 h-24 inline"
+                  src={restaurantData?.logo}
+                  alt=""
+                />
+                <p className="font-semibold mb-4">{restaurantData?.name}</p>
+                <p
+                  style={{
+                    fontFamily: "cursive",
+                  }}
+                  className=" mb-2 text-sm"
+                >
+                  Table No: {addTableNo && addTableNo}
+                </p>
+                <div
+                  style={{
+                    borderColor: restaurantData?.color ?? currentColor,
+                  }}
+                  className=" pb-3 border-4 border-dashed relative text-center"
+                >
+                  <img
+                    className="w-[300px] h-[300px] text-center"
+                    src={qrImg}
+                    alt="qr"
+                  />
+                  <h6
+                    style={{
+                      fontFamily: "cursive",
+                    }}
+                    className=" absolute bottom-2 font-medium left-28"
+                  >
+                    Scan Me
+                  </h6>
+                </div>
+                <h1
+                  style={{
+                    color: restaurantData?.color ?? currentColor,
+                    fontFamily: "cursive",
+                  }}
+                  className="text-5xl font-extrabold  uppercase  mt-5"
+                >
+                  {" "}
+                  menu
+                </h1>
 
-                    <p className="justify-center text-[11px] mt-2">
-                      <span>*</span>You can place an order from the comfort of
-                      your own seat using this service
+                <p className="justify-center text-[11px] mt-2">
+                  <span>*</span>You can place an order from the comfort of your
+                  own seat using this service
+                </p>
+                <div className="flex justify-end mt-14">
+                  <div>
+                    <p className="text-[10px] font-medium text-gray-400">
+                      Powered by
                     </p>
-                    <div className="flex justify-end mt-14">
-                      <div>
-                        <p className="text-[10px] font-medium text-gray-400">
-                          Powered by
-                        </p>
-                        <img
-                          className="w-20 h-3 mb-2"
-                          src="https://cdn.nexisltd.com/nexis-website/images/logo.svg"
-                          alt="Nexis LTD."
-                        />
-                      </div>
-                    </div>
+                    <img
+                      className="w-20 h-3 mb-2"
+                      src="https://cdn.nexisltd.com/nexis-website/images/logo.svg"
+                      alt="Nexis LTD."
+                    />
                   </div>
-                );
-              })}
+                </div>
+              </div>
             </div>
 
             <Box
@@ -259,69 +265,71 @@ const GenerateQR = ({ text }) => {
 
             {/* survey */}
             <div className="text-center overflow-x-hidden p-4">
-              {restaurantData?.map((data, index) => {
-                return (
-                  <Box key={index} className="w-[300px]">
-                    <img className="w-24 h-24 inline" src={data?.logo} alt="" />
-                    <p className="font-semibold mb-[45px]">{data?.name}</p>
-                    <p
-                      style={{
-                        fontFamily: "cursive",
-                      }}
-                      className=" mb-2 text-sm"
-                    >
-                      {/* Table No: {tableNo && tableNo} */}
-                    </p>
-                    <div
-                      style={{
-                        borderColor: data?.color ?? currentColor,
-                      }}
-                      className=" pb-3 border-4 border-dashed relative text-center"
-                    >
-                      <img
-                        className="w-[300px] h-[300px] text-center"
-                        src={qrSurveyImg}
-                        alt="qr"
-                      />
-                      <h6
-                        style={{
-                          fontFamily: "cursive",
-                        }}
-                        className=" absolute bottom-2 font-medium left-28"
-                      >
-                        Scan Me
-                      </h6>
-                    </div>
-                    <h1
-                      style={{
-                        color: data?.color ?? currentColor,
-                        fontFamily: "cursive",
-                      }}
-                      className="text-5xl font-extrabold  uppercase  mt-5"
-                    >
-                      {" "}
-                      Survey
-                    </h1>
-                    <p className="justify-center text-[11px] mt-2">
-                      <span>*</span> Your feedback is important to us and will
-                      be used to improve our products and services.
-                    </p>
+              <Box className="w-[300px]">
+                <img
+                  className="w-24 h-24 inline"
+                  src={restaurantData?.logo}
+                  alt=""
+                />
+                <p className="font-semibold mb-[45px]">
+                  {restaurantData?.name}
+                </p>
+                <p
+                  style={{
+                    fontFamily: "cursive",
+                  }}
+                  className=" mb-2 text-sm"
+                >
+                  {/* Table No: {tableNo && tableNo} */}
+                </p>
+                <div
+                  style={{
+                    borderColor: restaurantData?.color ?? currentColor,
+                  }}
+                  className=" pb-3 border-4 border-dashed relative text-center"
+                >
+                  <img
+                    className="w-[300px] h-[300px] text-center"
+                    src={qrSurveyImg}
+                    alt="qr"
+                  />
+                  <h6
+                    style={{
+                      fontFamily: "cursive",
+                    }}
+                    className=" absolute bottom-2 font-medium left-28"
+                  >
+                    Scan Me
+                  </h6>
+                </div>
+                <h1
+                  style={{
+                    color: restaurantData?.color ?? currentColor,
+                    fontFamily: "cursive",
+                  }}
+                  className="text-5xl font-extrabold  uppercase  mt-5"
+                >
+                  {" "}
+                  Survey
+                </h1>
+                <p className="justify-center text-[11px] mt-2">
+                  <span>*</span> Your feedback is important to us and will be
+                  used to improve our products and services.
+                </p>
 
-                    <div className="flex justify-end mt-14">
-                      <div>
-                        <p className="text-[10px] font-medium text-gray-400">
-                          Powered by
-                        </p>
-                        <img
-                          className="w-20 h-3 mb-2"
-                          src="https://cdn.nexisltd.com/nexis-website/images/logo.svg"
-                          alt="Nexis LTD."
-                        />
-                      </div>
-                    </div>
-                  </Box>
-                );
-              })}
+                <div className="flex justify-end mt-14">
+                  <div>
+                    <p className="text-[10px] font-medium text-gray-400">
+                      Powered by
+                    </p>
+                    <img
+                      className="w-20 h-3 mb-2"
+                      src="https://cdn.nexisltd.com/nexis-website/images/logo.svg"
+                      alt="Nexis LTD."
+                    />
+                  </div>
+                </div>
+              </Box>
             </div>
           </Box>
           <Grid
@@ -356,6 +364,7 @@ const GenerateQR = ({ text }) => {
           </Grid>
         </Box>
       </CustomQRGenModal>
+
       {Boolean(delTabId) && (
         <CustomDelete
           path="table"
