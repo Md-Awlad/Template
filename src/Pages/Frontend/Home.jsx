@@ -7,7 +7,7 @@ const Home = () => {
   const { restaurantData } = useStateContext();
   return (
     <div>
-      {!Boolean(Object.entries(restaurantData).length) ? (
+      {Boolean(Object.entries(restaurantData).length) ? (
         <LandingPage />
       ) : (
         <div className="h-screen flex justify-center items-center ">
