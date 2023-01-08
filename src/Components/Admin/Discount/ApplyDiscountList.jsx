@@ -47,13 +47,17 @@ const ApplyDiscountList = ({
         return (
           <Tooltip
             title={row?.food?.map((data) => (
-              <Typography key={data.id}>{data.food_name}</Typography>
+              <Typography component="span" key={data.id}>
+                {data.food_name}
+              </Typography>
             ))}
             placement="top"
           >
             <Box sx={{ height: 60, overflow: "scroll" }}>
               {row?.food?.map((data) => (
-                <Typography key={data.id}>{data.food_name}</Typography>
+                <Typography component="span" key={data.id}>
+                  {data.food_name}
+                </Typography>
               ))}
             </Box>
           </Tooltip>

@@ -190,11 +190,13 @@ const CartItems = ({ cart, setCart, item }) => {
           alt="img"
         />
         <Box>
-          <Typography variant="h6" sx={{ fontWeight: 500 }}>
+          <Typography component="span" variant="h6" sx={{ fontWeight: 500 }}>
             {item.food_name.substr(0, 20) +
               `${item.food_name.length > 20 ? ".." : ""}`}
           </Typography>
-          {item?.size && <Typography>{`Size:${item?.size}`}</Typography>}
+          {item?.size && (
+            <Typography component="span">{`Size:${item?.size}`}</Typography>
+          )}
         </Box>
 
         {/* --remove-- */}
@@ -222,7 +224,9 @@ const CartItems = ({ cart, setCart, item }) => {
             onClick={() => handleDecrement(item)}
             className="inline text-2xl lg:text-xl  cursor-pointer"
           />
-          <Typography className="text-2xl">{item?.count}</Typography>
+          <Typography component="span" className="text-2xl">
+            {item?.count}
+          </Typography>
           <GrAdd
             onClick={() => handleIncrement(item)}
             style={{}}
@@ -267,6 +271,7 @@ const CartItems = ({ cart, setCart, item }) => {
             id="panel1a-header"
           >
             <Typography
+              component="span"
               sx={{
                 fontWeight: "semibold",
                 fontSize: { md: 16, xs: 20 },
@@ -276,7 +281,7 @@ const CartItems = ({ cart, setCart, item }) => {
             </Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <Typography>
+            <Typography component="span">
               {item?.customize_food?.map((extraPrice, index) => {
                 return (
                   <Box
@@ -310,7 +315,11 @@ const CartItems = ({ cart, setCart, item }) => {
                         }
                       />
                     </Box>
-                    <Typography variant="h6" sx={{ fontSize: "14px" }}>
+                    <Typography
+                      component="span"
+                      variant="h6"
+                      sx={{ fontSize: "14px" }}
+                    >
                       {extraPrice.price}
                     </Typography>
                   </Box>

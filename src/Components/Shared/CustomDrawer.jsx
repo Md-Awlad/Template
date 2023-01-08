@@ -36,7 +36,7 @@ const CustomDrawer = () => {
             src={cookImg}
             alt=""
           />
-          <Typography
+          <Typography component="span"
             sx={{
               fontSize: { sm: 14, xs: 8 },
               fontWeight: 500,
@@ -54,6 +54,7 @@ const CustomDrawer = () => {
         >
           <SvgImage />
           <Typography
+            component="span"
             sx={{
               fontSize: { sm: 11, xs: 8 },
               fontWeight: 500,

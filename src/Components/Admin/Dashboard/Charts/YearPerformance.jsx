@@ -39,7 +39,10 @@ const YearPerformance = () => {
 
   return (
     <>
-      <Typography variant="h6"> Yearly Report</Typography>
+      <Typography component="span" variant="h6">
+        {" "}
+        Yearly Report
+      </Typography>
       {/* <Grid
         item
         xs={9}

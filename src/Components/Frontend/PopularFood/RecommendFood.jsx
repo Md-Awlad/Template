@@ -28,7 +28,7 @@ const RecommendFood = () => {
         gap: 2,
       }}
     >
-      {recommendFood?.map((item,index) => (
+      {recommendFood?.map((item, index) => (
         <Paper
           key={index}
           sx={{
@@ -45,7 +45,9 @@ const RecommendFood = () => {
             src="https://www.imgacademy.com/themes/custom/imgacademy/images/helpbox-contact.jpg"
             alt=""
           />
-          <Typography variant="h4">{item.food_name}</Typography>
+          <Typography component="span" variant="h4">
+            {item.food_name}
+          </Typography>
         </Paper>
       ))}
     </Box>

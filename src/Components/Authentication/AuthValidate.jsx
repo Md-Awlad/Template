@@ -74,11 +74,16 @@ const AuthValidate = () => {
           }}
         />
         <Box component="span">
-          <Typography variant="h4" textAlign="center">
+          <Typography component="span" variant="h4" textAlign="center">
             Authentication
           </Typography>
           {isLoading && (
-            <Typography variant="subtitle2" gutterBottom textAlign="center">
+            <Typography
+              component="span"
+              variant="subtitle2"
+              gutterBottom
+              textAlign="center"
+            >
               Please wait while validating..
             </Typography>
           )}

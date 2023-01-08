@@ -101,7 +101,9 @@ const MonthlySell = () => {
       }}
     >
       <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-        <Typography variant="h6">Monthly Report</Typography>
+        <Typography component="span" variant="h6">
+          Monthly Report
+        </Typography>
         <FormControl sx={{ width: 120 }}>
           <InputLabel id="demo-simple-select-label">Month</InputLabel>
           <Select
@@ -133,7 +135,7 @@ const MonthlySell = () => {
             style={{ backgroundColor: `${currentColor}90` }}
           ></Box>
           <Box>
-            <Typography variant="h6" sx={{ fontSize: "14px" }}>
+            <Typography component="span" variant="h6" sx={{ fontSize: "14px" }}>
               Order
               <span className="text-lg font-semibold pl-3">{months.order}</span>
             </Typography>
@@ -145,7 +147,7 @@ const MonthlySell = () => {
             sx={{ width: 12, height: 12, marginTop: 0.5 }}
           ></Box>
           <Box>
-            <Typography variant="h6" sx={{ fontSize: "14px" }}>
+            <Typography component="span" variant="h6" sx={{ fontSize: "14px" }}>
               Complete Order
               <span className="text-lg font-semibold pl-3">
                 {months.complete_order}
@@ -164,7 +166,7 @@ const MonthlySell = () => {
           ></Box>
 
           <Box>
-            <Typography variant="h6" sx={{ fontSize: "14px" }}>
+            <Typography component="span" variant="h6" sx={{ fontSize: "14px" }}>
               Total Amount
               <span className="text-lg font-semibold pl-3">{months.sell}</span>
             </Typography>

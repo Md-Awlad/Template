@@ -97,7 +97,11 @@ const SurveyInfo = () => {
         className="lg:max-w-4xl lg:m-auto mx-4 py-20"
       >
         <Box className="space-y-3">
-          <Typography sx={{ textTransform: "capitalize" }} variant="h5">
+          <Typography
+            component="span"
+            sx={{ textTransform: "capitalize" }}
+            variant="h5"
+          >
             one minute survey
           </Typography>
           {/* --order ID-- */}
@@ -773,7 +777,9 @@ const SurveyInfo = () => {
               )}
             />
           </Grid>
-          <Typography variant="h6">Opinion/Suggestion</Typography>
+          <Typography component="span" variant="h6">
+            Opinion/Suggestion
+          </Typography>
           {/* --message-- */}
           <Grid item xs={12} md={6}>
             <TextareaAutosize

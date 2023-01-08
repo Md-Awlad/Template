@@ -50,7 +50,10 @@ const FoodCategory = ({
               aria-controls="panel1a-content"
               id="panel1a-header"
             >
-              <Typography sx={{ fontWeight: 500, fontSize: 18 }}>
+              <Typography
+                component="span"
+                sx={{ fontWeight: 500, fontSize: 18 }}
+              >
                 {item.name}
               </Typography>
             </AccordionSummary>

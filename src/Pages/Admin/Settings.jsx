@@ -37,7 +37,7 @@ const Settings = () => {
         <div></div>
         <Stack>
           <Typography
-            component="div"
+            component="span"
             sx={{
               fontWeight: 500,
               fontSize: 18,
@@ -46,7 +46,7 @@ const Settings = () => {
             Manage your organization information
           </Typography>
           <Typography
-            component="div"
+            component="span"
             className="text-gray-400"
             sx={{
               fontSize: 13,

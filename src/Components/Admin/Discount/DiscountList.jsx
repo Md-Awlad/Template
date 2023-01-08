@@ -41,7 +41,7 @@ const DiscountList = ({ discounts, isLoading }) => {
             placement="top"
           >
             <Box>
-              <Typography>
+              <Typography component="span">
                 {row?.notice.length >= 15 ? row?.notice : ""}
               </Typography>
             </Box>

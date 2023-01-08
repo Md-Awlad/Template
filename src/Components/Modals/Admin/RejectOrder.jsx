@@ -74,7 +74,7 @@ const RejectOrder = ({ reject, handleModalClose }) => {
           overflowY: "scroll",
         }}
       >
-        <Typography variant="h6" sx={{ mb: 1 }}>
+        <Typography component="span" variant="h6" sx={{ mb: 1 }}>
           Cancel Food
         </Typography>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">

@@ -152,6 +152,7 @@ const Sidebar = () => {
               }}
             />
             <Typography
+              component="span"
               variant="h6"
               className="dark:text-neutral"
               sx={{
@@ -215,7 +216,10 @@ const Sidebar = () => {
                         : setActiveMenu(path)
                     }
                   >
-                    <Typography className="flex items-center gap-5 text-gray-700 ">
+                    <Typography
+                      component="span"
+                      className="flex items-center gap-5 text-gray-700 "
+                    >
                       <NavIcon className="text-xl" />
                       {expandedMenu && name}
                     </Typography>
@@ -299,7 +303,10 @@ const Sidebar = () => {
                 >
                   {/* <NavIcon />
                   <span className="capitalize ">{name}</span> */}
-                  <Typography className="flex items-center gap-5  text-gray-700 ">
+                  <Typography
+                    component="span"
+                    className="flex items-center gap-5  text-gray-700 "
+                  >
                     <NavIcon className="text-xl" />
                     {name}
                   </Typography>

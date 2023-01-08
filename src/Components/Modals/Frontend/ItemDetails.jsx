@@ -26,6 +26,7 @@ const ItemDetails = ({ handleModalClose, item }) => {
       />
       {/* --title-- */}
       <Typography
+        component="span"
         variant="h6"
         sx={{
           fontWeight: 600,
@@ -38,6 +39,7 @@ const ItemDetails = ({ handleModalClose, item }) => {
       <div className="flex justify-end">
         <div>
           <Typography
+            component="span"
             sx={{ fontSize: 12, fontWeight: "bold" }}
             component="legend"
           >
@@ -58,6 +60,7 @@ const ItemDetails = ({ handleModalClose, item }) => {
           <div className="flex justify-between items-center pt-40 pb-5 px-4">
             <div className="font-bold">
               <Typography
+                component="span"
                 variant="h6"
                 sx={{
                   width: 50,
@@ -78,6 +81,7 @@ const ItemDetails = ({ handleModalClose, item }) => {
 
             <div className="font-bold">
               <Typography
+                component="span"
                 variant="h6"
                 sx={{
                   width: 50,
@@ -104,6 +108,7 @@ const ItemDetails = ({ handleModalClose, item }) => {
       {/* --desc-- */}
       <Box sx={{ my: 3 }}>
         <Typography
+          component="span"
           variant="h6"
           sx={{
             fontWeight: 600,
@@ -113,6 +118,7 @@ const ItemDetails = ({ handleModalClose, item }) => {
           Details
         </Typography>
         <Typography
+          component="span"
           variant="h6"
           sx={{
             fontSize: 14,

@@ -16,9 +16,11 @@ function LinearProgressWithLabel(props) {
         <LinearProgress variant="determinate" {...props} />
       </Box>
       <Box sx={{ minWidth: 35 }}>
-        <Typography variant="body2" color="text.secondary">{`${Math.round(
-          props.value
-        )}%`}</Typography>
+        <Typography
+          component="span"
+          variant="body2"
+          color="text.secondary"
+        >{`${Math.round(props.value)}%`}</Typography>
       </Box>
     </Box>
   );
@@ -33,7 +35,7 @@ const OrderSummary = ({ orders }) => {
 
   return (
     <Box className="bg-neutral dark:bg-secondary-dark-bg dark:text-neutral md:px-10 px-4 py-4 border rounded-md text-2xl font-semibold shadow-sm dark:border-gray-700 space-y-8">
-      <Typography variant="h5" sx={{ fontWeight: 500 }}>
+      <Typography component="span" variant="h5" sx={{ fontWeight: 500 }}>
         Orders Summary
       </Typography>
 

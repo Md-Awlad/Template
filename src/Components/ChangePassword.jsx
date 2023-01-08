@@ -59,7 +59,9 @@ const ChangePassword = ({ handleClose }) => {
         padding: 2,
       }}
     >
-      <Typography variant="h6">Change Your Password</Typography>
+      <Typography component="span" variant="h6">
+        Change Your Password
+      </Typography>
       <Box
         component="form"
         onSubmit={handleSubmit(onSubmit)}

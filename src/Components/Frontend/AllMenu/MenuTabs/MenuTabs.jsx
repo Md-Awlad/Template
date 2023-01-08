@@ -19,7 +19,7 @@ function TabPanel(props) {
     >
       {value === index && (
         <Box>
-          <Typography>{children}</Typography>
+          <Typography component="span">{children}</Typography>
         </Box>
       )}
     </div>
@@ -72,7 +72,7 @@ const MenuTabs = ({ setCart, cart }) => {
 
       {categories?.map((category, index) => {
         return (
-          <TabPanel key={index} value={value} index={index}>
+          <TabPanel key={category.id} value={value} index={index}>
             <Food
               setCart={setCart}
               id={category.id}

@@ -17,11 +17,12 @@ const OrderSummary = () => {
     content: () => componentRef.current,
   });
 
-  useQuery(["orderSummary"], async () => {
+  React.useEffect(() => {
     fetch(`${baseURL}/order_summery/${orderId}/`)
       .then((res) => res.json())
       .then((data) => setOrderSummary(data));
-  });
+  }, []);
+
   return (
     <>
       {expandedMenu ? (
@@ -64,6 +65,7 @@ const OrderSummary = () => {
               }}
             >
               <Typography
+                component="span"
                 sx={{
                   fontSize: 13,
                 }}
@@ -76,8 +78,10 @@ const OrderSummary = () => {
           <Box sx={{ marginX: { md: 8, xs: 4 } }}>
             <BsCheckCircle className="text-3xl text-green-600 m-auto" />
             <Box sx={{ textAlign: "center" }}>
-              <Typography variant="h6">We've received your order</Typography>
-              <Typography variant="h6">
+              <Typography component="span" variant="h6">
+                We've received your order
+              </Typography>
+              <Typography component="span" variant="h6">
                 Order ID: # {orderSummary.order_id}
               </Typography>
             </Box>
@@ -91,21 +95,26 @@ const OrderSummary = () => {
             >
               {/* --leftDelivery-- */}
               <Box>
-                <Typography variant="h6" className="text-xl font-semibold">
+                <Typography
+                  component="span"
+                  variant="h6"
+                  className="text-xl font-semibold"
+                >
                   Order Details
                 </Typography>
                 <Box>
-                  {/* <Typography variant="h6" sx={{ fontSize: { xs: 14 } }}>
-                    {`${
-                      orderSummary?.order_type === "takeaway"
-                        ? "Takeaway"
-                        : orderSummary?.order_type === "dine_in" && "Dine In"
-                    }`}
-                  </Typography> */}
-                  <Typography variant="h6" sx={{ fontSize: { xs: 14 } }}>
+                  <Typography
+                    component="span"
+                    variant="h6"
+                    sx={{ fontSize: { xs: 14 } }}
+                  >
                     Phone: {orderSummary.phone}
                   </Typography>
-                  <Typography variant="h6" sx={{ fontSize: { xs: 14 } }}>
+                  <Typography
+                    component="span"
+                    variant="h6"
+                    sx={{ fontSize: { xs: 14 } }}
+                  >
                     Order Type:{" "}
                     {`${
                       orderSummary?.order_type === "takeaway"
@@ -115,49 +124,34 @@ const OrderSummary = () => {
                   </Typography>
                 </Box>
               </Box>
-              {/* --rightOrder-- */}
-              {/* <Box>
-                <Typography variant="h6" className="text-xl font-semibold">
-                  Delivery Details
-                </Typography>
-                <Box>
-                  <Typography variant="h6" sx={{ fontSize: { xs: 14 } }}>
-                    {orderSummary.name && `Name: ${orderSummary?.name}`}
-                  </Typography>
-                  <Typography variant="h6" sx={{ fontSize: { xs: 14 } }}>
-                    Phone: {orderSummary.phone}
-                  </Typography>
-                  <Typography variant="h6" sx={{ fontSize: { xs: 14 } }}>
-                    Order Type: {orderSummary.order_type}
-                  </Typography>
-                </Box>
-              </Box> */}
             </Box>
             {/* --orderSummary-- */}
             <Box>
-              <Typography variant="h6">Order Summary</Typography>
-              <div class="bg-gray-100">
-                <div class="bg-white shadow-sm overflow-auto">
-                  <table class="w-full overflow-scroll">
+              <Typography component="span" variant="h6">
+                Order Summary
+              </Typography>
+              <div className="bg-gray-100">
+                <div className="bg-white shadow-sm overflow-auto">
+                  <table className="w-full overflow-scroll">
                     <thead>
-                      <tr class="bg-gray-200 text-gray-600 uppercase text-sm">
-                        <th class="px-2 py-3">Item</th>
-                        <th class="px-2 py-3">Quantity</th>
-                        <th class="px-2 py-3">Extra Ingredient</th>
-                        <th class="px-2 py-3">Size</th>
-                        <th class="px-2 py-3">Amount</th>
-                        <th class="px-2 py-3">Total Amount</th>
+                      <tr className="bg-gray-200 text-gray-600 uppercase text-sm">
+                        <th className="px-2 py-3">Item</th>
+                        <th className="px-2 py-3">Quantity</th>
+                        <th className="px-2 py-3">Extra Ingredient</th>
+                        <th className="px-2 py-3">Size</th>
+                        <th className="px-2 py-3">Amount</th>
+                        <th className="px-2 py-3">Total Amount</th>
                       </tr>
                     </thead>
-                    <tbody class="text-gray-600 text-sm">
+                    <tbody className="text-gray-600 text-sm">
                       {orderSummary.order_items?.map((data) => (
                         <tr
                           key={data.id}
-                          class="border-b border-gray-200 hover:bg-gray-100"
+                          className="border-b border-gray-200 hover:bg-gray-100"
                         >
-                          <td class="py-3 text-center">{data.food_name}</td>
-                          <td class="py-3 text-center">{data.quantity}</td>
-                          <td class="py-3 text-center">
+                          <td className="py-3 text-center">{data.food_name}</td>
+                          <td className="py-3 text-center">{data.quantity}</td>
+                          <td className="py-3 text-center">
                             <div className="flex justify-evenly items-center h-12 overflow-scroll">
                               <div>
                                 {data?.extra?.map((ingredient, index) => (
@@ -171,9 +165,13 @@ const OrderSummary = () => {
                               </div>
                             </div>
                           </td>
-                          <td class="py-3 text-center">{data.price}</td>
-                          <td class="py-3 text-center">{data.food_price} </td>
-                          <td class="py-3 text-center">{data.food_amount} </td>
+                          <td className="py-3 text-center">{data.price}</td>
+                          <td className="py-3 text-center">
+                            {data.food_price}{" "}
+                          </td>
+                          <td className="py-3 text-center">
+                            {data.food_amount}{" "}
+                          </td>
                         </tr>
                       ))}
                     </tbody>
@@ -185,47 +183,95 @@ const OrderSummary = () => {
               >
                 <Box>
                   <Box className="grid grid-cols-3 gap-8">
-                    <Typography variant="h6" sx={{ fontSize: { xs: 14 } }}>
+                    <Typography
+                      component="span"
+                      variant="h6"
+                      sx={{ fontSize: { xs: 14 } }}
+                    >
                       Packaging
                     </Typography>
-                    <Typography variant="h6" sx={{ fontSize: { xs: 14 } }}>
+                    <Typography
+                      component="span"
+                      variant="h6"
+                      sx={{ fontSize: { xs: 14 } }}
+                    >
                       :
                     </Typography>
-                    <Typography variant="h6" sx={{ fontSize: { xs: 14 } }}>
+                    <Typography
+                      component="span"
+                      variant="h6"
+                      sx={{ fontSize: { xs: 14 } }}
+                    >
                       {orderSummary.packaging || "00"}
                     </Typography>
                   </Box>
                   <Box className="grid grid-cols-3 gap-8 ">
-                    <Typography variant="h6" sx={{ fontSize: { xs: 14 } }}>
+                    <Typography
+                      component="span"
+                      variant="h6"
+                      sx={{ fontSize: { xs: 14 } }}
+                    >
                       Total
                     </Typography>
-                    <Typography variant="h6" sx={{ fontSize: { xs: 14 } }}>
+                    <Typography
+                      component="span"
+                      variant="h6"
+                      sx={{ fontSize: { xs: 14 } }}
+                    >
                       :
                     </Typography>
-                    <Typography variant="h6" sx={{ fontSize: { xs: 14 } }}>
+                    <Typography
+                      component="span"
+                      variant="h6"
+                      sx={{ fontSize: { xs: 14 } }}
+                    >
                       {orderSummary.sub_total || "00"}
                     </Typography>
                   </Box>
                   <Box className="grid grid-cols-3 gap-8">
-                    <Typography variant="h6" sx={{ fontSize: { xs: 14 } }}>
+                    <Typography
+                      component="span"
+                      variant="h6"
+                      sx={{ fontSize: { xs: 14 } }}
+                    >
                       Discount
                     </Typography>
-                    <Typography variant="h6" sx={{ fontSize: { xs: 14 } }}>
+                    <Typography
+                      component="span"
+                      variant="h6"
+                      sx={{ fontSize: { xs: 14 } }}
+                    >
                       :
                     </Typography>
-                    <Typography variant="h6" sx={{ fontSize: { xs: 14 } }}>
+                    <Typography
+                      component="span"
+                      variant="h6"
+                      sx={{ fontSize: { xs: 14 } }}
+                    >
                       {orderSummary.discount || "00"}
                     </Typography>
                   </Box>
                   <hr />
                   <Box className="grid grid-cols-3 gap-8">
-                    <Typography variant="h6" sx={{ fontSize: { xs: 14 } }}>
+                    <Typography
+                      component="span"
+                      variant="h6"
+                      sx={{ fontSize: { xs: 14 } }}
+                    >
                       Total Amount
                     </Typography>
-                    <Typography variant="h6" sx={{ fontSize: { xs: 14 } }}>
+                    <Typography
+                      component="span"
+                      variant="h6"
+                      sx={{ fontSize: { xs: 14 } }}
+                    >
                       :
                     </Typography>
-                    <Typography variant="h6" sx={{ fontSize: { xs: 14 } }}>
+                    <Typography
+                      component="span"
+                      variant="h6"
+                      sx={{ fontSize: { xs: 14 } }}
+                    >
                       {orderSummary.total_amount || "00"}
                     </Typography>
                   </Box>

@@ -171,10 +171,11 @@ function AddToCartModal(props) {
         </Box>
         <Box className="p-4">
           <Box>
-            <Typography sx={{ fontWeight: 500, fontSize: 26 }}>
+            <Typography component="span" sx={{ fontWeight: 500, fontSize: 26 }}>
               {item?.food_name}
             </Typography>
             <Typography
+              component="span"
               sx={{
                 mb: 2,
               }}
@@ -189,6 +190,7 @@ function AddToCartModal(props) {
             <Box>
               <Box className="flex justify-between my-5 lowercase">
                 <Typography
+                  component="span"
                   sx={{
                     fontSize: 18,
                     fontWeight: 500,
@@ -197,6 +199,7 @@ function AddToCartModal(props) {
                   select variation
                 </Typography>
                 <Typography
+                  component="span"
                   sx={{
                     textTransform: "uppercase",
                     fontSize: 14,
@@ -260,6 +263,7 @@ function AddToCartModal(props) {
                               onChange={(e) => handleChange({ index, key })}
                             />
                             <Typography
+                              component="span"
                               sx={{
                                 fontSize: {
                                   sm: "12px",
@@ -282,6 +286,7 @@ function AddToCartModal(props) {
                             variant="h6"
                           >
                             <Typography
+                              component="span"
                               className="text-gray-600"
                               sx={{
                                 fontSize: {
@@ -293,6 +298,7 @@ function AddToCartModal(props) {
                               TK {item.price[key[0]]}
                             </Typography>
                             <Typography
+                              component="span"
                               sx={{
                                 fontWeight: 300,
                                 fontSize: {
@@ -336,6 +342,7 @@ function AddToCartModal(props) {
                                 onClick={(e) => handleChange({ index, key })}
                               />
                               <Typography
+                                component="span"
                                 sx={{
                                   fontSize: {
                                     sm: "12px",
@@ -350,6 +357,7 @@ function AddToCartModal(props) {
                             </Box>
                             <Box className="flex  items-center">
                               <Typography
+                                component="span"
                                 sx={{
                                   fontWeight: 300,
                                   fontSize: {
@@ -371,7 +379,7 @@ function AddToCartModal(props) {
             {/* {Boolean(ingredients?.length > 0) && (
                 <Box className="flex justify-between my-5 ">
                   <Box>
-                    <Typography
+                    <Typography component="span"
                       sx={{
                         textTransform: "lowercase",
                         fontSize: 18,
@@ -380,7 +388,7 @@ function AddToCartModal(props) {
                     >
                       Extra ingredient
                     </Typography>
-                    <Typography
+                    <Typography component="span"
                       sx={{
                         fontSize: 13,
                         fontWeight: 300,
@@ -408,7 +416,7 @@ function AddToCartModal(props) {
                         aria-controls="panel1a-content"
                         id="panel1a-header"
                       >
-                        <Typography
+                        <Typography component="span"
                           sx={{
                             fontWeight: "semibold",
                             fontSize: { md: 16, xs: 20 },
@@ -418,7 +426,7 @@ function AddToCartModal(props) {
                         </Typography>
                       </AccordionSummary>
                       <AccordionDetails>
-                        <Typography>
+                        <Typography component="span">
                           {ingredients?.map((extraPrice, index) => (
                             <Box
                               key={index}
@@ -451,7 +459,7 @@ function AddToCartModal(props) {
                                   }
                                 />
                               </Box>
-                              <Typography
+                              <Typography component="span"
                                 variant="h6"
                                 sx={{ fontSize: "14px" }}
                               >
@@ -464,7 +472,7 @@ function AddToCartModal(props) {
                     </Accordion>
                   </Box>
 
-                  <Typography
+                  <Typography component="span"
                     sx={{
                       height: 28,
                       textTransform: "uppercase",
@@ -510,7 +518,7 @@ function AddToCartModal(props) {
                   >
                     <AiOutlineMinus className="inline text-xl  cursor-pointer" />
                   </Button>
-                  <Typography className="text-xl text-gray-600">
+                  <Typography component="span" className="text-xl text-gray-600">
                     {item?.count}
                   </Typography>
                   <Button

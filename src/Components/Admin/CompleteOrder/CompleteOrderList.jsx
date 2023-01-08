@@ -108,7 +108,11 @@ const CompleteOrderList = ({ completes, isLoading, isError }) => {
                 // inputProps={{ "aria-label": "search google maps" }}
               />
             </Box>
-            <Typography className="dark:text-neutral" variant="h6">
+            <Typography
+              component="span"
+              className="dark:text-neutral"
+              variant="h6"
+            >
               Orders Complete : {completes.length ? completes.length : "00"}
             </Typography>
           </Box>
@@ -143,9 +147,10 @@ const CompleteOrderList = ({ completes, isLoading, isError }) => {
                     className="space-y-2"
                   >
                     <Box className="flex justify-between flex-wrap items-center">
-                      <Typography sx={{ fontSize: 14 }}>
+                      <Typography component="span" sx={{ fontSize: 14 }}>
                         Order ID :{" "}
                         <Typography
+                          component="span"
                           component={"span"}
                           sx={{ fontSize: 14, fontWeight: 500 }}
                           variant="h6"
@@ -154,9 +159,10 @@ const CompleteOrderList = ({ completes, isLoading, isError }) => {
                         </Typography>
                       </Typography>
                       {item?.table && (
-                        <Typography sx={{ fontSize: 14 }}>
+                        <Typography component="span" sx={{ fontSize: 14 }}>
                           Table No:{" "}
                           <Typography
+                            component="span"
                             component={"span"}
                             sx={{ fontSize: 15, fontWeight: 500 }}
                           >
@@ -167,9 +173,10 @@ const CompleteOrderList = ({ completes, isLoading, isError }) => {
                     </Box>
 
                     <Box>
-                      <Typography sx={{ fontSize: 14 }}>
+                      <Typography component="span" sx={{ fontSize: 14 }}>
                         Order Type :{" "}
                         <Typography
+                          component="span"
                           component={"span"}
                           sx={{ fontSize: 14, fontWeight: 500 }}
                           variant="h6"
@@ -181,9 +188,10 @@ const CompleteOrderList = ({ completes, isLoading, isError }) => {
                           }`}
                         </Typography>
                       </Typography>
-                      <Typography sx={{ fontSize: 14 }}>
+                      <Typography component="span" sx={{ fontSize: 14 }}>
                         Name :{" "}
                         <Typography
+                          component="span"
                           component={"span"}
                           sx={{ fontSize: 14, fontWeight: 500 }}
                         >
@@ -191,6 +199,7 @@ const CompleteOrderList = ({ completes, isLoading, isError }) => {
                         </Typography>
                       </Typography>
                       <Typography
+                        component="span"
                         sx={{
                           display: "flex",
                           alignItems: "center",
@@ -201,6 +210,7 @@ const CompleteOrderList = ({ completes, isLoading, isError }) => {
                         {/* <FaPhoneAlt /> */}
                         Phone :
                         <Typography
+                          component="span"
                           component={"span"}
                           sx={{ fontSize: 14, fontWeight: 500 }}
                         >
@@ -208,6 +218,7 @@ const CompleteOrderList = ({ completes, isLoading, isError }) => {
                         </Typography>
                       </Typography>
                       <Typography
+                        component="span"
                         sx={{
                           display: "flex",
                           alignItems: "center",
@@ -217,6 +228,7 @@ const CompleteOrderList = ({ completes, isLoading, isError }) => {
                       >
                         Email :
                         <Typography
+                          component="span"
                           component={"span"}
                           sx={{ fontSize: 14, fontWeight: 500 }}
                         >
@@ -335,12 +347,14 @@ const CompleteOrderList = ({ completes, isLoading, isError }) => {
                     }}
                   >
                     <Typography
+                      component="span"
                       sx={{ fontSize: 18, fontWeight: 500 }}
                       variant="h6"
                     >
                       Total Amount:
                     </Typography>
                     <Typography
+                      component="span"
                       sx={{ fontSize: 18, fontWeight: 500 }}
                       variant="h6"
                     >

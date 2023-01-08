@@ -125,13 +125,16 @@ function AddToCartModal(props) {
         <Box className="p-4">
           <Box>
             <Box className="flex justify-between items-center">
-              <Typography sx={{ fontWeight: 500, fontSize: 26 }}>
+              <Typography
+                component="span"
+                sx={{ fontWeight: 500, fontSize: 26 }}
+              >
                 {item?.food_name}
               </Typography>
               <Box>
                 {Boolean(item?.discount_price)
                   ? Object.entries(item?.discount_price).map((key, index) => (
-                      <Stack>
+                      <Stack key={index}>
                         {index === 0 && (
                           <Box
                             sx={{
@@ -142,6 +145,7 @@ function AddToCartModal(props) {
                             variant="h6"
                           >
                             <Typography
+                              component="span"
                               className="text-gray-600"
                               sx={{
                                 fontSize: {
@@ -153,6 +157,7 @@ function AddToCartModal(props) {
                               TK {item.price[key[0]]}
                             </Typography>
                             <Typography
+                              component="span"
                               sx={{
                                 fontWeight: 300,
                                 fontSize: {
@@ -170,10 +175,11 @@ function AddToCartModal(props) {
                   : Boolean(item?.price)
                   ? Object.entries(item?.price).map((key, index) => {
                       return (
-                        <Stack>
+                        <Stack key={index}>
                           {index === 0 && (
                             <Box className="flex  items-center">
                               <Typography
+                                component="span"
                                 sx={{
                                   fontWeight: 300,
                                   fontSize: {
@@ -194,6 +200,7 @@ function AddToCartModal(props) {
             </Box>
 
             <Typography
+              component="span"
               sx={{
                 mb: 2,
               }}
@@ -210,6 +217,7 @@ function AddToCartModal(props) {
               <Box>
                 <Box className="flex justify-between my-5 lowercase">
                   <Typography
+                    component="span"
                     sx={{
                       display:
                         Object.values(item?.discount_price).length < 2
@@ -222,6 +230,7 @@ function AddToCartModal(props) {
                     select variation
                   </Typography>
                   <Typography
+                    component="span"
                     sx={{
                       display:
                         Object.values(item?.discount_price).length < 2
@@ -254,9 +263,10 @@ function AddToCartModal(props) {
                       width: 1,
                     }}
                   >
-                    {Object.entries(item?.discount_price).map((key) => {
+                    {Object.entries(item?.discount_price).map((key, i) => {
                       return (
                         <Box
+                          key={i}
                           sx={{
                             width: 1,
                             display: "flex",
@@ -297,6 +307,7 @@ function AddToCartModal(props) {
                               onChange={(e) => handleChange({ index, key })}
                             />
                             <Typography
+                              component="span"
                               sx={{
                                 fontSize: {
                                   sm: "12px",
@@ -319,6 +330,7 @@ function AddToCartModal(props) {
                             variant="h6"
                           >
                             <Typography
+                              component="span"
                               className="text-gray-600"
                               sx={{
                                 fontSize: {
@@ -330,6 +342,7 @@ function AddToCartModal(props) {
                               TK {item.discount_price[key[0]]}
                             </Typography>
                             <Typography
+                              component="span"
                               sx={{
                                 fontWeight: 300,
                                 fontSize: {
@@ -351,6 +364,7 @@ function AddToCartModal(props) {
               <Box>
                 <Box className="flex justify-between my-5 lowercase">
                   <Typography
+                    component="span"
                     sx={{
                       display:
                         Object.values(item?.price).length < 2
@@ -363,6 +377,7 @@ function AddToCartModal(props) {
                     select variation
                   </Typography>
                   <Typography
+                    component="span"
                     sx={{
                       display:
                         Object.values(item?.price).length < 2
@@ -393,9 +408,10 @@ function AddToCartModal(props) {
                       width: 1,
                     }}
                   >
-                    {Object.entries(item?.price).map((key) => {
+                    {Object.entries(item?.price).map((key, i) => {
                       return (
                         <Box
+                          key={i}
                           sx={{
                             width: 1,
                             display: "flex",
@@ -434,6 +450,7 @@ function AddToCartModal(props) {
                               onChange={(e) => handleChange({ index, key })}
                             />
                             <Typography
+                              component="span"
                               sx={{
                                 fontSize: {
                                   sm: "12px",
@@ -455,7 +472,7 @@ function AddToCartModal(props) {
                             }}
                             variant="h6"
                           >
-                            {/* <Typography
+                            {/* <Typography component="span"
                               className="text-gray-600"
                               sx={{
                                 fontSize: {
@@ -467,6 +484,7 @@ function AddToCartModal(props) {
                               TK {item.price[key[0]]}
                             </Typography> */}
                             <Typography
+                              component="span"
                               sx={{
                                 fontWeight: 300,
                                 fontSize: {
@@ -509,12 +527,12 @@ function AddToCartModal(props) {
                       Object.entries(item?.discount_price).map((key, i) => {
                         return (
                           <Button
+                            key={i}
                             disabled={
                               !Boolean(
                                 Object.entries(item?.discount_price).length < 2
                               )
                             }
-                            key={i}
                             variant="contained"
                             sx={{
                               width: 1,

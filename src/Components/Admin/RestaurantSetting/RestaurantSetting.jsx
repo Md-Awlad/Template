@@ -38,6 +38,7 @@ const RestaurantSetting = () => {
           <Box className="border border-gray-600 py-3 px-5 w-full rounded-md ">
             <Box>
               <Typography
+                component="span"
                 sx={{
                   fontSize: "1.1rem",
                   borderBottom: `1px dashed #707070`,
@@ -49,6 +50,7 @@ const RestaurantSetting = () => {
               <Grid container sx={{ justifyContent: "space-between", mt: 2 }}>
                 <Grid item xs={4}>
                   <Typography
+                    component="span"
                     sx={{
                       display: "flex",
                       alignItems: "center",
@@ -61,6 +63,7 @@ const RestaurantSetting = () => {
                 </Grid>
                 <Grid item xs={7}>
                   <Typography
+                    component="span"
                     sx={{
                       fontWeight: 500,
                     }}
@@ -72,6 +75,7 @@ const RestaurantSetting = () => {
               <Grid container sx={{ justifyContent: "space-between", mt: 2 }}>
                 <Grid item xs={4}>
                   <Typography
+                    component="span"
                     sx={{
                       display: "flex",
                       alignItems: "center",
@@ -84,6 +88,7 @@ const RestaurantSetting = () => {
                 </Grid>
                 <Grid item xs={7}>
                   <Typography
+                    component="span"
                     sx={{
                       fontWeight: 500,
                     }}
@@ -95,6 +100,7 @@ const RestaurantSetting = () => {
               <Grid container sx={{ justifyContent: "space-between", mt: 1 }}>
                 <Grid item xs={4}>
                   <Typography
+                    component="span"
                     sx={{
                       display: "flex",
                       alignItems: "center",
@@ -107,6 +113,7 @@ const RestaurantSetting = () => {
                 </Grid>
                 <Grid item xs={7}>
                   <Typography
+                    component="span"
                     sx={{
                       fontWeight: 500,
                     }}
@@ -118,6 +125,7 @@ const RestaurantSetting = () => {
               <Grid container sx={{ justifyContent: "space-between", mt: 1 }}>
                 <Grid item xs={4}>
                   <Typography
+                    component="span"
                     sx={{
                       display: "flex",
                       alignItems: "center",
@@ -130,6 +138,7 @@ const RestaurantSetting = () => {
                 </Grid>
                 <Grid item xs={7}>
                   <Typography
+                    component="span"
                     sx={{
                       fontWeight: 500,
                     }}
@@ -150,6 +159,7 @@ const RestaurantSetting = () => {
               >
                 <Grid item xs={4}>
                   <Typography
+                    component="span"
                     sx={{
                       display: "flex",
                       alignItems: "center",
@@ -169,6 +179,7 @@ const RestaurantSetting = () => {
                 </Grid>
                 <Grid item xs={7}>
                   <Typography
+                    component="span"
                     sx={{
                       fontWeight: 500,
                     }}

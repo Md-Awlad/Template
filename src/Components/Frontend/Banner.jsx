@@ -59,6 +59,7 @@ const Banner = () => {
               ?.map((a) =>
                 a.discount?.map((data, index) => (
                   <Typography
+                    component="span"
                     key={index}
                     variant="h6"
                     sx={{ mx: 2, fontSize: 22, fontWeight: 500 }}

@@ -140,6 +140,7 @@ const OrderList = ({ orders, orderRefetch, isLoading, isError }) => {
               />
             </Box>
             <Typography
+              component="span"
               className="dark:text-neutral"
               sx={{ display: "flex", justifyContent: "flex-end" }}
               variant="h6"
@@ -182,20 +183,20 @@ const OrderList = ({ orders, orderRefetch, isLoading, isError }) => {
                       className="space-y-2"
                     >
                       <Box className="flex justify-between flex-wrap items-center">
-                        <Typography sx={{ fontSize: 14 }}>
+                        <Typography component="span" sx={{ fontSize: 14 }}>
                           Order ID :{" "}
                           <Typography
-                            component={"span"}
+                            component="span"
                             sx={{ fontSize: 14, fontWeight: 500 }}
                           >
                             {item?.id}
                           </Typography>
                         </Typography>
                         {item?.table && (
-                          <Typography sx={{ fontSize: 14 }}>
+                          <Typography component="span" sx={{ fontSize: 14 }}>
                             Table No:{" "}
                             <Typography
-                              component={"span"}
+                              component="span"
                               sx={{ fontSize: 15, fontWeight: 500 }}
                             >
                               {item?.table}
@@ -205,10 +206,13 @@ const OrderList = ({ orders, orderRefetch, isLoading, isError }) => {
                       </Box>
 
                       <Box>
-                        <Typography sx={{ fontSize: 14, fontWeight: 400 }}>
+                        <Typography
+                          component="span"
+                          sx={{ fontSize: 14, fontWeight: 400 }}
+                        >
                           Order Type :{" "}
                           <Typography
-                            component={"span"}
+                            component="span"
                             sx={{ fontSize: 15, fontWeight: 500 }}
                             variant="h6"
                           >
@@ -219,10 +223,10 @@ const OrderList = ({ orders, orderRefetch, isLoading, isError }) => {
                             }`}
                           </Typography>
                         </Typography>
-                        <Typography sx={{ fontSize: 14 }}>
+                        <Typography component="span" sx={{ fontSize: 14 }}>
                           Name :{" "}
                           <Typography
-                            component={"span"}
+                            component="span"
                             sx={{ fontSize: 15, fontWeight: 500 }}
                             variant="h6"
                           >
@@ -230,6 +234,7 @@ const OrderList = ({ orders, orderRefetch, isLoading, isError }) => {
                           </Typography>
                         </Typography>
                         <Typography
+                          component="span"
                           sx={{
                             display: "flex",
                             alignItems: "center",
@@ -240,13 +245,14 @@ const OrderList = ({ orders, orderRefetch, isLoading, isError }) => {
                           {/* <FaPhoneAlt /> */}
                           Phone :
                           <Typography
-                            component={"span"}
+                            component="span"
                             sx={{ fontSize: 14, fontWeight: 500 }}
                           >
                             {item?.customer_phone}
                           </Typography>
                         </Typography>
                         <Typography
+                          component="span"
                           sx={{
                             display: "flex",
                             alignItems: "center",
@@ -257,7 +263,7 @@ const OrderList = ({ orders, orderRefetch, isLoading, isError }) => {
                           {/* <MdEmail /> */}
                           Email :
                           <Typography
-                            component={"span"}
+                            component="span"
                             sx={{ fontSize: 14, fontWeight: 500 }}
                             variant="h6"
                           >
@@ -378,12 +384,14 @@ const OrderList = ({ orders, orderRefetch, isLoading, isError }) => {
                       }}
                     >
                       <Typography
+                        component="span"
                         sx={{ fontSize: 18, fontWeight: 500 }}
                         variant="h6"
                       >
                         Total Amount:
                       </Typography>
                       <Typography
+                        component="span"
                         sx={{ fontSize: 18, fontWeight: 500 }}
                         variant="h6"
                       >

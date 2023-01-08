@@ -53,6 +53,7 @@ const ResponsiveBottomMenu = () => {
               >
                 <SvgImage />
                 <Typography
+                  component="span"
                   sx={{
                     fontSize: { sm: 11, xs: 8 },
                     fontWeight: 500,

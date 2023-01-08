@@ -17,11 +17,11 @@ const Food = ({ category }) => {
     <Box sx={{ mb: 10 }}>
       {/* --food-- */}
       <Box>
-        <Grid container sx={{ padding: 0, m: 0 }}>
+        <Grid container>
           {category?.foodItems_category?.map((item, index) => {
             return (
               <Grid key={index} item sm={6} md={6}>
-                <div onClick={() => handleItemAndToggle(item, index)}>
+                <Box onClick={() => handleItemAndToggle(item, index)}>
                   <Box
                     sx={{
                       minHeight: { xs: 300, sm: "auto", md: "auto" },
@@ -29,7 +29,6 @@ const Food = ({ category }) => {
                     }}
                     className=" border-2 shadow-md  rounded-lg   cursor-pointer relative"
                   >
-                    {/* <div className="md:flex justify-between"> */}
                     <Grid
                       container
                       sx={{
@@ -40,7 +39,7 @@ const Food = ({ category }) => {
                     >
                       {/* image section */}
                       <Grid item xs={12} sm={5} md={5} sx={{ p: 0, m: 0 }}>
-                        <div className=" sm:m-0 sm:w-32 sm:h-32 w-full h-44   relative p-0 m-0">
+                        <Box className=" sm:m-0 sm:w-32 sm:h-32 w-full h-44   relative p-0 m-0">
                           <img
                             className=" object-cover w-full h-full  rounded-md p-0 "
                             src={item?.image}
@@ -52,13 +51,14 @@ const Food = ({ category }) => {
                             alt=""
                           />
                           <IoMdAdd className="absolute text-xl font-bold bottom-1 right-1 bg-white text-gray-900 rounded-md p-1" />
-                        </div>
+                        </Box>
                       </Grid>
                       {/* details section */}
                       <Grid item xs={12} sm={7} md={7}>
-                        <Box className="">
+                        <Box>
                           <Box className="md:flex justify-between">
                             <Typography
+                              component="span"
                               sx={{
                                 fontWeight: 500,
                               }}
@@ -68,6 +68,7 @@ const Food = ({ category }) => {
                             </Typography>
                           </Box>
                           <Typography
+                            component="span"
                             sx={{
                               fontSize: 12,
                               fontWeight: 500,
@@ -85,6 +86,7 @@ const Food = ({ category }) => {
                               Object.entries(item?.discount_price).map(
                                 (key, index) => (
                                   <Box
+                                    key={index}
                                     sx={{
                                       display: "flex",
                                       alignItems: "center",
@@ -93,6 +95,7 @@ const Food = ({ category }) => {
                                     {index === 0 && (
                                       <Box className="absolute flex  items-center bottom-3">
                                         <Typography
+                                          component="span"
                                           sx={{
                                             fontSize: {
                                               md: "16px",
@@ -104,6 +107,7 @@ const Food = ({ category }) => {
                                         </Typography>
 
                                         <Typography
+                                          component="span"
                                           sx={{
                                             fontSize: {
                                               sm: "13px",
@@ -114,6 +118,7 @@ const Food = ({ category }) => {
                                           {item.price[key[0]]}
                                         </Typography>
                                         <Typography
+                                          component="span"
                                           sx={{
                                             fontWeight: 500,
                                             fontSize: {
@@ -132,10 +137,14 @@ const Food = ({ category }) => {
                             ) : Boolean(item?.price) ? (
                               Object.entries(item?.price).map((key, index) => {
                                 return (
-                                  <Box className="flex items-center">
+                                  <Box
+                                    key={index}
+                                    className="flex items-center"
+                                  >
                                     {Boolean(index === 0) && (
                                       <Box className=" absolute flex  items-center bottom-3">
                                         <Typography
+                                          component="span"
                                           sx={{
                                             fontSize: "16px",
 
@@ -146,6 +155,7 @@ const Food = ({ category }) => {
                                         </Typography>
 
                                         <Typography
+                                          component="span"
                                           sx={{
                                             fontWeight: 500,
                                             fontSize: {
@@ -162,7 +172,7 @@ const Food = ({ category }) => {
                                 );
                               })
                             ) : (
-                              <></>
+                              <div></div>
                             )}
                           </Box>
                           {/* --size End-- */}
@@ -171,7 +181,7 @@ const Food = ({ category }) => {
                     </Grid>
                     {/* </div> */}
                   </Box>
-                </div>
+                </Box>
               </Grid>
             );
           })}

@@ -97,20 +97,16 @@ const GenerateQR = ({ text }) => {
         return (
           <Box className="flex gap-5 items-center">
             <Tooltip title="Generate Qr" placement="top">
-              <>
-                <QrCode
-                  onClick={() => handleQr(row?.table_name)}
-                  className="text-gray-600 dark:text-neutral text-xl cursor-pointer"
-                />
-              </>
+              <QrCode
+                onClick={() => handleQr(row?.table_name)}
+                className="text-gray-600 dark:text-neutral text-xl cursor-pointer"
+              />
             </Tooltip>
             <Tooltip title="Delete Table" placement="top">
-              <>
-                <RiDeleteBin6Line
-                  onClick={() => setDelTabId(row?.id)}
-                  className="text-red-400 dark:text-neutral text-xl cursor-pointer"
-                />
-              </>
+              <RiDeleteBin6Line
+                onClick={() => setDelTabId(row?.id)}
+                className="text-red-400 dark:text-neutral text-xl cursor-pointer"
+              />
             </Tooltip>
           </Box>
         );
@@ -126,6 +122,7 @@ const GenerateQR = ({ text }) => {
     <>
       <Box className=" border-1 p-4 text-center">
         <Typography
+          component="span"
           sx={{
             fontSize: 20,
             mb: 5,

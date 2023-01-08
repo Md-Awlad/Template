@@ -69,7 +69,11 @@ const Sidebars = () => {
                 }}
               />
 
-              <Typography variant="h6" className="dark:text-neutral">
+              <Typography
+                component="span"
+                variant="h6"
+                className="dark:text-neutral"
+              >
                 {restaurantData?.name || "Nexis Menu"}
               </Typography>
             </Box>

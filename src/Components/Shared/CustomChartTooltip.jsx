@@ -12,6 +12,7 @@ const CustomChartTooltip = ({ active, payload, label }) => {
         }}
       >
         <Typography
+          component="span"
           className="recharts-tooltip-label"
           color="primary"
           sx={{ fontWeight: 700 }}
@@ -21,12 +22,14 @@ const CustomChartTooltip = ({ active, payload, label }) => {
         {payload.map((item, index) => {
           return (
             <Typography
+              component="span"
               key={index + "tooltip"}
               className="recharts-tooltip-item-name"
               fontSize={12}
             >
               {item?.name?.replace("_", " ")}:{" "}
               <Typography
+                component="span"
                 component="span"
                 fontWeight={500}
                 fontSize={13}

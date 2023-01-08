@@ -47,7 +47,11 @@ const PhoneViewCart = () => {
     >
       {/* --cartInfo-- */}
 
-      <Typography variant="h6" sx={{ textTransform: "uppercase" }}>
+      <Typography
+        component="span"
+        variant="h6"
+        sx={{ textTransform: "uppercase" }}
+      >
         your food
       </Typography>
 
@@ -68,10 +72,18 @@ const PhoneViewCart = () => {
                 alignItems: "center",
               }}
             >
-              <Typography variant="h6" sx={{ fontSize: "14px" }}>
+              <Typography
+                component="span"
+                variant="h6"
+                sx={{ fontSize: "14px" }}
+              >
                 Sub Total
               </Typography>
-              <Typography variant="h6" sx={{ fontSize: "14px" }}>
+              <Typography
+                component="span"
+                variant="h6"
+                sx={{ fontSize: "14px" }}
+              >
                 {cartCalculation?.sub_total ? cartCalculation?.sub_total : "00"}{" "}
                 <span></span>
               </Typography>
@@ -84,10 +96,18 @@ const PhoneViewCart = () => {
                 alignItems: "center",
               }}
             >
-              <Typography variant="h6" sx={{ fontSize: "14px" }}>
+              <Typography
+                component="span"
+                variant="h6"
+                sx={{ fontSize: "14px" }}
+              >
                 Packaging
               </Typography>
-              <Typography variant="h6" sx={{ fontSize: "14px" }}>
+              <Typography
+                component="span"
+                variant="h6"
+                sx={{ fontSize: "14px" }}
+              >
                 {cartCalculation?.packaging ? cartCalculation?.packaging : "00"}{" "}
                 <span></span>
               </Typography>
@@ -100,10 +120,18 @@ const PhoneViewCart = () => {
                 alignItems: "center",
               }}
             >
-              <Typography variant="h6" sx={{ fontSize: "14px" }}>
+              <Typography
+                component="span"
+                variant="h6"
+                sx={{ fontSize: "14px" }}
+              >
                 Discount
               </Typography>
-              <Typography variant="h6" sx={{ fontSize: "14px" }}>
+              <Typography
+                component="span"
+                variant="h6"
+                sx={{ fontSize: "14px" }}
+              >
                 {cartCalculation?.discount_amount
                   ? -cartCalculation?.discount_amount
                   : "00"}{" "}
@@ -120,10 +148,18 @@ const PhoneViewCart = () => {
                 mb: 10,
               }}
             >
-              <Typography variant="h6" sx={{ fontSize: "16px" }}>
+              <Typography
+                component="span"
+                variant="h6"
+                sx={{ fontSize: "16px" }}
+              >
                 Total Amount
               </Typography>
-              <Typography variant="h6" sx={{ fontSize: "16px" }}>
+              <Typography
+                component="span"
+                variant="h6"
+                sx={{ fontSize: "16px" }}
+              >
                 {cartCalculation?.total_amount
                   ? cartCalculation?.total_amount
                   : "00"}{" "}

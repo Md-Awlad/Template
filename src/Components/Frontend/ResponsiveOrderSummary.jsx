@@ -65,6 +65,7 @@ const ResponsiveOrderSummery = () => {
           }}
         >
           <Typography
+            component="span"
             sx={{
               fontSize: 13,
             }}
@@ -77,54 +78,75 @@ const ResponsiveOrderSummery = () => {
       <Box sx={{ marginX: { md: 8, xs: 4 } }}>
         <BsCheckCircle className="text-3xl text-green-600 m-auto" />
         <Box sx={{ textAlign: "center" }}>
-          <Typography variant="h6">We've received your order</Typography>
-          <Typography variant="h6">
+          <Typography component="span" variant="h6">
+            We've received your order
+          </Typography>
+          <Typography component="span" variant="h6">
             Order ID: # {orderSummary.order_id}
           </Typography>
         </Box>
         <Box className="space-y-3">
           {/* --details-- */}
           <Box>
-            <Typography variant="h6">Order Details</Typography>
-            <Typography variant="h6" sx={{ fontSize: { xs: 14 } }}>
+            <Typography component="span" variant="h6">
+              Order Details
+            </Typography>
+            <Typography
+              component="span"
+              variant="h6"
+              sx={{ fontSize: { xs: 14 } }}
+            >
               {orderSummary.name && `Name: ${orderSummary?.name}`}
             </Typography>
-            <Typography variant="h6" sx={{ fontSize: { xs: 14 } }}>
+            <Typography
+              component="span"
+              variant="h6"
+              sx={{ fontSize: { xs: 14 } }}
+            >
               Phone: {orderSummary.phone}
             </Typography>
-            <Typography variant="h6" sx={{ fontSize: { xs: 14 } }}>
+            <Typography
+              component="span"
+              variant="h6"
+              sx={{ fontSize: { xs: 14 } }}
+            >
               Order Type: {orderSummary.order_type}
             </Typography>
           </Box>
 
           {/* --orderSummary-- */}
           <Box>
-            <Typography variant="h6">Order Summary</Typography>
+            <Typography component="span" variant="h6">
+              Order Summary
+            </Typography>
             <Box>
-              <Typography variant="h6" sx={{ fontSize: 18 }}>
+              <Typography component="span" variant="h6" sx={{ fontSize: 18 }}>
                 Order Items
               </Typography>
               {orderSummary.order_items?.map((data, index) => (
                 <Box key={index}>
                   <Box className="flex justify-between items-center">
                     <Box className="flex gap-2 items-center">
-                      <Typography>
+                      <Typography component="span">
                         {data?.quantity && `${data?.quantity} X`}
                       </Typography>
-                      <Typography>{data?.food_name}</Typography>
+                      <Typography component="span">
+                        {data?.food_name}
+                      </Typography>
                     </Box>
-                    <Typography sx={{ fontWeight: 600 }}>
+                    <Typography component="span" sx={{ fontWeight: 600 }}>
                       {data?.food_amount}
                     </Typography>
                   </Box>
                 </Box>
               ))}
-              <Typography variant="h6" sx={{ fontSize: 18 }}>
+              <Typography component="span" variant="h6" sx={{ fontSize: 18 }}>
                 Extra Ingredients
               </Typography>
               {orderSummary.order_items?.map((data, index) => (
                 <Box key={index} className="flex justify-between">
                   <Typography
+                    component="span"
                     sx={{
                       width: 135,
                       borderBottom: `1px dashed #707070`,
@@ -138,6 +160,7 @@ const ResponsiveOrderSummery = () => {
                     )}
                   </Typography>
                   <Typography
+                    component="span"
                     sx={{
                       fontWeight: 600,
                       borderBottom: `1px dashed #707070`,
@@ -154,12 +177,12 @@ const ResponsiveOrderSummery = () => {
                   </Typography>
                 </Box>
               ))}
-              <Typography variant="h6" sx={{ fontSize: 18 }}>
+              <Typography component="span" variant="h6" sx={{ fontSize: 18 }}>
                 Size
               </Typography>
               {orderSummary.order_items?.map((data, index) => (
                 <Box sx={{ mt: -3 }} key={index} className="flex justify-end">
-                  <Typography sx={{ pb: 2, fontWeight: 600 }}>
+                  <Typography component="span" sx={{ pb: 2, fontWeight: 600 }}>
                     {data?.price}
                   </Typography>
                 </Box>
@@ -167,13 +190,22 @@ const ResponsiveOrderSummery = () => {
             </Box>
             <Box className="mb-20 mt-2">
               <Box className="grid grid-cols-3 gap-8">
-                <Typography variant="h6" sx={{ fontSize: { xs: 14 } }}>
+                <Typography
+                  component="span"
+                  variant="h6"
+                  sx={{ fontSize: { xs: 14 } }}
+                >
                   Packaging
                 </Typography>
-                <Typography variant="h6" sx={{ fontSize: { xs: 14 } }}>
+                <Typography
+                  component="span"
+                  variant="h6"
+                  sx={{ fontSize: { xs: 14 } }}
+                >
                   :
                 </Typography>
                 <Typography
+                  component="span"
                   variant="h6"
                   sx={{
                     fontSize: { xs: 14 },
@@ -185,13 +217,22 @@ const ResponsiveOrderSummery = () => {
                 </Typography>
               </Box>
               <Box className="grid grid-cols-3 gap-8 ">
-                <Typography variant="h6" sx={{ fontSize: { xs: 14 } }}>
+                <Typography
+                  component="span"
+                  variant="h6"
+                  sx={{ fontSize: { xs: 14 } }}
+                >
                   Total
                 </Typography>
-                <Typography variant="h6" sx={{ fontSize: { xs: 14 } }}>
+                <Typography
+                  component="span"
+                  variant="h6"
+                  sx={{ fontSize: { xs: 14 } }}
+                >
                   :
                 </Typography>
                 <Typography
+                  component="span"
                   variant="h6"
                   sx={{
                     fontSize: { xs: 14 },
@@ -203,13 +244,22 @@ const ResponsiveOrderSummery = () => {
                 </Typography>
               </Box>
               <Box className="grid grid-cols-3 gap-8">
-                <Typography variant="h6" sx={{ fontSize: { xs: 14 } }}>
+                <Typography
+                  component="span"
+                  variant="h6"
+                  sx={{ fontSize: { xs: 14 } }}
+                >
                   Discount
                 </Typography>
-                <Typography variant="h6" sx={{ fontSize: { xs: 14 } }}>
+                <Typography
+                  component="span"
+                  variant="h6"
+                  sx={{ fontSize: { xs: 14 } }}
+                >
                   :
                 </Typography>
                 <Typography
+                  component="span"
                   variant="h6"
                   sx={{
                     fontSize: { xs: 14 },
@@ -222,13 +272,18 @@ const ResponsiveOrderSummery = () => {
               </Box>
               <hr />
               <Box className="grid grid-cols-3 gap-8">
-                <Typography variant="h6" sx={{ fontSize: 14 }}>
+                <Typography component="span" variant="h6" sx={{ fontSize: 14 }}>
                   Total Amount
                 </Typography>
-                <Typography variant="h6" sx={{ fontSize: { xs: 14 } }}>
+                <Typography
+                  component="span"
+                  variant="h6"
+                  sx={{ fontSize: { xs: 14 } }}
+                >
                   :
                 </Typography>
                 <Typography
+                  component="span"
                   variant="h6"
                   sx={{
                     fontSize: { xs: 14 },

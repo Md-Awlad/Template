@@ -20,7 +20,9 @@ const CancelOrderList = ({ cancelOrder, isLoading, isError }) => {
         return (
           <>
             {row?.order_items?.map((data, index) => (
-              <Typography>{index === 0 && data?.id}</Typography>
+              <Typography component="span">
+                {index === 0 && data?.id}
+              </Typography>
             ))}
           </>
         );
@@ -42,7 +44,7 @@ const CancelOrderList = ({ cancelOrder, isLoading, isError }) => {
       // renderCell: ({ row }) => {
       //   return (
       //     <Tooltip title={row?.customer_mail} placement="top">
-      //       <Typography>{row?.customer_mail}</Typography>
+      //       <Typography component="span">{row?.customer_mail}</Typography>
       //     </Tooltip>
       //   );
       // },
@@ -62,7 +64,7 @@ const CancelOrderList = ({ cancelOrder, isLoading, isError }) => {
       align: "center",
       renderCell: ({ row }) => {
         return (
-          <Typography>{`${
+          <Typography component="span">{`${
             row?.order_type === "takeaway"
               ? "Takeaway"
               : row?.order_type === "dine_in" && "Dine In"
@@ -87,7 +89,11 @@ const CancelOrderList = ({ cancelOrder, isLoading, isError }) => {
         return (
           <Tooltip
             title={value?.row?.order_items?.map((item, index) => {
-              return <Typography key={index}>{item.food_name}</Typography>;
+              return (
+                <Typography component="span" key={index}>
+                  {item.food_name}
+                </Typography>
+              );
             })}
             placement="top"
           >

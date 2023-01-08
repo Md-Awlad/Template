@@ -38,6 +38,7 @@ const Total = ({ orders }) => {
           />
           <Box>
             <Typography
+              component="span"
               variant="h6"
               sx={{ fontSize: "16px" }}
               // className="text-sm text-gray-600"
@@ -45,6 +46,7 @@ const Total = ({ orders }) => {
               Total Food
             </Typography>
             <Typography
+              component="span"
               variant="h5"
               sx={{ fontWeight: 500, textAlign: "center" }}
             >
@@ -71,6 +73,7 @@ const Total = ({ orders }) => {
           />
           <Box>
             <Typography
+              component="span"
               variant="h6"
               sx={{ fontSize: "16px" }}
               // className="text-sm text-gray-600"
@@ -78,6 +81,7 @@ const Total = ({ orders }) => {
               Total Category
             </Typography>
             <Typography
+              component="span"
               variant="h5"
               sx={{ fontWeight: 500, textAlign: "center" }}
             >
@@ -104,6 +108,7 @@ const Total = ({ orders }) => {
           />
           <Box>
             <Typography
+              component="span"
               variant="h6"
               sx={{ fontSize: "16px" }}
               // className="text-sm text-gray-600"
@@ -111,6 +116,7 @@ const Total = ({ orders }) => {
               Total Orders
             </Typography>
             <Typography
+              component="span"
               variant="h5"
               sx={{ fontWeight: 500, textAlign: "center" }}
             >
@@ -137,6 +143,7 @@ const Total = ({ orders }) => {
           />
           <Box>
             <Typography
+              component="span"
               variant="h6"
               sx={{ fontSize: "16px" }}
               // className="text-sm text-gray-600"
@@ -144,6 +151,7 @@ const Total = ({ orders }) => {
               Complete Order
             </Typography>
             <Typography
+              component="span"
               variant="h5"
               sx={{ fontWeight: 500, textAlign: "center" }}
             >

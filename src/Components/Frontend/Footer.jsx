@@ -4,6 +4,7 @@ import React from "react";
 const Footer = () => {
   return (
     <Typography
+      component="span"
       variant="h6"
       sx={{
         fontSize: "16px",
