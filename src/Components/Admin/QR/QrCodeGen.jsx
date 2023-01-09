@@ -66,6 +66,7 @@ const GenerateQR = ({ text }) => {
     tableName(payload);
   };
   const handleQr = (table) => {
+    table && setAddTableNo(table);
     table && setOpenQr(true);
     table && generateQR(`${window.location.origin}/?table=${table}`);
     table && generateQRSurvey(`${window.location.origin}/survey`);
