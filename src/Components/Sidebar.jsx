@@ -218,7 +218,7 @@ const Sidebar = () => {
                   >
                     <Typography
                       component="span"
-                      className="flex items-center gap-5 text-gray-700 "
+                      className="flex items-center gap-5 text-gray-700 dark:text-gray-200"
                     >
                       <NavIcon className="text-xl" />
                       {expandedMenu && name}
@@ -274,9 +274,7 @@ const Sidebar = () => {
                                 ? "flex items-center pl-2 py-2 rounded-lg  text-neutral  text-md mt-2 mr-4"
                                 : "flex  items-center pl-2 py-2 rounded-lg text-md hover:text-gray-700 dark:text-gray-200 dark:hover:text-black hover:bg-light-gray mt-2 mr-4"
                             }
-                          >
-                            {/* <NavIcon className="text-xl" /> */}
-                          </NavLink>
+                          ></NavLink>
                         );
                       }
                     })}
@@ -305,7 +303,7 @@ const Sidebar = () => {
                   <span className="capitalize ">{name}</span> */}
                   <Typography
                     component="span"
-                    className="flex items-center gap-5  text-gray-700 "
+                    className="flex items-center gap-5    "
                   >
                     <NavIcon className="text-xl" />
                     {name}
