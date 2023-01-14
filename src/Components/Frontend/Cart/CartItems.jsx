@@ -235,7 +235,7 @@ const CartItems = ({ cart, setCart, item }) => {
                       variant="h6"
                       sx={{ fontSize: "14px" }}
                     >
-                      {extraPrice.price}
+                      {extraPrice?.price}
                     </Typography>
                   </Box>
                 );

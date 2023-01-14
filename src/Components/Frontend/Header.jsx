@@ -1,4 +1,3 @@
-import { Dashboard } from "@mui/icons-material";
 import { Box, Button } from "@mui/material";
 import React from "react";
 import { Link } from "react-router-dom";
@@ -6,12 +5,7 @@ import { useStateContext } from "../../Contexts/ContextProvider";
 import mainLogo from "../../image/logo.png";
 
 const Header = () => {
-  const {
-    expandedMenu,
-    restaurantData,
-    currentUser: { id: UID = null },
-  } = useStateContext();
-
+  const { expandedMenu, restaurantData } = useStateContext();
   return (
     <>
       <Box
@@ -31,9 +25,9 @@ const Header = () => {
             alt=""
           />
         </Link>
-        {Boolean(UID) && (
+        {Boolean(sessionStorage.getItem("accessToken")) && (
           <Link to="dashboard">
-            {expandedMenu ? (
+            {expandedMenu && (
               <Button
                 sx={{
                   color: "#fff",
@@ -42,8 +36,6 @@ const Header = () => {
               >
                 go to dashboard
               </Button>
-            ) : (
-              <Dashboard />
             )}
           </Link>
         )}

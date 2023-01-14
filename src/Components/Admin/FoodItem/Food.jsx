@@ -49,7 +49,7 @@ const Food = ({ category, customizeFood }) => {
     {
       field: "price",
       headerName: "Size & Price",
-      width: 230,
+      width: 280,
       headerAlign: "center",
       align: "center",
       renderCell: ({ row: { price = {} } }) => {
@@ -60,7 +60,7 @@ const Food = ({ category, customizeFood }) => {
                 ? "no data"
                 : Object.keys(price).map((key, index) => {
                     return (
-                      <div key={index} className="flex gap-5">
+                      <div key={index} className="flex justify-between">
                         <h2>size: {key}</h2>
                         <h2>Price: {price[key]}</h2>
                       </div>
@@ -74,7 +74,7 @@ const Food = ({ category, customizeFood }) => {
                 ? "no data"
                 : Object.keys(price).map((key, index) => {
                     return (
-                      <div key={index} className="flex gap-5">
+                      <div key={index} className="flex justify-between">
                         <h2>size: {key}</h2>
                         <h2>Price: {price[key]}</h2>
                       </div>
@@ -88,14 +88,14 @@ const Food = ({ category, customizeFood }) => {
     {
       field: "custom_food",
       headerName: "Extra & Price",
-      width: 200,
+      width: 240,
       headerAlign: "center",
       align: "center",
       renderCell: ({ row }) => {
         return (
           <Tooltip
             title={row?.customize_food?.map((data) => (
-              <div key={data?.id} className="flex gap-5">
+              <div key={data?.id} className="flex justify-between">
                 <h2>Name: {data?.name}</h2>
                 <h2>Price: {data?.price}</h2>
               </div>
@@ -105,7 +105,7 @@ const Food = ({ category, customizeFood }) => {
             <div className="overflow-y-auto h-12 w-full">
               {row?.customize_food?.map((data) => {
                 return (
-                  <div key={data?.id} className="flex gap-5">
+                  <div key={data?.id} className="flex justify-between">
                     <h2>Name: {data?.ingredient_name}</h2>
                     <h2>Price: {data?.price}</h2>
                   </div>
@@ -119,7 +119,7 @@ const Food = ({ category, customizeFood }) => {
     {
       field: "discount_price",
       headerName: "Discount Price",
-      width: 150,
+      width: 270,
       headerAlign: "center",
       align: "center",
       renderCell: ({ value }) => {
@@ -127,18 +127,18 @@ const Food = ({ category, customizeFood }) => {
           return (
             <Tooltip
               title={Object.keys(value)?.map((key, index) => (
-                <div key={index} className="flex justify-between w-36">
+                <div key={index} className="flex justify-between ">
                   <h2>size: {key}</h2>
                   <h2>Price: {value[key]}</h2>
                 </div>
               ))}
               placement="top"
             >
-              <div className="overflow-y-auto h-12 w-full mt-7">
+              <div className="overflow-x-auto h-12  mt-7">
                 {Object.keys(value)?.map((key, index) => (
-                  <div key={index} className="grid grid-cols-2">
-                    <h2>size: {key}</h2>
-                    <h2>Price: {value[key]}</h2>
+                  <div key={index} className="flex justify-between">
+                    <h2 className="col-span-6">size: {key}</h2>
+                    <h2 className="col-span-6">Price: {value[key]}</h2>
                   </div>
                 ))}
               </div>

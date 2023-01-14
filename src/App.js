@@ -12,6 +12,7 @@ import { SuspenseLoader } from "./Components/Shared/SharedStyles";
 import { useStateContext } from "./Contexts/ContextProvider";
 import QRCodeGen from "./Pages/Admin/QRCode";
 import Home from "./Pages/Frontend/Home";
+import { getAccessToken } from "./utils/localStorages";
 const ThemeLayout = lazy(() => import("./Components/Layouts/ThemeLayout"));
 const NavLayout = lazy(() => import("./Components/Layouts/NavLayout"));
 const CancelOrder = lazy(() => import("./Pages/Admin/CancelOrder"));
@@ -35,7 +36,6 @@ const App = () => {
     currentUser: { id: userId = null },
     isLoading,
     orderId,
-    accessToken,
   } = useStateContext();
   useEffect(() => {
     if (
@@ -162,7 +162,7 @@ const App = () => {
     {
       path: "/auth",
       element:
-        Boolean(accessToken) || Boolean(userId) ? (
+        Boolean(getAccessToken()) || Boolean(userId) ? (
           <Navigate to="/dashboard" />
         ) : (
           <AuthRedirect />
@@ -171,7 +171,7 @@ const App = () => {
     {
       path: "/authCallback",
       element:
-        Boolean(accessToken) || Boolean(userId) ? (
+        Boolean(getAccessToken()) || Boolean(userId) ? (
           <Navigate to="/dashboard" />
         ) : (
           <AuthValidate />

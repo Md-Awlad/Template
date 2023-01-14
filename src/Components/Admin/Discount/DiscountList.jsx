@@ -9,7 +9,7 @@ import { Box } from "@mui/system";
 import LoaderSource from "../../Loaders/LoaderSource";
 import CustomDataGrid from "../../Shared/CustomDataGrid";
 
-const DiscountList = ({ discounts, isLoading }) => {
+const DiscountList = ({ discounts=[], isLoading }) => {
   const [editId, setEditId] = useState(null);
   const [deleteId, setDeleteId] = useState(null);
 

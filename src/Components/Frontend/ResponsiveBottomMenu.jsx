@@ -15,11 +15,8 @@ const ResponsiveBottomMenu = () => {
     restaurantData,
     currentUser: { id: U_ID = null },
   } = useStateContext();
-  const [accessToken, setAccessToken] = useState("");
   const [isFromCart, setIsFromCart] = useState(false);
-  useEffect(() => {
-    setAccessToken(getAccessToken());
-  }, []);
+
   const [open, setOpen] = useState(false);
 
   const handleDrawerOpen = (bool) => {
@@ -76,7 +73,7 @@ const ResponsiveBottomMenu = () => {
             </Box>
           </Box>
 
-          {Boolean(U_ID) || Boolean(accessToken) ? (
+          {Boolean(U_ID) || Boolean(getAccessToken()) ? (
             <Link to="/dashboard">
               <Dashboard className="inline md:w-16 md:h-16 w-8 h-8 text-neutral " />
             </Link>

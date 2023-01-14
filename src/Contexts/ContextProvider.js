@@ -25,13 +25,9 @@ export const ContextProvider = ({ children }) => {
   const [orderId, setOrderId] = useState();
   const [confirmed, setConfirmed] = useState();
   const [customColor, setCustomColor] = useState();
-  const [accessToken, setAccessToken] = useState("");
   const [expandedMenu, setExpandedMenu] = useState(true);
   const [drawerToggle, setDrawerToggle] = useState(false);
 
-  useEffect(() => {
-    setAccessToken(getAccessToken());
-  }, []);
   const { isLoading, data: currentUser = {} } = useQuery(
     ["currentUser"],
     async () => {
@@ -97,7 +93,7 @@ export const ContextProvider = ({ children }) => {
         orderId,
         currentMode,
         screenSize,
-        accessToken,
+        // accessToken,
         initialState,
         customColor,
         checkbox,

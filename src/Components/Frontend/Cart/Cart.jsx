@@ -47,8 +47,7 @@ function a11yProps(index) {
   };
 }
 
-const Cart = ({ isFromCart }) => {
-  console.log(isFromCart);
+const Cart = ({ isFromCart = false }) => {
   const { setOrderId, expandedMenu, restaurantData } = useStateContext();
   let [searchParams] = useSearchParams();
   const navigate = useNavigate();

@@ -11,7 +11,7 @@ import CustomDataGrid from "../../Shared/CustomDataGrid";
 
 const ApplyDiscountList = ({
   discounts,
-  applyDiscount,
+  applyDiscount = [],
   applyRefetch,
   categories,
   foods,

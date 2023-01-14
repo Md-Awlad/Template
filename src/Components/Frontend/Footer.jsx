@@ -13,12 +13,13 @@ const Footer = () => {
         py: 2,
       }}
     >
-      <p>
+      <p className="text-sm mb-2">
         © 2022 All rights reserved by{" "}
         <a
           rel="noopener noreferrer"
           href="https://www.nexisltd.com/"
           target="_blank"
+          className="text-blue-500 "
         >
           Nexis Ltd.
         </a>
