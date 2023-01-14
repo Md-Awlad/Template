@@ -14,32 +14,10 @@ import { GrAdd } from "react-icons/gr";
 import { MdClose } from "react-icons/md";
 
 const CartItems = ({ cart, setCart, item }) => {
-  // const addExtra = (extraId, price = 0) => {
-  //   setCart(
-  //     cart.map((e) => {
-  //       if (e.id === item.id && e.size === item.size) {
-  //         const existing = e?.extra && Boolean(e.extra[extraId]);
-  //         return {
-  //           ...e,
-  //           extra: {
-  //             ...e.extra,
-  //             [extraId]: existing ? null : price,
-  //           },
-  //         };
-  //       } else {
-  //         return e;
-  //       }
-  //     })
-  //   );
-  // };
-
   const addExtra = (extraId, price = 0) => {
     setCart(
-      cart.map((e) => {
-        //e.id === item.id && e.size === item.size
+      cart?.map((e) => {
         if (e === item) {
-          const existing = e?.extra && Boolean(e.extra[extraId]);
-
           if (Object.keys(e.extra).length) {
             for (const key in e.extra) {
               if (parseInt(key) === extraId) {
@@ -64,29 +42,6 @@ const CartItems = ({ cart, setCart, item }) => {
       })
     );
   };
-  // const addExtra = (extraId, price = 0) => {
-  //   const items = cart.map((e) => {
-  //     if (Object.keys(e.extra).length) {
-  //       for (const key in e.extra) {
-  //         if (parseInt(key) === extraId) {
-  //           delete e.extra[extraId];
-  //           break;
-  //         } else {
-  //           e["extra"] = {
-  //             ...e?.extra,
-  //             [extraId]: price,
-  //           };
-  //         }
-  //       }
-  //     } else {
-  //       e["extra"] = {
-  //         [extraId]: price,
-  //       };
-  //     }
-  //     return e;
-  //   });
-  //   setCart(items);
-  // };
 
   const handleIncrement = (item) => {
     if (cart.find((i) => i === item && Object.keys(item?.extra))) {
@@ -104,31 +59,6 @@ const CartItems = ({ cart, setCart, item }) => {
     }
   };
 
-  // const handleIncrement = (item) => {
-  //   if (
-  //     cart.find(
-  //       (i) =>
-  //         i.id === item.id && i.size === item.size && Object.keys(item?.extra)
-  //     )
-  //   ) {
-  //     setCart(
-  //       cart.map((e) => {
-  //         if (
-  //           e.id === item.id &&
-  //           e.size === item.size &&
-  //           Object.keys(item?.extra)
-  //         ) {
-  //           return { ...e, count: e.count + 1 };
-  //         } else {
-  //           return e;
-  //         }
-  //       })
-  //     );
-  //   } else {
-  //     setCart([...cart, { ...item, count: 1 }]);
-  //   }
-  // };
-
   const handleDecrement = (item) => {
     if (cart.find((i) => i === item)) {
       setCart(
@@ -142,19 +72,6 @@ const CartItems = ({ cart, setCart, item }) => {
       );
     }
   };
-  // const handleDecrement = (item) => {
-  //   if (cart.find((i) => i.id === item.id && i.size === item.size)) {
-  //     setCart(
-  //       cart.map((e) => {
-  //         if (e.id === item.id && e.size === item.size && e.count > 1) {
-  //           return { ...e, count: e.count - 1 };
-  //         } else {
-  //           return e;
-  //         }
-  //       })
-  //     );
-  //   }
-  // };
 
   // --remove item--
   const removeItem = (sId) => {
@@ -168,7 +85,8 @@ const CartItems = ({ cart, setCart, item }) => {
         marginY: 1,
         padding: 2,
         borderRadius: "5px",
-        // boxShadow: "0px 0px 5px 0px rgb(0 0 0 / 20%)",
+        position: "relative",
+        mr: 1,
       }}
     >
       <Box
@@ -176,12 +94,10 @@ const CartItems = ({ cart, setCart, item }) => {
         sx={{
           display: "flex",
           alignItems: "center",
-
-          position: "relative",
         }}
       >
         <img
-          className="lg:w-16 lg:h-16 w-20 h-20 object-cover rounded-full border-2 border-gray-400"
+          className="w-16 h-16  object-cover rounded-full border-2 border-gray-400"
           src={item?.image}
           onError={({ currentTarget }) => {
             currentTarget.onerror = null; // prevents looping
@@ -203,7 +119,7 @@ const CartItems = ({ cart, setCart, item }) => {
 
         <MdClose
           onClick={() => removeItem(item.sId, item.index)}
-          className="absolute md:right-0 -right-2 top-0 text-red-600 text-2xl border border-gray-700 rounded-full cursor-pointer"
+          className="absolute  right-[4px]  top-[4px] text-red-600 text-2xl border border-gray-700 rounded-full cursor-pointer"
         />
       </Box>
       {/* --countBtn-- */}
@@ -214,7 +130,6 @@ const CartItems = ({ cart, setCart, item }) => {
           alignItems: "center",
           position: "relative",
         }}
-        // className="flex justify-between items-center relative"
       >
         <Box
           className="space-x-3"
@@ -249,7 +164,7 @@ const CartItems = ({ cart, setCart, item }) => {
         </div>
       </Box>
       {/* --extra-- */}
-      {Boolean(item?.customize_food.length) ? (
+      {Boolean(item?.customize_food?.length) ? (
         <Accordion
           sx={{
             bgcolor: "unset",

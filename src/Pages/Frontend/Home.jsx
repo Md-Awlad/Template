@@ -1,13 +1,17 @@
 import React from "react";
 import { useStateContext } from "../../Contexts/ContextProvider";
 import LandingPage from "./LandingPage";
-import LocalDiningIcon from "@mui/icons-material/LocalDining";
 import { Box, Typography } from "@mui/material";
+import QueryLoader from "../../Components/Loaders/QueryLoader";
 const Home = () => {
-  const { restaurantData } = useStateContext();
+  const { restaurantData, restaurantIsLoading } = useStateContext();
   return (
     <div>
-      {Boolean(Object.entries(restaurantData).length) ? (
+      {restaurantIsLoading ? (
+        <Box className="h-screen flex justify-center items-center ">
+          <QueryLoader />
+        </Box>
+      ) : Boolean(Object.entries(restaurantData).length) ? (
         <LandingPage />
       ) : (
         <div className="h-screen flex justify-center items-center ">

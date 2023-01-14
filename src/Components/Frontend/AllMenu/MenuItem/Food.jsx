@@ -24,7 +24,7 @@ const Food = ({ category }) => {
                 <Box onClick={() => handleItemAndToggle(item, index)}>
                   <Box
                     sx={{
-                      minHeight: { xs: 300, sm: "auto", md: "auto" },
+                      minHeight: { xs: 350, sm: "auto", md: "auto" },
                       bgcolor: "#FAFAEE",
                     }}
                     className=" border-2 shadow-md  rounded-lg   cursor-pointer relative"
@@ -72,12 +72,13 @@ const Food = ({ category }) => {
                             sx={{
                               fontSize: 12,
                               fontWeight: 500,
+                              mb: 4,
                             }}
                           >
                             {item.base_ingredient.substr(0, 100) +
                               `${
                                 item.base_ingredient.length > 100 ? ".." : ""
-                              }`}
+                              } `}
                           </Typography>
                           {/* --size-- */}
 
@@ -93,7 +94,7 @@ const Food = ({ category }) => {
                                     }}
                                   >
                                     {index === 0 && (
-                                      <Box className="absolute flex  items-center bottom-3">
+                                      <Box className="mt-2 absolute flex  items-center bottom-3">
                                         <Typography
                                           component="span"
                                           sx={{
@@ -115,7 +116,7 @@ const Food = ({ category }) => {
                                             textDecoration: "line-through",
                                           }}
                                         >
-                                          {item.price[key[0]]}
+                                          {item?.price[key[0]]}
                                         </Typography>
                                         <Typography
                                           component="span"
@@ -142,7 +143,7 @@ const Food = ({ category }) => {
                                     className="flex items-center"
                                   >
                                     {Boolean(index === 0) && (
-                                      <Box className=" absolute flex  items-center bottom-3">
+                                      <Box className=" mt-2 absolute flex  items-center bottom-3">
                                         <Typography
                                           component="span"
                                           sx={{

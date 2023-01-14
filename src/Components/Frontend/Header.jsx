@@ -1,15 +1,12 @@
 import { Dashboard } from "@mui/icons-material";
 import { Box, Button } from "@mui/material";
-import React, { useEffect, useState } from "react";
-import { MdOutlineAddShoppingCart } from "react-icons/md";
+import React from "react";
 import { Link } from "react-router-dom";
 import { useStateContext } from "../../Contexts/ContextProvider";
 import mainLogo from "../../image/logo.png";
-import CustomDrawer from "../Shared/CustomDrawer";
 
 const Header = () => {
   const {
-    cart,
     expandedMenu,
     restaurantData,
     currentUser: { id: UID = null },
@@ -49,14 +46,6 @@ const Header = () => {
               <Dashboard />
             )}
           </Link>
-        )}
-        {expandedMenu ? null : cart?.length ? (
-          <CustomDrawer />
-        ) : (
-          <MdOutlineAddShoppingCart
-            className="inline w-8 h-8 cursor-pointer"
-            color="action"
-          />
         )}
       </Box>
     </>
