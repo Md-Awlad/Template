@@ -133,6 +133,7 @@ const ResponsiveOrderSummery = () => {
                       <Typography component="span">
                         {data?.food_name}
                       </Typography>
+                      <Typography component="span">({data?.price})</Typography>
                     </Box>
                     <Typography component="span" sx={{ fontWeight: 600 }}>
                       {data?.food_amount}
@@ -174,16 +175,6 @@ const ResponsiveOrderSummery = () => {
                           data?.extra.length - 1 === index ? "" : ","
                         }`
                     )}
-                  </Typography>
-                </Box>
-              ))}
-              <Typography component="span" variant="h6" sx={{ fontSize: 18 }}>
-                Size
-              </Typography>
-              {orderSummary.order_items?.map((data, index) => (
-                <Box sx={{ mt: -3 }} key={index} className="flex justify-end">
-                  <Typography component="span" sx={{ pb: 2, fontWeight: 600 }}>
-                    {data?.price}
                   </Typography>
                 </Box>
               ))}
