@@ -2,12 +2,14 @@ import { Grid, Typography } from "@mui/material";
 import Box from "@mui/material/Box";
 import React, { useState } from "react";
 import { IoMdAdd } from "react-icons/io";
+import { useStateContext } from "../../../../Contexts/ContextProvider";
 import AddToCartModal from "../../../Modals/Frontend/AddToCartModal";
 
 const Food = ({ category }) => {
   const [foodItem, setFoodItem] = useState({});
   const [foodIndex, setFoodIndex] = useState(null);
   const [open, setOpen] = useState(false);
+  const { expandedMenu } = useStateContext();
   const handleItemAndToggle = (foodItem, index) => {
     setOpen(true);
     setFoodIndex(index);
@@ -75,10 +77,15 @@ const Food = ({ category }) => {
                               mb: 4,
                             }}
                           >
-                            {item.base_ingredient.substr(0, 100) +
-                              `${
-                                item.base_ingredient.length > 100 ? ".." : ""
-                              } `}
+                            {expandedMenu
+                              ? item.base_ingredient.substr(0, 100) +
+                                `${
+                                  item.base_ingredient.length > 100 ? ".." : ""
+                                } `
+                              : item.base_ingredient.substr(0, 80) +
+                                `${
+                                  item.base_ingredient.length > 80 ? ".." : ""
+                                } `}
                           </Typography>
                           {/* --size-- */}
 

@@ -134,6 +134,7 @@ const Cart = ({ isFromCart = false }) => {
       {cart?.length || expandedMenu ? (
         <Box
           sx={{
+            width: 1,
             position: "sticky",
             top: 0,
             zIndex: 1,
@@ -148,7 +149,7 @@ const Cart = ({ isFromCart = false }) => {
         >
           {/* --cartInfo-- */}
 
-          <Box className="flex justify-between ">
+          <Box className="flex justify-between  ">
             <Typography
               component="span"
               variant="h6"
@@ -172,7 +173,7 @@ const Cart = ({ isFromCart = false }) => {
           <Box
             sx={{
               overflowY: "scroll",
-
+              px: 1,
               maxHeight:
                 !expandedMenu && Boolean(cart?.length)
                   ? "100vh"

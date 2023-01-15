@@ -1,7 +1,6 @@
-import { Dashboard } from "@mui/icons-material";
+import { Dashboard, Home, ShoppingCart } from "@mui/icons-material";
 import { Badge, Box, Drawer, Typography } from "@mui/material";
-import React, { useEffect, useState } from "react";
-import { AiOutlineHome, AiOutlineShoppingCart } from "react-icons/ai";
+import React, { useState } from "react";
 import { IoIosArrowForward } from "react-icons/io";
 import { Link } from "react-router-dom";
 import { useStateContext } from "../../Contexts/ContextProvider";
@@ -45,7 +44,12 @@ const ResponsiveBottomMenu = () => {
             badgeContent={cart.length}
             color="primary"
           >
-            <AiOutlineShoppingCart className="inline md:w-16 md:h-16 w-8 h-8 text-neutral " />
+            <ShoppingCart
+              sx={{
+                fontSize: { xs: 36, md: 30 },
+              }}
+              className=" text-neutral"
+            />
           </Badge>
 
           <Box
@@ -75,15 +79,26 @@ const ResponsiveBottomMenu = () => {
 
           {Boolean(U_ID) || Boolean(getAccessToken()) ? (
             <Link to="/dashboard">
-              <Dashboard className="inline md:w-16 md:h-16 w-8 h-8 text-neutral " />
+              <Dashboard
+                sx={{
+                  fontSize: { xs: 36, md: 30 },
+                }}
+                className="  text-neutral"
+              />
             </Link>
           ) : (
-            <AiOutlineHome className="inline md:w-16 md:h-16 w-8 h-8 text-neutral " />
+            <Home
+              sx={{
+                fontSize: { xs: 36, md: 30 },
+              }}
+              className="text-xl text-neutral"
+            />
           )}
         </Box>
       </Box>
       <Drawer
         sx={{
+          width: 1,
           flexShrink: 0,
           "& .MuiDrawer-paper": {
             width: 1,

@@ -80,7 +80,7 @@ const CartItems = ({ cart, setCart, item }) => {
   };
   return (
     <Box
-      className="border-2"
+      className="border-2 w-full"
       sx={{
         marginY: 1,
         padding: 2,
