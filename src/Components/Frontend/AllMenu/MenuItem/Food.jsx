@@ -9,7 +9,7 @@ const Food = ({ category }) => {
   const [foodItem, setFoodItem] = useState({});
   const [foodIndex, setFoodIndex] = useState(null);
   const [open, setOpen] = useState(false);
-  const { expandedMenu } = useStateContext();
+  const { screenSize } = useStateContext();
   const handleItemAndToggle = (foodItem, index) => {
     setOpen(true);
     setFoodIndex(index);
@@ -77,14 +77,14 @@ const Food = ({ category }) => {
                               mb: 4,
                             }}
                           >
-                            {expandedMenu
+                            {screenSize >= 1280
                               ? item.base_ingredient.substr(0, 100) +
                                 `${
                                   item.base_ingredient.length > 100 ? ".." : ""
                                 } `
-                              : item.base_ingredient.substr(0, 80) +
+                              : item.base_ingredient.substr(0, 70) +
                                 `${
-                                  item.base_ingredient.length > 80 ? ".." : ""
+                                  item.base_ingredient.length > 70 ? ".." : ""
                                 } `}
                           </Typography>
                           {/* --size-- */}
