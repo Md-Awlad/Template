@@ -8,7 +8,6 @@ import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { defaultQueryFn } from "./utils/myAxios";
 import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 
 const queryClient = new QueryClient({
@@ -16,7 +15,6 @@ const queryClient = new QueryClient({
     queries: {
       retry: false,
       refetchOnWindowFocus: false,
-      queryFn: defaultQueryFn,
     },
   },
 });

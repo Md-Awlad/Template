@@ -1,4 +1,5 @@
 import React from "react";
+import { useLocation } from "react-router-dom";
 import { useStateContext } from "../../Contexts/ContextProvider";
 const PageTitle = ({
   headingText = "",
@@ -10,16 +11,13 @@ const PageTitle = ({
   editIcon = false,
 }) => {
   const { currentColor } = useStateContext();
+  const { pathname } = useLocation();
   return (
-    <div className="md:flex justify-between mb-5 py-2  items-center">
-      <div className="dark:text-neutral">
-        <h2 className="text-3xl  font-semibold capitalize"> {headingText}</h2>
+    <div className="bg-white md:flex justify-between mb-5 py-2 items-center shadow rounded-md px-4">
+      <div>
+        <h2 className="text-3xl font-semibold capitalize"> {headingText}</h2>
         <p className="text-sm my-2 font-medium">
-          Dashboard /
-          <span className="text-gray-600 dark:text-gray-400 capitalize">
-            {" "}
-            {pageName}
-          </span>
+          Dashboard <span className="capitalize"> {pathname}</span>
         </p>
       </div>
       <div className="flex items-center gap-3">
@@ -29,11 +27,6 @@ const PageTitle = ({
             style={{ backgroundColor: currentColor }}
             className="px-3 py-2 text-sm rounded-md text-neutral flex items-center gap-1 font-medium hover:opacity-80 capitalize"
           >
-            {/* {editIcon ? (
-              <ModeEditOutlineIcon className="inline text-xs font-bold " />
-            ) : (
-              <AddCircleOutlineOutlinedIcon className="inline text-xs font-bold " />
-            )} */}
             {buttonText}
           </button>
         )}

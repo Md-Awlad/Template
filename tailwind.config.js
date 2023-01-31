@@ -14,72 +14,46 @@ module.exports = {
         14: "14px",
       },
       backgroundColor: {
-        primary: "#5442A8",
-        "primary-50": "#faf5ff",
+        primary: "#0C4A6E",
         secondary: "#3678E3",
         accent: "#FDA95B",
         neutral: "#fff",
-        "base-100": "#181e2a",
         info: "#3ABFF8",
         success: "#36D399",
         warning: "#FBBD23",
         error: "#F87272",
-        customColor: "red",
-        "main-bg": "#F2F5F9",
-        "main-dark-bg": "#20232A",
-        "secondary-dark-bg": "#33373E",
-        "light-gray": "#F7F7F7",
-        "half-transparent": "rgba(0, 0, 0, 0.5)",
       },
       borderWidth: {
         1: "1px",
       },
       borderColor: {
-        primary: "#5442A8",
+        primary: "#0C4A6E",
         secondary: "#3678E3",
         accent: "#FDA95B",
         neutral: "#fff",
-
-        "base-100": "#181e2a",
-
         info: "#3ABFF8",
-
         success: "#36D399",
-
         warning: "#FBBD23",
-
         error: "#F87272",
       },
       textColor: {
-        primary: "#5442A8",
+        primary: "#0C4A6E",
         secondary: "#3678E3",
         accent: "#FDA95B",
         neutral: "#fff",
-        "dark-color": "#000",
-        "base-100": "#181e2a",
-        "gray-600": "#4b5563",
         info: "#3ABFF8",
-
         success: "#36D399",
-
         warning: "#FBBD23",
-
         error: "#F87272",
       },
       boxShadow: {
-        primary: "#5442A8",
+        primary: "#0C4A6E",
         secondary: "#3678E3",
         accent: "#FDA95B",
         neutral: "#fff",
-
-        "base-100": "#181e2a",
-
         info: "#3ABFF8",
-
         success: "#36D399",
-
         warning: "#FBBD23",
-
         error: "#F87272",
       },
       width: {

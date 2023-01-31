@@ -1,17 +1,15 @@
 import React, { lazy } from "react";
+import Banner from "../../Components/Frontend/Banner";
 import { SuspenseLoader } from "../../Components/Shared/SharedStyles";
-const Menu = lazy(() => import("../../Components/Frontend/AllMenu/Menu/Menu"));
+const Layouts = lazy(() => import("../../Components/Frontend/Layouts/Layouts"));
 
-const Layout = lazy(() => import("../../Components/Frontend/Layout/Layout"));
-const Banner = lazy(() => import("../../Components/Frontend/Banner"));
 const LandingPage = () => {
   return (
-    <Layout>
+    <Layouts>
       <SuspenseLoader>
         <Banner />
-        <Menu />
       </SuspenseLoader>
-    </Layout>
+    </Layouts>
   );
 };
 

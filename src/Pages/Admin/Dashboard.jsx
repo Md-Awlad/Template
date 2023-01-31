@@ -1,32 +1,18 @@
-import { Container } from "@mui/material";
-import { useQuery } from "@tanstack/react-query";
-import OrderSummary from "../../Components/Admin/Dashboard/OrderSummary";
-import Total from "../../Components/Admin/Dashboard/Total";
-import myAxios from "../../utils/myAxios";
+import { useLocation } from "react-router-dom";
 
 const DashBoard = () => {
-  const { data: orders = [], refetch: Refetch } = useQuery(
-    ["today"],
-    async () => {
-      const res = await myAxios("/performance_count/");
-      return res.data;
-    }
-  );
+  const { pathname } = useLocation();
   return (
-    <Container>
-      <div className="md:flex justify-between mb-5 py-2  items-center">
-        <div className="dark:text-neutral">
-          <h2 className="text-3xl  font-semibold capitalize">
-            Welcome <span className="text-gray-600 dark:text-gray-400">!</span>
-          </h2>
-          <p className="text-sm my-2 font-medium capitalize">Dashboard</p>
-        </div>
+    <div className="md:flex justify-between mb-5 py-2 px-4 rounded-md shadow items-center bg-white">
+      <div className="">
+        <h2 className="text-3xl  font-semibold capitalize">
+          Welcome <span className="text-gray-600">!</span>
+        </h2>
+        <p className="text-sm my-2 font-medium capitalize">
+          {pathname.replace("/", "")}
+        </p>
       </div>
-      <div className="space-y-10">
-        <Total orders={orders} Refetch={Refetch} />
-        <OrderSummary orders={orders} Refetch={Refetch} />
-      </div>
-    </Container>
+    </div>
   );
 };
 export default DashBoard;
